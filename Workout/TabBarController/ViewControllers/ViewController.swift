@@ -8,17 +8,18 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-  convenience init(title: String) {
-    self.init()
-    
-    self.title = title
-  }
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
   }
-
-
 }
+extension ViewController: TabBarMenu {
+  var tabTitle: String {
+    return "홈"
+  }
+  
+  var icon: String {
+    return "house.fill"
+  }
+}
+
 
