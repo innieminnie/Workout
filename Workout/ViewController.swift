@@ -9,6 +9,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
+  convenience init(title: String) {
+    self.init()
+    
+    self.title = title
+  }
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
