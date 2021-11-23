@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
   }
 }
-extension ViewController: TabBarMenu {
+extension HomeViewController: TabBarMenu {
   var tabTitle: String {
     return "홈"
   }

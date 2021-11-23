@@ -15,7 +15,7 @@ class BaseTabBarController: UITabBarController {
   }
   
   private func generateViewControllers() -> [UIViewController] {
-    let menus:[TabBarMenu] = [ViewController(), ListViewController()]
+    let menus:[TabBarMenu] = [HomeViewController(), ListViewController()]
     
     return menus.enumerated().map { (offset, menu) in
       let navigationController = UINavigationController.init(rootViewController: menu as! UIViewController)
