@@ -18,6 +18,7 @@
 		D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569E1274CD162007E517A /* BaseTabBarController.swift */; };
 		D98569E4274D0299007E517A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569E3274D0299007E517A /* ListViewController.swift */; };
 		D98569E8274D2A3D007E517A /* TabBarMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569E7274D2A3D007E517A /* TabBarMenu.swift */; };
+		D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569EA27561CB7007E517A /* NewWorkoutViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		D98569E1274CD162007E517A /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		D98569E3274D0299007E517A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		D98569E7274D2A3D007E517A /* TabBarMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarMenu.swift; sourceTree = "<group>"; };
+		D98569EA27561CB7007E517A /* NewWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 			children = (
 				D98569B3274CBAFB007E517A /* HomeViewController.swift */,
 				D98569E3274D0299007E517A /* ListViewController.swift */,
+				D98569EA27561CB7007E517A /* NewWorkoutViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */,
 				D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */,
 				D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */,
+				D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */,
 				D98569E4274D0299007E517A /* ListViewController.swift in Sources */,
 				D98569E8274D2A3D007E517A /* TabBarMenu.swift in Sources */,
 				D98569B2274CBAFB007E517A /* SceneDelegate.swift in Sources */,

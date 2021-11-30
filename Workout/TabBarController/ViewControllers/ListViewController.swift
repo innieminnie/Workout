@@ -17,6 +17,11 @@ class ListViewController: UIViewController {
     button.layer.cornerRadius = 13.0
     button.contentEdgeInsets = UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
     
+    button.addTarget(self, action: #selector(buttonTouched(_:)), for: .touchDown)
+    button.addTarget(self, action: #selector(buttonTouched(_:)), for: .touchDragEnter)
+    button.addTarget(self, action: #selector(buttonUntouched(_:)), for: .touchDragOutside)
+    button.addTarget(self, action: #selector(tappedAddNewWorkout(_:)), for: .touchUpInside)
+    
     return button
   }()
   
@@ -33,6 +38,24 @@ class ListViewController: UIViewController {
       addButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
       addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
     ])
+  }
+  
+  @objc private func buttonTouched(_ sender: UIButton) {
+    sender.alpha = 0.8
+  }
+  
+  @objc private func buttonUntouched(_ sender: UIButton) {
+    sender.alpha = 1
+  }
+  
+  @objc private func tappedAddNewWorkout(_ sender: UIButton) {
+    let newWorkoutViewController = NewWorkoutViewController()
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+      self.present(newWorkoutViewController, animated: true) {
+        sender.alpha = 1
+      }
+    }
   }
 }
 extension ListViewController: TabBarMenu {
