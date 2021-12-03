@@ -124,9 +124,41 @@ class NewWorkoutView: UIView {
       buttonStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       buttonStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
     ])
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    nameTextField.delegate = self
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  @objc private func keyboardWillShow(notification: Notification) {
+    guard let userInfo = notification.userInfo,
+          let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+      return
+    }
+    
+    let keyboardHeight = keyboardFrame.height
+    if self.frame.height - keyboardHeight < buttonStackView.frame.origin.y   {
+      buttonStackView.frame.origin.y -= keyboardHeight
+    }
+  }
+  
+  @objc private func keyboardWillHide(notification: Notification) {
+    guard let userInfo = notification.userInfo,
+          let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+      return
+    }
+    
+    let keyboardHeight = keyboardFrame.height
+    buttonStackView.frame.origin.y += keyboardHeight
+  }
+}
+extension NewWorkoutView: UITextFieldDelegate {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
   }
 }
