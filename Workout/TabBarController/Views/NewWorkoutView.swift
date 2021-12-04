@@ -71,6 +71,8 @@ class NewWorkoutView: UIView {
     return stackView
   }()
   
+  private var activatedMeasurement: RoundedCornerLabelView?
+  
   private let buttonStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,6 +104,12 @@ class NewWorkoutView: UIView {
     measurementStackView.addArrangedSubview(RoundedCornerLabelView(title: "무게 & 횟수"))
     measurementStackView.addArrangedSubview(RoundedCornerLabelView(title: "횟수"))
     measurementStackView.addArrangedSubview(RoundedCornerLabelView(title: "시간"))
+    
+    for measurement in measurementStackView.arrangedSubviews {
+      let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
+      measurement.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
     NewWorkoutRegisterFormStackView.addArrangedSubview(nameTextField)
     NewWorkoutRegisterFormStackView.addArrangedSubview(measurementStackView)
     addSubview(NewWorkoutRegisterFormStackView)
@@ -160,5 +168,24 @@ extension NewWorkoutView: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
+  }
+}
+extension NewWorkoutView {
+  @objc private func viewTapped(_ tapGestureRecognizer: UITapGestureRecognizer) {
+    if let currentlyActivatedMeasurement = self.activatedMeasurement {
+      currentlyActivatedMeasurement.backgroundColor = .white
+    }
+    
+    guard let tappedMeasurementView = tapGestureRecognizer.view as? RoundedCornerLabelView else {
+      return
+    }
+    
+    if self.activatedMeasurement == tappedMeasurementView {
+      tappedMeasurementView.backgroundColor = .white
+      self.activatedMeasurement = nil
+    } else {
+      tappedMeasurementView.backgroundColor = .blue
+      self.activatedMeasurement = tappedMeasurementView
+    }
   }
 }
