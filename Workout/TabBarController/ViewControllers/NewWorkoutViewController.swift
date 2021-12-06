@@ -8,10 +8,19 @@
 import Foundation
 import UIKit
 
+protocol NewWorkoutActionDelegate: AnyObject {
+  func showKeyboard()
+  func hideKeyboard()
+  func tappedCancel()
+  func tappedComplete()
+}
+
 class NewWorkoutViewController: UIViewController {
   let newWorkoutView = NewWorkoutView()
   
   override func viewDidLoad() {
+    newWorkoutView.delegate = self
+    
     view.addSubview(newWorkoutView)
     view.backgroundColor = .white
     
@@ -23,3 +32,21 @@ class NewWorkoutViewController: UIViewController {
     ])
   }
 }
+extension NewWorkoutViewController: NewWorkoutActionDelegate {
+  func showKeyboard() {
+    // keyboard up
+  }
+  
+  func hideKeyboard() {
+    // keyboard down
+  }
+  
+  func tappedCancel() {
+    self.dismiss(animated: true, completion: nil)
+  }
+  
+  func tappedComplete() {
+    // complete (register)
+  }
+}
+

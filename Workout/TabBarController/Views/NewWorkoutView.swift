@@ -35,6 +35,7 @@ class NewWorkoutView: UIView {
   private let cancelButton: UIButton = {
     let button = UIButton()
     
+    button.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
     button.setTitle("취소", for: .normal)
     button.setTitleColor(.red, for: .normal)
     
@@ -71,8 +72,6 @@ class NewWorkoutView: UIView {
     return stackView
   }()
   
-  private var activatedMeasurement: RoundedCornerLabelView?
-  
   private let buttonStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -94,6 +93,9 @@ class NewWorkoutView: UIView {
     
     return stackView
   }()
+  
+  private var activatedMeasurement: RoundedCornerLabelView?
+  weak var delegate: NewWorkoutActionDelegate?
   
   init() {
     super.init(frame: .zero)
@@ -162,6 +164,10 @@ class NewWorkoutView: UIView {
     
     let keyboardHeight = keyboardFrame.height
     buttonStackView.frame.origin.y += keyboardHeight
+  }
+  
+  @objc private func tappedCancel() {
+    delegate?.tappedCancel()
   }
 }
 extension NewWorkoutView: UITextFieldDelegate {
