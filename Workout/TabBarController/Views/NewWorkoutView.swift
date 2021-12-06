@@ -146,6 +146,39 @@ class NewWorkoutView: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+}
+extension NewWorkoutView: UITextFieldDelegate {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
+}
+extension NewWorkoutView {
+  @objc private func viewTapped() {
+    self.endEditing(true)
+  }
+  
+  @objc private func measurementTapped(_ tapGestureRecognizer: UITapGestureRecognizer) {
+    if let currentlyActivatedMeasurement = self.activatedMeasurement {
+      currentlyActivatedMeasurement.backgroundColor = .white
+    }
+    
+    guard let tappedMeasurementView = tapGestureRecognizer.view as? RoundedCornerLabelView else {
+      return
+    }
+    
+    if self.activatedMeasurement == tappedMeasurementView {
+      tappedMeasurementView.backgroundColor = .white
+      self.activatedMeasurement = nil
+    } else {
+      tappedMeasurementView.backgroundColor = .blue
+      self.activatedMeasurement = tappedMeasurementView
+    }
+  }
+  
+  @objc private func tappedCancel() {
+    delegate?.tappedCancel()
+  }
   
   @objc private func keyboardWillShow(notification: Notification) {
     guard let userInfo = notification.userInfo,
@@ -167,38 +200,5 @@ class NewWorkoutView: UIView {
     
     let keyboardHeight = keyboardFrame.height
     buttonStackView.frame.origin.y += keyboardHeight
-  }
-  
-  @objc private func viewTapped() {
-    self.endEditing(true)
-  }
-  
-  @objc private func tappedCancel() {
-    delegate?.tappedCancel()
-  }
-}
-extension NewWorkoutView: UITextFieldDelegate {
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
-    return true
-  }
-}
-extension NewWorkoutView {
-  @objc private func measurementTapped(_ tapGestureRecognizer: UITapGestureRecognizer) {
-    if let currentlyActivatedMeasurement = self.activatedMeasurement {
-      currentlyActivatedMeasurement.backgroundColor = .white
-    }
-    
-    guard let tappedMeasurementView = tapGestureRecognizer.view as? RoundedCornerLabelView else {
-      return
-    }
-    
-    if self.activatedMeasurement == tappedMeasurementView {
-      tappedMeasurementView.backgroundColor = .white
-      self.activatedMeasurement = nil
-    } else {
-      tappedMeasurementView.backgroundColor = .blue
-      self.activatedMeasurement = tappedMeasurementView
-    }
   }
 }
