@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 
 protocol NewWorkoutActionDelegate: AnyObject {
-  func showKeyboard()
-  func hideKeyboard()
   func tappedCancel()
   func tappedComplete()
 }
@@ -33,14 +31,6 @@ class NewWorkoutViewController: UIViewController {
   }
 }
 extension NewWorkoutViewController: NewWorkoutActionDelegate {
-  func showKeyboard() {
-    // keyboard up
-  }
-  
-  func hideKeyboard() {
-    // keyboard down
-  }
-  
   func tappedCancel() {
     self.dismiss(animated: true, completion: nil)
   }
