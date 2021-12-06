@@ -108,7 +108,7 @@ class NewWorkoutView: UIView {
     measurementStackView.addArrangedSubview(RoundedCornerLabelView(title: "시간"))
     
     for measurement in measurementStackView.arrangedSubviews {
-      let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
+      let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(measurementTapped(_:)))
       measurement.addGestureRecognizer(tapGestureRecognizer)
     }
     
@@ -134,6 +134,9 @@ class NewWorkoutView: UIView {
       buttonStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       buttonStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
     ])
+    
+    let viewTapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+    self.addGestureRecognizer(viewTapGesture)
     
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -166,6 +169,10 @@ class NewWorkoutView: UIView {
     buttonStackView.frame.origin.y += keyboardHeight
   }
   
+  @objc private func viewTapped() {
+    self.endEditing(true)
+  }
+  
   @objc private func tappedCancel() {
     delegate?.tappedCancel()
   }
@@ -177,7 +184,7 @@ extension NewWorkoutView: UITextFieldDelegate {
   }
 }
 extension NewWorkoutView {
-  @objc private func viewTapped(_ tapGestureRecognizer: UITapGestureRecognizer) {
+  @objc private func measurementTapped(_ tapGestureRecognizer: UITapGestureRecognizer) {
     if let currentlyActivatedMeasurement = self.activatedMeasurement {
       currentlyActivatedMeasurement.backgroundColor = .white
     }
