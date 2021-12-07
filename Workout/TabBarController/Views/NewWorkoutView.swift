@@ -103,13 +103,12 @@ class NewWorkoutView: UIView {
     
     addSubview(titleLabel)
     
-    measurementStackView.addArrangedSubview(RoundedCornerLabelView(title: "무게 & 횟수"))
-    measurementStackView.addArrangedSubview(RoundedCornerLabelView(title: "횟수"))
-    measurementStackView.addArrangedSubview(RoundedCornerLabelView(title: "시간"))
-    
-    for measurement in measurementStackView.arrangedSubviews {
+    for measurementValue in Measurement.allCases {
+      let measurementRoundedCornerView = RoundedCornerLabelView(title: measurementValue.rawValue)
+      measurementStackView.addArrangedSubview(measurementRoundedCornerView)
+      
       let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(measurementTapped(_:)))
-      measurement.addGestureRecognizer(tapGestureRecognizer)
+      measurementRoundedCornerView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     NewWorkoutRegisterFormStackView.addArrangedSubview(nameTextField)
