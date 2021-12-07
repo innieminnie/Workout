@@ -27,9 +27,16 @@ class ListViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .white
+    view.backgroundColor = .red
     view.addSubview(addButton)
+    setUpNavigationController()
     setUpLayout()
+  }
+  
+  private func setUpNavigationController() {
+    self.navigationController?.navigationBar.isHidden = false
+    self.navigationController?.navigationBar.prefersLargeTitles = true
+    self.navigationController?.navigationBar.topItem?.title = "나의 운동 목록"
   }
   
   private func setUpLayout() {
