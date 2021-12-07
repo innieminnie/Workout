@@ -23,6 +23,7 @@
 		D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569EE2758F669007E517A /* RoundedCornerLabelView.swift */; };
 		D98569F3275E346D007E517A /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569F2275E346D007E517A /* Workout.swift */; };
 		D98569F5275E3927007E517A /* Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569F4275E3927007E517A /* Measurement.swift */; };
+		D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569F6275F717B007E517A /* WorkoutManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		D98569EE2758F669007E517A /* RoundedCornerLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerLabelView.swift; sourceTree = "<group>"; };
 		D98569F2275E346D007E517A /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		D98569F4275E3927007E517A /* Measurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurement.swift; sourceTree = "<group>"; };
+		D98569F6275F717B007E517A /* WorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				D98569F2275E346D007E517A /* Workout.swift */,
+				D98569F6275F717B007E517A /* WorkoutManager.swift */,
 				D98569F4275E3927007E517A /* Measurement.swift */,
 			);
 			path = Models;
@@ -319,6 +322,7 @@
 				D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */,
 				D98569F3275E346D007E517A /* Workout.swift in Sources */,
 				D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */,
+				D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */,
 				D98569F5275E3927007E517A /* Measurement.swift in Sources */,
 				D98569E4274D0299007E517A /* ListViewController.swift in Sources */,
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,

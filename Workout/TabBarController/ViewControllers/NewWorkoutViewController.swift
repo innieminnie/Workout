@@ -35,8 +35,8 @@ extension NewWorkoutViewController: NewWorkoutActionDelegate {
     self.dismiss(animated: true, completion: nil)
   }
   
-  func tappedComplete(with newWorkOut: Workout) {
-    print(newWorkOut)
+  func tappedComplete(with newWorkout: Workout) {
+    workoutManager.register(workout: newWorkout)
     self.dismiss(animated: true, completion: nil)
   }
 }
