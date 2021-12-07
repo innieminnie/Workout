@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 
 class NewWorkoutView: UIView {
+  static let measurementTypes: [Measurement] = {
+    return Measurement.allCases
+  }()
+  
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -32,25 +36,6 @@ class NewWorkoutView: UIView {
     return textField
   }()
   
-  private let cancelButton: UIButton = {
-    let button = UIButton()
-    
-    button.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
-    button.setTitle("취소", for: .normal)
-    button.setTitleColor(.red, for: .normal)
-    
-    return button
-  }()
-  
-  private let completeButton: UIButton = {
-    let button = UIButton()
-    
-    button.setTitle("완료", for: .normal)
-    button.setTitleColor(.black, for: .normal)
-    
-    return button
-  }()
-  
   private let nameStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,6 +57,36 @@ class NewWorkoutView: UIView {
     return stackView
   }()
   
+  private let newWorkoutRegisterFormStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    stackView.axis = .vertical
+    stackView.spacing = 20
+    
+    return stackView
+  }()
+  
+  private let cancelButton: UIButton = {
+    let button = UIButton()
+    
+    button.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
+    button.setTitle("취소", for: .normal)
+    button.setTitleColor(.red, for: .normal)
+    
+    return button
+  }()
+  
+  private let completeButton: UIButton = {
+    let button = UIButton()
+    
+    button.addTarget(self, action: #selector(tappedComplete), for: .touchUpInside)
+    button.setTitle("완료", for: .normal)
+    button.setTitleColor(.black, for: .normal)
+    
+    return button
+  }()
+  
   private let buttonStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,17 +99,7 @@ class NewWorkoutView: UIView {
     return stackView
   }()
   
-  private let NewWorkoutRegisterFormStackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    
-    stackView.axis = .vertical
-    stackView.spacing = 20
-    
-    return stackView
-  }()
-  
-  private var activatedMeasurement: RoundedCornerLabelView?
+  private var activatedMeasurementView: RoundedCornerLabelView?
   weak var delegate: NewWorkoutActionDelegate?
   
   init() {
@@ -103,7 +108,7 @@ class NewWorkoutView: UIView {
     
     addSubview(titleLabel)
     
-    for measurementValue in Measurement.allCases {
+    for measurementValue in NewWorkoutView.measurementTypes {
       let measurementRoundedCornerView = RoundedCornerLabelView(title: measurementValue.rawValue)
       measurementStackView.addArrangedSubview(measurementRoundedCornerView)
       
@@ -111,9 +116,9 @@ class NewWorkoutView: UIView {
       measurementRoundedCornerView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    NewWorkoutRegisterFormStackView.addArrangedSubview(nameTextField)
-    NewWorkoutRegisterFormStackView.addArrangedSubview(measurementStackView)
-    addSubview(NewWorkoutRegisterFormStackView)
+    newWorkoutRegisterFormStackView.addArrangedSubview(nameTextField)
+    newWorkoutRegisterFormStackView.addArrangedSubview(measurementStackView)
+    addSubview(newWorkoutRegisterFormStackView)
     
     buttonStackView.addArrangedSubview(cancelButton)
     buttonStackView.addArrangedSubview(completeButton)
@@ -124,10 +129,10 @@ class NewWorkoutView: UIView {
       titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
       titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       
-      NewWorkoutRegisterFormStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-      NewWorkoutRegisterFormStackView.bottomAnchor.constraint(lessThanOrEqualTo: buttonStackView.topAnchor, constant: -20),
-      NewWorkoutRegisterFormStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
-      NewWorkoutRegisterFormStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
+      newWorkoutRegisterFormStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+      newWorkoutRegisterFormStackView.bottomAnchor.constraint(lessThanOrEqualTo: buttonStackView.topAnchor, constant: -20),
+      newWorkoutRegisterFormStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
+      newWorkoutRegisterFormStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
       
       buttonStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
       buttonStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
@@ -158,25 +163,41 @@ extension NewWorkoutView {
   }
   
   @objc private func measurementTapped(_ tapGestureRecognizer: UITapGestureRecognizer) {
-    if let currentlyActivatedMeasurement = self.activatedMeasurement {
-      currentlyActivatedMeasurement.backgroundColor = .white
-    }
-    
     guard let tappedMeasurementView = tapGestureRecognizer.view as? RoundedCornerLabelView else {
       return
     }
     
-    if self.activatedMeasurement == tappedMeasurementView {
-      tappedMeasurementView.backgroundColor = .white
-      self.activatedMeasurement = nil
-    } else {
+    guard let activatedMeasurementView = self.activatedMeasurementView else {
       tappedMeasurementView.backgroundColor = .blue
-      self.activatedMeasurement = tappedMeasurementView
+      self.activatedMeasurementView = tappedMeasurementView
+      return
+    }
+    
+    if activatedMeasurementView == tappedMeasurementView {
+      tappedMeasurementView.backgroundColor = .white
+      self.activatedMeasurementView = nil
+    } else {
+      activatedMeasurementView.backgroundColor = .white
+      tappedMeasurementView.backgroundColor = .blue
+      self.activatedMeasurementView = tappedMeasurementView
     }
   }
   
   @objc private func tappedCancel() {
     delegate?.tappedCancel()
+  }
+  
+  @objc private func tappedComplete() {
+    guard let name = nameTextField.text else {
+      return
+    }
+    
+    for (index, measurmentTypeView) in measurementStackView.arrangedSubviews.enumerated() {
+      if self.activatedMeasurementView == measurmentTypeView {
+        let selectedType = NewWorkoutView.measurementTypes[index]
+        delegate?.tappedComplete(with: Workout(name, selectedType))
+      }
+    }
   }
   
   @objc private func keyboardWillShow(notification: Notification) {

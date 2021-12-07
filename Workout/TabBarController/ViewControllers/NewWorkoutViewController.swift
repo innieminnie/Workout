@@ -10,7 +10,7 @@ import UIKit
 
 protocol NewWorkoutActionDelegate: AnyObject {
   func tappedCancel()
-  func tappedComplete()
+  func tappedComplete(with newWorkout: Workout)
 }
 
 class NewWorkoutViewController: UIViewController {
@@ -35,8 +35,9 @@ extension NewWorkoutViewController: NewWorkoutActionDelegate {
     self.dismiss(animated: true, completion: nil)
   }
   
-  func tappedComplete() {
-    // complete (register)
+  func tappedComplete(with newWorkOut: Workout) {
+    print(newWorkOut)
+    self.dismiss(animated: true, completion: nil)
   }
 }
 

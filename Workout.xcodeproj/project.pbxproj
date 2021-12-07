@@ -21,6 +21,8 @@
 		D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569EA27561CB7007E517A /* NewWorkoutViewController.swift */; };
 		D98569ED2758A1D7007E517A /* NewWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569EC2758A1D7007E517A /* NewWorkoutView.swift */; };
 		D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569EE2758F669007E517A /* RoundedCornerLabelView.swift */; };
+		D98569F3275E346D007E517A /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569F2275E346D007E517A /* Workout.swift */; };
+		D98569F5275E3927007E517A /* Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569F4275E3927007E517A /* Measurement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		D98569EA27561CB7007E517A /* NewWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutViewController.swift; sourceTree = "<group>"; };
 		D98569EC2758A1D7007E517A /* NewWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutView.swift; sourceTree = "<group>"; };
 		D98569EE2758F669007E517A /* RoundedCornerLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerLabelView.swift; sourceTree = "<group>"; };
+		D98569F2275E346D007E517A /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		D98569F4275E3927007E517A /* Measurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,7 @@
 		D98569AE274CBAFB007E517A /* Workout */ = {
 			isa = PBXGroup;
 			children = (
+				D98569F1275E345E007E517A /* Models */,
 				D98569E6274D08AF007E517A /* TabBarController */,
 				D98569AF274CBAFB007E517A /* AppDelegate.swift */,
 				D98569B1274CBAFB007E517A /* SceneDelegate.swift */,
@@ -168,6 +173,15 @@
 				D98569EE2758F669007E517A /* RoundedCornerLabelView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		D98569F1275E345E007E517A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D98569F2275E346D007E517A /* Workout.swift */,
+				D98569F4275E3927007E517A /* Measurement.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,7 +317,9 @@
 				D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */,
 				D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */,
 				D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */,
+				D98569F3275E346D007E517A /* Workout.swift in Sources */,
 				D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */,
+				D98569F5275E3927007E517A /* Measurement.swift in Sources */,
 				D98569E4274D0299007E517A /* ListViewController.swift in Sources */,
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,
 				D98569E8274D2A3D007E517A /* TabBarMenu.swift in Sources */,
