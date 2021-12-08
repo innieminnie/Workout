@@ -16,7 +16,7 @@
 		D98569C7274CBAFE007E517A /* WorkoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569C6274CBAFE007E517A /* WorkoutTests.swift */; };
 		D98569D2274CBAFE007E517A /* WorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569D1274CBAFE007E517A /* WorkoutUITests.swift */; };
 		D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569E1274CD162007E517A /* BaseTabBarController.swift */; };
-		D98569E4274D0299007E517A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569E3274D0299007E517A /* ListViewController.swift */; };
+		D98569E4274D0299007E517A /* WorkoutListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569E3274D0299007E517A /* WorkoutListViewController.swift */; };
 		D98569E8274D2A3D007E517A /* TabBarMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569E7274D2A3D007E517A /* TabBarMenu.swift */; };
 		D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569EA27561CB7007E517A /* NewWorkoutViewController.swift */; };
 		D98569ED2758A1D7007E517A /* NewWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569EC2758A1D7007E517A /* NewWorkoutView.swift */; };
@@ -59,7 +59,7 @@
 		D98569D1274CBAFE007E517A /* WorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutUITests.swift; sourceTree = "<group>"; };
 		D98569D3274CBAFE007E517A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D98569E1274CD162007E517A /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
-		D98569E3274D0299007E517A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		D98569E3274D0299007E517A /* WorkoutListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewController.swift; sourceTree = "<group>"; };
 		D98569E7274D2A3D007E517A /* TabBarMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarMenu.swift; sourceTree = "<group>"; };
 		D98569EA27561CB7007E517A /* NewWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutViewController.swift; sourceTree = "<group>"; };
 		D98569EC2758A1D7007E517A /* NewWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutView.swift; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				D98569B3274CBAFB007E517A /* HomeViewController.swift */,
-				D98569E3274D0299007E517A /* ListViewController.swift */,
+				D98569E3274D0299007E517A /* WorkoutListViewController.swift */,
 				D98569EA27561CB7007E517A /* NewWorkoutViewController.swift */,
 			);
 			path = ViewControllers;
@@ -324,7 +324,7 @@
 				D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */,
 				D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */,
 				D98569F5275E3927007E517A /* Measurement.swift in Sources */,
-				D98569E4274D0299007E517A /* ListViewController.swift in Sources */,
+				D98569E4274D0299007E517A /* WorkoutListViewController.swift in Sources */,
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,
 				D98569E8274D2A3D007E517A /* TabBarMenu.swift in Sources */,
 				D98569B2274CBAFB007E517A /* SceneDelegate.swift in Sources */,

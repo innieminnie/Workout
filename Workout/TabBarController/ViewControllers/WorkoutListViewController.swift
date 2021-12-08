@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListViewController: UIViewController {
+class WorkoutListViewController: UIViewController {
   private lazy var addButton: UIButton = {
     let button = UIButton()
     
@@ -65,7 +65,7 @@ class ListViewController: UIViewController {
     }
   }
 }
-extension ListViewController: TabBarMenu {
+extension WorkoutListViewController: TabBarMenu {
   var tabTitle: String {
     "목록"
   }
