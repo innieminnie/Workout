@@ -8,7 +8,7 @@
 import Foundation
 
 struct Workout {
-  private let name: String
+  let name: String
   private let measurement: Measurement
   
   init(_ name: String, _ measurement: Measurement) {

@@ -14,8 +14,16 @@ class WorkoutManager {
   
   private init() { }
   
+  func numberOfWorkoutList() -> Int {
+    return workoutList.count
+  }
+  
   func register(workout: Workout) {
-    self.workoutList.append(workout)
+    return self.workoutList.append(workout)
+  }
+  
+  func workout(at index: Int) -> Workout {
+    return workoutList[index]
   }
 }
 
