@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WorkoutListViewController: UIViewController {
+class WorkoutListViewController: UITableViewController {
   private lazy var addButton: UIButton = {
     let button = UIButton()
     
@@ -29,7 +29,6 @@ class WorkoutListViewController: UIViewController {
     let tableView = UITableView()
     tableView.translatesAutoresizingMaskIntoConstraints = false
     
-    
     return tableView
   }()
   
@@ -38,15 +37,27 @@ class WorkoutListViewController: UIViewController {
     view.backgroundColor = .white
     view.addSubview(addButton)
     setUpNavigationController()
-    
-    workoutListTableView.dataSource = self
-    workoutListTableView.delegate = self
-    let nib = UINib(nibName: "WorkoutTableViewCell", bundle: nil)
-    workoutListTableView.register(nib, forCellReuseIdentifier: WorkoutTableViewCell.identifier)
-    view.addSubview(workoutListTableView)
-    
+    setUpListTableView()
     setUpLayout()
+  }
+  
+  override func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return workoutManager.numberOfWorkoutList()
+  }
+  
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: WorkoutTableViewCell.identifier, for: indexPath) as? WorkoutTableViewCell else {
+      return UITableViewCell()
+    }
     
+    let workout = workoutManager.workout(at: indexPath.row)
+    cell.setUp(with: workout)
+    
+    return cell
   }
   
   private func setUpNavigationController() {
@@ -54,16 +65,16 @@ class WorkoutListViewController: UIViewController {
     self.navigationController?.navigationBar.prefersLargeTitles = true
     self.navigationController?.navigationBar.topItem?.title = "나의 운동 목록"
   }
+
+  private func setUpListTableView() {
+    let nib = UINib(nibName: "WorkoutTableViewCell", bundle: nil)
+    self.tableView.register(nib, forCellReuseIdentifier: WorkoutTableViewCell.identifier)
+  }
   
   private func setUpLayout() {
     NSLayoutConstraint.activate([
-      workoutListTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-      workoutListTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-      workoutListTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-      workoutListTableView.bottomAnchor.constraint(equalTo: addButton.topAnchor),
-      
-      addButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
-      addButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
+      addButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9),
+      addButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
       addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
     ])
   }
@@ -94,24 +105,4 @@ extension WorkoutListViewController: TabBarMenu {
   var icon: String {
     "list.bullet"
   }
-}
-extension WorkoutListViewController: UITableViewDataSource {
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return workoutManager.numberOfWorkoutList()
-  }
-  
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: WorkoutTableViewCell.identifier, for: indexPath) as? WorkoutTableViewCell else {
-      return UITableViewCell()
-    }
-    
-    let workout = workoutManager.workout(at: indexPath.row)
-  
-    cell.configure(with: workout)
-    
-    return cell
-  }
-}
-extension WorkoutListViewController: UITableViewDelegate {
-  
 }

@@ -23,7 +23,7 @@ class WorkoutTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
   
-  func configure(with workout: Workout) {
+  func setUp(with workout: Workout) {
     workoutNameLabel.text = workout.name
   }
     
