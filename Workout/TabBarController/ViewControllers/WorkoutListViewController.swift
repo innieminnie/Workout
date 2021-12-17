@@ -8,7 +8,7 @@
 import UIKit
 
 class WorkoutListViewController: UITableViewController {
-  private lazy var addButton: UIButton = {
+  private let addButton: UIButton = {
     let button = UIButton()
     
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -52,26 +52,23 @@ class WorkoutListViewController: UITableViewController {
     
     return cell
   }
-  
-  private func setUpNavigationController() {
-    self.navigationController?.navigationBar.isHidden = false
-    self.navigationController?.navigationBar.prefersLargeTitles = true
-    self.navigationController?.navigationBar.topItem?.title = "나의 운동 목록"
-  }
-
-  private func setUpListTableView() {
-    let nib = UINib(nibName: "WorkoutTableViewCell", bundle: nil)
-    self.tableView.register(nib, forCellReuseIdentifier: WorkoutTableViewCell.identifier)
+}
+extension WorkoutListViewController: TabBarMenu {
+  var tabTitle: String {
+    "목록"
   }
   
-  private func setUpLayout() {
-    NSLayoutConstraint.activate([
-      addButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9),
-      addButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
-    ])
+  var icon: String {
+    "list.bullet"
   }
-  
+}
+extension WorkoutListViewController: AddNewWorkoutDelegate {
+  func saveNewWorkout(workout: Workout) {
+    workoutManager.register(workout: workout)
+    tableView.reloadData()
+  }
+}
+extension WorkoutListViewController {
   @objc private func buttonTouched(_ sender: UIButton) {
     sender.alpha = 0.8
   }
@@ -90,21 +87,23 @@ class WorkoutListViewController: UITableViewController {
       }
     }
   }
-}
-extension WorkoutListViewController: TabBarMenu {
-  var tabTitle: String {
-    "목록"
+  
+  private func setUpNavigationController() {
+    self.navigationController?.navigationBar.isHidden = false
+    self.navigationController?.navigationBar.prefersLargeTitles = true
+    self.navigationController?.navigationBar.topItem?.title = "나의 운동 목록"
   }
   
-  var icon: String {
-    "list.bullet"
-  }
-}
-extension WorkoutListViewController: AddNewWorkoutDelegate {
-  func saveNewWorkout(workout: Workout) {
-    workoutManager.register(workout: workout)
-    tableView.reloadData()
+  private func setUpListTableView() {
+    let nib = UINib(nibName: "WorkoutTableViewCell", bundle: nil)
+    self.tableView.register(nib, forCellReuseIdentifier: WorkoutTableViewCell.identifier)
   }
   
-  
+  private func setUpLayout() {
+    NSLayoutConstraint.activate([
+      addButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9),
+      addButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+      addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+    ])
+  }
 }

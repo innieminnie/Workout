@@ -8,11 +8,6 @@
 import Foundation
 import UIKit
 
-protocol NewWorkoutActionDelegate: AnyObject {
-  func tappedCancel()
-  func tappedComplete(with newWorkout: Workout)
-}
-
 protocol AddNewWorkoutDelegate: AnyObject {
   func saveNewWorkout(workout: Workout)
 }

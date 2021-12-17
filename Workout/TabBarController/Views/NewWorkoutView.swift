@@ -8,6 +8,11 @@
 import Foundation
 import UIKit
 
+protocol NewWorkoutActionDelegate: AnyObject {
+  func tappedCancel()
+  func tappedComplete(with newWorkout: Workout)
+}
+
 class NewWorkoutView: UIView {
   static let measurementTypes: [Measurement] = {
     return Measurement.allCases
