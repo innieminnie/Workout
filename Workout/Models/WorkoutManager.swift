@@ -19,7 +19,8 @@ class WorkoutManager {
   }
   
   func register(workout: Workout) {
-    return self.workoutList.append(workout)
+    self.workoutList.append(workout)
+    
   }
   
   func workout(at index: Int) -> Workout {

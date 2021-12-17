@@ -82,6 +82,7 @@ class WorkoutListViewController: UITableViewController {
   
   @objc private func tappedAddNewWorkout(_ sender: UIButton) {
     let newWorkoutViewController = NewWorkoutViewController()
+    newWorkoutViewController.delegate = self
     
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
       self.present(newWorkoutViewController, animated: true) {
@@ -98,4 +99,12 @@ extension WorkoutListViewController: TabBarMenu {
   var icon: String {
     "list.bullet"
   }
+}
+extension WorkoutListViewController: AddNewWorkoutDelegate {
+  func saveNewWorkout(workout: Workout) {
+    workoutManager.register(workout: workout)
+    tableView.reloadData()
+  }
+  
+  
 }

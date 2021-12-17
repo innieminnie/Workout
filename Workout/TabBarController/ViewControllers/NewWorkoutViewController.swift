@@ -13,8 +13,13 @@ protocol NewWorkoutActionDelegate: AnyObject {
   func tappedComplete(with newWorkout: Workout)
 }
 
+protocol AddNewWorkoutDelegate: AnyObject {
+  func saveNewWorkout(workout: Workout)
+}
+
 class NewWorkoutViewController: UIViewController {
   let newWorkoutView = NewWorkoutView()
+  weak var delegate: AddNewWorkoutDelegate?
   
   override func viewDidLoad() {
     newWorkoutView.delegate = self
@@ -36,7 +41,7 @@ extension NewWorkoutViewController: NewWorkoutActionDelegate {
   }
   
   func tappedComplete(with newWorkout: Workout) {
-    workoutManager.register(workout: newWorkout)
+    self.delegate?.saveNewWorkout(workout: newWorkout)
     self.dismiss(animated: true, completion: nil)
   }
 }
