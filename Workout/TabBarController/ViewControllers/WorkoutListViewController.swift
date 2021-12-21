@@ -28,10 +28,23 @@ class WorkoutListViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
-    view.addSubview(addButton)
     setUpNavigationController()
+    setUpSearchController()
     setUpListTableView()
+    view.addSubview(addButton)
     setUpLayout()
+  }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    let footerViewHeight = addButton.frame.size.height * 1.5
+    guard let footerView = tableView.tableFooterView else {
+      return
+    }
+
+    if footerView.frame.size.height != footerViewHeight {
+      footerView.frame.size.height = footerViewHeight
+    }
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -94,9 +107,15 @@ extension WorkoutListViewController {
     self.navigationController?.navigationBar.topItem?.title = "나의 운동 목록"
   }
   
+  private func setUpSearchController() {
+    let searchController = UISearchController(searchResultsController: nil)
+    self.navigationItem.searchController = searchController
+  }
+  
   private func setUpListTableView() {
     let nib = UINib(nibName: "WorkoutTableViewCell", bundle: nil)
     self.tableView.register(nib, forCellReuseIdentifier: WorkoutTableViewCell.identifier)
+    tableView.tableFooterView = UIView()
   }
   
   private func setUpLayout() {
