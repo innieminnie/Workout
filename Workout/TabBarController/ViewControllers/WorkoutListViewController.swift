@@ -10,12 +10,16 @@ import UIKit
 class WorkoutListViewController: UITableViewController {
   private let addButton: UIButton = {
     let button = UIButton()
-    
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.setTitle("새로운 운동 추가", for: .normal)
+    
     button.backgroundColor = .systemPurple
-    button.layer.cornerRadius = 13.0
-    button.contentEdgeInsets = UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
+    button.setTitle("+", for: .normal)
+    button.setTitleColor(.white, for: .normal)
+    
+    button.layer.shadowColor = UIColor.gray.cgColor
+    button.layer.shadowOpacity = 1.0
+    button.layer.shadowOffset = .zero
+    button.layer.shadowRadius = 6
     
     button.addTarget(self, action: #selector(buttonTouched(_:)), for: .touchDown)
     button.addTarget(self, action: #selector(buttonTouched(_:)), for: .touchDragEnter)
@@ -33,8 +37,9 @@ class WorkoutListViewController: UITableViewController {
     setUpListTableView()
     view.addSubview(addButton)
     setUpLayout()
+    print(addButton.frame.size)
   }
-  
+
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
     let footerViewHeight = addButton.frame.size.height * 1.5
@@ -120,9 +125,12 @@ extension WorkoutListViewController {
   
   private func setUpLayout() {
     NSLayoutConstraint.activate([
-      addButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9),
-      addButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+      addButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+      addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+      addButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.3),
+      addButton.heightAnchor.constraint(equalTo:addButton.widthAnchor)
     ])
+    
+    addButton.layer.cornerRadius = UIScreen.main.bounds.size.width * 0.15
   }
 }
