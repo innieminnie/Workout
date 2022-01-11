@@ -37,7 +37,6 @@ class WorkoutListViewController: UITableViewController {
     setUpListTableView()
     view.addSubview(addButton)
     setUpLayout()
-    print(addButton.frame.size)
   }
 
   override func viewDidLayoutSubviews() {
@@ -127,10 +126,10 @@ extension WorkoutListViewController {
     NSLayoutConstraint.activate([
       addButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
       addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-      addButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.3),
+      addButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.2),
       addButton.heightAnchor.constraint(equalTo:addButton.widthAnchor)
     ])
     
-    addButton.layer.cornerRadius = UIScreen.main.bounds.size.width * 0.15
+    addButton.layer.cornerRadius = UIScreen.main.bounds.size.width * 0.1
   }
 }
