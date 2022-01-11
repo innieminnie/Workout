@@ -10,11 +10,16 @@ import UIKit
 class WorkoutTableViewCell: UITableViewCell {
     static let identifier = "workoutTableViewCell"
   
+  @IBOutlet weak var workoutCellBackgroundView: UIView!
   @IBOutlet weak var workoutNameLabel: UILabel!
   
   override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    NSLayoutConstraint.activate([
+      workoutCellBackgroundView.heightAnchor.constraint(equalTo: workoutNameLabel.heightAnchor, multiplier: 3.0)
+    ])
+    workoutCellBackgroundView.layer.cornerRadius = 13
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

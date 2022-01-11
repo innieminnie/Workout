@@ -107,6 +107,7 @@ extension WorkoutListViewController {
   private func setUpListTableView() {
     let nib = UINib(nibName: "WorkoutTableViewCell", bundle: nil)
     self.tableView.register(nib, forCellReuseIdentifier: WorkoutTableViewCell.identifier)
+    self.tableView.separatorStyle = .none
   }
   
   private func setUpLayout() {
