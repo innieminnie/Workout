@@ -20,7 +20,9 @@ class WorkoutManager {
   
   func register(workout: Workout) {
     self.workoutList.append(workout)
-    
+    workoutList.sort { workout1, workout2 in
+      return workout1.name < workout2.name
+    }
   }
   
   func workout(at index: Int) -> Workout {
