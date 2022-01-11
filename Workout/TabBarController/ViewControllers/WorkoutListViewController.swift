@@ -38,18 +38,6 @@ class WorkoutListViewController: UITableViewController {
     view.addSubview(addButton)
     setUpLayout()
   }
-
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    let footerViewHeight = addButton.frame.size.height * 1.5
-    guard let footerView = tableView.tableFooterView else {
-      return
-    }
-
-    if footerView.frame.size.height != footerViewHeight {
-      footerView.frame.size.height = footerViewHeight
-    }
-  }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
     return 1
