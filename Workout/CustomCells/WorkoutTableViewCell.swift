@@ -8,28 +8,28 @@
 import UIKit
 
 class WorkoutTableViewCell: UITableViewCell {
-    static let identifier = "workoutTableViewCell"
-  
-  @IBOutlet weak var workoutCellBackgroundView: UIView!
+  static let identifier = "workoutTableViewCell"
   @IBOutlet weak var workoutNameLabel: UILabel!
+  @IBOutlet weak var workoutMeasurementLabel: UILabel!
   
   override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    NSLayoutConstraint.activate([
-      workoutCellBackgroundView.heightAnchor.constraint(equalTo: workoutNameLabel.heightAnchor, multiplier: 3.0)
-    ])
-    workoutCellBackgroundView.layer.cornerRadius = 13
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+    super.awakeFromNib()
+    contentView.layer.cornerRadius = 13
+  }
   
-  func setUp(with workout: Workout) {
-    workoutNameLabel.text = workout.name
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
+  }
+  
+  override func setSelected(_ selected: Bool, animated: Bool) {
+    super.setSelected(selected, animated: animated)
+    // Configure the view for the selected state
   }
     
+    func setUp(with workout: Workout) {
+      workoutNameLabel.text = workout.name
+      workoutMeasurementLabel.text = workout.measurement.rawValue
+  }
+  
 }

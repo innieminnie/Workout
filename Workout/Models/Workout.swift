@@ -9,7 +9,7 @@ import Foundation
 
 struct Workout {
   let name: String
-  private let measurement: Measurement
+  let measurement: Measurement
   
   init(_ name: String, _ measurement: Measurement) {
     self.name = name
