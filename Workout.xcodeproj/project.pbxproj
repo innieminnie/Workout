@@ -122,6 +122,9 @@
 			isa = PBXGroup;
 			children = (
 				D98569F1275E345E007E517A /* Models */,
+				D98569F02758F6E4007E517A /* Views */,
+				D98569E5274D088A007E517A /* ViewControllers */,
+				D9856A00278EA442007E517A /* CustomCells */,
 				D98569E6274D08AF007E517A /* TabBarController */,
 				D98569AF274CBAFB007E517A /* AppDelegate.swift */,
 				D98569B1274CBAFB007E517A /* SceneDelegate.swift */,
@@ -129,8 +132,6 @@
 				D98569B8274CBAFE007E517A /* Assets.xcassets */,
 				D98569BA274CBAFE007E517A /* LaunchScreen.storyboard */,
 				D98569BD274CBAFE007E517A /* Info.plist */,
-				D98569FC2760ADC0007E517A /* WorkoutTableViewCell.swift */,
-				D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -166,8 +167,6 @@
 		D98569E6274D08AF007E517A /* TabBarController */ = {
 			isa = PBXGroup;
 			children = (
-				D98569E5274D088A007E517A /* ViewControllers */,
-				D98569F02758F6E4007E517A /* Views */,
 				D98569E1274CD162007E517A /* BaseTabBarController.swift */,
 				D98569E7274D2A3D007E517A /* TabBarMenu.swift */,
 			);
@@ -191,6 +190,15 @@
 				D98569F4275E3927007E517A /* Measurement.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D9856A00278EA442007E517A /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				D98569FC2760ADC0007E517A /* WorkoutTableViewCell.swift */,
+				D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */,
+			);
+			path = CustomCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
