@@ -26,6 +26,7 @@
 		D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569F6275F717B007E517A /* WorkoutManager.swift */; };
 		D98569FE2760ADC0007E517A /* WorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569FC2760ADC0007E517A /* WorkoutTableViewCell.swift */; };
 		D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */; };
+		D9856A0C27BA4E69007E517A /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9856A0B27BA4E69007E517A /* CalendarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		D98569F6275F717B007E517A /* WorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutManager.swift; sourceTree = "<group>"; };
 		D98569FC2760ADC0007E517A /* WorkoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewCell.swift; sourceTree = "<group>"; };
 		D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorkoutTableViewCell.xib; sourceTree = "<group>"; };
+		D9856A0B27BA4E69007E517A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 		D98569F02758F6E4007E517A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D9856A0127BA4711007E517A /* CustomCalendar */,
 				D98569EC2758A1D7007E517A /* NewWorkoutView.swift */,
 				D98569EE2758F669007E517A /* RoundedCornerLabelView.swift */,
 			);
@@ -199,6 +202,14 @@
 				D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */,
 			);
 			path = CustomCells;
+			sourceTree = "<group>";
+		};
+		D9856A0127BA4711007E517A /* CustomCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				D9856A0B27BA4E69007E517A /* CalendarView.swift */,
+			);
+			path = CustomCalendar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,6 +347,7 @@
 				D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */,
 				D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */,
 				D98569F3275E346D007E517A /* Workout.swift in Sources */,
+				D9856A0C27BA4E69007E517A /* CalendarView.swift in Sources */,
 				D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */,
 				D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */,
 				D98569F5275E3927007E517A /* Measurement.swift in Sources */,

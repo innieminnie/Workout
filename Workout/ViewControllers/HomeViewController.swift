@@ -8,8 +8,23 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+  let calendarView = CalendarView()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.addSubview(calendarView)
+    setUpLayout()
+  }
+  
+  private func setUpLayout() {
+    NSLayoutConstraint.activate([
+      calendarView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
+      calendarView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor
+                                            , constant: 10),
+      calendarView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+      calendarView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+     
+    ])
   }
 }
 extension HomeViewController: TabBarMenu {
