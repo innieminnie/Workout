@@ -122,7 +122,7 @@ class CalendarView: UIView {
   }
   
   private func numberOfDaysInCurrentMonth() -> Int {
-    let dayName = weekdays[(getFirstDayOfTheMonth() - 1)]
+    let dayName = weekdays[(firstDayOfTheMonth() - 1)]
     let dateComponents = DateComponents(year: currentYear, month: currentMonth)
     let date = Calendar.current.date(from: dateComponents)
 
@@ -134,7 +134,7 @@ class CalendarView: UIView {
     return monthRange.count
   }
   
-  private func getFirstDayOfTheMonth() -> Int {
+  private func firstDayOfTheMonth() -> Int {
     let day = ("\(currentYear)-\(currentMonth)-01".date?.firstDayOfTheMonth.weekday)!
     return day
   }
@@ -157,7 +157,7 @@ extension CalendarView: UICollectionViewDelegate {
 }
 extension CalendarView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return numberOfDaysInCurrentMonth()
+    return weekdays.count * 6
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
