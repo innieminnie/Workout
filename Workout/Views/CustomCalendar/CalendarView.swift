@@ -165,7 +165,10 @@ extension CalendarView: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
     
-    cell.update(with: indexPath.row)
+    let currentMonthCellRange = (firstDayOfTheMonth()-1..<firstDayOfTheMonth()-1 + numberOfDaysInCurrentMonth())
+    
+    currentMonthCellRange.contains(indexPath.row) ? cell.update(with: indexPath.row, isCurrentMonth: true) : cell.update(with: indexPath.row, isCurrentMonth: false)
+    
     return cell
   }
   

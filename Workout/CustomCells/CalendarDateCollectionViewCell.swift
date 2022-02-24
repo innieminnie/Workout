@@ -17,7 +17,13 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     self.contentView.backgroundColor = .systemPink
   }
   
-  func update(with number: Int) {
+  func update(with number: Int, isCurrentMonth: Bool) {
+    if isCurrentMonth {
+      self.contentView.backgroundColor = .systemPink
+    } else {
+      self.contentView.backgroundColor = .systemGray
+    }
+    
     dateNumberLabel.text = "\(number)"
   }
   
