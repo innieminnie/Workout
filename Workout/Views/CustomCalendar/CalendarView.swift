@@ -136,19 +136,20 @@ class CalendarView: UIView {
   
   private func getFirstDayOfTheMonth() -> Int {
     let day = ("\(currentYear)-\(currentMonth)-01".date?.firstDayOfTheMonth.weekday)!
-    print(day)
     return day
   }
 }
 extension CalendarView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 40, height: 40)
+    let cellWidth = self.frame.width / 7
+    let cellHeight = cellWidth
+    return CGSize(width: cellWidth, height: cellHeight)
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 0
   }
-  
+
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     return 0
   }
