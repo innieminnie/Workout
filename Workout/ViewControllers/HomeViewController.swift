@@ -18,11 +18,11 @@ class HomeViewController: UIViewController {
   
   private func setUpLayout() {
     NSLayoutConstraint.activate([
-      calendarView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
+      calendarView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
       calendarView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor
                                             , constant: 10),
       calendarView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-      calendarView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+      calendarView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
      
     ])
   }
