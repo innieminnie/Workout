@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-  let calendarView = CalendarView()
+  let calendarView = CalendarView(frame: .zero)
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -18,10 +18,10 @@ class HomeViewController: UIViewController {
   
   private func setUpLayout() {
     NSLayoutConstraint.activate([
-      calendarView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+      calendarView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
       calendarView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
       calendarView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-      calendarView.heightAnchor.constraint(equalToConstant: 7*40)
+      calendarView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
     ])
   }
 }

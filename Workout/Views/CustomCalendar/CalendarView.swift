@@ -80,15 +80,18 @@ class CalendarView: UIView {
     NSLayoutConstraint.activate([
       currentMonthLabel.topAnchor.constraint(equalTo: self.topAnchor),
       currentMonthLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      
       rightButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
       rightButton.leadingAnchor
         .constraint(equalTo: currentMonthLabel.trailingAnchor, constant: 10),
+      
       leftButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
       leftButton.trailingAnchor
         .constraint(equalTo: currentMonthLabel.leadingAnchor, constant: -10),
+      
       monthlyPageCollectionView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 10),
-      monthlyPageCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      monthlyPageCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      monthlyPageCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+      monthlyPageCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
       monthlyPageCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
     ])
   }
@@ -125,7 +128,7 @@ class CalendarView: UIView {
     let dayName = weekdays[(getFirstDayOfTheMonth())]
     let dateComponents = DateComponents(year: currentYear, month: currentMonth)
     let date = Calendar.current.date(from: dateComponents)
-
+    
     guard let monthRange = Calendar.current.range(of: .day, in: .month, for: date!) else {
       return 0
     }
@@ -149,7 +152,7 @@ extension CalendarView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 0
   }
-
+  
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     return 0
   }
@@ -199,4 +202,3 @@ extension Date {
     }
   }
 }
-
