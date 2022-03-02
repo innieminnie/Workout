@@ -137,6 +137,25 @@ class CalendarView: UIView {
     return monthRange.count
   }
   
+  private func numberOfDaysInLastMonth() -> Int {
+    var lastMonth = (currentMonth + 12) % 13
+    var year = currentYear
+    
+    if lastMonth == 0 {
+      lastMonth = 12
+      year = currentYear - 1
+    }
+    
+    let dateComponents = DateComponents(year: year, month: lastMonth)
+    let date = Calendar.current.date(from: dateComponents)
+    
+    guard let monthRange = Calendar.current.range(of: .day, in: .month, for: date!) else {
+      return 0
+    }
+
+    return monthRange.count
+  }
+  
   private func getFirstDayOfTheMonth() -> Int {
     let day = ("\(currentYear)-\(currentMonth)-01".date?.firstDayOfTheMonth.weekday)!
     return day
@@ -170,9 +189,11 @@ extension CalendarView: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
     
-    let currentMonthCellRange = (getFirstDayOfTheMonth()..<getFirstDayOfTheMonth() + numberOfDaysInCurrentMonth())
+    let firstDay = getFirstDayOfTheMonth()
+    let currentMonthCellRange = (firstDay..<firstDay + numberOfDaysInCurrentMonth())
+    let numberOfDaysInLastMonth = numberOfDaysInLastMonth()
     
-    currentMonthCellRange.contains(indexPath.row) ? cell.update(with: indexPath.row, isCurrentMonth: true) : cell.update(with: indexPath.row, isCurrentMonth: false)
+    currentMonthCellRange.contains(indexPath.row) ? cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true) : cell.update(with: numberOfDaysInLastMonth - (firstDay-indexPath.row-1), isCurrentMonth: false)
     
     return cell
   }
