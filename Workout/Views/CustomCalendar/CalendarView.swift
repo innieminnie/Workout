@@ -188,12 +188,19 @@ extension CalendarView: UICollectionViewDataSource {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarDateCollectionViewCell.identifier, for: indexPath) as? CalendarDateCollectionViewCell else {
       return UICollectionViewCell()
     }
-    
+  
     let firstDay = getFirstDayOfTheMonth()
-    let currentMonthCellRange = (firstDay..<firstDay + numberOfDaysInCurrentMonth())
+    let numberOfDaysInCurrentMonth = numberOfDaysInCurrentMonth()
+    let currentMonthCellRange = (firstDay..<firstDay + numberOfDaysInCurrentMonth)
     let numberOfDaysInLastMonth = numberOfDaysInLastMonth()
     
-    currentMonthCellRange.contains(indexPath.row) ? cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true) : cell.update(with: numberOfDaysInLastMonth - (firstDay-indexPath.row-1), isCurrentMonth: false)
+    if indexPath.row < firstDay {
+      cell.update(with: numberOfDaysInLastMonth - (firstDay - indexPath.row - 1), isCurrentMonth: false)
+    } else if currentMonthCellRange.contains(indexPath.row) {
+      cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true)
+    } else {
+      cell.update(with: indexPath.row - (numberOfDaysInCurrentMonth + firstDay) + 1, isCurrentMonth: false)
+    }
     
     return cell
   }
