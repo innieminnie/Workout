@@ -163,7 +163,7 @@ class CalendarView: UIView {
 }
 extension CalendarView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let cellWidth = self.frame.width / 7
+    let cellWidth =  monthlyPageCollectionView.frame.width / 7
     let cellHeight = cellWidth
     return CGSize(width: cellWidth, height: cellHeight)
   }
