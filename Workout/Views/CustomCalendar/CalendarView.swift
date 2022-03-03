@@ -8,7 +8,7 @@
 import UIKit
 
 class CalendarView: UIView {
-  private var weekdays = ["일", "월", "화", "수", "목", "금", "토"]
+  private let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
   private var currentMonth = 1
   private var currentYear = 0
   
@@ -125,7 +125,7 @@ class CalendarView: UIView {
   }
   
   private func numberOfDaysInCurrentMonth() -> Int {
-    let dayName = weekdays[(getFirstDayOfTheMonth())]
+    let dayName = weekdays[MonthInformation.weekDayIndexOfFirstDay(currentYear, currentMonth)]
     let dateComponents = DateComponents(year: currentYear, month: currentMonth)
     let date = Calendar.current.date(from: dateComponents)
     
@@ -154,11 +154,6 @@ class CalendarView: UIView {
     }
 
     return monthRange.count
-  }
-  
-  private func getFirstDayOfTheMonth() -> Int {
-    let day = ("\(currentYear)-\(currentMonth)-01".date?.firstDayOfTheMonth.weekday)!
-    return day
   }
 }
 extension CalendarView: UICollectionViewDelegateFlowLayout {
@@ -189,7 +184,7 @@ extension CalendarView: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
   
-    let firstDay = getFirstDayOfTheMonth()
+    let firstDay = MonthInformation.weekDayIndexOfFirstDay(currentYear, currentMonth)
     let numberOfDaysInCurrentMonth = numberOfDaysInCurrentMonth()
     let currentMonthCellRange = (firstDay..<firstDay + numberOfDaysInCurrentMonth)
     let numberOfDaysInLastMonth = numberOfDaysInLastMonth()
@@ -204,8 +199,6 @@ extension CalendarView: UICollectionViewDataSource {
     
     return cell
   }
-  
-  
 }
 extension String {
   static var dateFormatter: DateFormatter = {
@@ -219,14 +212,17 @@ extension String {
   }
 }
 
-extension Date {
-  var weekday: Int {
-    return Calendar.current.component(.weekday, from: self) - 1
-  }
-  
-  var firstDayOfTheMonth: Date {
-    get {
-      Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: self))!
+struct MonthInformation {
+  static func weekDayIndexOfFirstDay(_ year: Int, _ month: Int) -> Int {
+    guard let formattedFirstDate = "\(year)-\(month)-01".date else {
+      return -1
     }
+    
+    let firstDateComponents = Calendar.current.dateComponents([.year, .month], from: formattedFirstDate)
+    guard let firstDate = Calendar.current.date(from: firstDateComponents) else {
+      return -1
+    }
+  
+    return Calendar.current.component(.weekday, from: firstDate) - 1
   }
 }
