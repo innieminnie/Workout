@@ -123,38 +123,6 @@ class CalendarView: UIView {
     currentMonthLabel.text = " \(currentYear)년 \(currentMonth)월 "
     monthlyPageCollectionView.reloadData()
   }
-  
-  private func numberOfDaysInCurrentMonth() -> Int {
-    let dayName = weekdays[MonthInformation.weekDayIndexOfFirstDay(currentYear, currentMonth)]
-    let dateComponents = DateComponents(year: currentYear, month: currentMonth)
-    let date = Calendar.current.date(from: dateComponents)
-    
-    guard let monthRange = Calendar.current.range(of: .day, in: .month, for: date!) else {
-      return 0
-    }
-    
-    print("1일은 \(dayName)요일, \(currentMonth)의 날짜수는 \(String(describing: monthRange))일")
-    return monthRange.count
-  }
-  
-  private func numberOfDaysInLastMonth() -> Int {
-    var lastMonth = (currentMonth + 12) % 13
-    var year = currentYear
-    
-    if lastMonth == 0 {
-      lastMonth = 12
-      year = currentYear - 1
-    }
-    
-    let dateComponents = DateComponents(year: year, month: lastMonth)
-    let date = Calendar.current.date(from: dateComponents)
-    
-    guard let monthRange = Calendar.current.range(of: .day, in: .month, for: date!) else {
-      return 0
-    }
-
-    return monthRange.count
-  }
 }
 extension CalendarView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -184,11 +152,11 @@ extension CalendarView: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
   
-    let firstDay = MonthInformation.weekDayIndexOfFirstDay(currentYear, currentMonth)
-    let numberOfDaysInCurrentMonth = numberOfDaysInCurrentMonth()
+    let firstDay = MonthInformation.weekDayIndexOfFirstDay(year: currentYear, month: currentMonth)
+    let numberOfDaysInCurrentMonth = MonthInformation.numberOfDays(year: currentYear, month: currentMonth)
     let currentMonthCellRange = (firstDay..<firstDay + numberOfDaysInCurrentMonth)
-    let numberOfDaysInLastMonth = numberOfDaysInLastMonth()
-    
+    let numberOfDaysInLastMonth = MonthInformation.lastMonthTracker(from: currentYear, month: currentMonth)
+   
     if indexPath.row < firstDay {
       cell.update(with: numberOfDaysInLastMonth - (firstDay - indexPath.row - 1), isCurrentMonth: false)
     } else if currentMonthCellRange.contains(indexPath.row) {
@@ -213,16 +181,43 @@ extension String {
 }
 
 struct MonthInformation {
-  static func weekDayIndexOfFirstDay(_ year: Int, _ month: Int) -> Int {
+  static func weekDayIndexOfFirstDay(year: Int, month: Int) -> Int {
     guard let formattedFirstDate = "\(year)-\(month)-01".date else {
       return -1
     }
     
     let firstDateComponents = Calendar.current.dateComponents([.year, .month], from: formattedFirstDate)
+    
     guard let firstDate = Calendar.current.date(from: firstDateComponents) else {
       return -1
     }
   
     return Calendar.current.component(.weekday, from: firstDate) - 1
+  }
+  
+  static func numberOfDays(year: Int, month: Int) -> Int {
+    let dateComponents = DateComponents(year: year, month: month)
+    
+    guard let date = Calendar.current.date(from: dateComponents) else {
+      return -1
+    }
+    
+    guard let monthRange = Calendar.current.range(of: .day, in: .month, for: date) else {
+      return 0
+    }
+    
+    return monthRange.count
+  }
+  
+  static func lastMonthTracker(from year: Int, month: Int) -> Int {
+    var lastMonth = (month + 12) % 13
+    var yearOfLastMonth = year
+
+    if lastMonth == 0 {
+      lastMonth = 12
+      yearOfLastMonth = year - 1
+    }
+   
+    return numberOfDays(year: yearOfLastMonth, month: lastMonth)
   }
 }
