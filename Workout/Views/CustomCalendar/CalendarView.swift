@@ -9,9 +9,7 @@ import UIKit
 
 class CalendarView: UIView {
   private let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
-  private var currentMonth = 1
-  private var currentYear = 0
-  
+  private var currentMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
   private let rightButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -65,15 +63,12 @@ class CalendarView: UIView {
     
     self.translatesAutoresizingMaskIntoConstraints = false
     self.backgroundColor = .clear
-    currentMonth = Calendar.current.component(.month, from: Date())
-    currentYear = Calendar.current.component(.year, from: Date())
-    
     self.addSubview(currentMonthLabel)
     self.addSubview(rightButton)
     self.addSubview(leftButton)
     self.addSubview(monthlyPageCollectionView)
     
-    currentMonthLabel.text = " \(currentYear)년 \(currentMonth)월 "
+    currentMonthLabel.text = currentMonthInformation.currentDate
     monthlyPageCollectionView.delegate = self
     monthlyPageCollectionView.dataSource = self
     
@@ -101,26 +96,14 @@ class CalendarView: UIView {
   }
   
   @objc func tappedNextMonthButton(sender: UIButton) {
-    currentMonth = (currentMonth + 1) % 13
-    
-    if currentMonth == 0 {
-      currentMonth = 1
-      currentYear += 1
-    }
-    
-    currentMonthLabel.text = " \(currentYear)년 \(currentMonth)월 "
+    currentMonthInformation.changeToNextMonth()
+    currentMonthLabel.text = currentMonthInformation.currentDate
     monthlyPageCollectionView.reloadData()
   }
   
   @objc func tappedLastMonthButton(sender: UIButton) {
-    currentMonth = (currentMonth + 12) % 13
-    
-    if currentMonth == 0 {
-      currentMonth = 12
-      currentYear -= 1
-    }
-    
-    currentMonthLabel.text = " \(currentYear)년 \(currentMonth)월 "
+    currentMonthInformation.changeToLastMonth()
+    currentMonthLabel.text = currentMonthInformation.currentDate
     monthlyPageCollectionView.reloadData()
   }
 }
@@ -152,13 +135,16 @@ extension CalendarView: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
   
-    let firstDay = MonthInformation.weekDayIndexOfFirstDay(year: currentYear, month: currentMonth)
-    let numberOfDaysInCurrentMonth = MonthInformation.numberOfDays(year: currentYear, month: currentMonth)
+    let firstDay = currentMonthInformation.weekDayIndexOfFirstDay
+    let numberOfDaysInCurrentMonth = currentMonthInformation.numberOfDays
     let currentMonthCellRange = (firstDay..<firstDay + numberOfDaysInCurrentMonth)
-    let numberOfDaysInLastMonth = MonthInformation.lastMonthTracker(from: currentYear, month: currentMonth)
-   
+    let dateInLastMonth = Calendar.current.date(byAdding: .month, value: -1,  to: currentMonthInformation.startDate)
+    guard let monthRange = Calendar.current.range(of: .day, in: .month, for: dateInLastMonth!) else {
+      return UICollectionViewCell()
+    }
+  
     if indexPath.row < firstDay {
-      cell.update(with: numberOfDaysInLastMonth - (firstDay - indexPath.row - 1), isCurrentMonth: false)
+      cell.update(with: monthRange.last! - firstDay + indexPath.row + 1, isCurrentMonth: false)
     } else if currentMonthCellRange.contains(indexPath.row) {
       cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true)
     } else {
