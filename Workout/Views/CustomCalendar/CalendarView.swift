@@ -16,6 +16,7 @@ class CalendarView: UIView {
     
     button.addTarget(self, action: #selector(tappedNextMonthButton(sender:)), for: .touchUpInside)
     button.setTitle(">", for: .normal)
+    button.setTitleColor(.black, for: .normal)
     
     return button
   }()
@@ -26,6 +27,7 @@ class CalendarView: UIView {
     
     button.addTarget(self, action: #selector(tappedLastMonthButton(sender:)), for: .touchUpInside)
     button.setTitle("<", for: .normal)
+    button.setTitleColor(.black, for: .normal)
     
     return button
   }()
@@ -36,7 +38,7 @@ class CalendarView: UIView {
     
     label.textAlignment = .center
     label.font = UIFont.boldSystemFont(ofSize: 16)
-    label.textColor = .white
+    label.textColor = .black
     
     return label
   }()
@@ -84,7 +86,7 @@ class CalendarView: UIView {
       leftButton.trailingAnchor
         .constraint(equalTo: currentMonthLabel.leadingAnchor, constant: -10),
       
-      monthlyPageCollectionView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 10),
+      monthlyPageCollectionView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 20),
       monthlyPageCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
       monthlyPageCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
       monthlyPageCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
