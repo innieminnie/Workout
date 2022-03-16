@@ -13,15 +13,13 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   @IBOutlet weak var dateNumberLabel: UILabel!
   override func awakeFromNib() {
     super.awakeFromNib()
-    // Initialization code
-    self.contentView.backgroundColor = .systemPink
   }
   
   func update(with number: Int, isCurrentMonth: Bool) {
     if isCurrentMonth {
-      self.contentView.backgroundColor = .systemPink
+      self.dateNumberLabel.textColor = .systemPink
     } else {
-      self.contentView.backgroundColor = .systemGray
+      self.dateNumberLabel.textColor = .systemGray
     }
     
     dateNumberLabel.text = "\(number)"
