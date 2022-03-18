@@ -42,7 +42,7 @@ class CalendarView: UIView {
     
     return label
   }()
-  
+
   private let monthlyPageCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
@@ -129,7 +129,7 @@ extension CalendarView: UICollectionViewDelegate {
 }
 extension CalendarView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return weekdays.count * 6
+    return currentMonthInformation.numberOfDaysToDisplay()
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

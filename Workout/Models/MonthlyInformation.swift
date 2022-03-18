@@ -49,4 +49,17 @@ struct MonthlyInformation {
     self.year = Calendar.current.component(.year, from: dateInLastMonth!)
     self.month = Calendar.current.component(.month, from: dateInLastMonth!)
   }
+  
+  func numberOfDaysToDisplay() -> Int {
+    let daysOfLastMonthToDisplay = self.weekDayIndexOfFirstDay
+    
+    let dateInNextMonth = Calendar.current.date(byAdding: .month, value: 1,  to: self.startDate)
+    let weekDayOfFirstDayOfNextMonth = Calendar.current.component(.weekday, from: dateInNextMonth!)
+    
+    guard weekDayOfFirstDayOfNextMonth > 1 else {
+      return daysOfLastMonthToDisplay + self.numberOfDays
+    }
+    
+    return daysOfLastMonthToDisplay + self.numberOfDays + (weekDayOfFirstDayOfNextMonth...7).count
+  }
 }
