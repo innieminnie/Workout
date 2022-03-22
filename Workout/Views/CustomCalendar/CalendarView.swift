@@ -8,7 +8,7 @@
 import UIKit
 
 class CalendarView: UIView {
-  private let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
+//  private let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
   private var currentMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
   private let rightButton: UIButton = {
     let button = UIButton()
@@ -42,6 +42,21 @@ class CalendarView: UIView {
     
     return label
   }()
+  
+  private let weekdaysLabel: UIStackView = {
+    let stackView = UIStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    stackView.axis = .horizontal
+    stackView.distribution = .fillEqually
+    
+    let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
+    for dayName in weekdays {
+      stackView.addArrangedSubview(RoundedCornerLabelView(title: dayName))
+    }
+    
+    return stackView
+  }()
 
   private let monthlyPageCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -68,6 +83,7 @@ class CalendarView: UIView {
     self.addSubview(currentMonthLabel)
     self.addSubview(rightButton)
     self.addSubview(leftButton)
+    self.addSubview(weekdaysLabel)
     self.addSubview(monthlyPageCollectionView)
     
     currentMonthLabel.text = currentMonthInformation.currentDate
@@ -86,7 +102,11 @@ class CalendarView: UIView {
       leftButton.trailingAnchor
         .constraint(equalTo: currentMonthLabel.leadingAnchor, constant: -10),
       
-      monthlyPageCollectionView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 20),
+      weekdaysLabel.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 20),
+      weekdaysLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+      weekdaysLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+      
+      monthlyPageCollectionView.topAnchor.constraint(equalTo: weekdaysLabel.bottomAnchor, constant: 5),
       monthlyPageCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
       monthlyPageCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
       monthlyPageCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
