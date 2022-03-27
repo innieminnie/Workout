@@ -8,8 +8,9 @@
 import UIKit
 
 class CalendarView: UIView {
-//  private let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
-  private var currentMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
+  private let todayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date()))
+  private var selectedDayInformation: DateInformation?
+  private var displayingMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
   private let rightButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -77,6 +78,7 @@ class CalendarView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
+    selectedDayInformation = todayInformation
     
     self.translatesAutoresizingMaskIntoConstraints = false
     self.backgroundColor = .clear
@@ -86,7 +88,7 @@ class CalendarView: UIView {
     self.addSubview(weekdaysLabel)
     self.addSubview(monthlyPageCollectionView)
     
-    currentMonthLabel.text = currentMonthInformation.currentDate
+    currentMonthLabel.text = displayingMonthInformation.currentDate
     monthlyPageCollectionView.delegate = self
     monthlyPageCollectionView.dataSource = self
     
@@ -118,14 +120,14 @@ class CalendarView: UIView {
   }
   
   @objc func tappedNextMonthButton(sender: UIButton) {
-    currentMonthInformation.changeToNextMonth()
-    currentMonthLabel.text = currentMonthInformation.currentDate
+    displayingMonthInformation.changeToNextMonth()
+    currentMonthLabel.text = displayingMonthInformation.currentDate
     monthlyPageCollectionView.reloadData()
   }
   
   @objc func tappedLastMonthButton(sender: UIButton) {
-    currentMonthInformation.changeToLastMonth()
-    currentMonthLabel.text = currentMonthInformation.currentDate
+    displayingMonthInformation.changeToLastMonth()
+    currentMonthLabel.text = displayingMonthInformation.currentDate
     monthlyPageCollectionView.reloadData()
   }
 }
@@ -149,7 +151,7 @@ extension CalendarView: UICollectionViewDelegate {
 }
 extension CalendarView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return currentMonthInformation.numberOfDaysToDisplay()
+    return displayingMonthInformation.numberOfDaysToDisplay()
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -157,20 +159,26 @@ extension CalendarView: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
   
-    let firstDay = currentMonthInformation.weekDayIndexOfFirstDay
-    let numberOfDaysInCurrentMonth = currentMonthInformation.numberOfDays
+    let firstDay = displayingMonthInformation.weekDayIndexOfFirstDay
+    let numberOfDaysInCurrentMonth = displayingMonthInformation.numberOfDays
     let currentMonthCellRange = (firstDay..<firstDay + numberOfDaysInCurrentMonth)
-    let dateInLastMonth = Calendar.current.date(byAdding: .month, value: -1,  to: currentMonthInformation.startDate)
+    let dateInLastMonth = Calendar.current.date(byAdding: .month, value: -1,  to: displayingMonthInformation.startDate)
     guard let monthRange = Calendar.current.range(of: .day, in: .month, for: dateInLastMonth!) else {
       return UICollectionViewCell()
     }
   
     if indexPath.row < firstDay {
-      cell.update(with: monthRange.last! - firstDay + indexPath.row + 1, isCurrentMonth: false)
+      cell.update(with: monthRange.last! - firstDay + indexPath.row + 1, isCurrentMonth: false, isToday: false)
     } else if currentMonthCellRange.contains(indexPath.row) {
-      cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true)
+      cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true, isToday: false)
+      
+      if displayingMonthInformation.currentDate == todayInformation.currentDate
+          && indexPath.row - firstDay + 1 == Calendar.current.component(.day, from: Date()) {
+        cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true, isToday: true)
+        cell.backgroundColor = .systemPurple
+      }
     } else {
-      cell.update(with: indexPath.row - (numberOfDaysInCurrentMonth + firstDay) + 1, isCurrentMonth: false)
+      cell.update(with: indexPath.row - (numberOfDaysInCurrentMonth + firstDay) + 1, isCurrentMonth: false, isToday: false)
     }
     
     return cell

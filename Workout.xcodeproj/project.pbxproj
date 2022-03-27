@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C5527F030B800FABD37 /* DateInformation.swift */; };
 		D926672F27D1016F00A30366 /* MonthlyInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D926672E27D1016F00A30366 /* MonthlyInformation.swift */; };
 		D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569AF274CBAFB007E517A /* AppDelegate.swift */; };
 		D98569B2274CBAFB007E517A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569B1274CBAFB007E517A /* SceneDelegate.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D9107C5527F030B800FABD37 /* DateInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInformation.swift; sourceTree = "<group>"; };
 		D926672E27D1016F00A30366 /* MonthlyInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyInformation.swift; sourceTree = "<group>"; };
 		D98569AC274CBAFB007E517A /* Workout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98569AF274CBAFB007E517A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				D98569F6275F717B007E517A /* WorkoutManager.swift */,
 				D98569F4275E3927007E517A /* Measurement.swift */,
 				D926672E27D1016F00A30366 /* MonthlyInformation.swift */,
+				D9107C5527F030B800FABD37 /* DateInformation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				D9856A0C27BA4E69007E517A /* CalendarView.swift in Sources */,
 				D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */,
 				D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */,
+				D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */,
 				D98569F5275E3927007E517A /* Measurement.swift in Sources */,
 				D98569E4274D0299007E517A /* WorkoutListViewController.swift in Sources */,
 				D98569FE2760ADC0007E517A /* WorkoutTableViewCell.swift in Sources */,

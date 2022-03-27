@@ -11,17 +11,19 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   static let identifier = "calendarDateCollectionViewCell"
   
   @IBOutlet weak var dateNumberLabel: UILabel!
+  
   override func awakeFromNib() {
     super.awakeFromNib()
+    self.layer.cornerRadius = 13
   }
   
-  func update(with number: Int, isCurrentMonth: Bool) {
-    if isCurrentMonth {
-      self.dateNumberLabel.textColor = .systemPink
-    } else {
-      self.dateNumberLabel.textColor = .systemGray
-    }
-    
+  override func prepareForReuse() {
+    self.backgroundColor = .clear
+  }
+  
+  func update(with number: Int, isCurrentMonth: Bool, isToday: Bool) {
+    isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
+    isToday ? (self.backgroundColor = .systemPurple) : (self.backgroundColor = .clear)
     dateNumberLabel.text = "\(number)"
   }
   
