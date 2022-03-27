@@ -9,8 +9,20 @@ import UIKit
 
 class CalendarDateCollectionViewCell: UICollectionViewCell {
   static let identifier = "calendarDateCollectionViewCell"
+  var isToday = false
   
   @IBOutlet weak var dateNumberLabel: UILabel!
+  
+  override var isSelected: Bool {
+    didSet{
+      if isSelected {
+        self.backgroundColor = .systemGray
+      }
+      else {
+        self.backgroundColor = .clear
+      }
+    }
+  }
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -19,11 +31,12 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   
   override func prepareForReuse() {
     self.backgroundColor = .clear
+    isToday = false
   }
   
-  func update(with number: Int, isCurrentMonth: Bool, isToday: Bool) {
+  func update(with number: Int, isCurrentMonth: Bool) {
     isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
-    isToday ? (self.backgroundColor = .systemPurple) : (self.backgroundColor = .clear)
+    if isToday { self.dateNumberLabel.textColor = .systemRed }
     dateNumberLabel.text = "\(number)"
   }
   

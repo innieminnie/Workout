@@ -10,6 +10,7 @@ import UIKit
 class CalendarView: UIView {
   private let todayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date()))
   private var selectedDayInformation: DateInformation?
+  var selectedIndex: IndexPath?
   private var displayingMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
   private let rightButton: UIButton = {
     let button = UIButton()
@@ -123,12 +124,14 @@ class CalendarView: UIView {
     displayingMonthInformation.changeToNextMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
     monthlyPageCollectionView.reloadData()
+    self.selectedIndex = nil
   }
   
   @objc func tappedLastMonthButton(sender: UIButton) {
     displayingMonthInformation.changeToLastMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
     monthlyPageCollectionView.reloadData()
+    self.selectedIndex = nil
   }
 }
 extension CalendarView: UICollectionViewDelegateFlowLayout {
@@ -147,7 +150,17 @@ extension CalendarView: UICollectionViewDelegateFlowLayout {
   }
 }
 extension CalendarView: UICollectionViewDelegate {
-  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarDateCollectionViewCell else { return }
+    cell.isSelected = true
+    
+    if let previousIndex = self.selectedIndex{
+      let previousSelectedCell = collectionView.cellForItem(at: previousIndex)
+      previousSelectedCell?.isSelected = false
+    }
+    
+    self.selectedIndex = indexPath
+  }
 }
 extension CalendarView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -168,17 +181,18 @@ extension CalendarView: UICollectionViewDataSource {
     }
   
     if indexPath.row < firstDay {
-      cell.update(with: monthRange.last! - firstDay + indexPath.row + 1, isCurrentMonth: false, isToday: false)
+      cell.update(with: monthRange.last! - firstDay + indexPath.row + 1, isCurrentMonth: false)
     } else if currentMonthCellRange.contains(indexPath.row) {
-      cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true, isToday: false)
+      cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true)
       
       if displayingMonthInformation.currentDate == todayInformation.currentDate
-          && indexPath.row - firstDay + 1 == Calendar.current.component(.day, from: Date()) {
-        cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true, isToday: true)
-        cell.backgroundColor = .systemPurple
+          && (indexPath.row - firstDay + 1) == Calendar.current.component(.day, from: Date()) {
+        cell.isToday = true
+        cell.isSelected = true
+        cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true)
       }
     } else {
-      cell.update(with: indexPath.row - (numberOfDaysInCurrentMonth + firstDay) + 1, isCurrentMonth: false, isToday: false)
+      cell.update(with: indexPath.row - (numberOfDaysInCurrentMonth + firstDay) + 1, isCurrentMonth: false)
     }
     
     return cell
