@@ -11,22 +11,39 @@ class HomeViewController: UIViewController {
   private let contentScrollView: UIScrollView = {
     let scrollView = UIScrollView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false
+    
     return scrollView
   }()
   
   private let calendarView = CalendarView(frame: .zero)
+  
+  private let addRoutineButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    
+    button.setTitle("루틴 추가하기", for: .normal)
+    button.layer.cornerRadius = 13
+    button.backgroundColor = .purple
+    button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
+    
+    return button
+  }()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
     view.addSubview(contentScrollView)
     contentScrollView.addSubview(calendarView)
+    contentScrollView.addSubview(addRoutineButton)
     setUpLayout()
   }
   
+  @objc func tappedAddRoutineButton(sender: UIButton) {
+    print("add new routine")
+  }
+  
   private func setUpLayout() {
-    let scrollHeightContraint = calendarView.heightAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.heightAnchor)
-    scrollHeightContraint.priority = UILayoutPriority(250)
+    let calendarViewHeightConstraint = calendarView.heightAnchor.constraint(equalToConstant: 400)
     
     NSLayoutConstraint.activate([
       contentScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -37,10 +54,13 @@ class HomeViewController: UIViewController {
       calendarView.topAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.topAnchor, constant: 30),
       calendarView.leadingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.leadingAnchor),
       calendarView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
-      calendarView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor),
-      
       calendarView.widthAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.widthAnchor),
-      scrollHeightContraint
+      calendarViewHeightConstraint,
+      
+      addRoutineButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
+      addRoutineButton.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
+      addRoutineButton.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
+      addRoutineButton.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -10)
     ])
     
   }
