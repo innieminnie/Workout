@@ -39,7 +39,9 @@ class HomeViewController: UIViewController {
   }
   
   @objc func tappedAddRoutineButton(sender: UIButton) {
-    print("add new routine")
+    let routineSelectionViewController = RoutineSelectionViewController()
+    routineSelectionViewController.modalPresentationStyle = .formSheet
+    self.present(routineSelectionViewController, animated: true, completion: nil)
   }
   
   private func setUpLayout() {
