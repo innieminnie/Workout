@@ -31,6 +31,7 @@ class RoundedCornerLabelView: UIView {
     self.init()
     
     self.titleLabel.text = title
+    self.titleLabel.textColor = .black
     addSubview(titleLabel)
     
     NSLayoutConstraint.activate([
@@ -39,8 +40,6 @@ class RoundedCornerLabelView: UIView {
       titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
       titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
     ])
-    
-    self.layoutSubviews()
   }
   
   required init?(coder: NSCoder) {

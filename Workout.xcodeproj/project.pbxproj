@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C5527F030B800FABD37 /* DateInformation.swift */; };
+		D926672F27D1016F00A30366 /* MonthlyInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D926672E27D1016F00A30366 /* MonthlyInformation.swift */; };
 		D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569AF274CBAFB007E517A /* AppDelegate.swift */; };
 		D98569B2274CBAFB007E517A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569B1274CBAFB007E517A /* SceneDelegate.swift */; };
 		D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569B3274CBAFB007E517A /* HomeViewController.swift */; };
@@ -26,6 +28,9 @@
 		D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569F6275F717B007E517A /* WorkoutManager.swift */; };
 		D98569FE2760ADC0007E517A /* WorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569FC2760ADC0007E517A /* WorkoutTableViewCell.swift */; };
 		D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */; };
+		D9856A0C27BA4E69007E517A /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9856A0B27BA4E69007E517A /* CalendarView.swift */; };
+		D9856A1527C0CBC2007E517A /* CalendarDateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9856A1327C0CBC2007E517A /* CalendarDateCollectionViewCell.swift */; };
+		D9856A1627C0CBC2007E517A /* CalendarDateCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D9107C5527F030B800FABD37 /* DateInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInformation.swift; sourceTree = "<group>"; };
+		D926672E27D1016F00A30366 /* MonthlyInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyInformation.swift; sourceTree = "<group>"; };
 		D98569AC274CBAFB007E517A /* Workout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98569AF274CBAFB007E517A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D98569B1274CBAFB007E517A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +78,9 @@
 		D98569F6275F717B007E517A /* WorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutManager.swift; sourceTree = "<group>"; };
 		D98569FC2760ADC0007E517A /* WorkoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewCell.swift; sourceTree = "<group>"; };
 		D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorkoutTableViewCell.xib; sourceTree = "<group>"; };
+		D9856A0B27BA4E69007E517A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		D9856A1327C0CBC2007E517A /* CalendarDateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCollectionViewCell.swift; sourceTree = "<group>"; };
+		D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarDateCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +186,7 @@
 		D98569F02758F6E4007E517A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D9856A0127BA4711007E517A /* CustomCalendar */,
 				D98569EC2758A1D7007E517A /* NewWorkoutView.swift */,
 				D98569EE2758F669007E517A /* RoundedCornerLabelView.swift */,
 			);
@@ -188,6 +199,8 @@
 				D98569F2275E346D007E517A /* Workout.swift */,
 				D98569F6275F717B007E517A /* WorkoutManager.swift */,
 				D98569F4275E3927007E517A /* Measurement.swift */,
+				D926672E27D1016F00A30366 /* MonthlyInformation.swift */,
+				D9107C5527F030B800FABD37 /* DateInformation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -197,8 +210,18 @@
 			children = (
 				D98569FC2760ADC0007E517A /* WorkoutTableViewCell.swift */,
 				D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */,
+				D9856A1327C0CBC2007E517A /* CalendarDateCollectionViewCell.swift */,
+				D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */,
 			);
 			path = CustomCells;
+			sourceTree = "<group>";
+		};
+		D9856A0127BA4711007E517A /* CustomCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				D9856A0B27BA4E69007E517A /* CalendarView.swift */,
+			);
+			path = CustomCalendar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,6 +327,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9856A1627C0CBC2007E517A /* CalendarDateCollectionViewCell.xib in Resources */,
 				D98569BC274CBAFE007E517A /* LaunchScreen.storyboard in Resources */,
 				D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */,
 				D98569B7274CBAFB007E517A /* Main.storyboard in Resources */,
@@ -333,16 +357,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */,
+				D9856A1527C0CBC2007E517A /* CalendarDateCollectionViewCell.swift in Sources */,
 				D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */,
 				D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */,
 				D98569F3275E346D007E517A /* Workout.swift in Sources */,
+				D9856A0C27BA4E69007E517A /* CalendarView.swift in Sources */,
 				D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */,
 				D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */,
+				D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */,
 				D98569F5275E3927007E517A /* Measurement.swift in Sources */,
 				D98569E4274D0299007E517A /* WorkoutListViewController.swift in Sources */,
 				D98569FE2760ADC0007E517A /* WorkoutTableViewCell.swift in Sources */,
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,
 				D98569E8274D2A3D007E517A /* TabBarMenu.swift in Sources */,
+				D926672F27D1016F00A30366 /* MonthlyInformation.swift in Sources */,
 				D98569B2274CBAFB007E517A /* SceneDelegate.swift in Sources */,
 				D98569ED2758A1D7007E517A /* NewWorkoutView.swift in Sources */,
 			);

@@ -1,0 +1,43 @@
+//
+//  CalendarDateCollectionViewCell.swift
+//  Workout
+//
+//  Created by 강인희 on 2022/02/19.
+//
+
+import UIKit
+
+class CalendarDateCollectionViewCell: UICollectionViewCell {
+  static let identifier = "calendarDateCollectionViewCell"
+  var isToday = false
+  
+  @IBOutlet weak var dateNumberLabel: UILabel!
+  
+  override var isSelected: Bool {
+    didSet{
+      if isSelected {
+        self.backgroundColor = .systemGray
+      }
+      else {
+        self.backgroundColor = .clear
+      }
+    }
+  }
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    self.layer.cornerRadius = 13
+  }
+  
+  override func prepareForReuse() {
+    self.backgroundColor = .clear
+    isToday = false
+  }
+  
+  func update(with number: Int, isCurrentMonth: Bool) {
+    isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
+    if isToday { self.dateNumberLabel.textColor = .systemRed }
+    dateNumberLabel.text = "\(number)"
+  }
+  
+}
