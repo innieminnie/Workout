@@ -40,6 +40,7 @@ class HomeViewController: UIViewController {
   
   @objc func tappedAddRoutineButton(sender: UIButton) {
     let routineSelectionViewController = RoutineSelectionViewController()
+    routineSelectionViewController.delegate = self
     routineSelectionViewController.modalPresentationStyle = .formSheet
     self.present(routineSelectionViewController, animated: true, completion: nil)
   }
@@ -66,6 +67,13 @@ class HomeViewController: UIViewController {
     ])
     
   }
+}
+extension HomeViewController: RoutineSelectionDelegate {
+  func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
+    print(selectedWorkouts)
+  }
+  
+  
 }
 extension HomeViewController: TabBarMenu {
   var tabTitle: String {

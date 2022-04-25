@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol RoutineSelectionDelegate: AnyObject {
+  func addSelectedWorkouts(_ selectedWorkouts: [Workout])
+}
 class RoutineSelectionViewController: UIViewController {
+  private var selectedWorkouts = [Workout]()
+  weak var delegate: RoutineSelectionDelegate?
+  
   private let workoutListTableView: UITableView = {
     let tableView = UITableView()
     tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -23,6 +29,9 @@ class RoutineSelectionViewController: UIViewController {
     setUpLayout()
   }
   
+  override func viewWillDisappear(_ animated: Bool) {
+    self.delegate?.addSelectedWorkouts(selectedWorkouts)
+  }
   private func setUpLayout() {
     NSLayoutConstraint.activate([
       workoutListTableView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -49,7 +58,10 @@ extension RoutineSelectionViewController: UITableViewDataSource {
   }
 }
 extension RoutineSelectionViewController: UITableViewDelegate {
-  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let selectedWorkout = workoutManager.workout(at: indexPath.row)
+    selectedWorkouts.append(selectedWorkout)
+  }
 }
 extension RoutineSelectionViewController {
   private func setUpListTableView() {
