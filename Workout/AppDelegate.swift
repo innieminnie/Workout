@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
     let appearance = UINavigationBarAppearance()
-    appearance.configureWithDefaultBackground()
+    appearance.configureWithTransparentBackground()
     appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     

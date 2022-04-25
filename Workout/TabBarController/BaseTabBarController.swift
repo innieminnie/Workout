@@ -12,6 +12,8 @@ class BaseTabBarController: UITabBarController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.viewControllers = generateViewControllers()
+    UITabBar.appearance().shadowImage = UIImage()
+    UITabBar.appearance().backgroundImage = UIImage()
   }
   
   private func generateViewControllers() -> [UIViewController] {

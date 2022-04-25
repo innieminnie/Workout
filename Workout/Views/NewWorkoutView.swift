@@ -25,6 +25,7 @@ class NewWorkoutView: UIView {
     label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
     label.setContentHuggingPriority(.defaultHigh, for: .vertical)
     label.text = "NEW"
+    label.textColor = .black
     label.textAlignment = .center
     
     return label
