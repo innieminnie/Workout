@@ -29,12 +29,26 @@ class HomeViewController: UIViewController {
     return button
   }()
   
+  private let routineStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    stackView.axis = .vertical
+    stackView.distribution = .equalSpacing
+    stackView.spacing = 10
+    
+    return stackView
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
     view.addSubview(contentScrollView)
+    
     contentScrollView.addSubview(calendarView)
     contentScrollView.addSubview(addRoutineButton)
+    contentScrollView.addSubview(routineStackView)
+    
     setUpLayout()
   }
   
@@ -63,7 +77,12 @@ class HomeViewController: UIViewController {
       addRoutineButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
       addRoutineButton.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
       addRoutineButton.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
-      addRoutineButton.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -10)
+      
+      routineStackView.topAnchor.constraint(equalTo: addRoutineButton.bottomAnchor, constant: 10),
+      routineStackView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
+      routineStackView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
+      routineStackView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -10),
+      
     ])
     
   }
@@ -71,6 +90,9 @@ class HomeViewController: UIViewController {
 extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
     print(selectedWorkouts)
+    for workout in selectedWorkouts {
+      routineStackView.addArrangedSubview(RoundedCornerLabelView(title: workout.name))
+    }
   }
   
   
