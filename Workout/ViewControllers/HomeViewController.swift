@@ -11,22 +11,56 @@ class HomeViewController: UIViewController {
   private let contentScrollView: UIScrollView = {
     let scrollView = UIScrollView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false
+    
     return scrollView
   }()
   
   private let calendarView = CalendarView(frame: .zero)
   
+  private let addRoutineButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    
+    button.setTitle("루틴 추가하기", for: .normal)
+    button.layer.cornerRadius = 13
+    button.backgroundColor = .purple
+    button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
+    
+    return button
+  }()
+  
+  private let routineStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    stackView.axis = .vertical
+    stackView.distribution = .equalSpacing
+    stackView.spacing = 10
+    
+    return stackView
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
     view.addSubview(contentScrollView)
+    
     contentScrollView.addSubview(calendarView)
+    contentScrollView.addSubview(addRoutineButton)
+    contentScrollView.addSubview(routineStackView)
+    
     setUpLayout()
   }
   
+  @objc func tappedAddRoutineButton(sender: UIButton) {
+    let routineSelectionViewController = RoutineSelectionViewController()
+    routineSelectionViewController.delegate = self
+    routineSelectionViewController.modalPresentationStyle = .formSheet
+    self.present(routineSelectionViewController, animated: true, completion: nil)
+  }
+  
   private func setUpLayout() {
-    let scrollHeightContraint = calendarView.heightAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.heightAnchor)
-    scrollHeightContraint.priority = UILayoutPriority(250)
+    let calendarViewHeightConstraint = calendarView.heightAnchor.constraint(equalToConstant: 400)
     
     NSLayoutConstraint.activate([
       contentScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -37,13 +71,31 @@ class HomeViewController: UIViewController {
       calendarView.topAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.topAnchor, constant: 30),
       calendarView.leadingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.leadingAnchor),
       calendarView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
-      calendarView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor),
-      
       calendarView.widthAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.widthAnchor),
-      scrollHeightContraint
+      calendarViewHeightConstraint,
+      
+      addRoutineButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
+      addRoutineButton.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
+      addRoutineButton.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
+      
+      routineStackView.topAnchor.constraint(equalTo: addRoutineButton.bottomAnchor, constant: 10),
+      routineStackView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
+      routineStackView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
+      routineStackView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -10),
+      
     ])
     
   }
+}
+extension HomeViewController: RoutineSelectionDelegate {
+  func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
+    print(selectedWorkouts)
+    for workout in selectedWorkouts {
+      routineStackView.addArrangedSubview(RoundedCornerLabelView(title: workout.name))
+    }
+  }
+  
+  
 }
 extension HomeViewController: TabBarMenu {
   var tabTitle: String {
