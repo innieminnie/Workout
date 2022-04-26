@@ -89,10 +89,9 @@ class HomeViewController: UIViewController {
 }
 extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
-    print(selectedWorkouts)
-    for workout in selectedWorkouts {
-      routineStackView.addArrangedSubview(RoundedCornerLabelView(title: workout.name))
-    }
+      for workout in selectedWorkouts {
+        routineStackView.addArrangedSubview(RoundedCornerLabelView(title: workout.name))
+      }
   }
   
   
