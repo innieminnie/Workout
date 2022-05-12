@@ -8,6 +8,8 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+  var workouts = [Workout]()
+  
   private let contentScrollView: UIScrollView = {
     let scrollView = UIScrollView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,15 +31,15 @@ class HomeViewController: UIViewController {
     return button
   }()
   
-  private let routineStackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.translatesAutoresizingMaskIntoConstraints = false
+  private let routineTableView: UITableView = {
+    let tableView = UITableView()
+    tableView.translatesAutoresizingMaskIntoConstraints = false
     
-    stackView.axis = .vertical
-    stackView.distribution = .equalSpacing
-    stackView.spacing = 10
-    
-    return stackView
+    let nib = UINib(nibName: "WorkoutPlanCardTableViewCell", bundle: nil)
+    tableView.register(nib, forCellReuseIdentifier: WorkoutPlanCardTableViewCell.identifier)
+    tableView.separatorStyle = .none
+
+    return tableView
   }()
   
   override func viewDidLoad() {
@@ -47,7 +49,9 @@ class HomeViewController: UIViewController {
     
     contentScrollView.addSubview(calendarView)
     contentScrollView.addSubview(addRoutineButton)
-    contentScrollView.addSubview(routineStackView)
+    contentScrollView.addSubview(routineTableView)
+    routineTableView.delegate = self
+    routineTableView.dataSource = self
     
     setUpLayout()
   }
@@ -61,6 +65,7 @@ class HomeViewController: UIViewController {
   
   private func setUpLayout() {
     let calendarViewHeightConstraint = calendarView.heightAnchor.constraint(equalToConstant: 400)
+    let routineTableViewHeightConstraint = routineTableView.heightAnchor.constraint(equalToConstant: 400)
     
     NSLayoutConstraint.activate([
       contentScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -73,27 +78,48 @@ class HomeViewController: UIViewController {
       calendarView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
       calendarView.widthAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.widthAnchor),
       calendarViewHeightConstraint,
-      
+
       addRoutineButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
       addRoutineButton.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
       addRoutineButton.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
       
-      routineStackView.topAnchor.constraint(equalTo: addRoutineButton.bottomAnchor, constant: 10),
-      routineStackView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
-      routineStackView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
-      routineStackView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -10),
-      
+      routineTableView.topAnchor.constraint(equalTo: addRoutineButton.bottomAnchor, constant: 10),
+      routineTableView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
+      routineTableView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
+      routineTableView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -10),
+      routineTableViewHeightConstraint,
     ])
-    
   }
 }
 extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
-      for workout in selectedWorkouts {
-        routineStackView.addArrangedSubview(WorkoutPlannerView(of: workout))
-      }
+    self.workouts += selectedWorkouts
+    routineTableView.reloadData()
+  }
+}
+extension HomeViewController: UITableViewDataSource {
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
   }
   
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return workouts.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: WorkoutPlanCardTableViewCell.identifier, for: indexPath) as? WorkoutPlanCardTableViewCell else {
+      return UITableViewCell()
+    }
+    
+    let workout = workouts[indexPath.row]
+    cell.setUp(with: workout)
+    
+    return cell
+  }
+  
+  
+}
+extension HomeViewController: UITableViewDelegate {
   
 }
 extension HomeViewController: TabBarMenu {
