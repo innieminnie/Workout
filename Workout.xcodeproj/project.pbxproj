@@ -10,6 +10,8 @@
 		D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C5527F030B800FABD37 /* DateInformation.swift */; };
 		D9107C582810045200FABD37 /* RoutineSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */; };
 		D9107C5A28190A5400FABD37 /* WorkoutPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C5928190A5400FABD37 /* WorkoutPlannerView.swift */; };
+		D9107C5D282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C5B282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift */; };
+		D9107C5E282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9107C5C282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib */; };
 		D926672F27D1016F00A30366 /* MonthlyInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D926672E27D1016F00A30366 /* MonthlyInformation.swift */; };
 		D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569AF274CBAFB007E517A /* AppDelegate.swift */; };
 		D98569B2274CBAFB007E517A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569B1274CBAFB007E517A /* SceneDelegate.swift */; };
@@ -55,6 +57,8 @@
 		D9107C5527F030B800FABD37 /* DateInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInformation.swift; sourceTree = "<group>"; };
 		D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSelectionViewController.swift; sourceTree = "<group>"; };
 		D9107C5928190A5400FABD37 /* WorkoutPlannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPlannerView.swift; sourceTree = "<group>"; };
+		D9107C5B282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPlanCardTableViewCell.swift; sourceTree = "<group>"; };
+		D9107C5C282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorkoutPlanCardTableViewCell.xib; sourceTree = "<group>"; };
 		D926672E27D1016F00A30366 /* MonthlyInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyInformation.swift; sourceTree = "<group>"; };
 		D98569AC274CBAFB007E517A /* Workout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98569AF274CBAFB007E517A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -215,6 +219,8 @@
 				D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */,
 				D9856A1327C0CBC2007E517A /* CalendarDateCollectionViewCell.swift */,
 				D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */,
+				D9107C5B282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift */,
+				D9107C5C282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -332,6 +338,7 @@
 			files = (
 				D9856A1627C0CBC2007E517A /* CalendarDateCollectionViewCell.xib in Resources */,
 				D98569BC274CBAFE007E517A /* LaunchScreen.storyboard in Resources */,
+				D9107C5E282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib in Resources */,
 				D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */,
 				D98569B7274CBAFB007E517A /* Main.storyboard in Resources */,
 				D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */,
@@ -362,6 +369,7 @@
 				D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */,
 				D9856A1527C0CBC2007E517A /* CalendarDateCollectionViewCell.swift in Sources */,
 				D9107C582810045200FABD37 /* RoutineSelectionViewController.swift in Sources */,
+				D9107C5D282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift in Sources */,
 				D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */,
 				D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */,
 				D98569F3275E346D007E517A /* Workout.swift in Sources */,
