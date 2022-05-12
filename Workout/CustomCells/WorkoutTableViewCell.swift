@@ -10,8 +10,7 @@ import UIKit
 class WorkoutTableViewCell: UITableViewCell {
   static let identifier = "workoutTableViewCell"
   @IBOutlet weak var workoutNameLabel: UILabel!
-  @IBOutlet weak var workoutMeasurementLabel: UILabel!
-  
+
   override func awakeFromNib() {
     super.awakeFromNib()
     contentView.layer.cornerRadius = 13
@@ -29,7 +28,6 @@ class WorkoutTableViewCell: UITableViewCell {
     
     func setUp(with workout: Workout) {
       workoutNameLabel.text = workout.name
-      workoutMeasurementLabel.text = workout.measurement.rawValue
   }
   
 }
