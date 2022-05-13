@@ -59,30 +59,15 @@ class CalendarView: UIView {
     
     return stackView
   }()
-
-  private let monthlyPageCollectionView: UICollectionView = {
-    let layout = UICollectionViewFlowLayout()
-    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
-    
-    
-    collectionView.backgroundColor = .white
-    let nib = UINib(nibName: "CalendarDateCollectionViewCell", bundle: nil)
-    collectionView.register(nib, forCellWithReuseIdentifier: CalendarDateCollectionViewCell.identifier)
-    collectionView.showsHorizontalScrollIndicator = false
-    collectionView.showsVerticalScrollIndicator = false
-    collectionView.allowsMultipleSelection = false
-    
-    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    return collectionView
-  }()
+  
+  private let monthlyPageCollectionView = MonthlyPageCollectionView()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     selectedDayInformation = todayInformation
     
     self.translatesAutoresizingMaskIntoConstraints = false
-    self.backgroundColor = .clear
+    self.backgroundColor = .red
     self.addSubview(currentMonthLabel)
     self.addSubview(rightButton)
     self.addSubview(leftButton)
