@@ -31,16 +31,7 @@ class HomeViewController: UIViewController {
     return button
   }()
   
-  private let routineTableView: UITableView = {
-    let tableView = UITableView()
-    tableView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let nib = UINib(nibName: "WorkoutPlanCardTableViewCell", bundle: nil)
-    tableView.register(nib, forCellReuseIdentifier: WorkoutPlanCardTableViewCell.identifier)
-    tableView.separatorStyle = .none
-
-    return tableView
-  }()
+  private let routineTableView = RoutineTableView()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -50,6 +41,7 @@ class HomeViewController: UIViewController {
     contentScrollView.addSubview(calendarView)
     contentScrollView.addSubview(addRoutineButton)
     contentScrollView.addSubview(routineTableView)
+    
     routineTableView.delegate = self
     routineTableView.dataSource = self
     
@@ -63,10 +55,7 @@ class HomeViewController: UIViewController {
     self.present(routineSelectionViewController, animated: true, completion: nil)
   }
   
-  private func setUpLayout() {
-    let calendarViewHeightConstraint = calendarView.heightAnchor.constraint(equalToConstant: 400)
-    let routineTableViewHeightConstraint = routineTableView.heightAnchor.constraint(equalToConstant: 400)
-    
+  private func setUpLayout() {    
     NSLayoutConstraint.activate([
       contentScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
       contentScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -77,7 +66,6 @@ class HomeViewController: UIViewController {
       calendarView.leadingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.leadingAnchor),
       calendarView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
       calendarView.widthAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.widthAnchor),
-      calendarViewHeightConstraint,
 
       addRoutineButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
       addRoutineButton.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
@@ -87,7 +75,6 @@ class HomeViewController: UIViewController {
       routineTableView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
       routineTableView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
       routineTableView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -10),
-      routineTableViewHeightConstraint,
     ])
   }
 }
@@ -95,6 +82,7 @@ extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
     self.workouts += selectedWorkouts
     routineTableView.reloadData()
+    routineTableView.layoutIfNeeded()
   }
 }
 extension HomeViewController: UITableViewDataSource {

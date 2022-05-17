@@ -9,9 +9,13 @@ import UIKit
 
 class CalendarView: UIView {
   private let todayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date()))
+  
   private var selectedDayInformation: DateInformation?
-  var selectedIndex: IndexPath?
+  
+  private var selectedIndex: IndexPath?
+  
   private var displayingMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
+  
   private let rightButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +71,7 @@ class CalendarView: UIView {
     selectedDayInformation = todayInformation
     
     self.translatesAutoresizingMaskIntoConstraints = false
-    self.backgroundColor = .red
+    self.backgroundColor = .clear
     self.addSubview(currentMonthLabel)
     self.addSubview(rightButton)
     self.addSubview(leftButton)
@@ -109,6 +113,7 @@ class CalendarView: UIView {
     displayingMonthInformation.changeToNextMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
     monthlyPageCollectionView.reloadData()
+    monthlyPageCollectionView.layoutIfNeeded()
     self.selectedIndex = nil
   }
   
@@ -116,6 +121,7 @@ class CalendarView: UIView {
     displayingMonthInformation.changeToLastMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
     monthlyPageCollectionView.reloadData()
+    monthlyPageCollectionView.layoutIfNeeded()
     self.selectedIndex = nil
   }
 }
