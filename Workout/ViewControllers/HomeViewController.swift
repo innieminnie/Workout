@@ -101,14 +101,15 @@ extension HomeViewController: UITableViewDataSource {
     
     let workout = workouts[indexPath.row]
     cell.setUp(with: workout)
+    cell.delegate = self
     
     return cell
   }
-  
-  
 }
 extension HomeViewController: UITableViewDelegate {
-  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return UITableView.automaticDimension
+  }
 }
 extension HomeViewController: TabBarMenu {
   var tabTitle: String {
@@ -119,5 +120,9 @@ extension HomeViewController: TabBarMenu {
     return "house.fill"
   }
 }
-
-
+extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
+  func cellExpand() {
+    routineTableView.beginUpdates()
+    routineTableView.endUpdates()
+  }
+}
