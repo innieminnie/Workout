@@ -8,6 +8,7 @@
 import UIKit
 protocol WorkoutPlanCardTableViewCellDelegate: AnyObject {
   func cellExpand()
+  func cellShrink()
 }
 
 class WorkoutPlanCardTableViewCell: UITableViewCell {
@@ -15,6 +16,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   @IBOutlet weak var workoutNameLabel: UILabel!
   @IBOutlet weak var setStackView: UIStackView!
   @IBOutlet weak var plusSetButton: UIButton!
+  @IBOutlet weak var minusSetButton: UIButton!
   weak var delegate: WorkoutPlanCardTableViewCellDelegate?
   
   override func awakeFromNib() {
@@ -24,6 +26,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     setStackView.translatesAutoresizingMaskIntoConstraints = false
     setStackView.isHidden = true
     plusSetButton.addTarget(self, action: #selector(tappedPlusSetButton(sender:)), for: .touchUpInside)
+    minusSetButton.addTarget(self, action: #selector(tappedMinusSetButton(sender:)), for: .touchUpInside)
   }
   
   override func layoutSubviews() {
@@ -44,7 +47,18 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     testLabel.text = "hi"
     testLabel.textColor = .black
     setStackView.addArrangedSubview(testLabel)
-    setStackView.isHidden = false
+    if setStackView.isHidden { setStackView.isHidden = false }
     delegate?.cellExpand()
+  }
+  
+  @objc func tappedMinusSetButton(sender: UIButton) {
+    guard let lastSet = setStackView.arrangedSubviews.last else {
+      setStackView.isHidden = true
+      return
+    }
+    
+    setStackView.removeArrangedSubview(lastSet)
+    lastSet.removeFromSuperview()
+    delegate?.cellShrink()
   }
 }
