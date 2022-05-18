@@ -77,6 +77,11 @@ class HomeViewController: UIViewController {
       routineTableView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -10),
     ])
   }
+  
+  private func updateTableView() {
+    routineTableView.beginUpdates()
+    routineTableView.endUpdates()
+  }
 }
 extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
@@ -122,12 +127,10 @@ extension HomeViewController: TabBarMenu {
 }
 extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
   func cellExpand() {
-    routineTableView.beginUpdates()
-    routineTableView.endUpdates()
+    updateTableView()
   }
   
   func cellShrink() {
-    routineTableView.beginUpdates()
-    routineTableView.endUpdates()
+    updateTableView()
   }
 }
