@@ -125,4 +125,9 @@ extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
     routineTableView.beginUpdates()
     routineTableView.endUpdates()
   }
+  
+  func cellShrink() {
+    routineTableView.beginUpdates()
+    routineTableView.endUpdates()
+  }
 }

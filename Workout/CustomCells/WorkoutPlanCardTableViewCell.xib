@@ -24,8 +24,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="t5W-2e-8UO" userLabel="Set Stack View">
-                        <rect key="frame" x="10" y="40.5" width="402" height="199.5"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="t5W-2e-8UO" userLabel="Set Stack View">
+                        <rect key="frame" x="10" y="40.5" width="402" height="209.5"/>
                     </stackView>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="P7O-jz-dfQ" userLabel="Button Stack View">
                         <rect key="frame" x="10" y="250" width="402" height="30"/>
@@ -51,16 +51,15 @@
                     <constraint firstAttribute="trailing" secondItem="t5W-2e-8UO" secondAttribute="trailing" constant="10" id="MZ8-If-DEr"/>
                     <constraint firstAttribute="trailing" secondItem="5gn-bM-9ZQ" secondAttribute="trailing" constant="10" id="PbP-Mh-VgY"/>
                     <constraint firstItem="t5W-2e-8UO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Ypf-h5-aMS"/>
-                    <constraint firstItem="t5W-2e-8UO" firstAttribute="top" secondItem="5gn-bM-9ZQ" secondAttribute="bottom" constant="10" id="Z8v-gc-3Q3"/>
                     <constraint firstAttribute="bottom" secondItem="P7O-jz-dfQ" secondAttribute="bottom" constant="10" id="fsa-Zq-dXk"/>
-                    <constraint firstItem="P7O-jz-dfQ" firstAttribute="top" secondItem="t5W-2e-8UO" secondAttribute="bottom" constant="10" id="hGl-72-VCO"/>
+                    <constraint firstItem="P7O-jz-dfQ" firstAttribute="top" secondItem="t5W-2e-8UO" secondAttribute="bottom" id="hGl-72-VCO"/>
                     <constraint firstItem="5gn-bM-9ZQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="i7Z-hk-Ro1"/>
-                    <constraint firstItem="P7O-jz-dfQ" firstAttribute="top" secondItem="t5W-2e-8UO" secondAttribute="bottom" constant="10" id="piR-Fm-WcV"/>
                     <constraint firstItem="5gn-bM-9ZQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="y3c-M3-xQI"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="minusSetButton" destination="fUo-kE-TbI" id="TTf-cG-3WP"/>
                 <outlet property="plusSetButton" destination="Fpt-gR-ZAj" id="nDs-UP-yLh"/>
                 <outlet property="setStackView" destination="t5W-2e-8UO" id="ZW7-jJ-KfT"/>
                 <outlet property="workoutNameLabel" destination="5gn-bM-9ZQ" id="knL-oO-orG"/>
