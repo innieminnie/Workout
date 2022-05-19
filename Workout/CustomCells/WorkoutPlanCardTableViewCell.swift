@@ -43,10 +43,8 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
-    let testLabel = UILabel()
-    testLabel.text = "hi"
-    testLabel.textColor = .black
-    setStackView.addArrangedSubview(testLabel)
+    let setConfigurationView = SetConfigurationView()
+    setStackView.addArrangedSubview(setConfigurationView)
     if setStackView.isHidden { setStackView.isHidden = false }
     delegate?.cellExpand()
   }
