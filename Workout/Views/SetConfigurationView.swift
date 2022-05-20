@@ -102,6 +102,10 @@ class SetConfigurationView: UIView {
   
   init() {
     super.init(frame: .zero)
+    
+    weightTextField.delegate = self
+    countTextField.delegate = self
+   
     configureWeightStackView()
     configureCountStackView()
     configureSetStackView()
@@ -144,5 +148,10 @@ class SetConfigurationView: UIView {
   
   @objc private func tappedCheckButton(sender: UIButton) {
     sender.isSelected = !sender.isSelected
+  }
+}
+extension SetConfigurationView: UITextFieldDelegate {
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    NotificationCenter.default.post(name: NSNotification.Name("TappedTextField"), object: textField, userInfo: nil)
   }
 }
