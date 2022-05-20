@@ -52,7 +52,7 @@ class HomeViewController: UIViewController {
     setUpLayout()
   }
   
-  @objc func tappedAddRoutineButton(sender: UIButton) {
+  @objc private func tappedAddRoutineButton(sender: UIButton) {
     let routineSelectionViewController = RoutineSelectionViewController()
     routineSelectionViewController.delegate = self
     routineSelectionViewController.modalPresentationStyle = .formSheet
@@ -65,7 +65,7 @@ class HomeViewController: UIViewController {
     }
   }
   
-  @objc func hideKeyboard() {
+  @objc private func hideKeyboard() {
     if let activatedField = editableField {
       activatedField.resignFirstResponder()
     }
