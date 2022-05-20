@@ -33,6 +33,8 @@ class HomeViewController: UIViewController {
   
   private let routineTableView = RoutineTableView()
   
+  private weak var editableField: UITextField?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
@@ -45,6 +47,8 @@ class HomeViewController: UIViewController {
     routineTableView.delegate = self
     routineTableView.dataSource = self
     
+    configureNotification()
+    configureGestureRecognizer()
     setUpLayout()
   }
   
@@ -55,7 +59,47 @@ class HomeViewController: UIViewController {
     self.present(routineSelectionViewController, animated: true, completion: nil)
   }
   
-  private func setUpLayout() {    
+  @objc private func trackTappedTextField(notification: Notification) {
+    if let activatedField = notification.object as? UITextField {
+      self.editableField = activatedField
+    }
+  }
+  
+  @objc func hideKeyboard() {
+    if let activatedField = editableField {
+      activatedField.resignFirstResponder()
+    }
+  }
+  
+  @objc private func keyboardWillShow(notification: NSNotification) {
+    guard let userInfo = notification.userInfo,
+          let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+          }
+    
+    let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardFrame.height, right: 0.0)
+    contentScrollView.contentInset = contentInsets
+    contentScrollView.verticalScrollIndicatorInsets = contentInsets
+    
+    if let activeField = editableField {
+      let activeRect = activeField.convert(activeField.bounds, to: contentScrollView)
+      contentScrollView.scrollRectToVisible(activeRect, animated: true)
+    }
+  }
+  
+  private func configureNotification() {
+    NotificationCenter.default.addObserver(self, selector: #selector(trackTappedTextField), name: NSNotification.Name("TappedTextField"), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+  }
+  
+  private func configureGestureRecognizer() {
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+    tapGestureRecognizer.numberOfTapsRequired = 1
+    tapGestureRecognizer.isEnabled = true
+    contentScrollView.addGestureRecognizer(tapGestureRecognizer)
+  }
+  
+  private func setUpLayout() {
     NSLayoutConstraint.activate([
       contentScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
       contentScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -66,7 +110,7 @@ class HomeViewController: UIViewController {
       calendarView.leadingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.leadingAnchor),
       calendarView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
       calendarView.widthAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.widthAnchor),
-
+      
       addRoutineButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
       addRoutineButton.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
       addRoutineButton.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
