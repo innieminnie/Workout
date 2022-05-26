@@ -50,6 +50,10 @@ class HomeViewController: UIViewController {
     configureNotification()
     configureGestureRecognizer()
     setUpLayout()
+    
+    routineTableView.dragInteractionEnabled = true
+    routineTableView.dragDelegate = self
+    routineTableView.dropDelegate = self
   }
   
   @objc private func tappedAddRoutineButton(sender: UIButton) {
@@ -154,6 +158,18 @@ extension HomeViewController: UITableViewDataSource {
     
     return cell
   }
+  
+  func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    return true
+  }
+  
+  func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    guard sourceIndexPath.row != destinationIndexPath.row else { return }
+    
+    let workout = workouts[sourceIndexPath.row]
+    workouts.remove(at: sourceIndexPath.row)
+    workouts.insert(workout, at: destinationIndexPath.row)
+  }
 }
 extension HomeViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -176,5 +192,21 @@ extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
   
   func cellShrink() {
     updateTableView()
+  }
+}
+extension HomeViewController: UITableViewDragDelegate {
+  func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+    return [UIDragItem(itemProvider: NSItemProvider())]
+  }
+}
+extension HomeViewController: UITableViewDropDelegate {
+  func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+  }
+  
+  func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+    if session.localDragSession != nil {
+      return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+    return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
   }
 }
