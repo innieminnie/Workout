@@ -43,7 +43,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
-    let setConfigurationView = SetConfigurationView()
+    let setConfigurationView = WorkoutPlannerView()
     setStackView.addArrangedSubview(setConfigurationView)
     if setStackView.isHidden { setStackView.isHidden = false }
     delegate?.cellExpand()
