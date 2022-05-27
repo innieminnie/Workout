@@ -1,5 +1,5 @@
 //
-//  WorkoutPlannerView.swift
+//  WorkoutSetConfigurationView.swift
 //  Workout
 //
 //  Created by 강인희 on 2022/05/19.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WorkoutPlannerView: UIView {
+class WorkoutSetConfigurationView: UIView {
   private let checkButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -150,7 +150,7 @@ class WorkoutPlannerView: UIView {
     sender.isSelected = !sender.isSelected
   }
 }
-extension WorkoutPlannerView: UITextFieldDelegate {
+extension WorkoutSetConfigurationView: UITextFieldDelegate {
   func textFieldDidBeginEditing(_ textField: UITextField) {
     NotificationCenter.default.post(name: NSNotification.Name("TappedTextField"), object: textField, userInfo: nil)
   }
