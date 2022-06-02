@@ -21,7 +21,11 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   @IBOutlet weak var minusSetButton: UIButton!
   
   weak var delegate: WorkoutPlanCardTableViewCellDelegate?
-  private var totalSum = 0
+  private var totalSum: Int = 0 {
+    didSet {
+      setSumLabel.text = "\(totalSum)"
+    }
+  }
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -70,6 +74,5 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
 extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
   func setSumUpdated(from oldValue: Int, to newValue: Int) {
     totalSum += (newValue - oldValue)
-    setSumLabel.text = "\(totalSum)"
   }
 }
