@@ -144,6 +144,10 @@ class WorkoutSetConfigurationView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
+  deinit {
+    delegate?.setSumUpdated(from: setSum, to: 0)
+  }
+  
   private func configureWeightStackView() {
     weightStackView.addArrangedSubview(weightTextField)
     weightStackView.addArrangedSubview(weightUnitLabel)
