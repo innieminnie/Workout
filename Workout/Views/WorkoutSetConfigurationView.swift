@@ -17,8 +17,21 @@ class WorkoutSetConfigurationView: UIView {
       delegate?.setSumUpdated(from: oldValue, to: setSum)
     }
   }
-  private var weightValue = 0
-  private var countValue = 0
+  
+  private var weightValue: Int = 0 {
+    didSet {
+      setSum -= oldValue * countValue
+      setSum += weightValue * countValue
+    }
+  }
+  
+  private var countValue: Int = 0 {
+    didSet {
+      setSum -= oldValue * weightValue
+      setSum += weightValue * countValue
+    }
+  }
+  
   weak var delegate: WorkoutSetConfigurationViewDelegate?
   
   private let checkButton: UIButton = {
@@ -167,7 +180,6 @@ class WorkoutSetConfigurationView: UIView {
       guard let text = sender.text,
             let countValue = Int(text) else {
               countValue = 0
-              setSum = self.countValue * self.weightValue
               return
             }
       
@@ -176,7 +188,6 @@ class WorkoutSetConfigurationView: UIView {
       guard let text = sender.text,
             let weightValue = Int(text) else {
               weightValue = 0
-              setSum = self.countValue * self.weightValue
               return
             }
       
@@ -184,8 +195,6 @@ class WorkoutSetConfigurationView: UIView {
     default:
       break
     }
-    
-    setSum = self.countValue * self.weightValue
   }
   
   @objc private func tappedCheckButton(sender: UIButton) {
