@@ -7,7 +7,20 @@
 
 import UIKit
 
+protocol WorkoutSetConfigurationViewDelegate: AnyObject {
+  func setSumUpdated(from oldValue: Int, to newValue: Int)
+}
+
 class WorkoutSetConfigurationView: UIView {
+  private var setSum: Int = 0 {
+    didSet {
+      delegate?.setSumUpdated(from: oldValue, to: setSum)
+    }
+  }
+  private var weightValue = 0
+  private var countValue = 0
+  weak var delegate: WorkoutSetConfigurationViewDelegate?
+  
   private let checkButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -28,6 +41,7 @@ class WorkoutSetConfigurationView: UIView {
     textField.keyboardType = .decimalPad
     textField.textAlignment = .center
     
+    textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
     return textField
   }()
   
@@ -48,6 +62,7 @@ class WorkoutSetConfigurationView: UIView {
     textField.keyboardType = .decimalPad
     textField.textAlignment = .center
     
+    textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
     return textField
   }()
   
@@ -105,7 +120,7 @@ class WorkoutSetConfigurationView: UIView {
     
     weightTextField.delegate = self
     countTextField.delegate = self
-   
+    
     configureWeightStackView()
     configureCountStackView()
     configureSetStackView()
@@ -146,12 +161,47 @@ class WorkoutSetConfigurationView: UIView {
     ])
   }
   
+  private func updateSetSum(sender: UITextField) {
+    switch sender {
+    case self.countTextField:
+      guard let text = sender.text,
+            let countValue = Int(text) else {
+              countValue = 0
+              setSum = self.countValue * self.weightValue
+              return
+            }
+      
+      self.countValue = countValue
+    case self.weightTextField:
+      guard let text = sender.text,
+            let weightValue = Int(text) else {
+              weightValue = 0
+              setSum = self.countValue * self.weightValue
+              return
+            }
+      
+      self.weightValue = weightValue
+    default:
+      break
+    }
+    
+    setSum = self.countValue * self.weightValue
+  }
+  
   @objc private func tappedCheckButton(sender: UIButton) {
     sender.isSelected = !sender.isSelected
+  }
+  
+  @objc private func textFieldValueChanged(sender: UITextField) {
+    updateSetSum(sender: sender)
   }
 }
 extension WorkoutSetConfigurationView: UITextFieldDelegate {
   func textFieldDidBeginEditing(_ textField: UITextField) {
     NotificationCenter.default.post(name: NSNotification.Name("TappedTextField"), object: textField, userInfo: nil)
+  }
+  
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    updateSetSum(sender: textField)
   }
 }
