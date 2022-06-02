@@ -13,11 +13,15 @@ protocol WorkoutPlanCardTableViewCellDelegate: AnyObject {
 
 class WorkoutPlanCardTableViewCell: UITableViewCell {
   static let identifier = "workoutPlanCardTableViewCell"
+  
   @IBOutlet weak var workoutNameLabel: UILabel!
+  @IBOutlet weak var setSumLabel: UILabel!
   @IBOutlet weak var setStackView: UIStackView!
   @IBOutlet weak var plusSetButton: UIButton!
   @IBOutlet weak var minusSetButton: UIButton!
+  
   weak var delegate: WorkoutPlanCardTableViewCellDelegate?
+  private var totalSum = 0
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -40,11 +44,14 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   
   func setUp(with workout: Workout) {
     workoutNameLabel.text = workout.name
+    setSumLabel.text = "0"
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
     let setConfigurationView = WorkoutSetConfigurationView()
     setStackView.addArrangedSubview(setConfigurationView)
+    setConfigurationView.delegate = self
+    
     if setStackView.isHidden { setStackView.isHidden = false }
     delegate?.cellExpand()
   }
@@ -58,5 +65,11 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     setStackView.removeArrangedSubview(lastSet)
     lastSet.removeFromSuperview()
     delegate?.cellShrink()
+  }
+}
+extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
+  func setSumUpdated(from oldValue: Int, to newValue: Int) {
+    totalSum += (newValue - oldValue)
+    setSumLabel.text = "\(totalSum)"
   }
 }
