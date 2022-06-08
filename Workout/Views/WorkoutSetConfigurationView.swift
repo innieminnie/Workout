@@ -202,7 +202,33 @@ class WorkoutSetConfigurationView: UIView {
   }
   
   @objc private func tappedCheckButton(sender: UIButton) {
+    if !sender.isSelected {
+      guard weightValue > 0, countValue > 0 else {
+        print("숫자입력필수")
+        return
+      }
+    }
+    
     sender.isSelected = !sender.isSelected
+    
+    if sender.isSelected {
+      weightTextField.isUserInteractionEnabled = false
+      weightTextField.backgroundColor = .clear
+      weightTextField.textColor = .gray
+      
+      countTextField.isUserInteractionEnabled = false
+      countTextField.backgroundColor = .clear
+      countTextField.textColor = .gray
+   
+    } else {
+      weightTextField.isUserInteractionEnabled = true
+      weightTextField.backgroundColor = .systemBlue
+      weightTextField.textColor = .black
+      
+      countTextField.isUserInteractionEnabled = true
+      countTextField.backgroundColor = .systemBlue
+      countTextField.textColor = .black
+    }
   }
   
   @objc private func textFieldValueChanged(sender: UITextField) {
