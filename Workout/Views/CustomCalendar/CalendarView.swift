@@ -16,8 +16,6 @@ class CalendarView: UIView {
   
   private var selectedDayInformation: DateInformation?
   
-  private var selectedIndex: IndexPath?
-  
   private var displayingMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
   
   private let rightButton: UIButton = {
@@ -119,7 +117,6 @@ class CalendarView: UIView {
     currentMonthLabel.text = displayingMonthInformation.currentDate
     monthlyPageCollectionView.reloadData()
     monthlyPageCollectionView.layoutIfNeeded()
-    self.selectedIndex = nil
   }
   
   @objc func tappedLastMonthButton(sender: UIButton) {
@@ -127,7 +124,6 @@ class CalendarView: UIView {
     currentMonthLabel.text = displayingMonthInformation.currentDate
     monthlyPageCollectionView.reloadData()
     monthlyPageCollectionView.layoutIfNeeded()
-    self.selectedIndex = nil
   }
   
   @objc private func cellTapped(gesture: CaledarDateTapGesture) {
