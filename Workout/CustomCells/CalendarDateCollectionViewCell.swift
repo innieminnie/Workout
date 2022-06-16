@@ -10,6 +10,7 @@ import UIKit
 class CalendarDateCollectionViewCell: UICollectionViewCell {
   static let identifier = "calendarDateCollectionViewCell"
   var isToday = false
+  var dateInformation: DateInformation?
   
   @IBOutlet weak var dateNumberLabel: UILabel!
   

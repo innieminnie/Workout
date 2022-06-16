@@ -38,6 +38,26 @@ struct MonthlyInformation {
     self.month = month
   }
 
+  func currentMonthInformation() -> (Int, Int) {
+    return (self.year, self.month)
+  }
+  
+  func lastMonthInformation() -> (Int, Int) {
+    let dateInLastMonth = Calendar.current.date(byAdding: .month, value: -1,  to: self.startDate)
+    let yearOfLastMonth = Calendar.current.component(.year, from: dateInLastMonth!)
+    let lastMonth = Calendar.current.component(.month, from: dateInLastMonth!)
+    
+    return (yearOfLastMonth, lastMonth)
+  }
+  
+  func nextMonthInformation() -> (Int, Int) {
+    let dateInNextMonth = Calendar.current.date(byAdding: .month, value: 1, to: self.startDate)
+    let yearOfNextMonth = Calendar.current.component(.year, from: dateInNextMonth!)
+    let nextMonth = Calendar.current.component(.month, from: dateInNextMonth!)
+    
+    return (yearOfNextMonth, nextMonth)
+  }
+  
   mutating func changeToNextMonth() {
     let dateInNextMonth = Calendar.current.date(byAdding: .month, value: 1,  to: self.startDate)
     self.year = Calendar.current.component(.year, from: dateInNextMonth!)

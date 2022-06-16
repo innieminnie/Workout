@@ -135,6 +135,8 @@ class CalendarView: UIView {
       currentTappedCell.isSelected = true
       self.selectedCell = currentTappedCell
     }
+  
+    selectedDayInformation = selectedCell?.dateInformation
   }
 }
 extension CalendarView: UICollectionViewDelegateFlowLayout {
@@ -166,24 +168,36 @@ extension CalendarView: UICollectionViewDataSource {
     let numberOfDaysInCurrentMonth = displayingMonthInformation.numberOfDays
     let currentMonthCellRange = (firstDay..<firstDay + numberOfDaysInCurrentMonth)
     let dateInLastMonth = Calendar.current.date(byAdding: .month, value: -1,  to: displayingMonthInformation.startDate)
+  
     guard let monthRange = Calendar.current.range(of: .day, in: .month, for: dateInLastMonth!) else {
       return UICollectionViewCell()
     }
   
     if indexPath.row < firstDay {
-      cell.update(with: monthRange.last! - firstDay + indexPath.row + 1, isCurrentMonth: false)
-    } else if currentMonthCellRange.contains(indexPath.row) {
-      cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true)
+      let (year, month) = displayingMonthInformation.lastMonthInformation()
+      let day = monthRange.last! - firstDay + indexPath.row + 1
+      cell.dateInformation = DateInformation(year, month, day)
       
+      cell.update(with: day, isCurrentMonth: false)
+    } else if currentMonthCellRange.contains(indexPath.row) {
+      let (year, month) = displayingMonthInformation.currentMonthInformation()
+      let day = indexPath.row - firstDay + 1
+      cell.dateInformation = DateInformation(year, month, day)
+    
       if displayingMonthInformation.currentDate == todayInformation.currentDate
-          && (indexPath.row - firstDay + 1) == Calendar.current.component(.day, from: Date()) {
+          && day == Calendar.current.component(.day, from: Date()) {
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         cell.isToday = true
-        cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true)
         self.selectedCell = cell
       }
+      
+      cell.update(with: day, isCurrentMonth: true)
     } else {
-      cell.update(with: indexPath.row - (numberOfDaysInCurrentMonth + firstDay) + 1, isCurrentMonth: false)
+      let (year, month) = displayingMonthInformation.nextMonthInformation()
+      let day = indexPath.row - (numberOfDaysInCurrentMonth + firstDay) + 1
+      cell.dateInformation = DateInformation(year, month, day)
+      
+      cell.update(with: day, isCurrentMonth: false)
     }
     
     let calendarDateTapGesture = CaledarDateTapGesture(target: self, action: #selector(cellTapped(gesture:)))
