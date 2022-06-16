@@ -30,13 +30,20 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   }
   
   override func prepareForReuse() {
+    self.isToday = false
+    self.isSelected = false
     self.backgroundColor = .clear
-    isToday = false
+    self.dateNumberLabel.textColor = .black
   }
   
   func update(with number: Int, isCurrentMonth: Bool) {
     isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
-    if isToday { self.dateNumberLabel.textColor = .systemRed }
+    
+    if isToday {
+      self.backgroundColor = .systemGray
+      self.dateNumberLabel.textColor = .systemRed
+    }
+    
     dateNumberLabel.text = "\(number)"
   }
   

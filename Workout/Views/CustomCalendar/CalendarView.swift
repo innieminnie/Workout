@@ -7,6 +7,10 @@
 
 import UIKit
 
+class CaledarDateTapGesture: UITapGestureRecognizer {
+  var tappedCell: CalendarDateCollectionViewCell?
+}
+
 class CalendarView: UIView {
   private let todayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date()))
   
@@ -66,6 +70,8 @@ class CalendarView: UIView {
   
   private let monthlyPageCollectionView = MonthlyPageCollectionView()
   
+  private var selectedCell: CalendarDateCollectionViewCell?
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     selectedDayInformation = todayInformation
@@ -79,7 +85,6 @@ class CalendarView: UIView {
     self.addSubview(monthlyPageCollectionView)
     
     currentMonthLabel.text = displayingMonthInformation.currentDate
-    monthlyPageCollectionView.delegate = self
     monthlyPageCollectionView.dataSource = self
     
     NSLayoutConstraint.activate([
@@ -124,6 +129,17 @@ class CalendarView: UIView {
     monthlyPageCollectionView.layoutIfNeeded()
     self.selectedIndex = nil
   }
+  
+  @objc private func cellTapped(gesture: CaledarDateTapGesture) {
+    if let currentSelectedCell = selectedCell {
+      currentSelectedCell.isSelected = false
+    }
+    
+    if let currentTappedCell = gesture.tappedCell {
+      currentTappedCell.isSelected = true
+      self.selectedCell = currentTappedCell
+    }
+  }
 }
 extension CalendarView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -138,19 +154,6 @@ extension CalendarView: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     return 0
-  }
-}
-extension CalendarView: UICollectionViewDelegate {
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarDateCollectionViewCell else { return }
-    cell.isSelected = true
-    
-    if let previousIndex = self.selectedIndex{
-      let previousSelectedCell = collectionView.cellForItem(at: previousIndex)
-      previousSelectedCell?.isSelected = false
-    }
-    
-    self.selectedIndex = indexPath
   }
 }
 extension CalendarView: UICollectionViewDataSource {
@@ -178,13 +181,18 @@ extension CalendarView: UICollectionViewDataSource {
       
       if displayingMonthInformation.currentDate == todayInformation.currentDate
           && (indexPath.row - firstDay + 1) == Calendar.current.component(.day, from: Date()) {
+        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         cell.isToday = true
-        cell.isSelected = true
         cell.update(with: indexPath.row - firstDay + 1, isCurrentMonth: true)
+        self.selectedCell = cell
       }
     } else {
       cell.update(with: indexPath.row - (numberOfDaysInCurrentMonth + firstDay) + 1, isCurrentMonth: false)
     }
+    
+    let calendarDateTapGesture = CaledarDateTapGesture(target: self, action: #selector(cellTapped(gesture:)))
+    calendarDateTapGesture.tappedCell = cell
+    cell.addGestureRecognizer(calendarDateTapGesture)
     
     return cell
   }
