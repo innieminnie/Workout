@@ -84,6 +84,7 @@ class CalendarView: UIView {
     
     currentMonthLabel.text = displayingMonthInformation.currentDate
     monthlyPageCollectionView.dataSource = self
+    monthlyPageCollectionView.delegate = self
     
     NSLayoutConstraint.activate([
       currentMonthLabel.topAnchor.constraint(equalTo: self.topAnchor),
