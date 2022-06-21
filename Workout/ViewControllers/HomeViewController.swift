@@ -9,6 +9,12 @@ import UIKit
 
 class HomeViewController: UIViewController {
   var workouts = [Workout]()
+  var selectedDayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
+    didSet {
+      self.workouts = routineManager.plan(of: selectedDayInformation)
+      routineTableView.reloadData()
+    }
+  }
   
   private let contentScrollView: UIScrollView = {
     let scrollView = UIScrollView()
@@ -220,7 +226,6 @@ extension HomeViewController: UITableViewDropDelegate {
 }
 extension HomeViewController: CalendarViewDelegate {
   func changedSelectedDay(to dateInformation: DateInformation) {
-    workouts = routineManager.plan(of: dateInformation)
-    routineTableView.reloadData()
+    self.selectedDayInformation = dateInformation
   }
 }

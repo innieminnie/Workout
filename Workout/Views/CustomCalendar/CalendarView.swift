@@ -18,7 +18,7 @@ protocol CalendarViewDelegate: AnyObject {
 class CalendarView: UIView {
   private let todayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date()))
   
-  private var selectedDayInformation: DateInformation?
+//  private var selectedDayInformation: DateInformation?
   
   private var displayingMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
   
@@ -78,7 +78,7 @@ class CalendarView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    selectedDayInformation = todayInformation
+//    selectedDayInformation = todayInformation
     
     self.translatesAutoresizingMaskIntoConstraints = false
     self.backgroundColor = .clear
@@ -142,11 +142,9 @@ class CalendarView: UIView {
       currentTappedCell.isSelected = true
       self.selectedCell = currentTappedCell
     }
-  
-    selectedDayInformation = selectedCell?.dateInformation
     
-    if let tappedDate = selectedDayInformation {
-      delegate?.changedSelectedDay(to: tappedDate)
+    if let selectedDayInformation = selectedCell?.dateInformation {
+      delegate?.changedSelectedDay(to: selectedDayInformation)
     }
   }
 }
