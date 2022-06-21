@@ -220,5 +220,7 @@ extension HomeViewController: UITableViewDropDelegate {
 }
 extension HomeViewController: CalendarViewDelegate {
   func changedSelectedDay(to dateInformation: DateInformation) {
+    workouts = routineManager.plan(of: dateInformation)
+    routineTableView.reloadData()
   }
 }

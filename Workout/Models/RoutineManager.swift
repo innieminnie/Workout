@@ -9,8 +9,15 @@ import Foundation
 
 class RoutineManager {
   static let shared = RoutineManager()
+  private var dictionary: [DateInformation : [Workout]]
   
-  private init() { }
+  private init() {
+    dictionary = [:]
+  }
+
+  func plan(of dateInformation: DateInformation) -> [Workout] {
+    return dictionary[dateInformation] ?? []
+  }
 }
 
 let routineManager = RoutineManager.shared
