@@ -11,6 +11,10 @@ class CaledarDateTapGesture: UITapGestureRecognizer {
   var tappedCell: CalendarDateCollectionViewCell?
 }
 
+protocol CalendarViewDelegate: AnyObject {
+  func changedSelectedDay(to dateInformation: DateInformation)
+}
+
 class CalendarView: UIView {
   private let todayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date()))
   
@@ -69,6 +73,8 @@ class CalendarView: UIView {
   private let monthlyPageCollectionView = MonthlyPageCollectionView()
   
   private var selectedCell: CalendarDateCollectionViewCell?
+  
+  weak var delegate: CalendarViewDelegate?
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -138,6 +144,10 @@ class CalendarView: UIView {
     }
   
     selectedDayInformation = selectedCell?.dateInformation
+    
+    if let tappedDate = selectedDayInformation {
+      delegate?.changedSelectedDay(to: tappedDate)
+    }
   }
 }
 extension CalendarView: UICollectionViewDelegateFlowLayout {
