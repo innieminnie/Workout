@@ -44,18 +44,17 @@ class HomeViewController: UIViewController {
     calendarView.delegate = self
     
     contentScrollView.addSubview(addRoutineButton)
-    contentScrollView.addSubview(routineTableView)
     
+    contentScrollView.addSubview(routineTableView)
     routineTableView.delegate = self
     routineTableView.dataSource = self
+    routineTableView.dragInteractionEnabled = true
+    routineTableView.dragDelegate = self
+    routineTableView.dropDelegate = self
     
     configureNotification()
     configureGestureRecognizer()
     setUpLayout()
-    
-    routineTableView.dragInteractionEnabled = true
-    routineTableView.dragDelegate = self
-    routineTableView.dropDelegate = self
   }
   
   @objc private func tappedAddRoutineButton(sender: UIButton) {
