@@ -41,6 +41,8 @@ class HomeViewController: UIViewController {
     view.addSubview(contentScrollView)
     
     contentScrollView.addSubview(calendarView)
+    calendarView.delegate = self
+    
     contentScrollView.addSubview(addRoutineButton)
     contentScrollView.addSubview(routineTableView)
     
@@ -215,5 +217,9 @@ extension HomeViewController: UITableViewDropDelegate {
       return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
     return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+  }
+}
+extension HomeViewController: CalendarViewDelegate {
+  func changedSelectedDay(to dateInformation: DateInformation) {
   }
 }
