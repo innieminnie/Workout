@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DateInformation {
+struct DateInformation: Hashable {
   private var year: Int
   private var month: Int
   private var day: Int
@@ -20,6 +20,4 @@ struct DateInformation {
     self.month = month
     self.day = day
   }
-  
-  
 }
