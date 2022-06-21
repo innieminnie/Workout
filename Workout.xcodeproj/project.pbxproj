@@ -36,6 +36,7 @@
 		D9856A0C27BA4E69007E517A /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9856A0B27BA4E69007E517A /* CalendarView.swift */; };
 		D9856A1527C0CBC2007E517A /* CalendarDateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9856A1327C0CBC2007E517A /* CalendarDateCollectionViewCell.swift */; };
 		D9856A1627C0CBC2007E517A /* CalendarDateCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */; };
+		D9958718286153250093E024 /* RoutineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9958717286153250093E024 /* RoutineManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		D9856A0B27BA4E69007E517A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		D9856A1327C0CBC2007E517A /* CalendarDateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCollectionViewCell.swift; sourceTree = "<group>"; };
 		D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarDateCollectionViewCell.xib; sourceTree = "<group>"; };
+		D9958717286153250093E024 /* RoutineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 			children = (
 				D98569F2275E346D007E517A /* Workout.swift */,
 				D98569F6275F717B007E517A /* WorkoutManager.swift */,
+				D9958717286153250093E024 /* RoutineManager.swift */,
 				D926672E27D1016F00A30366 /* MonthlyInformation.swift */,
 				D9107C5527F030B800FABD37 /* DateInformation.swift */,
 			);
@@ -372,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9958718286153250093E024 /* RoutineManager.swift in Sources */,
 				D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */,
 				D9856A1527C0CBC2007E517A /* CalendarDateCollectionViewCell.swift in Sources */,
 				D9107C582810045200FABD37 /* RoutineSelectionViewController.swift in Sources */,
