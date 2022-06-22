@@ -23,7 +23,7 @@ class RoutineManager {
     workoutPlanner[dateInformation] = workouts
   }
   
-  func updateRoutine(of date: DateInformation, with workouts: [Workout]) {
+  func updatePlan(of date: DateInformation, with workouts: [Workout]) {
     guard workoutPlanner[date] != nil else {
       return
     }

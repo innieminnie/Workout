@@ -181,7 +181,7 @@ extension HomeViewController: UITableViewDataSource {
     workouts.remove(at: sourceIndexPath.row)
     workouts.insert(workout, at: destinationIndexPath.row)
     
-    routineManager.updateRoutine(of: selectedDayInformation, with: workouts)
+    routineManager.updatePlan(of: selectedDayInformation, with: workouts)
   }
 }
 extension HomeViewController: UITableViewDelegate {
@@ -194,7 +194,7 @@ extension HomeViewController: UITableViewDelegate {
       workouts.remove(at: indexPath.row)
       tableView.deleteRows(at: [indexPath], with: .automatic)
       
-      routineManager.updateRoutine(of: selectedDayInformation, with: workouts)
+      routineManager.updatePlan(of: selectedDayInformation, with: workouts)
     }
   }
 }
