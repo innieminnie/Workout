@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-  var workouts = [Workout]()
+  private var workouts = [Workout]()
   var selectedDayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
       self.workouts = routineManager.plan(of: selectedDayInformation)
@@ -61,6 +61,8 @@ class HomeViewController: UIViewController {
     configureNotification()
     configureGestureRecognizer()
     setUpLayout()
+    
+    workouts = routineManager.plan(of: selectedDayInformation)
   }
   
   @objc private func tappedAddRoutineButton(sender: UIButton) {
@@ -141,6 +143,8 @@ class HomeViewController: UIViewController {
 extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
     self.workouts += selectedWorkouts
+    routineManager.addPlan(with: workouts, on: selectedDayInformation)
+    
     routineTableView.reloadData()
     routineTableView.layoutIfNeeded()
   }
@@ -176,6 +180,8 @@ extension HomeViewController: UITableViewDataSource {
     let workout = workouts[sourceIndexPath.row]
     workouts.remove(at: sourceIndexPath.row)
     workouts.insert(workout, at: destinationIndexPath.row)
+    
+    routineManager.updateRoutine(of: selectedDayInformation, with: workouts)
   }
 }
 extension HomeViewController: UITableViewDelegate {
@@ -187,6 +193,8 @@ extension HomeViewController: UITableViewDelegate {
     if editingStyle == .delete {
       workouts.remove(at: indexPath.row)
       tableView.deleteRows(at: [indexPath], with: .automatic)
+      
+      routineManager.updateRoutine(of: selectedDayInformation, with: workouts)
     }
   }
 }
