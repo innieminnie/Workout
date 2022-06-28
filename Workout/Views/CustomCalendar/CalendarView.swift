@@ -18,8 +18,6 @@ protocol CalendarViewDelegate: AnyObject {
 class CalendarView: UIView {
   private let todayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date()))
   
-//  private var selectedDayInformation: DateInformation?
-  
   private var displayingMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
   
   private let rightButton: UIButton = {
@@ -62,7 +60,7 @@ class CalendarView: UIView {
     stackView.axis = .horizontal
     stackView.distribution = .fillEqually
     
-    let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
+    let weekdays = ["월", "화", "수", "목", "금", "토", "일"]
     for dayName in weekdays {
       stackView.addArrangedSubview(RoundedCornerLabelView(title: dayName))
     }
@@ -78,7 +76,6 @@ class CalendarView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-//    selectedDayInformation = todayInformation
     
     self.translatesAutoresizingMaskIntoConstraints = false
     self.backgroundColor = .clear
@@ -172,25 +169,19 @@ extension CalendarView: UICollectionViewDataSource {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarDateCollectionViewCell.identifier, for: indexPath) as? CalendarDateCollectionViewCell else {
       return UICollectionViewCell()
     }
-  
-    let firstDay = displayingMonthInformation.weekDayIndexOfFirstDay
+    
     let numberOfDaysInCurrentMonth = displayingMonthInformation.numberOfDays
-    let currentMonthCellRange = (firstDay..<firstDay + numberOfDaysInCurrentMonth)
-    let dateInLastMonth = Calendar.current.date(byAdding: .month, value: -1,  to: displayingMonthInformation.startDate)
+    let currentMonthCellRange = (0..<numberOfDaysInCurrentMonth).map { $0 + displayingMonthInformation.weekDayIndexOfFirstDay }
   
-    guard let monthRange = Calendar.current.range(of: .day, in: .month, for: dateInLastMonth!) else {
-      return UICollectionViewCell()
-    }
-  
-    if indexPath.row < firstDay {
-      let (year, month) = displayingMonthInformation.lastMonthInformation()
-      let day = monthRange.last! - firstDay + indexPath.row + 1
-      cell.dateInformation = DateInformation(year, month, day)
+    if indexPath.row < displayingMonthInformation.weekDayIndexOfFirstDay {
+      let (lastYear, lastMonth) = displayingMonthInformation.lastMonthInformation()
+      let day = MonthlyInformation.numberOfDays(lastYear, lastMonth) - displayingMonthInformation.weekDayIndexOfFirstDay + indexPath.row + 1
+      cell.dateInformation = DateInformation(lastYear, lastMonth, day)
       
       cell.update(with: day, isCurrentMonth: false)
     } else if currentMonthCellRange.contains(indexPath.row) {
       let (year, month) = displayingMonthInformation.currentMonthInformation()
-      let day = indexPath.row - firstDay + 1
+      let day = indexPath.row - displayingMonthInformation.weekDayIndexOfFirstDay + 1
       cell.dateInformation = DateInformation(year, month, day)
     
       if displayingMonthInformation.currentDate == todayInformation.currentDate
@@ -202,9 +193,9 @@ extension CalendarView: UICollectionViewDataSource {
       
       cell.update(with: day, isCurrentMonth: true)
     } else {
-      let (year, month) = displayingMonthInformation.nextMonthInformation()
-      let day = indexPath.row - (numberOfDaysInCurrentMonth + firstDay) + 1
-      cell.dateInformation = DateInformation(year, month, day)
+      let (nextYear, nextMonth) = displayingMonthInformation.nextMonthInformation()
+      let day = indexPath.row - (numberOfDaysInCurrentMonth + displayingMonthInformation.weekDayIndexOfFirstDay) + 1
+      cell.dateInformation = DateInformation(nextYear, nextMonth, day)
       
       cell.update(with: day, isCurrentMonth: false)
     }
