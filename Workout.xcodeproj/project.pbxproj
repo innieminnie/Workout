@@ -37,6 +37,7 @@
 		D9856A1527C0CBC2007E517A /* CalendarDateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9856A1327C0CBC2007E517A /* CalendarDateCollectionViewCell.swift */; };
 		D9856A1627C0CBC2007E517A /* CalendarDateCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */; };
 		D9958718286153250093E024 /* RoutineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9958717286153250093E024 /* RoutineManager.swift */; };
+		D995871C286571BD0093E024 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = D995871B286571BD0093E024 /* Weekday.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		D9856A1327C0CBC2007E517A /* CalendarDateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateCollectionViewCell.swift; sourceTree = "<group>"; };
 		D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarDateCollectionViewCell.xib; sourceTree = "<group>"; };
 		D9958717286153250093E024 /* RoutineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineManager.swift; sourceTree = "<group>"; };
+		D995871B286571BD0093E024 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 				D9958717286153250093E024 /* RoutineManager.swift */,
 				D926672E27D1016F00A30366 /* MonthlyInformation.swift */,
 				D9107C5527F030B800FABD37 /* DateInformation.swift */,
+				D995871B286571BD0093E024 /* Weekday.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */,
 				D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */,
 				D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */,
+				D995871C286571BD0093E024 /* Weekday.swift in Sources */,
 				D98569E4274D0299007E517A /* WorkoutListViewController.swift in Sources */,
 				D98569FE2760ADC0007E517A /* WorkoutTableViewCell.swift in Sources */,
 				D9107C642836151300FABD37 /* WorkoutSetConfigurationView.swift in Sources */,

@@ -17,10 +17,19 @@ struct MonthlyInformation {
     "\(self.year)-\(self.month)-01".date!
   }
   var weekDayIndexOfFirstDay: Int {
-    return Calendar.current.component(.weekday, from: self.startDate) - 1
+    return Weekday(Calendar.current.component(.weekday, from: self.startDate)).convertWeekdayIndexToMondayBased()
   }
   var numberOfDays: Int {
-    let dateComponents = DateComponents(year: self.year, month: self.month)
+    return MonthlyInformation.numberOfDays(self.year, self.month)
+  }
+
+  init(_ year: Int, _ month: Int) {
+    self.year = year
+    self.month = month
+  }
+
+  static func numberOfDays(_ year: Int, _ month: Int) -> Int {
+    let dateComponents = DateComponents(year: year, month: month)
     
     guard let date = Calendar.current.date(from: dateComponents) else {
       return -1
@@ -32,12 +41,7 @@ struct MonthlyInformation {
     
     return monthRange.count
   }
-
-  init(_ year: Int, _ month: Int) {
-    self.year = year
-    self.month = month
-  }
-
+  
   func currentMonthInformation() -> (Int, Int) {
     return (self.year, self.month)
   }
@@ -74,12 +78,12 @@ struct MonthlyInformation {
     let daysOfLastMonthToDisplay = self.weekDayIndexOfFirstDay
     
     let dateInNextMonth = Calendar.current.date(byAdding: .month, value: 1,  to: self.startDate)
-    let weekDayOfFirstDayOfNextMonth = Calendar.current.component(.weekday, from: dateInNextMonth!)
+    let  daysOfNextMonthToDisplay = Weekday.daysInWeek - Weekday(Calendar.current.component(.weekday, from: dateInNextMonth!)).convertWeekdayIndexToMondayBased()
     
-    guard weekDayOfFirstDayOfNextMonth > 1 else {
-      return daysOfLastMonthToDisplay + self.numberOfDays
+    guard daysOfNextMonthToDisplay < 7 else {
+      return  daysOfLastMonthToDisplay + self.numberOfDays
     }
     
-    return daysOfLastMonthToDisplay + self.numberOfDays + (weekDayOfFirstDayOfNextMonth...7).count
+    return daysOfLastMonthToDisplay + self.numberOfDays + daysOfNextMonthToDisplay
   }
 }
