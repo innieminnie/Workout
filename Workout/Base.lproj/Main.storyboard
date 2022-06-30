@@ -161,7 +161,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vri-c1-Fxs">
-                                <rect key="frame" x="135" y="293" width="87" height="31"/>
+                                <rect key="frame" x="135" y="293" width="200" height="87"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" image="checkmark" catalog="system" title="Button"/>
@@ -178,7 +178,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fuQ-kl-XcC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2689" y="69"/>
+            <point key="canvasLocation" x="2688.4057971014495" y="68.973214285714278"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wfk-9c-Qq7">
