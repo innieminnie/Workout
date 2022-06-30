@@ -17,7 +17,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   override var isSelected: Bool {
     didSet{
       if isSelected {
-        self.backgroundColor = .systemGray
+        self.backgroundColor = .systemGray5
       }
       else {
         self.backgroundColor = .clear
@@ -41,7 +41,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
     
     if isToday {
-      self.backgroundColor = .systemGray
+      self.isSelected = true
       self.dateNumberLabel.textColor = .systemRed
     }
     
