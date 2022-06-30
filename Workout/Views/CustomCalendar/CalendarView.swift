@@ -53,21 +53,8 @@ class CalendarView: UIView {
     return label
   }()
   
-  private let weekdaysLabel: UIStackView = {
-    let stackView = UIStackView()
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    
-    stackView.axis = .horizontal
-    stackView.distribution = .fillEqually
-    
-    let weekdays = ["월", "화", "수", "목", "금", "토", "일"]
-    for dayName in weekdays {
-      stackView.addArrangedSubview(RoundedCornerLabelView(title: dayName))
-    }
-    
-    return stackView
-  }()
-  
+  private let weekdaysView = WeekdaysView()
+
   private let monthlyPageCollectionView = MonthlyPageCollectionView()
   
   private var selectedCell: CalendarDateCollectionViewCell?
@@ -76,13 +63,13 @@ class CalendarView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    
     self.translatesAutoresizingMaskIntoConstraints = false
+    
     self.backgroundColor = .clear
     self.addSubview(currentMonthLabel)
     self.addSubview(rightButton)
     self.addSubview(leftButton)
-    self.addSubview(weekdaysLabel)
+    self.addSubview(weekdaysView)
     self.addSubview(monthlyPageCollectionView)
     
     currentMonthLabel.text = displayingMonthInformation.currentDate
@@ -101,13 +88,13 @@ class CalendarView: UIView {
       leftButton.trailingAnchor
         .constraint(equalTo: currentMonthLabel.leadingAnchor, constant: -10),
       
-      weekdaysLabel.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 20),
-      weekdaysLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-      weekdaysLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+      weekdaysView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 10),
+      weekdaysView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      weekdaysView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       
-      monthlyPageCollectionView.topAnchor.constraint(equalTo: weekdaysLabel.bottomAnchor, constant: 5),
-      monthlyPageCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-      monthlyPageCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+      monthlyPageCollectionView.topAnchor.constraint(equalTo: weekdaysView.bottomAnchor),
+      monthlyPageCollectionView.leadingAnchor.constraint(equalTo: weekdaysView.leadingAnchor),
+      monthlyPageCollectionView.trailingAnchor.constraint(equalTo: weekdaysView.trailingAnchor),
       monthlyPageCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
     ])
   }
@@ -172,7 +159,7 @@ extension CalendarView: UICollectionViewDataSource {
     
     let numberOfDaysInCurrentMonth = displayingMonthInformation.numberOfDays
     let currentMonthCellRange = (0..<numberOfDaysInCurrentMonth).map { $0 + displayingMonthInformation.weekDayIndexOfFirstDay }
-  
+    
     if indexPath.row < displayingMonthInformation.weekDayIndexOfFirstDay {
       let (lastYear, lastMonth) = displayingMonthInformation.lastMonthInformation()
       let day = MonthlyInformation.numberOfDays(lastYear, lastMonth) - displayingMonthInformation.weekDayIndexOfFirstDay + indexPath.row + 1
@@ -183,7 +170,7 @@ extension CalendarView: UICollectionViewDataSource {
       let (year, month) = displayingMonthInformation.currentMonthInformation()
       let day = indexPath.row - displayingMonthInformation.weekDayIndexOfFirstDay + 1
       cell.dateInformation = DateInformation(year, month, day)
-    
+      
       if displayingMonthInformation.currentDate == todayInformation.currentDate
           && day == Calendar.current.component(.day, from: Date()) {
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
