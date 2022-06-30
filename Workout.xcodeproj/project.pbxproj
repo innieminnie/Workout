@@ -38,6 +38,7 @@
 		D9856A1627C0CBC2007E517A /* CalendarDateCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */; };
 		D9958718286153250093E024 /* RoutineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9958717286153250093E024 /* RoutineManager.swift */; };
 		D995871C286571BD0093E024 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = D995871B286571BD0093E024 /* Weekday.swift */; };
+		D995871E286D523A0093E024 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D995871D286D523A0093E024 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarDateCollectionViewCell.xib; sourceTree = "<group>"; };
 		D9958717286153250093E024 /* RoutineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineManager.swift; sourceTree = "<group>"; };
 		D995871B286571BD0093E024 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
+		D995871D286D523A0093E024 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,7 @@
 				D98569EE2758F669007E517A /* RoundedCornerLabelView.swift */,
 				D9107C632836151300FABD37 /* WorkoutSetConfigurationView.swift */,
 				D9107C612833741800FABD37 /* RoutineTableView.swift */,
+				D995871D286D523A0093E024 /* Extensions.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				D9107C642836151300FABD37 /* WorkoutSetConfigurationView.swift in Sources */,
 				D9107C60282E593C00FABD37 /* MonthlyPageCollectionView.swift in Sources */,
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,
+				D995871E286D523A0093E024 /* Extensions.swift in Sources */,
 				D98569E8274D2A3D007E517A /* TabBarMenu.swift in Sources */,
 				D926672F27D1016F00A30366 /* MonthlyInformation.swift in Sources */,
 				D98569B2274CBAFB007E517A /* SceneDelegate.swift in Sources */,
