@@ -39,6 +39,7 @@
 		D9958718286153250093E024 /* RoutineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9958717286153250093E024 /* RoutineManager.swift */; };
 		D995871C286571BD0093E024 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = D995871B286571BD0093E024 /* Weekday.swift */; };
 		D995871E286D523A0093E024 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D995871D286D523A0093E024 /* Extensions.swift */; };
+		D9958720286D6D760093E024 /* WeekdaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D995871F286D6D760093E024 /* WeekdaysView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		D9958717286153250093E024 /* RoutineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineManager.swift; sourceTree = "<group>"; };
 		D995871B286571BD0093E024 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
 		D995871D286D523A0093E024 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		D995871F286D6D760093E024 /* WeekdaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdaysView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				D9856A0B27BA4E69007E517A /* CalendarView.swift */,
+				D995871F286D6D760093E024 /* WeekdaysView.swift */,
 				D9107C5F282E593C00FABD37 /* MonthlyPageCollectionView.swift */,
 			);
 			path = CustomCalendar;
@@ -394,6 +397,7 @@
 				D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */,
 				D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */,
 				D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */,
+				D9958720286D6D760093E024 /* WeekdaysView.swift in Sources */,
 				D995871C286571BD0093E024 /* Weekday.swift in Sources */,
 				D98569E4274D0299007E517A /* WorkoutListViewController.swift in Sources */,
 				D98569FE2760ADC0007E517A /* WorkoutTableViewCell.swift in Sources */,
