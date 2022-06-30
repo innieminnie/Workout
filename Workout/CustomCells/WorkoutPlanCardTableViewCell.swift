@@ -14,6 +14,7 @@ protocol WorkoutPlanCardTableViewCellDelegate: AnyObject {
 class WorkoutPlanCardTableViewCell: UITableViewCell {
   static let identifier = "workoutPlanCardTableViewCell"
   
+  @IBOutlet weak var containerView: UIView!
   @IBOutlet weak var workoutNameLabel: UILabel!
   @IBOutlet weak var setSumLabel: UILabel!
   @IBOutlet weak var setStackView: UIStackView!
@@ -29,8 +30,16 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    contentView.layer.cornerRadius = 13
-  
+    
+    containerView.layer.cornerRadius = 8
+    containerView.layer.shadowColor = UIColor.gray.cgColor
+    containerView.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
+    containerView.layer.shadowOpacity = 0.5
+    containerView.layer.masksToBounds = false
+    
+    
+    
+    
     setStackView.translatesAutoresizingMaskIntoConstraints = false
     setStackView.isHidden = true
     plusSetButton.addTarget(self, action: #selector(tappedPlusSetButton(sender:)), for: .touchUpInside)
