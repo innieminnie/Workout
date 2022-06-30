@@ -31,15 +31,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     
-    containerView.layer.cornerRadius = 8
-    containerView.layer.shadowColor = UIColor.gray.cgColor
-    containerView.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
-    containerView.layer.shadowOpacity = 0.5
-    containerView.layer.masksToBounds = false
-    
-    
-    
-    
+    containerView.applyShadow()
     setStackView.translatesAutoresizingMaskIntoConstraints = false
     setStackView.isHidden = true
     plusSetButton.addTarget(self, action: #selector(tappedPlusSetButton(sender:)), for: .touchUpInside)

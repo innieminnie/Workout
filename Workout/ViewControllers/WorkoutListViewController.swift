@@ -15,11 +15,7 @@ class WorkoutListViewController: UITableViewController {
     button.backgroundColor = .systemPurple
     button.setTitle("+", for: .normal)
     button.setTitleColor(.white, for: .normal)
-    
-    button.layer.shadowColor = UIColor.gray.cgColor
-    button.layer.shadowOpacity = 1.0
-    button.layer.shadowOffset = .zero
-    button.layer.shadowRadius = 6
+    button.applyShadow()
     
     button.addTarget(self, action: #selector(buttonTouched(_:)), for: .touchDown)
     button.addTarget(self, action: #selector(buttonTouched(_:)), for: .touchDragEnter)

@@ -30,8 +30,9 @@ class HomeViewController: UIViewController {
     button.translatesAutoresizingMaskIntoConstraints = false
     
     button.setTitle("루틴 추가하기", for: .normal)
-    button.layer.cornerRadius = 13
-    button.backgroundColor = .purple
+    button.setTitleColor(.black, for: .normal)
+    button.backgroundColor = .white
+    button.applyShadow()
     button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
     
     return button
