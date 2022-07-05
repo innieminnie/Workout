@@ -63,6 +63,8 @@ class WorkoutSetConfigurationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     
     label.text = "kg"
+    label.textColor = .black
+    
     return label
   }()
   
@@ -84,6 +86,8 @@ class WorkoutSetConfigurationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     
     label.text = "회"
+    label.textColor = .black
+    
     return label
   }()
   
@@ -92,6 +96,8 @@ class WorkoutSetConfigurationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     
     label.text = "X"
+    label.textColor = .black
+    
     return label
   }()
   
