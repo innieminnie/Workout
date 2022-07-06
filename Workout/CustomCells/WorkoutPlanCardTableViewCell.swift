@@ -34,7 +34,6 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     
     containerView.applyShadow()
     setStackView.translatesAutoresizingMaskIntoConstraints = false
-    setStackView.isHidden = true
     
     doneButton.isEnabled = false
     doneButton.addTarget(self, action: #selector(tappedDoneButton(sender:)), for: .touchUpInside)
@@ -65,14 +64,11 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     let setConfigurationView = WorkoutSetConfigurationView()
     setStackView.addArrangedSubview(setConfigurationView)
     setConfigurationView.delegate = self
-    
-    if setStackView.isHidden { setStackView.isHidden = false }
     delegate?.cellExpand()
   }
   
   @objc func tappedMinusSetButton(sender: UIButton) {
     guard let lastSet = setStackView.arrangedSubviews.last else {
-      setStackView.isHidden = true
       return
     }
     
