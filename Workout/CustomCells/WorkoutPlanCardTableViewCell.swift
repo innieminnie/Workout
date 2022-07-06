@@ -20,6 +20,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   @IBOutlet weak var setStackView: UIStackView!
   @IBOutlet weak var plusSetButton: UIButton!
   @IBOutlet weak var minusSetButton: UIButton!
+  @IBOutlet weak var doneButton: UIButton!
   
   weak var delegate: WorkoutPlanCardTableViewCellDelegate?
   private var totalSum: Int = 0 {
@@ -34,6 +35,9 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     containerView.applyShadow()
     setStackView.translatesAutoresizingMaskIntoConstraints = false
     setStackView.isHidden = true
+    
+    doneButton.isEnabled = false
+    doneButton.addTarget(self, action: #selector(tappedDoneButton(sender:)), for: .touchUpInside)
     plusSetButton.addTarget(self, action: #selector(tappedPlusSetButton(sender:)), for: .touchUpInside)
     minusSetButton.addTarget(self, action: #selector(tappedMinusSetButton(sender:)), for: .touchUpInside)
   }
@@ -50,6 +54,11 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   func setUp(with workout: Workout) {
     workoutNameLabel.text = workout.name
     setSumLabel.text = "0"
+  }
+  
+  @objc func tappedDoneButton(sender: UIButton) {
+//    checkAllWeightandCountWritten
+    // if checked > changeView
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {

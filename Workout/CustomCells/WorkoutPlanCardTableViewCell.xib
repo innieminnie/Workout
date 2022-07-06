@@ -58,8 +58,13 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="xFv-Ev-VNa" userLabel="ExtendableView">
-                                        <rect key="frame" x="135" y="0.0" width="223" height="126"/>
+                                        <rect key="frame" x="135" y="0.0" width="150.5" height="126"/>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tu-KF-9s6">
+                                        <rect key="frame" x="285.5" y="0.0" width="72.5" height="126"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="운동완료"/>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Ec9-dv-sA9" firstAttribute="height" secondItem="SjM-GV-1QV" secondAttribute="height" id="8RQ-N7-cyL"/>
@@ -112,6 +117,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="containerView" destination="rPl-bA-zga" id="Gav-9m-lid"/>
+                <outlet property="doneButton" destination="9tu-KF-9s6" id="Wsm-oV-LyP"/>
                 <outlet property="minusSetButton" destination="fUo-kE-TbI" id="TTf-cG-3WP"/>
                 <outlet property="plusSetButton" destination="Fpt-gR-ZAj" id="nDs-UP-yLh"/>
                 <outlet property="setStackView" destination="t5W-2e-8UO" id="ZW7-jJ-KfT"/>
