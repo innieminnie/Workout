@@ -34,17 +34,6 @@ class WorkoutSetConfigurationView: UIView {
   
   weak var delegate: WorkoutSetConfigurationViewDelegate?
   
-  private let checkButton: UIButton = {
-    let button = UIButton()
-    button.translatesAutoresizingMaskIntoConstraints = false
-    
-    button.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-    button.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .selected)
-    button.addTarget(self, action: #selector(tappedCheckButton), for: .touchUpInside)
-    
-    return button
-  }()
-  
   private let weightTextField: UITextField = {
     let textField = UITextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
@@ -165,7 +154,6 @@ class WorkoutSetConfigurationView: UIView {
   }
   
   private func configureSetStackView() {
-    setStackView.addArrangedSubview(checkButton)
     setStackView.addArrangedSubview(weightStackView)
     setStackView.addArrangedSubview(multiplierLabel)
     setStackView.addArrangedSubview(countStackView)
@@ -204,36 +192,6 @@ class WorkoutSetConfigurationView: UIView {
       self.weightValue = weightValue
     default:
       break
-    }
-  }
-  
-  @objc private func tappedCheckButton(sender: UIButton) {
-    if !sender.isSelected {
-      guard weightValue > 0, countValue > 0 else {
-        print("숫자입력필수")
-        return
-      }
-    }
-    
-    sender.isSelected = !sender.isSelected
-    
-    if sender.isSelected {
-      weightTextField.isUserInteractionEnabled = false
-      weightTextField.backgroundColor = .clear
-      weightTextField.textColor = .gray
-      
-      countTextField.isUserInteractionEnabled = false
-      countTextField.backgroundColor = .clear
-      countTextField.textColor = .gray
-   
-    } else {
-      weightTextField.isUserInteractionEnabled = true
-      weightTextField.backgroundColor = .systemBlue
-      weightTextField.textColor = .black
-      
-      countTextField.isUserInteractionEnabled = true
-      countTextField.backgroundColor = .systemBlue
-      countTextField.textColor = .black
     }
   }
   
