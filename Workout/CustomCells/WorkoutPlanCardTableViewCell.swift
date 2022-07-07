@@ -11,6 +11,20 @@ protocol WorkoutPlanCardTableViewCellDelegate: AnyObject {
   func cellShrink()
 }
 
+enum WorkoutStatus {
+  case doing
+  case done
+  
+  func changeButtonTitle() -> String {
+    switch self {
+    case .doing:
+      return "운동완료"
+    case .done:
+      return "기록수정"
+    }
+  }
+}
+
 class WorkoutPlanCardTableViewCell: UITableViewCell {
   static let identifier = "workoutPlanCardTableViewCell"
   
@@ -23,11 +37,19 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   @IBOutlet weak var doneButton: UIButton!
   
   weak var delegate: WorkoutPlanCardTableViewCellDelegate?
+  
   private var totalSum: Int = 0 {
     didSet {
       setSumLabel.text = "\(totalSum)"
     }
   }
+  
+  private var workoutStatus: WorkoutStatus =
+    .doing {
+      didSet {
+        doneButton.setTitle(workoutStatus.changeButtonTitle(), for: .normal)
+      }
+    }
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -56,13 +78,19 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedDoneButton(sender: UIButton) {
-//    checkAllWeightandCountWritten
+    //    checkAllWeightandCountWritten
     // if checked > changeView
+    if workoutStatus == .doing {
+      workoutStatus = .done
+    } else {
+      workoutStatus = .doing
+    }
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
     let setConfigurationView = WorkoutSetConfigurationView()
     setStackView.addArrangedSubview(setConfigurationView)
+    if !doneButton.isEnabled { doneButton.isEnabled = true }
     setConfigurationView.delegate = self
     delegate?.cellExpand()
   }
@@ -73,6 +101,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     }
     
     setStackView.removeArrangedSubview(lastSet)
+    if setStackView.arrangedSubviews.isEmpty { doneButton.isEnabled = false }
     lastSet.removeFromSuperview()
     delegate?.cellShrink()
   }
