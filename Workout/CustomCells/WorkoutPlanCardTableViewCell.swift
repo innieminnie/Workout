@@ -15,7 +15,7 @@ enum WorkoutStatus {
   case doing
   case done
   
-  func changeButtonTitle() -> String {
+  var buttonTitle: String {
     switch self {
     case .doing:
       return "운동완료"
@@ -47,7 +47,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   private var workoutStatus: WorkoutStatus =
     .doing {
       didSet {
-        doneButton.setTitle(workoutStatus.changeButtonTitle(), for: .normal)
+        doneButton.setTitle(workoutStatus.buttonTitle, for: .normal)
       }
     }
   
@@ -78,12 +78,29 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedDoneButton(sender: UIButton) {
-    //    checkAllWeightandCountWritten
-    // if checked > changeView
-    if workoutStatus == .doing {
+    switch workoutStatus {
+    case .doing:
+      //    checkAllWeightandCountWritten
+      // if checked > changeView
       workoutStatus = .done
-    } else {
+      
+      for workoutSetView in setStackView.arrangedSubviews {
+        guard let singleSetView = workoutSetView as? WorkoutSetConfigurationView else {
+          continue
+        }
+        
+        singleSetView.showDoneStatusView()
+      }
+    case .done:
       workoutStatus = .doing
+      
+      for workoutSetView in setStackView.arrangedSubviews {
+        guard let singleSetView = workoutSetView as? WorkoutSetConfigurationView else {
+          continue
+        }
+        
+        singleSetView.showDoingStatusView()
+      }
     }
   }
   
