@@ -34,6 +34,14 @@ class WorkoutSetConfigurationView: UIView {
   
   weak var delegate: WorkoutSetConfigurationViewDelegate?
   
+  private let setIndexLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+
+    label.textColor = .black
+    return label
+  }()
+  
   private let weightTextField: UITextField = {
     let textField = UITextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
@@ -123,7 +131,7 @@ class WorkoutSetConfigurationView: UIView {
     return stackView
   }()
   
-  init() {
+  init(with index: Int) {
     super.init(frame: .zero)
     
     weightTextField.delegate = self
@@ -131,7 +139,7 @@ class WorkoutSetConfigurationView: UIView {
     
     configureWeightStackView()
     configureCountStackView()
-    configureSetStackView()
+    configureSetStackView(setIndex: index)
     setUpLayout()
   }
   
@@ -153,7 +161,9 @@ class WorkoutSetConfigurationView: UIView {
     countStackView.addArrangedSubview(countUnitLabel)
   }
   
-  private func configureSetStackView() {
+  private func configureSetStackView(setIndex: Int) {
+    setStackView.addArrangedSubview(setIndexLabel)
+    setIndexLabel.text = "Set \(setIndex)"
     setStackView.addArrangedSubview(weightStackView)
     setStackView.addArrangedSubview(multiplierLabel)
     setStackView.addArrangedSubview(countStackView)
