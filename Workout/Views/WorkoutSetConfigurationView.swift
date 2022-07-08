@@ -215,6 +215,10 @@ class WorkoutSetConfigurationView: UIView {
     countTextField.textColor = .gray
   }
   
+  func allFieldsAreWritten() -> Bool {
+    return weightTextField.hasText && countTextField.hasText
+  }
+  
   @objc private func textFieldValueChanged(sender: UITextField) {
     updateSetSum(sender: sender)
   }
