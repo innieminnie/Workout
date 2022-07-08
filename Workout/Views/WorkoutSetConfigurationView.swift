@@ -195,6 +195,26 @@ class WorkoutSetConfigurationView: UIView {
     }
   }
   
+  func showDoingStatusView() {
+    weightTextField.isUserInteractionEnabled = true
+    weightTextField.backgroundColor = .systemBlue
+    weightTextField.textColor = .black
+    
+    countTextField.isUserInteractionEnabled = true
+    countTextField.backgroundColor = .systemBlue
+    countTextField.textColor = .black
+  }
+  
+  func showDoneStatusView() {
+    weightTextField.isUserInteractionEnabled = false
+    weightTextField.backgroundColor = .clear
+    weightTextField.textColor = .gray
+    
+    countTextField.isUserInteractionEnabled = false
+    countTextField.backgroundColor = .clear
+    countTextField.textColor = .gray
+  }
+  
   @objc private func textFieldValueChanged(sender: UITextField) {
     updateSetSum(sender: sender)
   }
