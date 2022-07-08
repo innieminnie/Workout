@@ -80,20 +80,27 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   @objc func tappedDoneButton(sender: UIButton) {
     switch workoutStatus {
     case .doing:
-      //    checkAllWeightandCountWritten
-      // if checked > changeView
-      workoutStatus = .done
+      for workoutSetView in setStackView.arrangedSubviews {
+        guard let singleSetView = workoutSetView as? WorkoutSetConfigurationView else {
+          return
+        }
+        
+        guard singleSetView.allFieldsAreWritten() else {
+          print("숫자입력필수")
+          return
+        }
+      }
       
       for workoutSetView in setStackView.arrangedSubviews {
         guard let singleSetView = workoutSetView as? WorkoutSetConfigurationView else {
-          continue
+          return
         }
         
         singleSetView.showDoneStatusView()
+        workoutStatus = .done
+        
       }
     case .done:
-      workoutStatus = .doing
-      
       for workoutSetView in setStackView.arrangedSubviews {
         guard let singleSetView = workoutSetView as? WorkoutSetConfigurationView else {
           continue
@@ -101,9 +108,10 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
         
         singleSetView.showDoingStatusView()
       }
+      
+      workoutStatus = .doing
     }
   }
-  
   @objc func tappedPlusSetButton(sender: UIButton) {
     let setConfigurationView = WorkoutSetConfigurationView()
     setStackView.addArrangedSubview(setConfigurationView)
@@ -128,3 +136,4 @@ extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
     totalSum += (newValue - oldValue)
   }
 }
+
