@@ -9,6 +9,7 @@ import UIKit
 protocol WorkoutPlanCardTableViewCellDelegate: AnyObject {
   func cellExpand()
   func cellShrink()
+  func textFieldsAreNotFilled()
 }
 
 enum WorkoutStatus {
@@ -86,7 +87,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
         }
         
         guard singleSetView.allFieldsAreWritten() else {
-          print("숫자입력필수")
+          delegate?.textFieldsAreNotFilled()
           return
         }
       }
@@ -112,6 +113,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
       workoutStatus = .doing
     }
   }
+  
   @objc func tappedPlusSetButton(sender: UIButton) {
     let setConfigurationView = WorkoutSetConfigurationView()
     setStackView.addArrangedSubview(setConfigurationView)
