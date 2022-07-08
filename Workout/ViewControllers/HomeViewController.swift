@@ -216,6 +216,13 @@ extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
   func cellShrink() {
     updateTableView()
   }
+
+  func textFieldsAreNotFilled() {
+    let alert = UIAlertController(title: "모든 세트의 수행 무게와 횟수를 입력해주세요 :)", message: nil, preferredStyle: .alert)
+    let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+    alert.addAction(action)
+    self.present(alert, animated: false, completion: nil)
+  }
 }
 extension HomeViewController: UITableViewDragDelegate {
   func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
