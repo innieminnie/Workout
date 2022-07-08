@@ -58,6 +58,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     containerView.applyShadow()
     setStackView.translatesAutoresizingMaskIntoConstraints = false
     
+    setSumLabel.text = "\(totalSum)"
     doneButton.isEnabled = false
     doneButton.addTarget(self, action: #selector(tappedDoneButton(sender:)), for: .touchUpInside)
     plusSetButton.addTarget(self, action: #selector(tappedPlusSetButton(sender:)), for: .touchUpInside)
@@ -75,7 +76,6 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   
   func setUp(with workout: Workout) {
     workoutNameLabel.text = workout.name
-    setSumLabel.text = "0"
   }
   
   @objc func tappedDoneButton(sender: UIButton) {
