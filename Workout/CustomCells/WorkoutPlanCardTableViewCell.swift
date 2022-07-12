@@ -70,6 +70,19 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
   }
   
+  override func prepareForReuse() {
+    while !setStackView.arrangedSubviews.isEmpty {
+      guard let lastSet = setStackView.arrangedSubviews.last else {
+        return
+      }
+      
+      setStackView.removeArrangedSubview(lastSet)
+      if setStackView.arrangedSubviews.isEmpty { doneButton.isEnabled = false }
+      lastSet.removeFromSuperview()
+      delegate?.cellShrink()
+    }
+  }
+  
   override func setSelected(_ selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)
   }
