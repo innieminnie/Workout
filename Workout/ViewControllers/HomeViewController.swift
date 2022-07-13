@@ -8,10 +8,10 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-  private var workouts = [Workout]()
+  private var plannedWorkouts = [PlannedWorkout]()
   var selectedDayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
-      self.workouts = routineManager.plan(of: selectedDayInformation)
+      self.plannedWorkouts = routineManager.plan(of: selectedDayInformation)
       routineTableView.reloadData()
     }
   }
@@ -63,7 +63,7 @@ class HomeViewController: UIViewController {
     configureGestureRecognizer()
     setUpLayout()
     
-    workouts = routineManager.plan(of: selectedDayInformation)
+    plannedWorkouts = routineManager.plan(of: selectedDayInformation)
   }
   
   @objc private func tappedAddRoutineButton(sender: UIButton) {
@@ -143,8 +143,12 @@ class HomeViewController: UIViewController {
 }
 extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
-    self.workouts += selectedWorkouts
-    routineManager.addPlan(with: workouts, on: selectedDayInformation)
+    let newPlannedWorkouts = selectedWorkouts.map({ workout in
+      PlannedWorkout(workout)
+    })
+    
+    self.plannedWorkouts += newPlannedWorkouts
+    routineManager.addPlan(with: plannedWorkouts, on: selectedDayInformation)
     
     routineTableView.reloadData()
     routineTableView.layoutIfNeeded()
@@ -156,7 +160,7 @@ extension HomeViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return workouts.count
+    return plannedWorkouts.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -164,7 +168,7 @@ extension HomeViewController: UITableViewDataSource {
       return UITableViewCell()
     }
     
-    let workout = workouts[indexPath.row]
+    let workout = plannedWorkouts[indexPath.row]
     cell.setUp(with: workout)
     cell.delegate = self
     
@@ -178,11 +182,11 @@ extension HomeViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
     guard sourceIndexPath.row != destinationIndexPath.row else { return }
     
-    let workout = workouts[sourceIndexPath.row]
-    workouts.remove(at: sourceIndexPath.row)
-    workouts.insert(workout, at: destinationIndexPath.row)
+    let workout = plannedWorkouts[sourceIndexPath.row]
+    plannedWorkouts.remove(at: sourceIndexPath.row)
+    plannedWorkouts.insert(workout, at: destinationIndexPath.row)
     
-    routineManager.updatePlan(of: selectedDayInformation, with: workouts)
+    routineManager.updatePlan(of: selectedDayInformation, with: plannedWorkouts)
   }
 }
 extension HomeViewController: UITableViewDelegate {
@@ -192,10 +196,10 @@ extension HomeViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      workouts.remove(at: indexPath.row)
+      plannedWorkouts.remove(at: indexPath.row)
       tableView.deleteRows(at: [indexPath], with: .automatic)
       
-      routineManager.updatePlan(of: selectedDayInformation, with: workouts)
+      routineManager.updatePlan(of: selectedDayInformation, with: plannedWorkouts)
     }
   }
 }
@@ -216,7 +220,7 @@ extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
   func cellShrink() {
     updateTableView()
   }
-
+  
   func textFieldsAreNotFilled() {
     let alert = UIAlertController(title: "모든 세트의 수행 무게와 횟수를 입력해주세요 :)", message: nil, preferredStyle: .alert)
     let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)

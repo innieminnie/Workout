@@ -38,7 +38,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   @IBOutlet weak var doneButton: UIButton!
   
   weak var delegate: WorkoutPlanCardTableViewCellDelegate?
-  
+  private var currentWorkout: PlannedWorkout?
   private var totalSum: Int = 0 {
     didSet {
       setSumLabel.text = "\(totalSum)"
@@ -87,8 +87,25 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     super.setSelected(selected, animated: animated)
   }
   
-  func setUp(with workout: Workout) {
+  func setUp(with plannedWorkout: PlannedWorkout) {
+    self.currentWorkout = plannedWorkout
+    
+    let workout = plannedWorkout.workout
+    let sets = plannedWorkout.sets.sorted { set1, set2 in
+      set1.key < set2.key
+    }
+    
     workoutNameLabel.text = workout.name
+    
+    if !sets.isEmpty {
+      for singleSet in sets {
+        let setConfigurationView = WorkoutSetConfigurationView(index: singleSet.key, setInformation: singleSet.value)
+        setStackView.addArrangedSubview(setConfigurationView)
+        if !doneButton.isEnabled { doneButton.isEnabled = true }
+        setConfigurationView.delegate = self
+        delegate?.cellExpand()
+      }
+    }
   }
   
   @objc func tappedDoneButton(sender: UIButton) {
@@ -128,7 +145,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
-    let setConfigurationView = WorkoutSetConfigurationView(with: setStackView.arrangedSubviews.count + 1)
+    let setConfigurationView = WorkoutSetConfigurationView(index: setStackView.arrangedSubviews.count + 1, setInformation: SetConfiguration())
     setStackView.addArrangedSubview(setConfigurationView)
     if !doneButton.isEnabled { doneButton.isEnabled = true }
     setConfigurationView.delegate = self
@@ -147,6 +164,22 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
 }
 extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
+  func weightValueUpdated(to newValue: Int, of index: Int) {
+    guard let currentWorkout = self.currentWorkout else {
+      return
+    }
+    
+    currentWorkout.updateWeight(of: index, to: newValue )
+  }
+  
+  func countValueUpdated(to newValue: Int, of index: Int) {
+    guard let currentWorkout = self.currentWorkout else {
+      return
+    }
+    
+    currentWorkout.updateCount(of: index, to: newValue )
+  }
+  
   func setSumUpdated(from oldValue: Int, to newValue: Int) {
     totalSum += (newValue - oldValue)
   }

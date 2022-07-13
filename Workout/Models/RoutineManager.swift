@@ -9,21 +9,21 @@ import Foundation
 
 class RoutineManager {
   static let shared = RoutineManager()
-  private var workoutPlanner: [DateInformation : [Workout]]
+  private var workoutPlanner: [DateInformation : [PlannedWorkout]]
   
   private init() {
     workoutPlanner = [:]
   }
   
-  func plan(of dateInformation: DateInformation) -> [Workout] {
+  func plan(of dateInformation: DateInformation) -> [PlannedWorkout] {
     return workoutPlanner[dateInformation] ?? []
   }
 
-  func addPlan(with workouts: [Workout], on dateInformation: DateInformation) {
+  func addPlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
     workoutPlanner[dateInformation] = workouts
   }
   
-  func updatePlan(of date: DateInformation, with workouts: [Workout]) {
+  func updatePlan(of date: DateInformation, with workouts: [PlannedWorkout]) {
     guard workoutPlanner[date] != nil else {
       return
     }
