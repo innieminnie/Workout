@@ -9,9 +9,13 @@ import UIKit
 
 protocol WorkoutSetConfigurationViewDelegate: AnyObject {
   func setSumUpdated(from oldValue: Int, to newValue: Int)
+  func weightValueUpdated(to newValue: Int, of index: Int)
+  func countValueUpdated(to newValue: Int, of index: Int)
 }
 
 class WorkoutSetConfigurationView: UIView {
+  private lazy var setIndex: Int = 0
+  
   private var setSum: Int = 0 {
     didSet {
       delegate?.setSumUpdated(from: oldValue, to: setSum)
@@ -20,6 +24,8 @@ class WorkoutSetConfigurationView: UIView {
   
   private var weightValue: Int = 0 {
     didSet {
+      delegate?.weightValueUpdated(to: weightValue, of: self.setIndex)
+      
       setSum -= oldValue * countValue
       setSum += weightValue * countValue
     }
@@ -27,6 +33,8 @@ class WorkoutSetConfigurationView: UIView {
   
   private var countValue: Int = 0 {
     didSet {
+      delegate?.countValueUpdated(to: countValue, of: self.setIndex)
+      
       setSum -= oldValue * weightValue
       setSum += weightValue * countValue
     }
@@ -131,15 +139,16 @@ class WorkoutSetConfigurationView: UIView {
     return stackView
   }()
   
-  init(with index: Int) {
+  init(index: Int, setInformation: SetConfiguration) {
     super.init(frame: .zero)
     
+    self.setIndex = index
     weightTextField.delegate = self
     countTextField.delegate = self
     
-    configureWeightStackView()
-    configureCountStackView()
-    configureSetStackView(setIndex: index)
+    configureWeightStackView(with: setInformation.weight)
+    configureCountStackView(with: setInformation.count)
+    configureSetStackView()
     setUpLayout()
   }
   
@@ -151,19 +160,21 @@ class WorkoutSetConfigurationView: UIView {
     delegate?.setSumUpdated(from: setSum, to: 0)
   }
   
-  private func configureWeightStackView() {
+  private func configureWeightStackView(with weight: Int) {
     weightStackView.addArrangedSubview(weightTextField)
+    weightTextField.text = "\(weight)"
     weightStackView.addArrangedSubview(weightUnitLabel)
   }
   
-  private func configureCountStackView() {
+  private func configureCountStackView(with count: Int) {
     countStackView.addArrangedSubview(countTextField)
+    countTextField.text = "\(count)"
     countStackView.addArrangedSubview(countUnitLabel)
   }
   
-  private func configureSetStackView(setIndex: Int) {
+  private func configureSetStackView() {
     setStackView.addArrangedSubview(setIndexLabel)
-    setIndexLabel.text = "Set \(setIndex)"
+    setIndexLabel.text = "Set \(self.setIndex)"
     setStackView.addArrangedSubview(weightStackView)
     setStackView.addArrangedSubview(multiplierLabel)
     setStackView.addArrangedSubview(countStackView)
