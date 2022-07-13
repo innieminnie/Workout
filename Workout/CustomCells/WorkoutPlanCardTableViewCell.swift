@@ -99,6 +99,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     
     if !sets.isEmpty {
       for singleSet in sets {
+        totalSum += singleSet.value.weightTimesCount()
         let setConfigurationView = WorkoutSetConfigurationView(index: singleSet.key, setInformation: singleSet.value)
         setStackView.addArrangedSubview(setConfigurationView)
         if !doneButton.isEnabled { doneButton.isEnabled = true }

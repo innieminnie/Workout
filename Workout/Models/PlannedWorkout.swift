@@ -22,7 +22,7 @@ class PlannedWorkout {
       return
     }
     
-    updatingSet.weight = newValue
+    updatingSet.updateWeight(with: newValue)
   }
   
   func updateCount(of index: Int, to newValue: Int) {
@@ -31,6 +31,6 @@ class PlannedWorkout {
       return
     }
     
-    updatingSet.count = newValue
+    updatingSet.updateCount(with: newValue)
   }
 }
