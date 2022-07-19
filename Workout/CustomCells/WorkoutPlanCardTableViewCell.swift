@@ -39,12 +39,6 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   
   weak var delegate: WorkoutPlanCardTableViewCellDelegate?
   private var currentWorkout: PlannedWorkout?
-  private var totalSum: Int = 0 {
-    didSet {
-      setSumLabel.text = "\(totalSum)"
-    }
-  }
-  
   private var workoutStatus: WorkoutStatus =
     .doing {
       didSet {
@@ -58,7 +52,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     containerView.applyShadow()
     setStackView.translatesAutoresizingMaskIntoConstraints = false
     
-    setSumLabel.text = "\(totalSum)"
+    setSumLabel.text = "\(currentWorkout?.totalSum ?? 0)"
     doneButton.isEnabled = false
     doneButton.addTarget(self, action: #selector(tappedDoneButton(sender:)), for: .touchUpInside)
     plusSetButton.addTarget(self, action: #selector(tappedPlusSetButton(sender:)), for: .touchUpInside)
@@ -99,14 +93,15 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     
     if !sets.isEmpty {
       for singleSet in sets {
-        totalSum += singleSet.value.weightTimesCount()
         let setConfigurationView = WorkoutSetConfigurationView(index: singleSet.key, setInformation: singleSet.value)
         setStackView.addArrangedSubview(setConfigurationView)
-        if !doneButton.isEnabled { doneButton.isEnabled = true }
+//        if !doneButton.isEnabled { doneButton.isEnabled = true }
         setConfigurationView.delegate = self
         delegate?.cellExpand()
       }
     }
+    
+    setSumLabel.text = "\(currentWorkout?.totalSum ?? 0)"
   }
   
   @objc func tappedDoneButton(sender: UIButton) {
@@ -182,7 +177,7 @@ extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
   }
   
   func setSumUpdated(from oldValue: Int, to newValue: Int) {
-    totalSum += (newValue - oldValue)
+    setSumLabel.text = "\(currentWorkout?.totalSum ?? 0)"
   }
 }
 
