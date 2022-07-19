@@ -92,10 +92,11 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     workoutNameLabel.text = workout.name
     
     if !sets.isEmpty {
+      if !doneButton.isEnabled { doneButton.isEnabled = true }
+      
       for singleSet in sets {
         let setConfigurationView = WorkoutSetConfigurationView(index: singleSet.key, setInformation: singleSet.value)
         setStackView.addArrangedSubview(setConfigurationView)
-//        if !doneButton.isEnabled { doneButton.isEnabled = true }
         setConfigurationView.delegate = self
         delegate?.cellExpand()
       }
@@ -149,10 +150,11 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedMinusSetButton(sender: UIButton) {
-    guard let lastSet = setStackView.arrangedSubviews.last else {
+    guard let lastSet = setStackView.arrangedSubviews.last as? WorkoutSetConfigurationView else {
       return
     }
-    
+
+    lastSet.resetWeightAndCountValues()
     setStackView.removeArrangedSubview(lastSet)
     if setStackView.arrangedSubviews.isEmpty { doneButton.isEnabled = false }
     lastSet.removeFromSuperview()
