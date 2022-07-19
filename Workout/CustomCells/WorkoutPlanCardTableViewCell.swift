@@ -150,11 +150,12 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedMinusSetButton(sender: UIButton) {
-    guard let lastSet = setStackView.arrangedSubviews.last as? WorkoutSetConfigurationView else {
+    guard let currentWorkout = self.currentWorkout, let lastSet = setStackView.arrangedSubviews.last as? WorkoutSetConfigurationView else {
       return
     }
 
     lastSet.resetWeightAndCountValues()
+    currentWorkout.removeSet(of: setStackView.arrangedSubviews.count)
     setStackView.removeArrangedSubview(lastSet)
     if setStackView.arrangedSubviews.isEmpty { doneButton.isEnabled = false }
     lastSet.removeFromSuperview()

@@ -36,4 +36,8 @@ class PlannedWorkout {
     
     updatingSet.updateCount(with: newValue)
   }
+  
+  func removeSet(of index: Int) {
+    sets.removeValue(forKey: index)
+  }
 }
