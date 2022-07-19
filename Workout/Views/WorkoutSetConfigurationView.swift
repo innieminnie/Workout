@@ -58,6 +58,7 @@ class WorkoutSetConfigurationView: UIView {
     textField.layer.cornerRadius = 5
     textField.keyboardType = .decimalPad
     textField.textAlignment = .center
+    textField.placeholder = "\(0)"
     
     textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
     return textField
@@ -81,6 +82,7 @@ class WorkoutSetConfigurationView: UIView {
     textField.layer.cornerRadius = 5
     textField.keyboardType = .decimalPad
     textField.textAlignment = .center
+    textField.placeholder = "\(0)"
     
     textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
     return textField
@@ -139,6 +141,19 @@ class WorkoutSetConfigurationView: UIView {
     return stackView
   }()
   
+  init(index: Int) {
+    super.init(frame: .zero)
+    
+    self.setIndex = index
+    weightTextField.delegate = self
+    countTextField.delegate = self
+    
+    configureWeightStackView()
+    configureCountStackView()
+    configureSetStackView()
+    setUpLayout()
+  }
+  
   init(index: Int, setInformation: SetConfiguration) {
     super.init(frame: .zero)
     
@@ -146,9 +161,9 @@ class WorkoutSetConfigurationView: UIView {
     weightTextField.delegate = self
     countTextField.delegate = self
     
-    configureWeightStackView(with: setInformation.weight)
-    configureCountStackView(with: setInformation.count)
-    configureSetStackView()
+    configureWeightStackView()
+    configureCountStackView()
+    configureSetStackView(w: setInformation.weight, c: setInformation.count)
     setUpLayout()
   }
   
@@ -160,15 +175,13 @@ class WorkoutSetConfigurationView: UIView {
     delegate?.setSumUpdated(from: setSum, to: 0)
   }
   
-  private func configureWeightStackView(with weight: Int) {
+  private func configureWeightStackView() {
     weightStackView.addArrangedSubview(weightTextField)
-    weightTextField.text = "\(weight)"
     weightStackView.addArrangedSubview(weightUnitLabel)
   }
   
-  private func configureCountStackView(with count: Int) {
+  private func configureCountStackView() {
     countStackView.addArrangedSubview(countTextField)
-    countTextField.text = "\(count)"
     countStackView.addArrangedSubview(countUnitLabel)
   }
   
@@ -178,6 +191,17 @@ class WorkoutSetConfigurationView: UIView {
     setStackView.addArrangedSubview(weightStackView)
     setStackView.addArrangedSubview(multiplierLabel)
     setStackView.addArrangedSubview(countStackView)
+ 
+    self.addSubview(setStackView)
+  }
+  private func configureSetStackView(w weight: Int, c count: Int ) {
+    setStackView.addArrangedSubview(setIndexLabel)
+    setIndexLabel.text = "Set \(self.setIndex)"
+    setStackView.addArrangedSubview(weightStackView)
+    weightTextField.text = "\(weight)"
+    setStackView.addArrangedSubview(multiplierLabel)
+    setStackView.addArrangedSubview(countStackView)
+    countTextField.text = "\(count)"
     
     self.addSubview(setStackView)
   }

@@ -142,7 +142,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
-    let setConfigurationView = WorkoutSetConfigurationView(index: setStackView.arrangedSubviews.count + 1, setInformation: SetConfiguration())
+    let setConfigurationView = WorkoutSetConfigurationView(index: setStackView.arrangedSubviews.count + 1)
     setStackView.addArrangedSubview(setConfigurationView)
     if !doneButton.isEnabled { doneButton.isEnabled = true }
     setConfigurationView.delegate = self
