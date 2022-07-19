@@ -216,6 +216,11 @@ class WorkoutSetConfigurationView: UIView {
     }
   }
   
+  func resetWeightAndCountValues() {
+    self.weightValue = 0
+    self.countValue = 0
+  }
+  
   func showDoingStatusView() {
     weightTextField.isUserInteractionEnabled = true
     weightTextField.backgroundColor = .systemBlue
