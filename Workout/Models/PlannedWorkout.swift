@@ -21,6 +21,10 @@ class PlannedWorkout {
     self.sets = [:]
   }
   
+  func addNewSet(of index: Int) {
+    sets[index] = SetConfiguration()
+  }
+  
   func updateWeight(of index: Int, to newValue: Int) {
     guard let updatingSet = self.sets[index] else {
       sets[index] = SetConfiguration(weight: newValue)
