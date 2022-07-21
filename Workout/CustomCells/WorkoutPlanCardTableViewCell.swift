@@ -39,12 +39,6 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   
   weak var delegate: WorkoutPlanCardTableViewCellDelegate?
   private var currentWorkout: PlannedWorkout?
-  private var workoutStatus: WorkoutStatus =
-    .doing {
-      didSet {
-        doneButton.setTitle(workoutStatus.buttonTitle, for: .normal)
-      }
-    }
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -99,6 +93,10 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
         setStackView.addArrangedSubview(setConfigurationView)
         setConfigurationView.delegate = self
         delegate?.cellExpand()
+        
+        if plannedWorkout.isDone == .done {
+          setConfigurationView.showDoneStatusView()
+        }
       }
     }
     
@@ -106,7 +104,9 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedDoneButton(sender: UIButton) {
-    switch workoutStatus {
+    guard let currentWorkout = self.currentWorkout else { return }
+    
+    switch currentWorkout.isDone {
     case .doing:
       for workoutSetView in setStackView.arrangedSubviews {
         guard let singleSetView = workoutSetView as? WorkoutSetConfigurationView else {
@@ -125,8 +125,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
         }
         
         singleSetView.showDoneStatusView()
-        workoutStatus = .done
-        
+        currentWorkout.isDone = .done
       }
     case .done:
       for workoutSetView in setStackView.arrangedSubviews {
@@ -137,8 +136,10 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
         singleSetView.showDoingStatusView()
       }
       
-      workoutStatus = .doing
+      currentWorkout.isDone = .doing
     }
+    
+    doneButton.setTitle(currentWorkout.isDone.buttonTitle, for: .normal)
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {

@@ -9,6 +9,7 @@ import Foundation
 
 class PlannedWorkout {
   let workout: Workout
+  var isDone: WorkoutStatus
   var sets: [Int : SetConfiguration]
   var totalSum: Int {
     return sets.values.reduce(0){ return $0 + $1.weightTimesCount()}
@@ -16,6 +17,7 @@ class PlannedWorkout {
   
   init(_ workout: Workout) {
     self.workout = workout
+    self.isDone = .doing
     self.sets = [:]
   }
   
