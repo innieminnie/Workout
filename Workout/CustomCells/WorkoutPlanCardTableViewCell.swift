@@ -12,20 +12,6 @@ protocol WorkoutPlanCardTableViewCellDelegate: AnyObject {
   func textFieldsAreNotFilled()
 }
 
-enum WorkoutStatus {
-  case doing
-  case done
-  
-  var buttonTitle: String {
-    switch self {
-    case .doing:
-      return "운동완료"
-    case .done:
-      return "기록수정"
-    }
-  }
-}
-
 class WorkoutPlanCardTableViewCell: UITableViewCell {
   static let identifier = "workoutPlanCardTableViewCell"
   
@@ -143,7 +129,15 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
-    let setConfigurationView = WorkoutSetConfigurationView(index: setStackView.arrangedSubviews.count + 1)
+    let newSetIndex = setStackView.arrangedSubviews.count + 1
+    let setConfigurationView = WorkoutSetConfigurationView(index: newSetIndex)
+    
+    guard let currentWorkout = self.currentWorkout else {
+      return
+    }
+    
+    currentWorkout.addNewSet(of: newSetIndex)
+    
     setStackView.addArrangedSubview(setConfigurationView)
     if !doneButton.isEnabled { doneButton.isEnabled = true }
     setConfigurationView.delegate = self

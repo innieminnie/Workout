@@ -59,6 +59,7 @@ class WorkoutSetConfigurationView: UIView {
     textField.keyboardType = .decimalPad
     textField.textAlignment = .center
     textField.placeholder = "\(0)"
+    textField.text = "\(0)"
     
     textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
     return textField
@@ -83,6 +84,7 @@ class WorkoutSetConfigurationView: UIView {
     textField.keyboardType = .decimalPad
     textField.textAlignment = .center
     textField.placeholder = "\(0)"
+    textField.text = "\(0)"
     
     textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
     return textField
