@@ -129,7 +129,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
-    let newSetIndex = setStackView.arrangedSubviews.count + 1
+    let newSetIndex = UInt(setStackView.arrangedSubviews.count) + 1
     let setConfigurationView = WorkoutSetConfigurationView(index: newSetIndex)
     
     guard let currentWorkout = self.currentWorkout else {
@@ -150,7 +150,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     }
 
     lastSet.resetWeightAndCountValues()
-    currentWorkout.removeSet(of: setStackView.arrangedSubviews.count)
+    currentWorkout.removeSet(of: UInt(setStackView.arrangedSubviews.count))
     setStackView.removeArrangedSubview(lastSet)
     if setStackView.arrangedSubviews.isEmpty { doneButton.isEnabled = false }
     lastSet.removeFromSuperview()
@@ -158,7 +158,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
 }
 extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
-  func weightValueUpdated(to newValue: Int, of index: Int) {
+  func weightValueUpdated(to newValue: Float, of index: UInt) {
     guard let currentWorkout = self.currentWorkout else {
       return
     }
@@ -166,7 +166,7 @@ extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
     currentWorkout.updateWeight(of: index, to: newValue )
   }
   
-  func countValueUpdated(to newValue: Int, of index: Int) {
+  func countValueUpdated(to newValue: UInt, of index: UInt) {
     guard let currentWorkout = self.currentWorkout else {
       return
     }
@@ -174,7 +174,7 @@ extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
     currentWorkout.updateCount(of: index, to: newValue )
   }
   
-  func setSumUpdated(from oldValue: Int, to newValue: Int) {
+  func setSumUpdated(from oldValue: Float, to newValue: Float) {
     setSumLabel.text = "\(currentWorkout?.totalSum ?? 0)"
   }
 }

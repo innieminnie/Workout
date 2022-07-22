@@ -10,8 +10,8 @@ import Foundation
 class PlannedWorkout {
   let workout: Workout
   var isDone: WorkoutStatus
-  var sets: [Int : SetConfiguration]
-  var totalSum: Int {
+  var sets: [UInt : SetConfiguration]
+  var totalSum: Float {
     return sets.values.reduce(0){ return $0 + $1.weightTimesCount()}
   }
   
@@ -21,11 +21,11 @@ class PlannedWorkout {
     self.sets = [:]
   }
   
-  func addNewSet(of index: Int) {
+  func addNewSet(of index: UInt) {
     sets[index] = SetConfiguration()
   }
   
-  func updateWeight(of index: Int, to newValue: Int) {
+  func updateWeight(of index: UInt, to newValue: Float) {
     guard let updatingSet = self.sets[index] else {
       sets[index] = SetConfiguration(weight: newValue)
       return
@@ -34,7 +34,7 @@ class PlannedWorkout {
     updatingSet.updateWeight(with: newValue)
   }
   
-  func updateCount(of index: Int, to newValue: Int) {
+  func updateCount(of index: UInt, to newValue: UInt) {
     guard let updatingSet = self.sets[index] else {
       sets[index] = SetConfiguration(count: newValue)
       return
@@ -43,7 +43,7 @@ class PlannedWorkout {
     updatingSet.updateCount(with: newValue)
   }
   
-  func removeSet(of index: Int) {
+  func removeSet(of index: UInt) {
     sets.removeValue(forKey: index)
   }
 }
