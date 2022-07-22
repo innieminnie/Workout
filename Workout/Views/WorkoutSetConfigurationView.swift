@@ -94,7 +94,7 @@ class WorkoutSetConfigurationView: UIView {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     
-    label.text = "회"
+    label.text = "reps"
     label.textColor = .black
     
     return label
