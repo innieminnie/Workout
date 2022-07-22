@@ -9,10 +9,8 @@ import Foundation
 
 struct Workout {
   let name: String
-  let measurement: Measurement
   
-  init(_ name: String, _ measurement: Measurement) {
+  init(_ name: String) {
     self.name = name
-    self.measurement = measurement
   }
 }
