@@ -14,15 +14,11 @@ protocol NewWorkoutActionDelegate: AnyObject {
 }
 
 class NewWorkoutView: UIView {
-  static let measurementTypes: [Measurement] = {
-    return Measurement.allCases
-  }()
-  
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     
-    label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+    label.font = UIFont.preferredFont(forTextStyle: .title2)
     label.setContentHuggingPriority(.defaultHigh, for: .vertical)
     label.text = "NEW"
     label.textColor = .black
@@ -40,27 +36,6 @@ class NewWorkoutView: UIView {
     textField.placeholder = "새로운 운동명을 입력하세요."
     
     return textField
-  }()
-  
-  private let nameStackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    
-    stackView.axis = .horizontal
-    stackView.spacing = 3
-    
-    return stackView
-  }()
-  
-  private let measurementStackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    
-    stackView.axis = .horizontal
-    stackView.distribution = .fillEqually
-    stackView.spacing = 5
-    
-    return stackView
   }()
   
   private let newWorkoutRegisterFormStackView: UIStackView = {
@@ -104,8 +79,7 @@ class NewWorkoutView: UIView {
     
     return stackView
   }()
-  
-  private var activatedMeasurementView: RoundedCornerLabelView?
+
   weak var delegate: NewWorkoutActionDelegate?
   
   init() {
@@ -114,16 +88,7 @@ class NewWorkoutView: UIView {
     
     addSubview(titleLabel)
     
-    for measurementValue in NewWorkoutView.measurementTypes {
-      let measurementRoundedCornerView = RoundedCornerLabelView(title: measurementValue.rawValue)
-      measurementStackView.addArrangedSubview(measurementRoundedCornerView)
-      
-      let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(measurementTapped(_:)))
-      measurementRoundedCornerView.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
     newWorkoutRegisterFormStackView.addArrangedSubview(nameTextField)
-    newWorkoutRegisterFormStackView.addArrangedSubview(measurementStackView)
     addSubview(newWorkoutRegisterFormStackView)
     
     buttonStackView.addArrangedSubview(cancelButton)
@@ -168,27 +133,6 @@ extension NewWorkoutView {
     self.endEditing(true)
   }
   
-  @objc private func measurementTapped(_ tapGestureRecognizer: UITapGestureRecognizer) {
-    guard let tappedMeasurementView = tapGestureRecognizer.view as? RoundedCornerLabelView else {
-      return
-    }
-    
-    guard let activatedMeasurementView = self.activatedMeasurementView else {
-      tappedMeasurementView.backgroundColor = .blue
-      self.activatedMeasurementView = tappedMeasurementView
-      return
-    }
-    
-    if activatedMeasurementView == tappedMeasurementView {
-      tappedMeasurementView.backgroundColor = .white
-      self.activatedMeasurementView = nil
-    } else {
-      activatedMeasurementView.backgroundColor = .white
-      tappedMeasurementView.backgroundColor = .blue
-      self.activatedMeasurementView = tappedMeasurementView
-    }
-  }
-  
   @objc private func tappedCancel() {
     delegate?.tappedCancel()
   }
@@ -198,12 +142,7 @@ extension NewWorkoutView {
       return
     }
     
-    for (index, measurmentTypeView) in measurementStackView.arrangedSubviews.enumerated() {
-      if self.activatedMeasurementView == measurmentTypeView {
-        let selectedType = NewWorkoutView.measurementTypes[index]
-        delegate?.tappedComplete(with: Workout(name, selectedType))
-      }
-    }
+    delegate?.tappedComplete(with: Workout(name))
   }
   
   @objc private func keyboardWillShow(notification: Notification) {
