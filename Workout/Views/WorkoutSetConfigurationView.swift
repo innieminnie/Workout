@@ -8,35 +8,35 @@
 import UIKit
 
 protocol WorkoutSetConfigurationViewDelegate: AnyObject {
-  func setSumUpdated(from oldValue: Int, to newValue: Int)
-  func weightValueUpdated(to newValue: Int, of index: Int)
-  func countValueUpdated(to newValue: Int, of index: Int)
+  func setSumUpdated(from oldValue: Float, to newValue: Float)
+  func weightValueUpdated(to newValue: Float, of index: UInt)
+  func countValueUpdated(to newValue: UInt, of index: UInt)
 }
 
 class WorkoutSetConfigurationView: UIView {
-  private lazy var setIndex: Int = 0
+  private lazy var setIndex: UInt = 0
   
-  private var setSum: Int = 0 {
+  private var setSum: Float = 0 {
     didSet {
       delegate?.setSumUpdated(from: oldValue, to: setSum)
     }
   }
   
-  private var weightValue: Int = 0 {
+  private var weightValue: Float = 0 {
     didSet {
       delegate?.weightValueUpdated(to: weightValue, of: self.setIndex)
       
-      setSum -= oldValue * countValue
-      setSum += weightValue * countValue
+      setSum -= oldValue * Float(countValue)
+      setSum += weightValue * Float(countValue)
     }
   }
   
-  private var countValue: Int = 0 {
+  private var countValue: UInt = 0 {
     didSet {
       delegate?.countValueUpdated(to: countValue, of: self.setIndex)
       
-      setSum -= oldValue * weightValue
-      setSum += weightValue * countValue
+      setSum -= Float(oldValue) * weightValue
+      setSum += Float(countValue) * weightValue
     }
   }
   
@@ -143,7 +143,7 @@ class WorkoutSetConfigurationView: UIView {
     return stackView
   }()
   
-  init(index: Int) {
+  init(index: UInt) {
     super.init(frame: .zero)
     
     self.setIndex = index
@@ -156,7 +156,7 @@ class WorkoutSetConfigurationView: UIView {
     setUpLayout()
   }
   
-  init(index: Int, setInformation: SetConfiguration) {
+  init(index: UInt, setInformation: SetConfiguration) {
     super.init(frame: .zero)
     
     self.setIndex = index
@@ -196,7 +196,7 @@ class WorkoutSetConfigurationView: UIView {
  
     self.addSubview(setStackView)
   }
-  private func configureSetStackView(w weight: Int, c count: Int ) {
+  private func configureSetStackView(w weight: Float, c count: UInt ) {
     setStackView.addArrangedSubview(setIndexLabel)
     setIndexLabel.text = "Set \(self.setIndex)"
     setStackView.addArrangedSubview(weightStackView)
@@ -223,7 +223,7 @@ class WorkoutSetConfigurationView: UIView {
     switch sender {
     case self.countTextField:
       guard let text = sender.text,
-            let countValue = Int(text) else {
+            let countValue = UInt(text) else {
               countValue = 0
               return
             }
@@ -231,7 +231,7 @@ class WorkoutSetConfigurationView: UIView {
       self.countValue = countValue
     case self.weightTextField:
       guard let text = sender.text,
-            let weightValue = Int(text) else {
+            let weightValue = Float(text) else {
               weightValue = 0
               return
             }
