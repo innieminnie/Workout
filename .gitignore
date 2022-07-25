@@ -5,6 +5,9 @@
 ### Storyboard ###
 Workout/Base.lproj
 
+### Firebase Database ###
+Workout/GoogleService-Info.plist
+
 ### CocoaPods ###
 ## CocoaPods GitIgnore Template
 
