@@ -6,11 +6,9 @@
 //
 
 import UIKit
-import Firebase
 
 class HomeViewController: UIViewController {
   private var plannedWorkouts = [PlannedWorkout]()
-  private var ref: DatabaseReference!
   var selectedDayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
       self.plannedWorkouts = routineManager.plan(of: selectedDayInformation)
@@ -154,22 +152,6 @@ extension HomeViewController: RoutineSelectionDelegate {
     
     routineTableView.reloadData()
     routineTableView.layoutIfNeeded()
-    
-    self.ref = Database.database().reference()
-    let itemRef = self.ref.child("routine/\(selectedDayInformation.currentDate)")
-
-    var temp = [Any]()
-    for workout in plannedWorkouts {
-      do {
-        let data = try JSONEncoder().encode(workout)
-        let json = try JSONSerialization.jsonObject(with: data)
-        temp.append(json)
-      } catch {
-        print(error)
-      }
-    }
-    
-    itemRef.setValue(temp)
   }
 }
 extension HomeViewController: UITableViewDataSource {
