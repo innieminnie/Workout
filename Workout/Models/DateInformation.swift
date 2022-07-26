@@ -11,7 +11,11 @@ struct DateInformation: Hashable {
   private var year: Int
   private var month: Int
   private var day: Int
+  
   var currentDate: String {
+    return "\(self.year)_\(self.month)_\(self.day)"
+  }
+  var currentMonthlyDate: String {
     return "\(self.year)년 \(self.month)월"
   }
   

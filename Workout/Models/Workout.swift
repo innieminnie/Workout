@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Workout {
+struct Workout: Encodable {
   let name: String
   
   init(_ name: String) {

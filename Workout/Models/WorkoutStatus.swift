@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum WorkoutStatus {
-  case doing
+enum WorkoutStatus: Int, Encodable {
+  case doing = 0
   case done
   
   var buttonTitle: String {
