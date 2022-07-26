@@ -7,9 +7,14 @@
 
 import Foundation
 
-class SetConfiguration {
+class SetConfiguration: Encodable {
   var weight: Float
   var count: UInt
+  
+  enum CodingKeys: String, CodingKey {
+    case weight
+    case count
+  }
   
   init() {
     self.weight = 0

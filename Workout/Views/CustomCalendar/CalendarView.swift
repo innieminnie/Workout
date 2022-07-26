@@ -171,7 +171,7 @@ extension CalendarView: UICollectionViewDataSource {
       let day = indexPath.row - displayingMonthInformation.weekDayIndexOfFirstDay + 1
       cell.dateInformation = DateInformation(year, month, day)
       
-      if displayingMonthInformation.currentDate == todayInformation.currentDate
+      if displayingMonthInformation.currentDate == todayInformation.currentMonthlyDate
           && day == Calendar.current.component(.day, from: Date()) {
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         cell.isToday = true
