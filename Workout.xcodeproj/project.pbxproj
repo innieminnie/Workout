@@ -46,7 +46,7 @@
 		D9958722287CFFFD0093E024 /* SetConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9958721287CFFFD0093E024 /* SetConfiguration.swift */; };
 		D9958724287E54E40093E024 /* PlannedWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9958723287E54E40093E024 /* PlannedWorkout.swift */; };
 		D995872828894F500093E024 /* WorkoutStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D995872728894F500093E024 /* WorkoutStatus.swift */; };
-		D9C54448288E458400A73730 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9C54447288E458400A73730 /* GoogleService-Info.plist */; };
+		D9C5444E288FCAEF00A73730 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9C5444D288FCAEF00A73730 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,7 +116,7 @@
 		D9958721287CFFFD0093E024 /* SetConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetConfiguration.swift; sourceTree = "<group>"; };
 		D9958723287E54E40093E024 /* PlannedWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedWorkout.swift; sourceTree = "<group>"; };
 		D995872728894F500093E024 /* WorkoutStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatus.swift; sourceTree = "<group>"; };
-		D9C54447288E458400A73730 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D9C5444D288FCAEF00A73730 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F99F031903C6C522AC1CD969 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		FF5C8FD7B0C3E2936CFFA345 /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.debug.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -198,7 +198,7 @@
 				D98569B8274CBAFE007E517A /* Assets.xcassets */,
 				D98569BA274CBAFE007E517A /* LaunchScreen.storyboard */,
 				D98569BD274CBAFE007E517A /* Info.plist */,
-				D9C54447288E458400A73730 /* GoogleService-Info.plist */,
+				D9C5444D288FCAEF00A73730 /* GoogleService-Info.plist */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -417,7 +417,7 @@
 				D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */,
 				D98569B7274CBAFB007E517A /* Main.storyboard in Resources */,
 				D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */,
-				D9C54448288E458400A73730 /* GoogleService-Info.plist in Resources */,
+				D9C5444E288FCAEF00A73730 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
