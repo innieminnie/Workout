@@ -36,12 +36,12 @@ class RoutineManager {
     }
   }
   
-  func updatePlan(of date: DateInformation, with workouts: [PlannedWorkout]) {
-    guard workoutPlanner[date] != nil else {
+  func updatePlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
+    guard workoutPlanner[dateInformation] != nil else {
       return
     }
     
-    workoutPlanner[date] = workouts
+    addPlan(with: workouts, on: dateInformation)
   }
   
   private func configureDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
