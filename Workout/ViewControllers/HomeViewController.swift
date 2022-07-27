@@ -67,6 +67,8 @@ class HomeViewController: UIViewController {
   }
   
   @objc private func tappedAddRoutineButton(sender: UIButton) {
+    hideKeyboard()
+    
     let routineSelectionViewController = RoutineSelectionViewController()
     routineSelectionViewController.delegate = self
     routineSelectionViewController.modalPresentationStyle = .formSheet
