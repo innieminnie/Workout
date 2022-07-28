@@ -8,7 +8,14 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-  private var plannedWorkouts = [PlannedWorkout]()
+  private var plannedWorkouts = [PlannedWorkout]() {
+    didSet {
+      plannedWorkouts.enumerated().forEach { (index, workout) in
+        workout.sequenceNumber = UInt(index)
+      }
+    }
+  }
+  
   var selectedDayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
       self.plannedWorkouts = routineManager.plan(of: selectedDayInformation)
@@ -145,12 +152,13 @@ class HomeViewController: UIViewController {
 }
 extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
-    let newPlannedWorkouts = selectedWorkouts.map({ workout in
-      PlannedWorkout(workout)
+    let plannedWorkoutNumber = routineManager.plan(of: selectedDayInformation).count
+    let newPlannedWorkouts = selectedWorkouts.enumerated().map({ (index, workout) in
+      PlannedWorkout(workout, UInt(index + plannedWorkoutNumber))
     })
     
-    self.plannedWorkouts += newPlannedWorkouts
-    routineManager.addPlan(with: plannedWorkouts, on: selectedDayInformation)
+    routineManager.addPlan(with: newPlannedWorkouts, on: selectedDayInformation)
+    plannedWorkouts = routineManager.plan(of: selectedDayInformation)
     
     routineTableView.reloadData()
     routineTableView.layoutIfNeeded()
@@ -188,7 +196,7 @@ extension HomeViewController: UITableViewDataSource {
     plannedWorkouts.remove(at: sourceIndexPath.row)
     plannedWorkouts.insert(workout, at: destinationIndexPath.row)
     
-    routineManager.updatePlan(with: plannedWorkouts, on: selectedDayInformation)
+//    routineManager.updatePlan(with: plannedWorkouts, on: selectedDayInformation)
   }
 }
 extension HomeViewController: UITableViewDelegate {
@@ -201,7 +209,7 @@ extension HomeViewController: UITableViewDelegate {
       plannedWorkouts.remove(at: indexPath.row)
       tableView.deleteRows(at: [indexPath], with: .automatic)
       
-      routineManager.updatePlan(with: plannedWorkouts, on: selectedDayInformation)
+//      routineManager.updatePlan(with: plannedWorkouts, on: selectedDayInformation)
     }
   }
 }
@@ -215,6 +223,10 @@ extension HomeViewController: TabBarMenu {
   }
 }
 extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
+  func currentDateInformation() -> DateInformation {
+    return self.selectedDayInformation
+  }
+  
   func cellExpand() {
     updateTableView()
   }
