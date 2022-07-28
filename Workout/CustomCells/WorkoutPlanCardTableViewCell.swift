@@ -154,6 +154,9 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
 
     lastSet.resetWeightAndCountValues()
     currentWorkout.removeSet(of: UInt(setStackView.arrangedSubviews.count))
+    let currentDateInformation = delegate?.currentDateInformation()
+    routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
+    
     setStackView.removeArrangedSubview(lastSet)
     if setStackView.arrangedSubviews.isEmpty { doneButton.isEnabled = false }
     lastSet.removeFromSuperview()
