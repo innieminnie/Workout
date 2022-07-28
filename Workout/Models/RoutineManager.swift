@@ -43,6 +43,12 @@ class RoutineManager {
     }
   }
   
+  func removeWorkout(workout: PlannedWorkout, on dateInformation: DateInformation) {
+    guard let id = workout.id else { return }
+    
+    let itemRef = configureDatabaseReference(dateInformation: dateInformation)
+    itemRef.child("/\(id)").removeValue()
+  }
 //  func updatePlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
 //    guard workoutPlanner[dateInformation] != nil else {
 //      return
