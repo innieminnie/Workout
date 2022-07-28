@@ -11,7 +11,7 @@ import Firebase
 class RoutineManager {
   static let shared = RoutineManager()
   private var workoutPlanner: [DateInformation : [PlannedWorkout]]
-  private var ref: DatabaseReference!
+  private let ref: DatabaseReference! = Database.database().reference()
   private var encoder = JSONEncoder()
   
   private init() {
@@ -21,31 +21,60 @@ class RoutineManager {
   func plan(of dateInformation: DateInformation) -> [PlannedWorkout] {
     return workoutPlanner[dateInformation] ?? []
   }
-
+  
   func addPlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
-    workoutPlanner[dateInformation] = workouts
+    workoutPlanner[dateInformation] =  plan(of: dateInformation) + workouts
     
     let itemRef = configureDatabaseReference(dateInformation: dateInformation)
-
+    
+    for workout in workouts {
+      do {
+        guard let key = itemRef.childByAutoId().key else { return }
+        
+        workout.id = key
+        let data = try encoder.encode(workout)
+        let json = try JSONSerialization.jsonObject(with: data)
+        
+        let childUpdates = ["/routine/\(dateInformation.currentDate)/\(key)/": json]
+        self.ref.updateChildValues(childUpdates)
+      } catch {
+        print(error)
+      }
+    }
+  }
+  
+//  func updatePlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
+//    guard workoutPlanner[dateInformation] != nil else {
+//      return
+//    }
+//    
+//    for workout in workouts {
+//      do {
+//        let data = try encoder.encode(workout)
+//        let json = try JSONSerialization.jsonObject(with: data)
+//        
+//        guard let id = workout.id else { return }
+//        let childUpdates = ["/routine/\(dateInformation.currentDate)/\(id)/": json]
+//        self.ref.updateChildValues(childUpdates)
+//      } catch {
+//        print(error)
+//      }
+//    }
+//  }
+  
+  func updateWorkout(workout: PlannedWorkout, on dateInformation: DateInformation) {
     do {
-      let data = try encoder.encode(workouts)
+      guard let id = workout.id else { return }
+      let data = try encoder.encode(workout)
       let json = try JSONSerialization.jsonObject(with: data)
-      itemRef.setValue(json)
+      let childUpdates = ["/routine/\(dateInformation.currentDate)/\(id)": json]
+      ref.updateChildValues(childUpdates)
     } catch {
       print(error)
     }
   }
   
-  func updatePlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
-    guard workoutPlanner[dateInformation] != nil else {
-      return
-    }
-    
-    addPlan(with: workouts, on: dateInformation)
-  }
-  
   private func configureDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
-    self.ref = Database.database().reference()
     return self.ref.child("routine/\(dateInfo.currentDate)")
   }
 }

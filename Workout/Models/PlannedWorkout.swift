@@ -8,6 +8,8 @@
 import Foundation
 
 class PlannedWorkout: Encodable {
+  var id: String?
+  var sequenceNumber: UInt
   let workout: Workout
   var isDone: WorkoutStatus
   var sets: [UInt : SetConfiguration]
@@ -21,12 +23,14 @@ class PlannedWorkout: Encodable {
   }
   
   enum CodingKeys: String, CodingKey {
+    case sequenceNumber
     case workoutName
     case isDone
     case setsCompilation
   }
   
-  init(_ workout: Workout) {
+  init(_ workout: Workout, _ sequenceNumber: UInt ) {
+    self.sequenceNumber = sequenceNumber
     self.workout = workout
     self.isDone = .doing
     self.sets = [:]
@@ -61,6 +65,7 @@ class PlannedWorkout: Encodable {
 extension PlannedWorkout {
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(sequenceNumber, forKey: .sequenceNumber)
     try container.encode(workout.name, forKey: .workoutName)
     try container.encode(isDone, forKey: .isDone)
     try container.encode(compiledSets, forKey: .setsCompilation)

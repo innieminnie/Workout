@@ -10,6 +10,7 @@ protocol WorkoutPlanCardTableViewCellDelegate: AnyObject {
   func cellExpand()
   func cellShrink()
   func textFieldsAreNotFilled()
+  func currentDateInformation() -> DateInformation
 }
 
 class WorkoutPlanCardTableViewCell: UITableViewCell {
@@ -137,6 +138,8 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     }
     
     currentWorkout.addNewSet(of: newSetIndex)
+    let currentDateInformation = delegate?.currentDateInformation()
+    routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
     
     setStackView.addArrangedSubview(setConfigurationView)
     if !doneButton.isEnabled { doneButton.isEnabled = true }
@@ -164,6 +167,9 @@ extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
     }
     
     currentWorkout.updateWeight(of: index, to: newValue )
+    
+    let currentDateInformation = delegate?.currentDateInformation()
+    routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
   }
   
   func countValueUpdated(to newValue: UInt, of index: UInt) {
@@ -172,6 +178,9 @@ extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
     }
     
     currentWorkout.updateCount(of: index, to: newValue )
+    
+    let currentDateInformation = delegate?.currentDateInformation()
+    routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
   }
   
   func setSumUpdated(from oldValue: Float, to newValue: Float) {
