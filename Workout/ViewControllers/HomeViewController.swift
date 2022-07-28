@@ -206,10 +206,10 @@ extension HomeViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
+      let removingWorkout = plannedWorkouts[indexPath.row]
+      routineManager.removeWorkout(workout: removingWorkout, on: selectedDayInformation)
       plannedWorkouts.remove(at: indexPath.row)
       tableView.deleteRows(at: [indexPath], with: .automatic)
-      
-//      routineManager.updatePlan(with: plannedWorkouts, on: selectedDayInformation)
     }
   }
 }
