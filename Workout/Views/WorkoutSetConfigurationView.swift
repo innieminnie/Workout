@@ -9,12 +9,12 @@ import UIKit
 
 protocol WorkoutSetConfigurationViewDelegate: AnyObject {
   func setSumUpdated(from oldValue: Float, to newValue: Float)
-  func weightValueUpdated(to newValue: Float, of index: UInt)
-  func countValueUpdated(to newValue: UInt, of index: UInt)
+  func weightValueUpdated(to newValue: Float, of index: Int)
+  func countValueUpdated(to newValue: UInt, of index: Int)
 }
 
 class WorkoutSetConfigurationView: UIView {
-  private lazy var setIndex: UInt = 0
+  private lazy var setIndex: Int = 0
   
   private var setSum: Float = 0 {
     didSet {
@@ -143,7 +143,7 @@ class WorkoutSetConfigurationView: UIView {
     return stackView
   }()
   
-  init(index: UInt) {
+  init(index: Int) {
     super.init(frame: .zero)
     
     self.setIndex = index
@@ -156,7 +156,7 @@ class WorkoutSetConfigurationView: UIView {
     setUpLayout()
   }
   
-  init(index: UInt, setInformation: SetConfiguration) {
+  init(index: Int, setInformation: SetConfiguration) {
     super.init(frame: .zero)
     
     self.setIndex = index
