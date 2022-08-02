@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SetConfiguration: Encodable {
+class SetConfiguration: Codable {
   var weight: Float
   var count: UInt
   

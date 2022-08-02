@@ -66,17 +66,15 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     self.currentWorkout = plannedWorkout
     
     let workout = plannedWorkout.workout
-    let sets = plannedWorkout.sets.sorted { set1, set2 in
-      set1.key < set2.key
-    }
+    let sets = plannedWorkout.sets
     
     workoutNameLabel.text = workout.name
     
     if !sets.isEmpty {
       if !doneButton.isEnabled { doneButton.isEnabled = true }
       
-      for singleSet in sets {
-        let setConfigurationView = WorkoutSetConfigurationView(index: singleSet.key, setInformation: singleSet.value)
+      for (idx, singleSet) in sets.enumerated() {
+        let setConfigurationView = WorkoutSetConfigurationView(index: idx, setInformation: singleSet)
         setStackView.addArrangedSubview(setConfigurationView)
         setConfigurationView.delegate = self
         delegate?.cellExpand()
@@ -130,14 +128,14 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
-    let newSetIndex = UInt(setStackView.arrangedSubviews.count) + 1
+    let newSetIndex = setStackView.arrangedSubviews.count + 1
     let setConfigurationView = WorkoutSetConfigurationView(index: newSetIndex)
     
     guard let currentWorkout = self.currentWorkout else {
       return
     }
     
-    currentWorkout.addNewSet(of: newSetIndex)
+    currentWorkout.addNewSet()
     let currentDateInformation = delegate?.currentDateInformation()
     routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
     
@@ -153,7 +151,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     }
 
     lastSet.resetWeightAndCountValues()
-    currentWorkout.removeSet(of: UInt(setStackView.arrangedSubviews.count))
+    currentWorkout.removeSet(of: setStackView.arrangedSubviews.count)
     let currentDateInformation = delegate?.currentDateInformation()
     routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
     
@@ -164,7 +162,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
 }
 extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
-  func weightValueUpdated(to newValue: Float, of index: UInt) {
+  func weightValueUpdated(to newValue: Float, of index: Int) {
     guard let currentWorkout = self.currentWorkout else {
       return
     }
@@ -175,7 +173,7 @@ extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
     routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
   }
   
-  func countValueUpdated(to newValue: UInt, of index: UInt) {
+  func countValueUpdated(to newValue: UInt, of index: Int) {
     guard let currentWorkout = self.currentWorkout else {
       return
     }
