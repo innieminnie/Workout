@@ -208,7 +208,7 @@ extension HomeViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      routineManager.removeWorkout(at: indexPath.row, on: selectedDayInformation)
+      plannedWorkoutList = routineManager.removeWorkout(at: indexPath.row, on: selectedDayInformation)
       tableView.deleteRows(at: [indexPath], with: .automatic)
     }
   }
