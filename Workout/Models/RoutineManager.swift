@@ -12,10 +12,41 @@ class RoutineManager {
   static let shared = RoutineManager()
   private var workoutPlanner: [DateInformation : [PlannedWorkout]]
   private let ref: DatabaseReference! = Database.database().reference()
-  private var encoder = JSONEncoder()
+  private let encoder = JSONEncoder()
+  private let decoder = JSONDecoder()
   
   private init() {
     workoutPlanner = [:]
+  }
+  
+  func readData(from dateInformation: DateInformation) {
+    let itemRef = configureDatabaseReference(dateInformation: dateInformation)
+    
+    itemRef.getData { error, snapshot in
+      if let error = error {
+        print(error)
+      } else if snapshot.exists() {
+        guard let jsonValue = snapshot.value as? [String: Any] else {
+          return
+        }
+        
+        do {
+          let data = try JSONSerialization.data(withJSONObject: jsonValue)
+          let decodedRoutine = try self.decoder.decode([String : PlannedWorkout].self, from: data)
+          
+          let dailyRoutine = decodedRoutine.map{ $0.value }.sorted { plannedWorkout1, plannedWorkout2 in
+            plannedWorkout1.sequenceNumber < plannedWorkout2.sequenceNumber
+          }
+
+          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine])
+          
+        } catch {
+          print(error)
+        }
+      } else {
+        print("no data")
+      }
+    }
   }
   
   func plan(of dateInformation: DateInformation) -> [PlannedWorkout] {

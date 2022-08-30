@@ -128,7 +128,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
-    let newSetIndex = setStackView.arrangedSubviews.count + 1
+    let newSetIndex = setStackView.arrangedSubviews.count
     let setConfigurationView = WorkoutSetConfigurationView(index: newSetIndex)
     
     guard let currentWorkout = self.currentWorkout else {
@@ -151,7 +151,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     }
 
     lastSet.resetWeightAndCountValues()
-    currentWorkout.removeSet(of: setStackView.arrangedSubviews.count)
+    currentWorkout.removeSet(of: setStackView.arrangedSubviews.count - 1)
     let currentDateInformation = delegate?.currentDateInformation()
     routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
     
