@@ -189,7 +189,7 @@ class WorkoutSetConfigurationView: UIView {
   
   private func configureSetStackView() {
     setStackView.addArrangedSubview(setIndexLabel)
-    setIndexLabel.text = "Set \(self.setIndex)"
+    setIndexLabel.text = "Set \(self.setIndex + 1)"
     setStackView.addArrangedSubview(weightStackView)
     setStackView.addArrangedSubview(multiplierLabel)
     setStackView.addArrangedSubview(countStackView)
@@ -198,7 +198,7 @@ class WorkoutSetConfigurationView: UIView {
   }
   private func configureSetStackView(w weight: Float, c count: UInt ) {
     setStackView.addArrangedSubview(setIndexLabel)
-    setIndexLabel.text = "Set \(self.setIndex)"
+    setIndexLabel.text = "Set \(self.setIndex + 1)"
     setStackView.addArrangedSubview(weightStackView)
     weightTextField.text = "\(weight)"
     setStackView.addArrangedSubview(multiplierLabel)

@@ -37,7 +37,12 @@ class PlannedWorkout: Identifiable, Codable {
     workout = try values.decode(Workout.self, forKey: .workout)
     let status = try values.decode(Int.self, forKey: .isDone)
     isDone = status == 0 ? .doing : .done
-    sets = try values.decode([SetConfiguration].self, forKey: .sets)
+    
+    do {
+      sets = try values.decode([SetConfiguration].self, forKey: .sets)
+    } catch {
+      sets = []
+    }
   }
   
   func addNewSet() {

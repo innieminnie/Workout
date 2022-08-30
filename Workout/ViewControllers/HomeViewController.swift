@@ -10,10 +10,11 @@ import UIKit
 class HomeViewController: UIViewController {
   var selectedDayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
-      routineTableView.reloadData()
+      routineManager.readData(from: selectedDayInformation)
     }
   }
   
+  private var plannedWorkoutList = [PlannedWorkout]()
   private let contentScrollView: UIScrollView = {
     let scrollView = UIScrollView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,6 +61,21 @@ class HomeViewController: UIViewController {
     configureNotification()
     configureGestureRecognizer()
     setUpLayout()
+    
+    routineManager.readData(from: selectedDayInformation)
+  }
+  
+  @objc  private func updateRoutineTable(_ notification: NSNotification) {
+    guard let userInfo = notification.userInfo,
+          let dailyRoutine = userInfo["dailyRoutine"] as? [PlannedWorkout] else {
+      return
+    }
+    
+    self.plannedWorkoutList = dailyRoutine
+    
+    DispatchQueue.main.async {
+      self.routineTableView.reloadData()
+    }
   }
   
   @objc private func tappedAddRoutineButton(sender: UIButton) {
@@ -86,8 +102,8 @@ class HomeViewController: UIViewController {
   @objc private func keyboardWillShow(notification: NSNotification) {
     guard let userInfo = notification.userInfo,
           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-            return
-          }
+      return
+    }
     
     let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardFrame.height, right: 0.0)
     contentScrollView.contentInset = contentInsets
@@ -102,6 +118,7 @@ class HomeViewController: UIViewController {
   private func configureNotification() {
     NotificationCenter.default.addObserver(self, selector: #selector(trackTappedTextField), name: NSNotification.Name("TappedTextField"), object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.updateRoutineTable(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
   }
   
   private func configureGestureRecognizer() {
@@ -141,11 +158,12 @@ class HomeViewController: UIViewController {
 }
 extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
-    let plannedWorkoutNumber = routineManager.plan(of: selectedDayInformation).count
+    let plannedWorkoutNumber = plannedWorkoutList.count
     let newPlannedWorkouts = selectedWorkouts.enumerated().map({ (index, workout) in
       PlannedWorkout(workout, UInt(index + plannedWorkoutNumber))
     })
     
+    plannedWorkoutList.append(contentsOf: newPlannedWorkouts)
     routineManager.addPlan(with: newPlannedWorkouts, on: selectedDayInformation)
     
     routineTableView.reloadData()
@@ -158,7 +176,7 @@ extension HomeViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return routineManager.plan(of: selectedDayInformation).count
+    return plannedWorkoutList.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -166,7 +184,7 @@ extension HomeViewController: UITableViewDataSource {
       return UITableViewCell()
     }
     
-    let workout = routineManager.plan(of: selectedDayInformation)[indexPath.row]
+    let workout = plannedWorkoutList[indexPath.row]
     cell.setUp(with: workout)
     cell.delegate = self
     
@@ -179,7 +197,7 @@ extension HomeViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
     guard sourceIndexPath.row != destinationIndexPath.row else { return }
-  
+    
     routineManager.reorderPlan(on: selectedDayInformation, removeAt: sourceIndexPath.row, insertAt: destinationIndexPath.row)
   }
 }
