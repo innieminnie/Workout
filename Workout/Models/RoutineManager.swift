@@ -34,10 +34,15 @@ class RoutineManager {
           let data = try JSONSerialization.data(withJSONObject: jsonValue)
           let decodedRoutine = try self.decoder.decode([String : PlannedWorkout].self, from: data)
           
-          let dailyRoutine = decodedRoutine.map{ $0.value }.sorted { plannedWorkout1, plannedWorkout2 in
+          let dailyRoutine = decodedRoutine.map { (key: String, value: PlannedWorkout) -> PlannedWorkout in
+            value.id = key
+            return value
+          }.sorted { plannedWorkout1, plannedWorkout2 in
             plannedWorkout1.sequenceNumber < plannedWorkout2.sequenceNumber
           }
-
+         
+          self.workoutPlanner[dateInformation] = dailyRoutine
+  
           NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine])
           
         } catch {
@@ -106,17 +111,18 @@ class RoutineManager {
     }
   }
   
-  func removeWorkout(at removingPosition: Int, on dateInformation: DateInformation) {
+  func removeWorkout(at removingPosition: Int, on dateInformation: DateInformation) -> [PlannedWorkout] {
     var reorderingPlan = self.plan(of: dateInformation)
     let removingWorkout = reorderingPlan[removingPosition]
     reorderingPlan.remove(at: removingPosition)
     workoutPlanner[dateInformation] = reorderingPlan
     
-    guard let id = removingWorkout.id else { return }
+    guard let id = removingWorkout.id else { return self.plan(of: dateInformation) }
     let itemRef = configureDatabaseReference(dateInformation: dateInformation)
     itemRef.child("/\(id)").removeValue()
     
     self.updatePlan(with: reorderingPlan, on: dateInformation)
+    return self.plan(of: dateInformation)
   }
   
   private func configureDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
