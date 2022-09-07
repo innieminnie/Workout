@@ -124,6 +124,8 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
       currentWorkout.isDone = .doing
     }
     
+    let currentDateInformation = delegate?.currentDateInformation()
+    routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
     doneButton.setTitle(currentWorkout.isDone.buttonTitle, for: .normal)
   }
   
