@@ -49,7 +49,7 @@ class RoutineManager {
           print(error)
         }
       } else {
-        print("no data")
+        NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": []])
       }
     }
   }
