@@ -10,7 +10,11 @@ import UIKit
 class HomeViewController: UIViewController {
   var selectedDayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
-      routineManager.readData(from: selectedDayInformation)
+      plannedWorkoutList = routineManager.plan(of: selectedDayInformation)
+      
+      DispatchQueue.main.async {
+        self.routineTableView.reloadData()
+      }
     }
   }
   
@@ -61,20 +65,21 @@ class HomeViewController: UIViewController {
     configureNotification()
     configureGestureRecognizer()
     setUpLayout()
-    
-    routineManager.readData(from: selectedDayInformation)
   }
   
-  @objc  private func updateRoutineTable(_ notification: NSNotification) {
+  @objc  private func checkRoutineData(_ notification: NSNotification) {
     guard let userInfo = notification.userInfo,
+          let dateInformation = userInfo["date"] as? DateInformation,
           let dailyRoutine = userInfo["dailyRoutine"] as? [PlannedWorkout] else {
       return
     }
     
-    self.plannedWorkoutList = dailyRoutine
-    
-    DispatchQueue.main.async {
-      self.routineTableView.reloadData()
+    if selectedDayInformation == dateInformation {
+      self.plannedWorkoutList = dailyRoutine
+      
+      DispatchQueue.main.async {
+        self.routineTableView.reloadData()
+      }
     }
   }
   
@@ -118,7 +123,7 @@ class HomeViewController: UIViewController {
   private func configureNotification() {
     NotificationCenter.default.addObserver(self, selector: #selector(trackTappedTextField), name: NSNotification.Name("TappedTextField"), object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(self.updateRoutineTable(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.checkRoutineData(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
   }
   
   private func configureGestureRecognizer() {
