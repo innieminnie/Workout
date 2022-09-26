@@ -28,6 +28,8 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     self.layer.cornerRadius = 13
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(self.checkRoutineData(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
   }
   
   override func prepareForReuse() {
@@ -51,6 +53,20 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   func updateStatus() {
     if let dateInformation = dateInformation {
       routineManager.readData(from: dateInformation)
+    }
+  }
+  
+  @objc  private func checkRoutineData(_ notification: NSNotification) {
+    guard let userInfo = notification.userInfo,
+          let dateInformation = userInfo["date"] as? DateInformation,
+          let dailyRoutine = userInfo["dailyRoutine"] as? [PlannedWorkout] else {
+      return
+    }
+    
+    if self.dateInformation == dateInformation && !dailyRoutine.isEmpty {
+      DispatchQueue.main.async {
+        self.backgroundColor = .red
+      }
     }
   }
 }
