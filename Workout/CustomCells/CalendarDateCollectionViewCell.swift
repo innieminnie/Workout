@@ -48,4 +48,9 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     dateNumberLabel.text = "\(number)"
   }
   
+  func updateStatus() {
+    if let dateInformation = dateInformation {
+      routineManager.readData(from: dateInformation)
+    }
+  }
 }

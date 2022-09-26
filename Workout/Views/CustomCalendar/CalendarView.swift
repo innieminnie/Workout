@@ -187,6 +187,8 @@ extension CalendarView: UICollectionViewDataSource {
       cell.update(with: day, isCurrentMonth: false)
     }
     
+    cell.updateStatus()
+    
     let calendarDateTapGesture = CaledarDateTapGesture(target: self, action: #selector(cellTapped(gesture:)))
     calendarDateTapGesture.tappedCell = cell
     cell.addGestureRecognizer(calendarDateTapGesture)

@@ -43,13 +43,13 @@ class RoutineManager {
          
           self.workoutPlanner[dateInformation] = dailyRoutine
   
-          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine])
+          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine, "date": dateInformation])
           
         } catch {
           print(error)
         }
       } else {
-        NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": []])
+        NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": [], "date": dateInformation])
       }
     }
   }
