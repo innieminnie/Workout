@@ -9,25 +9,28 @@ import UIKit
 
 class CalendarDateCollectionViewCell: UICollectionViewCell {
   static let identifier = "calendarDateCollectionViewCell"
+  private var isCurrentMonth = true
   var isToday = false
   var dateInformation: DateInformation?
   
+  @IBOutlet weak var circleBackgroundView: UIView!
   @IBOutlet weak var dateNumberLabel: UILabel!
   
   override var isSelected: Bool {
     didSet{
       if isSelected {
-        self.backgroundColor = .systemGray5
+        self.circleBackgroundView.backgroundColor = .systemGray3
+        self.dateNumberLabel.textColor = .white
       }
       else {
-        self.backgroundColor = .clear
+        self.circleBackgroundView.backgroundColor = .clear
+        self.dateNumberLabel.textColor = isCurrentMonth ? .black : .systemGray
       }
     }
   }
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    self.layer.cornerRadius = 13
     
     NotificationCenter.default.addObserver(self, selector: #selector(self.checkRoutineData(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
   }
@@ -35,16 +38,21 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   override func prepareForReuse() {
     self.isToday = false
     self.isSelected = false
-    self.backgroundColor = .clear
+    
+    self.circleBackgroundView.backgroundColor = .clear
+    self.circleBackgroundView.layer.borderColor = UIColor.clear.cgColor
+    self.circleBackgroundView.layer.borderWidth = 0
     self.dateNumberLabel.textColor = .black
+    self.dateNumberLabel.font = UIFont.systemFont(ofSize: 15)
   }
   
   func update(with number: Int, isCurrentMonth: Bool) {
+    self.isCurrentMonth = isCurrentMonth
     isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
     
     if isToday {
       self.isSelected = true
-      self.dateNumberLabel.textColor = .systemRed
+      self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17)
     }
     
     dateNumberLabel.text = "\(number)"
@@ -65,7 +73,8 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     
     if self.dateInformation == dateInformation && !dailyRoutine.isEmpty {
       DispatchQueue.main.async {
-        self.backgroundColor = .red
+        self.circleBackgroundView.layer.borderColor = UIColor.black.cgColor
+        self.circleBackgroundView.layer.borderWidth = 1
       }
     }
   }

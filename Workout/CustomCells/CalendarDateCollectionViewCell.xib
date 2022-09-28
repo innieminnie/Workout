@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,30 +11,42 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CalendarDateCollectionViewCell" customModule="Workout" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="170" height="143"/>
+            <rect key="frame" x="0.0" y="0.0" width="146" height="143"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="170" height="143"/>
+                <rect key="frame" x="0.0" y="0.0" width="146" height="143"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meN-c3-lk7">
-                        <rect key="frame" x="66.5" y="62.5" width="37.5" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgA-Ji-UzW">
+                        <rect key="frame" x="5" y="5" width="133" height="133"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meN-c3-lk7">
+                                <rect key="frame" x="62" y="57.5" width="9.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="meN-c3-lk7" firstAttribute="centerX" secondItem="fgA-Ji-UzW" secondAttribute="centerX" id="8Iw-Q9-n1S"/>
+                            <constraint firstItem="meN-c3-lk7" firstAttribute="centerY" secondItem="fgA-Ji-UzW" secondAttribute="centerY" id="G0c-Pj-B5g"/>
+                            <constraint firstAttribute="width" secondItem="fgA-Ji-UzW" secondAttribute="height" multiplier="1:1" id="K9G-qI-bF7"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="meN-c3-lk7" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Jxb-va-p4M"/>
-                <constraint firstItem="meN-c3-lk7" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="PiX-NG-AFX"/>
+                <constraint firstItem="fgA-Ji-UzW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="FYI-SS-Fzv"/>
+                <constraint firstItem="fgA-Ji-UzW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="X17-qd-FdR"/>
+                <constraint firstAttribute="bottom" secondItem="fgA-Ji-UzW" secondAttribute="bottom" constant="5" id="gqT-py-sO4"/>
             </constraints>
-            <size key="customSize" width="170" height="143"/>
+            <size key="customSize" width="146" height="143"/>
             <connections>
+                <outlet property="circleBackgroundView" destination="fgA-Ji-UzW" id="aRG-eo-Qr2"/>
                 <outlet property="dateNumberLabel" destination="meN-c3-lk7" id="4jj-Cz-rHD"/>
             </connections>
-            <point key="canvasLocation" x="-139.13043478260872" y="100.11160714285714"/>
+            <point key="canvasLocation" x="-155" y="105"/>
         </collectionViewCell>
     </objects>
 </document>
