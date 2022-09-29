@@ -13,17 +13,17 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   var isToday = false
   var dateInformation: DateInformation?
   
-  @IBOutlet weak var circleBackgroundView: UIView!
+  @IBOutlet weak var dateBackgroundView: UIView!
   @IBOutlet weak var dateNumberLabel: UILabel!
   
   override var isSelected: Bool {
     didSet{
       if isSelected {
-        self.circleBackgroundView.backgroundColor = .systemGray3
+        self.dateBackgroundView.backgroundColor = .systemGray3
         self.dateNumberLabel.textColor = .white
       }
       else {
-        self.circleBackgroundView.backgroundColor = .clear
+        self.dateBackgroundView.backgroundColor = .clear
         self.dateNumberLabel.textColor = isCurrentMonth ? .black : .systemGray
       }
     }
@@ -39,9 +39,9 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     self.isToday = false
     self.isSelected = false
     
-    self.circleBackgroundView.backgroundColor = .clear
-    self.circleBackgroundView.layer.borderColor = UIColor.clear.cgColor
-    self.circleBackgroundView.layer.borderWidth = 0
+    self.dateBackgroundView.backgroundColor = .clear
+    self.dateBackgroundView.layer.borderColor = UIColor.clear.cgColor
+    self.dateBackgroundView.layer.borderWidth = 0
     self.dateNumberLabel.textColor = .black
     self.dateNumberLabel.font = UIFont.systemFont(ofSize: 15)
   }
@@ -74,13 +74,13 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     if self.dateInformation == dateInformation {
       if !dailyRoutine.isEmpty {
         DispatchQueue.main.async {
-          self.circleBackgroundView.layer.borderColor = UIColor.black.cgColor
-          self.circleBackgroundView.layer.borderWidth = 1
+          self.dateBackgroundView.layer.borderColor = UIColor.black.cgColor
+          self.dateBackgroundView.layer.borderWidth = 1
         }
       } else {
         DispatchQueue.main.async {
-          self.circleBackgroundView.layer.borderColor = UIColor.clear.cgColor
-          self.circleBackgroundView.layer.borderWidth = 0
+          self.dateBackgroundView.layer.borderColor = UIColor.clear.cgColor
+          self.dateBackgroundView.layer.borderWidth = 0
         }
       }
     }

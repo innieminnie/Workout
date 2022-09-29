@@ -43,7 +43,7 @@
             </constraints>
             <size key="customSize" width="146" height="143"/>
             <connections>
-                <outlet property="circleBackgroundView" destination="fgA-Ji-UzW" id="aRG-eo-Qr2"/>
+                <outlet property="dateBackgroundView" destination="fgA-Ji-UzW" id="aRG-eo-Qr2"/>
                 <outlet property="dateNumberLabel" destination="meN-c3-lk7" id="4jj-Cz-rHD"/>
             </connections>
             <point key="canvasLocation" x="-155" y="105"/>
