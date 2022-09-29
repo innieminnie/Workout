@@ -71,10 +71,17 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
       return
     }
     
-    if self.dateInformation == dateInformation && !dailyRoutine.isEmpty {
-      DispatchQueue.main.async {
-        self.circleBackgroundView.layer.borderColor = UIColor.black.cgColor
-        self.circleBackgroundView.layer.borderWidth = 1
+    if self.dateInformation == dateInformation {
+      if !dailyRoutine.isEmpty {
+        DispatchQueue.main.async {
+          self.circleBackgroundView.layer.borderColor = UIColor.black.cgColor
+          self.circleBackgroundView.layer.borderWidth = 1
+        }
+      } else {
+        DispatchQueue.main.async {
+          self.circleBackgroundView.layer.borderColor = UIColor.clear.cgColor
+          self.circleBackgroundView.layer.borderWidth = 0
+        }
       }
     }
   }
