@@ -170,6 +170,7 @@ extension HomeViewController: RoutineSelectionDelegate {
     
     plannedWorkoutList.append(contentsOf: newPlannedWorkouts)
     routineManager.addPlan(with: newPlannedWorkouts, on: selectedDayInformation)
+    calendarView.updateSelectedCell()
     
     routineTableView.reloadData()
     routineTableView.layoutIfNeeded()
@@ -214,6 +215,7 @@ extension HomeViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
       plannedWorkoutList = routineManager.removeWorkout(at: indexPath.row, on: selectedDayInformation)
+      calendarView.updateSelectedCell()
       tableView.deleteRows(at: [indexPath], with: .automatic)
     }
   }

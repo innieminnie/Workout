@@ -103,6 +103,12 @@ class CalendarView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
+  func updateSelectedCell() {
+    if let selectedCell = selectedCell {
+      selectedCell.updateStatus()
+    }
+  }
+  
   @objc func tappedNextMonthButton(sender: UIButton) {
     displayingMonthInformation.changeToNextMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
