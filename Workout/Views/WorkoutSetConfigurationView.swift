@@ -47,6 +47,8 @@ class WorkoutSetConfigurationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
 
     label.textColor = .black
+    label.font = .boldSystemFont(ofSize: 17)
+    
     return label
   }()
   
@@ -58,8 +60,8 @@ class WorkoutSetConfigurationView: UIView {
     textField.layer.cornerRadius = 5
     textField.keyboardType = .decimalPad
     textField.textAlignment = .center
-    textField.placeholder = "\(0)"
-    textField.text = "\(0)"
+    textField.placeholder = "\(0.0)"
+    textField.text = "\(0.0)"
     
     textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
     return textField
@@ -100,16 +102,6 @@ class WorkoutSetConfigurationView: UIView {
     return label
   }()
   
-  private let multiplierLabel: UILabel = {
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    
-    label.text = "X"
-    label.textColor = .black
-    
-    return label
-  }()
-  
   private let weightStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -138,7 +130,7 @@ class WorkoutSetConfigurationView: UIView {
     
     stackView.alignment = .center
     stackView.axis = .horizontal
-    stackView.distribution = .equalSpacing
+    stackView.distribution = .fill
     
     return stackView
   }()
@@ -180,28 +172,34 @@ class WorkoutSetConfigurationView: UIView {
   private func configureWeightStackView() {
     weightStackView.addArrangedSubview(weightTextField)
     weightStackView.addArrangedSubview(weightUnitLabel)
+    
+    NSLayoutConstraint.activate([
+      weightTextField.widthAnchor.constraint(equalTo: weightUnitLabel.widthAnchor, multiplier: 2.0)
+      ])
   }
   
   private func configureCountStackView() {
     countStackView.addArrangedSubview(countTextField)
     countStackView.addArrangedSubview(countUnitLabel)
+    
+    NSLayoutConstraint.activate([
+      countTextField.widthAnchor.constraint(equalTo: countUnitLabel.widthAnchor, multiplier: 1.5)
+    ])
   }
   
   private func configureSetStackView() {
     setStackView.addArrangedSubview(setIndexLabel)
-    setIndexLabel.text = "Set \(self.setIndex + 1)"
+    setIndexLabel.text = "Set \(self.setIndex + 1)  "
     setStackView.addArrangedSubview(weightStackView)
-    setStackView.addArrangedSubview(multiplierLabel)
     setStackView.addArrangedSubview(countStackView)
- 
+    
     self.addSubview(setStackView)
   }
   private func configureSetStackView(w weight: Float, c count: UInt ) {
     setStackView.addArrangedSubview(setIndexLabel)
-    setIndexLabel.text = "Set \(self.setIndex + 1)"
+    setIndexLabel.text = "Set \(self.setIndex + 1)  "
     setStackView.addArrangedSubview(weightStackView)
     weightTextField.text = "\(weight)"
-    setStackView.addArrangedSubview(multiplierLabel)
     setStackView.addArrangedSubview(countStackView)
     countTextField.text = "\(count)"
     
@@ -210,12 +208,14 @@ class WorkoutSetConfigurationView: UIView {
   
   private func setUpLayout() {
     NSLayoutConstraint.activate([
-      weightTextField.widthAnchor.constraint(equalToConstant: 30),
-      countTextField.widthAnchor.constraint(equalToConstant: 30),
       setStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      setStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-      setStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+      setStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+      setStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
       setStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      
+      weightStackView.widthAnchor.constraint(equalTo: setStackView.widthAnchor, multiplier: 0.35),
+      countStackView.widthAnchor.constraint(equalTo: weightStackView.widthAnchor),
+      
     ])
   }
   
