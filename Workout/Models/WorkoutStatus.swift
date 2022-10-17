@@ -19,4 +19,13 @@ enum WorkoutStatus: Int, Encodable {
       return "기록수정"
     }
   }
+  
+  var boolValue: Bool {
+    switch self {
+    case .doing:
+      return false
+    case .done:
+      return true
+    }
+  }
 }

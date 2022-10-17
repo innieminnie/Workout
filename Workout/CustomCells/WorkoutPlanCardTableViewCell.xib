@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -120,6 +120,7 @@
                 <outlet property="doneButton" destination="9tu-KF-9s6" id="Wsm-oV-LyP"/>
                 <outlet property="minusSetButton" destination="fUo-kE-TbI" id="TTf-cG-3WP"/>
                 <outlet property="plusSetButton" destination="Fpt-gR-ZAj" id="nDs-UP-yLh"/>
+                <outlet property="setButtonStackView" destination="P7O-jz-dfQ" id="1lh-Ze-LMx"/>
                 <outlet property="setStackView" destination="t5W-2e-8UO" id="ZW7-jJ-KfT"/>
                 <outlet property="setSumLabel" destination="K2x-Ko-409" id="G73-E7-sTw"/>
                 <outlet property="workoutNameLabel" destination="5gn-bM-9ZQ" id="knL-oO-orG"/>
