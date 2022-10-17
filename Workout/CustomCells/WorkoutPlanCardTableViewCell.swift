@@ -20,6 +20,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   @IBOutlet weak var workoutNameLabel: UILabel!
   @IBOutlet weak var setSumLabel: UILabel!
   @IBOutlet weak var setStackView: UIStackView!
+  @IBOutlet weak var setButtonStackView: UIStackView!
   @IBOutlet weak var plusSetButton: UIButton!
   @IBOutlet weak var minusSetButton: UIButton!
   @IBOutlet weak var doneButton: UIButton!
@@ -69,6 +70,8 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     let sets = plannedWorkout.sets
     
     workoutNameLabel.text = workout.name
+    doneButton.setTitle(plannedWorkout.isDone.buttonTitle, for: .normal)
+    setButtonStackView.isHidden = plannedWorkout.isDone.boolValue
     
     if !sets.isEmpty {
       if !doneButton.isEnabled { doneButton.isEnabled = true }
@@ -80,7 +83,6 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
         delegate?.cellExpand()
         
         if plannedWorkout.isDone == .done {
-          doneButton.setTitle(plannedWorkout.isDone.buttonTitle, for: .normal)
           setConfigurationView.showDoneStatusView()
         }
       }
@@ -111,8 +113,9 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
         }
         
         singleSetView.showDoneStatusView()
-        currentWorkout.isDone = .done
       }
+      
+      currentWorkout.isDone = .done
     case .done:
       for workoutSetView in setStackView.arrangedSubviews {
         guard let singleSetView = workoutSetView as? WorkoutSetConfigurationView else {
@@ -128,6 +131,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     let currentDateInformation = delegate?.currentDateInformation()
     routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
     doneButton.setTitle(currentWorkout.isDone.buttonTitle, for: .normal)
+    setButtonStackView.isHidden = currentWorkout.isDone.boolValue
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
