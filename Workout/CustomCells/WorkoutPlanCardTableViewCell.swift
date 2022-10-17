@@ -80,6 +80,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
         delegate?.cellExpand()
         
         if plannedWorkout.isDone == .done {
+          doneButton.setTitle(plannedWorkout.isDone.buttonTitle, for: .normal)
           setConfigurationView.showDoneStatusView()
         }
       }
