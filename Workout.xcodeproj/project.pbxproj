@@ -47,6 +47,7 @@
 		D9958724287E54E40093E024 /* PlannedWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9958723287E54E40093E024 /* PlannedWorkout.swift */; };
 		D995872828894F500093E024 /* WorkoutStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D995872728894F500093E024 /* WorkoutStatus.swift */; };
 		D9C5444E288FCAEF00A73730 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9C5444D288FCAEF00A73730 /* GoogleService-Info.plist */; };
+		D9D44E4228FEC3AD0035B8D0 /* BodySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E4128FEC3AD0035B8D0 /* BodySection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		D9958723287E54E40093E024 /* PlannedWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedWorkout.swift; sourceTree = "<group>"; };
 		D995872728894F500093E024 /* WorkoutStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatus.swift; sourceTree = "<group>"; };
 		D9C5444D288FCAEF00A73730 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D9D44E4128FEC3AD0035B8D0 /* BodySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySection.swift; sourceTree = "<group>"; };
 		F99F031903C6C522AC1CD969 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		FF5C8FD7B0C3E2936CFFA345 /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.debug.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -266,6 +268,7 @@
 				D926672E27D1016F00A30366 /* MonthlyInformation.swift */,
 				D9107C5527F030B800FABD37 /* DateInformation.swift */,
 				D995871B286571BD0093E024 /* Weekday.swift */,
+				D9D44E4128FEC3AD0035B8D0 /* BodySection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				D9107C642836151300FABD37 /* WorkoutSetConfigurationView.swift in Sources */,
 				D9107C60282E593C00FABD37 /* MonthlyPageCollectionView.swift in Sources */,
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,
+				D9D44E4228FEC3AD0035B8D0 /* BodySection.swift in Sources */,
 				D995871E286D523A0093E024 /* Extensions.swift in Sources */,
 				D98569E8274D2A3D007E517A /* TabBarMenu.swift in Sources */,
 				D9958724287E54E40093E024 /* PlannedWorkout.swift in Sources */,
