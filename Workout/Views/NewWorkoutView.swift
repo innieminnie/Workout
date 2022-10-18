@@ -142,7 +142,8 @@ extension NewWorkoutView {
       return
     }
     
-    delegate?.tappedComplete(with: Workout(name))
+    let tempBodySection = BodySection.leg
+    delegate?.tappedComplete(with: Workout(name, tempBodySection))
   }
   
   @objc private func keyboardWillShow(notification: Notification) {

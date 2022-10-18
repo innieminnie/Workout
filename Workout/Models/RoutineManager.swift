@@ -35,7 +35,7 @@ class RoutineManager {
           let decodedRoutine = try self.decoder.decode([String : PlannedWorkout].self, from: data)
           
           let dailyRoutine = decodedRoutine.map { (key: String, value: PlannedWorkout) -> PlannedWorkout in
-            value.id = key
+            value.setId(with: key)
             return value
           }.sorted { plannedWorkout1, plannedWorkout2 in
             plannedWorkout1.sequenceNumber < plannedWorkout2.sequenceNumber

@@ -7,10 +7,16 @@
 
 import Foundation
 
-struct Workout: Codable {
-  let name: String
+class Workout: Codable {
+  var name: String
+  private var bodySection: BodySection?
   
-  init(_ name: String) {
+  init(_ name: String, _ bodySection: BodySection) {
     self.name = name
+    self.bodySection = bodySection
+  }
+  
+  func searchBodySection() {
+    self.bodySection = BodySection.leg //temporary
   }
 }
