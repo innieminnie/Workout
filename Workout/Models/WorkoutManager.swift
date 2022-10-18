@@ -11,10 +11,10 @@ class WorkoutManager {
   static let shared = WorkoutManager()
   
   private var workoutList: [Workout] = [
-    Workout("스쿼트"),
-    Workout("런지"),
-    Workout("데드리프트"),
-    Workout("벤치프레스"),
+    Workout("스쿼트", BodySection.hip),
+    Workout("런지", BodySection.hip),
+    Workout("데드리프트", BodySection.back),
+    Workout("벤치프레스", BodySection.chest),
   ]
   
   private init() { }

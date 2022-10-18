@@ -35,6 +35,7 @@ class PlannedWorkout: Identifiable, Codable {
     let values = try decoder.container(keyedBy: CodingKeys.self)
     sequenceNumber = try values.decode(UInt.self, forKey: .sequenceNumber)
     workout = try values.decode(Workout.self, forKey: .workout)
+    workout.searchBodySection()
     let status = try values.decode(Int.self, forKey: .isDone)
     isDone = status == 0 ? .doing : .done
     
@@ -43,6 +44,10 @@ class PlannedWorkout: Identifiable, Codable {
     } catch {
       sets = []
     }
+  }
+  
+  func setId(with key: String) {
+    self.id = key
   }
   
   func addNewSet() {
