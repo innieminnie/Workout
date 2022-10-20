@@ -95,6 +95,7 @@ class HomeViewController: UIViewController {
   @objc private func trackTappedTextField(notification: Notification) {
     if let activatedField = notification.object as? UITextField {
       self.editableField = activatedField
+      activatedField.selectAll(nil)
     }
   }
   
