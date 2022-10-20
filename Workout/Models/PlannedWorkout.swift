@@ -35,8 +35,8 @@ class PlannedWorkout: Identifiable, Codable {
     let values = try decoder.container(keyedBy: CodingKeys.self)
     sequenceNumber = try values.decode(UInt.self, forKey: .sequenceNumber)
     workout = try values.decode(Workout.self, forKey: .workout)
-    let status = try values.decode(Int.self, forKey: .isDone)
-    isDone = status == 0 ? .doing : .done
+    let statusRawValue = try values.decode(Bool.self, forKey: .isDone)
+    isDone = WorkoutStatus(rawValue: statusRawValue)
     
     do {
       sets = try values.decode([SetConfiguration].self, forKey: .sets)
@@ -78,7 +78,7 @@ extension PlannedWorkout {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(sequenceNumber, forKey: .sequenceNumber)
     try container.encode(workout, forKey: .workout)
-    try container.encode(isDone, forKey: .isDone)
+    try container.encode(isDone.rawValue, forKey: .isDone)
     try container.encode(sets, forKey: .sets)
   }
 }
