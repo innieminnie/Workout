@@ -7,26 +7,13 @@
 
 import Foundation
 
-enum BodySection: CustomStringConvertible, Codable {
-  case chest
-  case abs
-  case shoulder
-  case biceps
-  case triceps
-  case back
-  case hip
-  case leg
-
-  var description: String {
-    switch self {
-    case .chest: return "가슴"
-    case .abs: return "복근"
-    case .shoulder: return "어깨"
-    case .biceps: return "이두"
-    case.triceps: return "삼두"
-    case.back: return "등"
-    case.hip: return "엉덩이"
-    case.leg: return "다리"
-    }
-  }
+enum BodySection: String, Codable {
+  case chest = "가슴"
+  case abs = "복근"
+  case shoulder = "어깨"
+  case biceps = "이두"
+  case triceps = "삼두"
+  case back = "등"
+  case hip = "엉덩이"
+  case leg = "다리"
 }
