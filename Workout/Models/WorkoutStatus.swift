@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum WorkoutStatus: Int, Encodable {
-  case doing = 0
+enum WorkoutStatus: Codable {
   case done
+  case doing
   
   var buttonTitle: String {
     switch self {
@@ -19,13 +19,24 @@ enum WorkoutStatus: Int, Encodable {
       return "기록수정"
     }
   }
+}
+extension WorkoutStatus: RawRepresentable {
+  typealias RawValue = Bool
   
-  var boolValue: Bool {
+  init(rawValue: Bool) {
+    if rawValue {
+      self = .done
+    } else {
+      self = .doing
+    }
+  }
+  
+  var rawValue: Bool {
     switch self {
-    case .doing:
-      return false
     case .done:
       return true
+    case .doing:
+      return false
     }
   }
 }

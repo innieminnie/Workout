@@ -71,7 +71,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     
     workoutNameLabel.text = workout.name
     doneButton.setTitle(plannedWorkout.isDone.buttonTitle, for: .normal)
-    setButtonStackView.isHidden = plannedWorkout.isDone.boolValue
+    setButtonStackView.isHidden = plannedWorkout.isDone.rawValue
     
     if !sets.isEmpty {
       if !doneButton.isEnabled { doneButton.isEnabled = true }
@@ -131,7 +131,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     let currentDateInformation = delegate?.currentDateInformation()
     routineManager.updateWorkout(workout: currentWorkout, on: currentDateInformation!)
     doneButton.setTitle(currentWorkout.isDone.buttonTitle, for: .normal)
-    setButtonStackView.isHidden = currentWorkout.isDone.boolValue
+    setButtonStackView.isHidden = currentWorkout.isDone.rawValue
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
