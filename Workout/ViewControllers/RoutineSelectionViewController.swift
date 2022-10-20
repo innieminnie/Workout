@@ -22,7 +22,7 @@ class RoutineSelectionViewController: UIViewController {
     return tableView
   }()
   
-  private let addRoutineButton: UIButton = {
+  private lazy var addRoutineButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
