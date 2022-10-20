@@ -48,7 +48,7 @@ class NewWorkoutView: UIView {
     return stackView
   }()
   
-  private let cancelButton: UIButton = {
+  private lazy var cancelButton: UIButton = {
     let button = UIButton()
     
     button.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
@@ -58,7 +58,7 @@ class NewWorkoutView: UIView {
     return button
   }()
   
-  private let completeButton: UIButton = {
+  private lazy var completeButton: UIButton = {
     let button = UIButton()
     
     button.addTarget(self, action: #selector(tappedComplete), for: .touchUpInside)

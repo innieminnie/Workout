@@ -8,7 +8,7 @@
 import UIKit
 
 class WorkoutListViewController: UITableViewController {
-  private let addButton: UIButton = {
+  private lazy var addButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     

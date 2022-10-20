@@ -28,7 +28,7 @@ class HomeViewController: UIViewController {
   
   private let calendarView = CalendarView(frame: .zero)
   
-  private let addRoutineButton: UIButton = {
+  private lazy var addRoutineButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     

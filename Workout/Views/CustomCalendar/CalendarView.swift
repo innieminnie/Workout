@@ -20,7 +20,7 @@ class CalendarView: UIView {
   
   private var displayingMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
   
-  private let rightButton: UIButton = {
+  private lazy var rightButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
@@ -31,7 +31,7 @@ class CalendarView: UIView {
     return button
   }()
   
-  private let leftButton: UIButton = {
+  private lazy var leftButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     

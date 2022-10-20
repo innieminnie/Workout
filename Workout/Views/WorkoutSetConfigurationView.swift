@@ -52,7 +52,7 @@ class WorkoutSetConfigurationView: UIView {
     return label
   }()
   
-  private let weightTextField: UITextField = {
+  private lazy var weightTextField: UITextField = {
     let textField = UITextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     
@@ -77,7 +77,7 @@ class WorkoutSetConfigurationView: UIView {
     return label
   }()
   
-  private let countTextField: UITextField = {
+  private lazy var countTextField: UITextField = {
     let textField = UITextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     
