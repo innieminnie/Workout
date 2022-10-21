@@ -47,6 +47,7 @@ class HomeViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    workoutManager.readWorkoutData()
     view.backgroundColor = .white
     view.addSubview(contentScrollView)
     
