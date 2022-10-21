@@ -23,6 +23,40 @@ class WorkoutManager {
   
   private init() { }
   
+  func readWorkoutData() {
+    let itemRef = ref.child("workout")
+    
+    itemRef.getData { error, snapshot in
+      if let error = error {
+        print(error)
+      } else if snapshot.exists() {
+        guard let jsonValue = snapshot.value as? [String: Any] else {
+          return
+        }
+        
+        do {
+          let data = try JSONSerialization.data(withJSONObject: jsonValue)
+          let decodedWorkout = try self.decoder.decode([String : Workout].self, from: data)
+          
+          let decodedWorkoutList = decodedWorkout.map { (key: String, value: Workout) -> Workout in
+            value.configureId(with: key)
+            return value
+          }.sorted { workout1, workout2 in
+            workout1.id < workout2.id
+          }
+          
+          self.workoutList = decodedWorkoutList
+          NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["workoutList": decodedWorkoutList])
+          
+        } catch {
+          print(error)
+        }
+      } else {
+        NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["workoutList": []])
+      }
+    }
+  }
+  
   func numberOfWorkoutList() -> Int {
     return workoutList.count
   }
