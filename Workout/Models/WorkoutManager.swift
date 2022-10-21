@@ -6,9 +6,13 @@
 //
 
 import Foundation
+import Firebase
 
 class WorkoutManager {
   static let shared = WorkoutManager()
+  private let ref: DatabaseReference! = Database.database().reference()
+  private let encoder = JSONEncoder()
+  private let decoder = JSONDecoder()
   
   private var workoutList: [Workout] = [
     Workout("스쿼트", BodySection.hip),
@@ -27,6 +31,20 @@ class WorkoutManager {
     self.workoutList.append(workout)
     workoutList.sort { workout1, workout2 in
       return workout1.name < workout2.name
+    }
+    
+    let itemRef = ref.child("workout")
+    guard let key = itemRef.childByAutoId().key else { return }
+    workout.configureId(with: key)
+    
+    do {
+      let data = try encoder.encode(workout)
+      let json = try JSONSerialization.jsonObject(with: data)
+      
+      let childUpdates = ["/workout/\(key)/": json]
+      self.ref.updateChildValues(childUpdates)
+    } catch {
+      print(error)
     }
   }
   
