@@ -60,7 +60,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   
   func updateStatus() {
     if let dateInformation = dateInformation {
-      routineManager.readData(from: dateInformation)
+      routineManager.readRoutineData(from: dateInformation)
     }
   }
   
