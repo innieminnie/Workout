@@ -14,12 +14,8 @@ class WorkoutManager {
   private let encoder = JSONEncoder()
   private let decoder = JSONDecoder()
   
-  private var workoutList: [Workout] = [
-    Workout("스쿼트", BodySection.hip),
-    Workout("런지", BodySection.hip),
-    Workout("데드리프트", BodySection.back),
-    Workout("벤치프레스", BodySection.chest),
-  ]
+  private var workoutList = [Workout]()
+  private var workoutCodeDictionary = [String: Workout]()
   
   private init() { }
   
@@ -36,23 +32,16 @@ class WorkoutManager {
         
         do {
           let data = try JSONSerialization.data(withJSONObject: jsonValue)
-          let decodedWorkout = try self.decoder.decode([String : Workout].self, from: data)
-          
-          let decodedWorkoutList = decodedWorkout.map { (key: String, value: Workout) -> Workout in
+          self.workoutCodeDictionary = try self.decoder.decode([String : Workout].self, from: data)
+          self.workoutList = self.workoutCodeDictionary.map { (key: String, value: Workout) -> Workout in
             value.configureId(with: key)
             return value
           }.sorted { workout1, workout2 in
             workout1.id < workout2.id
           }
-          
-          self.workoutList = decodedWorkoutList
-          NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["workoutList": decodedWorkoutList])
-          
         } catch {
           print(error)
         }
-      } else {
-        NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["workoutList": []])
       }
     }
   }
