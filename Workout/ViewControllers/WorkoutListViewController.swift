@@ -59,6 +59,13 @@ class WorkoutListViewController: UITableViewController {
     workoutManager.workout(at: indexPath.row).name = "스쿼트2"
     tableView.reloadData()
   }
+  
+  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == .delete {
+      workoutManager.removeWorkout(at: indexPath.row)
+      tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+  }
 }
 extension WorkoutListViewController: TabBarMenu {
   var tabTitle: String {
