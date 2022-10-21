@@ -33,7 +33,6 @@ class WorkoutListViewController: UITableViewController {
     setUpListTableView()
     view.addSubview(addButton)
     setUpLayout()
-    NotificationCenter.default.addObserver(self, selector: #selector(self.checkWorkoutData(_:)), name: Notification.Name("ReadWorkoutData"), object: nil)
     workoutManager.readWorkoutData()
   }
   
@@ -60,17 +59,6 @@ class WorkoutListViewController: UITableViewController {
     print(workoutManager.workout(at: indexPath.row).name)
     workoutManager.workout(at: indexPath.row).name = "스쿼트2"
     tableView.reloadData()
-  }
-  
-  @objc  private func checkWorkoutData(_ notification: NSNotification) {
-    guard let userInfo = notification.userInfo,
-          let workoutList = userInfo["workoutList"] as? [Workout] else {
-      return
-    }
-    
-    DispatchQueue.main.async {
-      self.tableView.reloadData()
-    }
   }
 }
 extension WorkoutListViewController: TabBarMenu {
