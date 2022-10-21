@@ -78,6 +78,18 @@ class WorkoutManager {
   func workoutByCode(_ code: String) -> Workout? {
     return workoutCodeDictionary[code]
   }
+  
+  func removeWorkout(at index: Int) {
+    let removingWorkout = workoutList[index]
+    workoutList.remove(at: index)
+    
+    if let removingCode = removingWorkout.id {
+      workoutCodeDictionary[removingCode] = nil
+      
+      let itemRef = ref.child("workout")
+      itemRef.child("/\(removingCode)").removeValue()
+    }
+  }
 }
 
 let workoutManager = WorkoutManager.shared
