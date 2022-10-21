@@ -9,8 +9,8 @@ import Foundation
 
 class PlannedWorkout: Identifiable, Codable {
   var id: String?
+  let workoutCode: String
   var sequenceNumber: UInt
-  let workout: Workout
   var isDone: WorkoutStatus
   var sets: [SetConfiguration]
   var totalSum: Float {
@@ -18,15 +18,16 @@ class PlannedWorkout: Identifiable, Codable {
   }
   
   enum CodingKeys: String, CodingKey {
+    case workoutCode
     case sequenceNumber
-    case workout
     case isDone
     case sets
   }
   
   init(_ workout: Workout, _ sequenceNumber: UInt ) {
+    guard let workoutCode = workout.id else { fatalError() }
+    self.workoutCode = workoutCode
     self.sequenceNumber = sequenceNumber
-    self.workout = workout
     self.isDone = .doing
     self.sets = []
   }
@@ -34,7 +35,7 @@ class PlannedWorkout: Identifiable, Codable {
   required init(from decoder: Decoder) throws {
     let values = try decoder.container(keyedBy: CodingKeys.self)
     sequenceNumber = try values.decode(UInt.self, forKey: .sequenceNumber)
-    workout = try values.decode(Workout.self, forKey: .workout)
+    workoutCode = try values.decode(String.self, forKey: .workoutCode)
     let statusRawValue = try values.decode(Bool.self, forKey: .isDone)
     isDone = WorkoutStatus(rawValue: statusRawValue)
     
@@ -77,7 +78,7 @@ extension PlannedWorkout {
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(sequenceNumber, forKey: .sequenceNumber)
-    try container.encode(workout, forKey: .workout)
+    try container.encode(workoutCode, forKey: .workoutCode)
     try container.encode(isDone.rawValue, forKey: .isDone)
     try container.encode(sets, forKey: .sets)
   }
