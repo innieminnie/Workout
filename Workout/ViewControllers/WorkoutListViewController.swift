@@ -33,6 +33,8 @@ class WorkoutListViewController: UITableViewController {
     setUpListTableView()
     view.addSubview(addButton)
     setUpLayout()
+    NotificationCenter.default.addObserver(self, selector: #selector(self.checkWorkoutData(_:)), name: Notification.Name("ReadWorkoutData"), object: nil)
+    workoutManager.readWorkoutData()
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,6 +54,23 @@ class WorkoutListViewController: UITableViewController {
     cell.setUp(with: workout)
     
     return cell
+  }
+  
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    print(workoutManager.workout(at: indexPath.row).name)
+    workoutManager.workout(at: indexPath.row).name = "스쿼트2"
+    tableView.reloadData()
+  }
+  
+  @objc  private func checkWorkoutData(_ notification: NSNotification) {
+    guard let userInfo = notification.userInfo,
+          let workoutList = userInfo["workoutList"] as? [Workout] else {
+      return
+    }
+    
+    DispatchQueue.main.async {
+      self.tableView.reloadData()
+    }
   }
 }
 extension WorkoutListViewController: TabBarMenu {
