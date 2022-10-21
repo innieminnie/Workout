@@ -19,8 +19,8 @@ class RoutineManager {
     workoutPlanner = [:]
   }
   
-  func readData(from dateInformation: DateInformation) {
-    let itemRef = configureDatabaseReference(dateInformation: dateInformation)
+  func readRoutineData(from dateInformation: DateInformation) {
+    let itemRef = configureRoutineDatabaseReference(dateInformation: dateInformation)
     
     itemRef.getData { error, snapshot in
       if let error = error {
@@ -59,7 +59,7 @@ class RoutineManager {
   }
   
   func addPlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
-    let itemRef = configureDatabaseReference(dateInformation: dateInformation)
+    let itemRef = configureRoutineDatabaseReference(dateInformation: dateInformation)
     
     for workout in workouts {
       do {
@@ -118,14 +118,14 @@ class RoutineManager {
     workoutPlanner[dateInformation] = reorderingPlan
     
     guard let id = removingWorkout.id else { return self.plan(of: dateInformation) }
-    let itemRef = configureDatabaseReference(dateInformation: dateInformation)
+    let itemRef = configureRoutineDatabaseReference(dateInformation: dateInformation)
     itemRef.child("/\(id)").removeValue()
     
     self.updatePlan(with: reorderingPlan, on: dateInformation)
     return self.plan(of: dateInformation)
   }
   
-  private func configureDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
+  private func configureRoutineDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
     return self.ref.child("routine/\(dateInfo.currentDate)")
   }
 }
