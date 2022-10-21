@@ -74,6 +74,10 @@ class WorkoutManager {
   func workout(at index: Int) -> Workout {
     return workoutList[index]
   }
+  
+  func workoutByCode(_ code: String) -> Workout? {
+    return workoutCodeDictionary[code]
+  }
 }
 
 let workoutManager = WorkoutManager.shared

@@ -33,7 +33,6 @@ class WorkoutListViewController: UITableViewController {
     setUpListTableView()
     view.addSubview(addButton)
     setUpLayout()
-    workoutManager.readWorkoutData()
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {

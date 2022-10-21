@@ -65,11 +65,9 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   
   func setUp(with plannedWorkout: PlannedWorkout) {
     self.currentWorkout = plannedWorkout
-    
-    let workout = plannedWorkout.workout
     let sets = plannedWorkout.sets
     
-    workoutNameLabel.text = workout.name
+    workoutNameLabel.text = plannedWorkout.checkWorkoutName()
     doneButton.setTitle(plannedWorkout.isDone.buttonTitle, for: .normal)
     setButtonStackView.isHidden = plannedWorkout.isDone.rawValue
     
