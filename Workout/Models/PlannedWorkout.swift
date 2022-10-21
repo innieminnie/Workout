@@ -73,6 +73,11 @@ class PlannedWorkout: Identifiable, Codable {
   func removeSet(of index: Int) {
     sets.remove(at: index)
   }
+  
+  func checkWorkoutName() -> String {
+    guard let workout = workoutManager.workoutByCode(self.workoutCode) else { return "    " }
+    return workout.name
+  }
 }
 extension PlannedWorkout {
   func encode(to encoder: Encoder) throws {
