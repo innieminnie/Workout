@@ -45,4 +45,12 @@ class RoundedCornerLabelView: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  func changeToSelectedBackgroundColor() {
+    self.backgroundColor = .blue
+  }
+  
+  func changeToDeselectedBackgroundColor() {
+    self.backgroundColor = .white
+  }
 }

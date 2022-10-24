@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+class BodySectionTapGesture: UITapGestureRecognizer {
+  var tappedCell: BodySectionCollectionViewCell?
+}
+
 protocol NewWorkoutActionDelegate: AnyObject {
   func tappedCancel()
   func tappedComplete(with newWorkout: Workout)
@@ -87,6 +91,7 @@ class NewWorkoutView: UIView {
     return stackView
   }()
 
+  private var selectedCell: BodySectionCollectionViewCell?
   weak var delegate: NewWorkoutActionDelegate?
   
   init() {
@@ -133,6 +138,19 @@ class NewWorkoutView: UIView {
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  @objc private func cellTapped(gesture: BodySectionTapGesture) {
+    if let currentSelectedCell = selectedCell {
+      currentSelectedCell.isSelected = false
+      currentSelectedCell.showDeselectedStatus()
+    }
+    
+    if let currentTappedCell = gesture.tappedCell {
+      currentTappedCell.isSelected = true
+      currentTappedCell.showSelectedStatus()
+      self.selectedCell = currentTappedCell
+    }
   }
 }
 extension NewWorkoutView: UITextFieldDelegate {
@@ -193,6 +211,11 @@ extension NewWorkoutView: UICollectionViewDataSource {
     }
 
     cell.setUp(with: bodySection)
+    
+    let bodySectionTapGesture = BodySectionTapGesture(target: self, action: #selector(cellTapped(gesture:)))
+    bodySectionTapGesture.tappedCell = cell
+    cell.addGestureRecognizer(bodySectionTapGesture)
+    
     return cell
   }
 }
