@@ -36,8 +36,8 @@ class RoundedCornerLabelView: UIView {
     
     NSLayoutConstraint.activate([
       titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-      titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 2),
+      titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -2),
       titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
     ])
   }

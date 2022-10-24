@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum BodySection: String, Codable {
+enum BodySection: String, CaseIterable, Codable {
   case chest = "가슴"
   case abs = "복근"
   case shoulder = "어깨"

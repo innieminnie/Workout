@@ -38,14 +38,21 @@ class NewWorkoutView: UIView {
     return textField
   }()
   
-  private let newWorkoutRegisterFormStackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.translatesAutoresizingMaskIntoConstraints = false
+  private lazy var bodySectionSelectionCollectionView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
-    stackView.axis = .vertical
-    stackView.spacing = 20
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
     
-    return stackView
+    collectionView.allowsMultipleSelection = false
+    collectionView.showsHorizontalScrollIndicator = false
+    collectionView.showsVerticalScrollIndicator = false
+    
+    let nib = UINib(nibName: "BodySectionCollectionViewCell", bundle: nil)
+    collectionView.register(nib, forCellWithReuseIdentifier: BodySectionCollectionViewCell.identifier)
+    
+    return collectionView
   }()
   
   private lazy var cancelButton: UIButton = {
@@ -86,10 +93,12 @@ class NewWorkoutView: UIView {
     super.init(frame: .zero)
     self.translatesAutoresizingMaskIntoConstraints = false
     
-    addSubview(titleLabel)
+    bodySectionSelectionCollectionView.dataSource = self
+    bodySectionSelectionCollectionView.delegate = self
     
-    newWorkoutRegisterFormStackView.addArrangedSubview(nameTextField)
-    addSubview(newWorkoutRegisterFormStackView)
+    addSubview(titleLabel)
+    addSubview(nameTextField)
+    addSubview(bodySectionSelectionCollectionView)
     
     buttonStackView.addArrangedSubview(cancelButton)
     buttonStackView.addArrangedSubview(completeButton)
@@ -100,14 +109,18 @@ class NewWorkoutView: UIView {
       titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
       titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       
-      newWorkoutRegisterFormStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-      newWorkoutRegisterFormStackView.bottomAnchor.constraint(lessThanOrEqualTo: buttonStackView.topAnchor, constant: -20),
-      newWorkoutRegisterFormStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
-      newWorkoutRegisterFormStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
+      nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+      nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
+      nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
+      nameTextField.bottomAnchor.constraint(equalTo: bodySectionSelectionCollectionView.topAnchor, constant: -20),
       
-      buttonStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      buttonStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-      buttonStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+      bodySectionSelectionCollectionView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
+      bodySectionSelectionCollectionView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
+      bodySectionSelectionCollectionView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -20),
+      
+      buttonStackView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
+      buttonStackView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
+      buttonStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -300)
     ])
     
     let viewTapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
@@ -166,5 +179,35 @@ extension NewWorkoutView {
     
     let keyboardHeight = keyboardFrame.height
     buttonStackView.frame.origin.y += keyboardHeight
+  }
+}
+extension NewWorkoutView: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    BodySection.allCases.count
+  }
+
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let bodySection = BodySection.allCases[indexPath.row]
+
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BodySectionCollectionViewCell.identifier, for: indexPath) as? BodySectionCollectionViewCell else { return UICollectionViewCell()
+    }
+
+    cell.setUp(with: bodySection)
+    return cell
+  }
+}
+extension NewWorkoutView: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let cellWidth =  bodySectionSelectionCollectionView.frame.width / 4
+    let cellHeight = cellWidth / 2
+    return CGSize(width: cellWidth, height: cellHeight)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 0
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    return 0
   }
 }
