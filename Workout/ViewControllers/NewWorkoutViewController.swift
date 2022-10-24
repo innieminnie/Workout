@@ -35,7 +35,7 @@ extension NewWorkoutViewController: NewWorkoutActionDelegate {
     self.dismiss(animated: true, completion: nil)
   }
   
-  func tappedComplete(with newWorkout: Workout) {
+  func register(with newWorkout: Workout) {
     self.delegate?.saveNewWorkout(workout: newWorkout)
     self.dismiss(animated: true, completion: nil)
   }
