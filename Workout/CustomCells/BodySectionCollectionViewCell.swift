@@ -19,7 +19,7 @@ class BodySectionCollectionViewCell: UICollectionViewCell {
   }
   
   func setUp(with bodySection: BodySection) {
-    self.bodySection = bodySectio
+    self.bodySection = bodySection
     let roundedCornerLabelView = RoundedCornerLabelView(title: bodySection.rawValue)
     bodySectionLabelView.addSubview(roundedCornerLabelView)
     
