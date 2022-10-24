@@ -14,7 +14,7 @@ class BodySectionTapGesture: UITapGestureRecognizer {
 
 protocol NewWorkoutActionDelegate: AnyObject {
   func tappedCancel()
-  func tappedComplete(with newWorkout: Workout)
+  func register(with newWorkout: Workout)
 }
 
 class NewWorkoutView: UIView {
@@ -169,12 +169,15 @@ extension NewWorkoutView {
   }
   
   @objc private func tappedComplete() {
-    guard let name = nameTextField.text else {
+    guard let name = nameTextField.text else { print("필수사항을 전부 작성해주세요"); return }
+    guard let bodySectionCell = self.selectedCell else { print("필수사항을 전부 작성해주세요"); return }
+    
+    let bodySection = bodySectionCell.getBodySection()
+    guard let bodySection = bodySection else {
       return
     }
-    
-    let tempBodySection = BodySection.leg
-    delegate?.tappedComplete(with: Workout(name, tempBodySection))
+
+    delegate?.register(with: Workout(name, bodySection))
   }
   
   @objc private func keyboardWillShow(notification: Notification) {

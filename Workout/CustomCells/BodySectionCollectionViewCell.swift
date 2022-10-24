@@ -51,4 +51,8 @@ class BodySectionCollectionViewCell: UICollectionViewCell {
     
     roundedCornerLabelView.changeToDeselectedBackgroundColor()
   }
+  
+  func getBodySection() -> BodySection? {
+    return self.bodySection
+  }
 }
