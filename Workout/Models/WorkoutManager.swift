@@ -66,6 +66,7 @@ class WorkoutManager {
       
       let childUpdates = ["/workout/\(key)/": json]
       self.ref.updateChildValues(childUpdates)
+      self.workoutCodeDictionary[key] = workout
     } catch {
       print(error)
     }
