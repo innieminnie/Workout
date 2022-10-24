@@ -48,6 +48,8 @@
 		D995872828894F500093E024 /* WorkoutStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D995872728894F500093E024 /* WorkoutStatus.swift */; };
 		D9C5444E288FCAEF00A73730 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9C5444D288FCAEF00A73730 /* GoogleService-Info.plist */; };
 		D9D44E4228FEC3AD0035B8D0 /* BodySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E4128FEC3AD0035B8D0 /* BodySection.swift */; };
+		D9D44E45290692A00035B8D0 /* BodySectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E43290692A00035B8D0 /* BodySectionCollectionViewCell.swift */; };
+		D9D44E46290692A00035B8D0 /* BodySectionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9D44E44290692A00035B8D0 /* BodySectionCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,8 @@
 		D995872728894F500093E024 /* WorkoutStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatus.swift; sourceTree = "<group>"; };
 		D9C5444D288FCAEF00A73730 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D9D44E4128FEC3AD0035B8D0 /* BodySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySection.swift; sourceTree = "<group>"; };
+		D9D44E43290692A00035B8D0 /* BodySectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		D9D44E44290692A00035B8D0 /* BodySectionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BodySectionCollectionViewCell.xib; sourceTree = "<group>"; };
 		F99F031903C6C522AC1CD969 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		FF5C8FD7B0C3E2936CFFA345 /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.debug.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -282,6 +286,8 @@
 				D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */,
 				D9107C5B282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift */,
 				D9107C5C282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib */,
+				D9D44E43290692A00035B8D0 /* BodySectionCollectionViewCell.swift */,
+				D9D44E44290692A00035B8D0 /* BodySectionCollectionViewCell.xib */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -418,6 +424,7 @@
 				D98569BC274CBAFE007E517A /* LaunchScreen.storyboard in Resources */,
 				D9107C5E282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib in Resources */,
 				D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */,
+				D9D44E46290692A00035B8D0 /* BodySectionCollectionViewCell.xib in Resources */,
 				D98569B7274CBAFB007E517A /* Main.storyboard in Resources */,
 				D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */,
 				D9C5444E288FCAEF00A73730 /* GoogleService-Info.plist in Resources */,
@@ -562,6 +569,7 @@
 				D98569EB27561CB7007E517A /* NewWorkoutViewController.swift in Sources */,
 				D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */,
 				D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */,
+				D9D44E45290692A00035B8D0 /* BodySectionCollectionViewCell.swift in Sources */,
 				D9958720286D6D760093E024 /* WeekdaysView.swift in Sources */,
 				D995871C286571BD0093E024 /* Weekday.swift in Sources */,
 				D98569E4274D0299007E517A /* WorkoutListViewController.swift in Sources */,
