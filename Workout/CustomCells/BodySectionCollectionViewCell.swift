@@ -10,7 +10,8 @@ import UIKit
 class BodySectionCollectionViewCell: UICollectionViewCell {
   static let identifier = "bodySectionCollectionViewCell"
   private var bodySection: BodySection?
-
+  private var roundedCornerLabelView: RoundedCornerLabelView?
+  
   @IBOutlet weak var bodySectionLabelView: UIView!
   
   override func awakeFromNib() {
@@ -20,7 +21,11 @@ class BodySectionCollectionViewCell: UICollectionViewCell {
   
   func setUp(with bodySection: BodySection) {
     self.bodySection = bodySection
-    let roundedCornerLabelView = RoundedCornerLabelView(title: bodySection.rawValue)
+    self.roundedCornerLabelView = RoundedCornerLabelView(title: bodySection.rawValue)
+    guard let roundedCornerLabelView = roundedCornerLabelView else {
+      return
+    }
+
     bodySectionLabelView.addSubview(roundedCornerLabelView)
     
     NSLayoutConstraint.activate([
@@ -29,5 +34,21 @@ class BodySectionCollectionViewCell: UICollectionViewCell {
       roundedCornerLabelView.trailingAnchor.constraint(equalTo: bodySectionLabelView.trailingAnchor, constant: -5),
       roundedCornerLabelView.bottomAnchor.constraint(equalTo: bodySectionLabelView.bottomAnchor, constant: -5)
     ])
+  }
+  
+  func showSelectedStatus() {
+    guard let roundedCornerLabelView = roundedCornerLabelView else {
+      return
+    }
+    
+    roundedCornerLabelView.changeToSelectedBackgroundColor()
+  }
+  
+  func showDeselectedStatus() {
+    guard let roundedCornerLabelView = roundedCornerLabelView else {
+      return
+    }
+    
+    roundedCornerLabelView.changeToDeselectedBackgroundColor()
   }
 }
