@@ -27,7 +27,7 @@ class WorkoutTableViewCell: UITableViewCell {
   }
     
     func setUp(with workout: Workout) {
-      workoutNameLabel.text = workout.name
+      workoutNameLabel.text = workout.displayName()
   }
   
 }

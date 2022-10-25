@@ -53,7 +53,7 @@ class WorkoutManager {
   func register(workout: Workout) {
     self.workoutList.append(workout)
     workoutList.sort { workout1, workout2 in
-      return workout1.name < workout2.name
+      return workout1.displayName() < workout2.displayName()
     }
     
     let itemRef = ref.child("workout")
@@ -90,6 +90,12 @@ class WorkoutManager {
       let itemRef = ref.child("workout")
       itemRef.child("/\(removingCode)").removeValue()
     }
+  }
+  
+  func updateWorkout(at index: Int, name: String, bodySection: BodySection) {
+    let updatingWorkout = workoutList[index]
+    guard let code = updatingWorkout.id else { return }
+    updatingWorkout.update(name, bodySection)
   }
 }
 
