@@ -8,8 +8,8 @@
 import Foundation
 
 class Workout: Identifiable, Codable {
-  var name: String
   var id: String?
+  private var name: String
   private var bodySection: BodySection
   
   enum CodingKeys: String, CodingKey {
@@ -31,6 +31,15 @@ class Workout: Identifiable, Codable {
   func configureId(with id: String) {
     guard self.id == nil else { return }
     self.id = id
+  }
+ 
+  func displayName() -> String {
+    return self.name
+  }
+  
+  func update(_ name: String, _ bodySection: BodySection) {
+    self.name = name
+    self.bodySection = bodySection
   }
 }
 extension Workout {

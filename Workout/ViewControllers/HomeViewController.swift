@@ -68,6 +68,10 @@ class HomeViewController: UIViewController {
     setUpLayout()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    self.routineTableView.reloadData()
+  }
+  
   @objc  private func checkRoutineData(_ notification: NSNotification) {
     guard let userInfo = notification.userInfo,
           let dateInformation = userInfo["date"] as? DateInformation,

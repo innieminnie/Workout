@@ -55,8 +55,7 @@ class WorkoutListViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    print(workoutManager.workout(at: indexPath.row).name)
-    workoutManager.workout(at: indexPath.row).name = "스쿼트2"
+    // 수정화면 로딩
     tableView.reloadData()
   }
   

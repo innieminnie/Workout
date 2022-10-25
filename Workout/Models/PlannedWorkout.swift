@@ -76,7 +76,7 @@ class PlannedWorkout: Identifiable, Codable {
   
   func checkWorkoutName() -> String {
     guard let workout = workoutManager.workoutByCode(self.workoutCode) else { return "    " }
-    return workout.name
+    return workout.displayName()
   }
 }
 extension PlannedWorkout {
