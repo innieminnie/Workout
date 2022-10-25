@@ -95,11 +95,11 @@ class RoutineManager {
     
     for (idx, workout) in workouts.enumerated() {
       workout.sequenceNumber = UInt(idx)
-      updateWorkout(workout: workout, on: dateInformation)
+      updateRoutine(workout: workout, on: dateInformation)
     }
   }
   
-  func updateWorkout(workout: PlannedWorkout, on dateInformation: DateInformation) {
+  func updateRoutine(workout: PlannedWorkout, on dateInformation: DateInformation) {
     do {
       guard let id = workout.id else { return }
       let data = try encoder.encode(workout)

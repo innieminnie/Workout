@@ -96,6 +96,15 @@ class WorkoutManager {
     let updatingWorkout = workoutList[index]
     guard let code = updatingWorkout.id else { return }
     updatingWorkout.update(name, bodySection)
+    
+    do {
+      let data = try encoder.encode(updatingWorkout)
+      let json = try JSONSerialization.jsonObject(with: data)
+      let childUpdates = ["/workout/\(code)": json]
+      ref.updateChildValues(childUpdates)
+    } catch {
+      print(error)
+    }
   }
 }
 
