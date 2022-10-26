@@ -105,6 +105,11 @@ class WorkoutManager {
       print(error)
     }
   }
+  
+  func checkNameValidation(_ previousName: String, _ name: String) -> Bool {
+    let nameList = Set(self.workoutList.map { $0.displayName() }.filter{ $0 != previousName })
+    return !nameList.contains(name)
+  }
 }
 
 let workoutManager = WorkoutManager.shared
