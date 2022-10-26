@@ -12,9 +12,9 @@ class BodySectionTapGesture: UITapGestureRecognizer {
   var tappedCell: BodySectionCollectionViewCell?
 }
 
-protocol NewWorkoutActionDelegate: AnyObject {
+protocol UpdateWorkoutActionDelegate: AnyObject {
   func tappedCancel()
-  func register(with newWorkout: Workout)
+  func register(_ name: String, _ bodySection: BodySection)
 }
 
 class NewWorkoutView: UIView {
@@ -90,9 +90,11 @@ class NewWorkoutView: UIView {
     
     return stackView
   }()
-
+  
   private var selectedCell: BodySectionCollectionViewCell?
-  weak var delegate: NewWorkoutActionDelegate?
+  private var selectedBodySection: BodySection?
+  
+  weak var delegate: UpdateWorkoutActionDelegate?
   
   init() {
     super.init(frame: .zero)
@@ -152,6 +154,11 @@ class NewWorkoutView: UIView {
       self.selectedCell = currentTappedCell
     }
   }
+  
+  func setUp(with workout: Workout) {
+    nameTextField.text = workout.displayName()
+    selectedBodySection = workout.bodySection
+  }
 }
 extension NewWorkoutView: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -167,17 +174,13 @@ extension NewWorkoutView {
   @objc private func tappedCancel() {
     delegate?.tappedCancel()
   }
-  
+
   @objc private func tappedComplete() {
     guard let name = nameTextField.text else { print("필수사항을 전부 작성해주세요"); return }
     guard let bodySectionCell = self.selectedCell else { print("필수사항을 전부 작성해주세요"); return }
+    guard let bodySection = bodySectionCell.getBodySection() else { return }
     
-    let bodySection = bodySectionCell.getBodySection()
-    guard let bodySection = bodySection else {
-      return
-    }
-
-    delegate?.register(with: Workout(name, bodySection))
+    self.delegate?.register(name, bodySection)
   }
   
   @objc private func keyboardWillShow(notification: Notification) {
@@ -206,13 +209,17 @@ extension NewWorkoutView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     BodySection.allCases.count
   }
-
+  
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let bodySection = BodySection.allCases[indexPath.row]
-
+    
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BodySectionCollectionViewCell.identifier, for: indexPath) as? BodySectionCollectionViewCell else { return UICollectionViewCell()
     }
-
+    
+    if let selectedBodySection = self.selectedBodySection, selectedBodySection == bodySection {
+      cell.isSelected = true
+      self.selectedCell = cell
+    }
     cell.setUp(with: bodySection)
     
     let bodySectionTapGesture = BodySectionTapGesture(target: self, action: #selector(cellTapped(gesture:)))

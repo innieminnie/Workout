@@ -34,6 +34,8 @@ class BodySectionCollectionViewCell: UICollectionViewCell {
       roundedCornerLabelView.trailingAnchor.constraint(equalTo: bodySectionLabelView.trailingAnchor, constant: -5),
       roundedCornerLabelView.bottomAnchor.constraint(equalTo: bodySectionLabelView.bottomAnchor, constant: -5)
     ])
+    
+    isSelected ? showSelectedStatus() : showDeselectedStatus()
   }
   
   func showSelectedStatus() {

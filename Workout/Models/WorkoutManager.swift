@@ -92,9 +92,8 @@ class WorkoutManager {
     }
   }
   
-  func updateWorkout(at index: Int, name: String, bodySection: BodySection) {
-    let updatingWorkout = workoutList[index]
-    guard let code = updatingWorkout.id else { return }
+  func updateWorkout(_ code: String, _ name: String, _ bodySection: BodySection) {
+    guard let updatingWorkout = workoutCodeDictionary[code] else { return }
     updatingWorkout.update(name, bodySection)
     
     do {
