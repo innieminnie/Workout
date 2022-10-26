@@ -17,6 +17,7 @@ class NewWorkoutViewController: UIViewController {
   weak var delegate: AddNewWorkoutDelegate?
   
   override func viewDidLoad() {
+    super.viewDidLoad()
     newWorkoutView.delegate = self
     
     view.addSubview(newWorkoutView)
@@ -30,13 +31,13 @@ class NewWorkoutViewController: UIViewController {
     ])
   }
 }
-extension NewWorkoutViewController: NewWorkoutActionDelegate {
+extension NewWorkoutViewController: UpdateWorkoutActionDelegate {
   func tappedCancel() {
     self.dismiss(animated: true, completion: nil)
   }
   
-  func register(with newWorkout: Workout) {
-    self.delegate?.saveNewWorkout(workout: newWorkout)
+  func register(_ name: String, _ bodySection: BodySection) {
+    self.delegate?.saveNewWorkout(workout: Workout(name, bodySection))
     self.dismiss(animated: true, completion: nil)
   }
 }

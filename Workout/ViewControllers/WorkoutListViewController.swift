@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SendingWorkoutDelegate: AnyObject {
+  func showInformation(of workout: Workout)
+}
+
 class WorkoutListViewController: UITableViewController {
   private lazy var addButton: UIButton = {
     let button = UIButton()
@@ -24,6 +28,8 @@ class WorkoutListViewController: UITableViewController {
     
     return button
   }()
+  
+  weak var delegate: SendingWorkoutDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -55,8 +61,12 @@ class WorkoutListViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    // 수정화면 로딩
-    tableView.reloadData()
+    let workout = workoutManager.workout(at: indexPath.row)
+    let workoutInformationViewController = WorkoutInformationViewController()
+    self.delegate = workoutInformationViewController
+    workoutInformationViewController.delegate = self
+    delegate?.showInformation(of: workout)
+    self.navigationController?.pushViewController(workoutInformationViewController, animated: true)
   }
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -80,6 +90,13 @@ extension WorkoutListViewController: AddNewWorkoutDelegate {
     workoutManager.register(workout: workout)
     tableView.reloadData()
   }
+}
+extension WorkoutListViewController: UpdateWorkoutDelegate {
+  func updateWorkout(code: String, name: String, bodySection: BodySection ) {
+    workoutManager.updateWorkout(code, name, bodySection)
+    tableView.reloadData()
+  }
+
 }
 extension WorkoutListViewController {
   @objc private func buttonTouched(_ sender: UIButton) {

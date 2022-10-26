@@ -10,7 +10,7 @@ import Foundation
 class Workout: Identifiable, Codable {
   var id: String?
   private var name: String
-  private var bodySection: BodySection
+  var bodySection: BodySection
   
   enum CodingKeys: String, CodingKey {
     case name
