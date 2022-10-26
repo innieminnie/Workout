@@ -37,7 +37,7 @@ class NewWorkoutView: UIView {
     
     textField.backgroundColor = .lightGray
     textField.borderStyle = .roundedRect
-    textField.placeholder = "새로운 운동명을 입력하세요."
+    textField.placeholder = "등록할 운동명을 입력하세요."
     
     return textField
   }()
@@ -93,6 +93,7 @@ class NewWorkoutView: UIView {
   
   private var selectedCell: BodySectionCollectionViewCell?
   private var selectedBodySection: BodySection?
+  private var previousName = String()
   
   weak var delegate: UpdateWorkoutActionDelegate?
   
@@ -158,6 +159,7 @@ class NewWorkoutView: UIView {
   func setUp(with workout: Workout) {
     nameTextField.text = workout.displayName()
     selectedBodySection = workout.bodySection
+    previousName = workout.displayName()
   }
 }
 extension NewWorkoutView: UITextFieldDelegate {
@@ -179,6 +181,7 @@ extension NewWorkoutView {
     guard let name = nameTextField.text else { print("필수사항을 전부 작성해주세요"); return }
     guard let bodySectionCell = self.selectedCell else { print("필수사항을 전부 작성해주세요"); return }
     guard let bodySection = bodySectionCell.getBodySection() else { return }
+    guard workoutManager.checkNameValidation(previousName, name) else { print("이미 사용중인 운동명이에요. 운동명을 변경해주세요"); return }
     
     self.delegate?.register(name, bodySection)
   }
