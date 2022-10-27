@@ -66,7 +66,7 @@ class HomeViewController: UIViewController {
   }
   
   override func viewWillAppear(_ animated: Bool) {
-    self.routineTableView.reloadData()
+    calendarView.updateSelectedCell()
   }
   
   @objc  private func checkRoutineData(_ notification: NSNotification) {
