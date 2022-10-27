@@ -18,9 +18,6 @@ struct DateInformation: Hashable, Codable {
     case day
   }
   
-  var currentDate: String {
-    return "\(self.year)_\(self.month)_\(self.day)"
-  }
   var currentMonthlyDate: String {
     return "\(self.year)년 \(self.month)월"
   }
