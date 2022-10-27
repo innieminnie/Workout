@@ -171,7 +171,7 @@ extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
     let plannedWorkoutNumber = plannedWorkoutList.count
     let newPlannedWorkouts = selectedWorkouts.enumerated().map({ (index, workout) in
-      PlannedWorkout(workout, UInt(index + plannedWorkoutNumber))
+      PlannedWorkout(workout, UInt(index + plannedWorkoutNumber), selectedDayInformation)
     })
     
     plannedWorkoutList.append(contentsOf: newPlannedWorkouts)

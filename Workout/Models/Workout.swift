@@ -11,26 +11,42 @@ class Workout: Identifiable, Codable {
   var id: String?
   private var name: String
   var bodySection: BodySection
+  private var registeredDate: [DateInformation]
   
   enum CodingKeys: String, CodingKey {
     case name
     case bodySection
+    case registeredDate
   }
   
   init(_ name: String, _ bodySection: BodySection) {
     self.name = name
     self.bodySection = bodySection
+    self.registeredDate = []
   }
   
   required init(from decoder: Decoder) throws {
     let values = try decoder.container(keyedBy: CodingKeys.self)
     name = try values.decode(String.self, forKey: .name)
     bodySection = try values.decode(BodySection.self, forKey: .bodySection)
+    
+    do {
+      registeredDate =  try values.decode([DateInformation].self, forKey: .registeredDate)
+    } catch {
+      registeredDate = []
+    }
   }
   
   func configureId(with id: String) {
     guard self.id == nil else { return }
     self.id = id
+  }
+  
+  func addRegisteredDate(on dateInformation: DateInformation) {
+    self.registeredDate.append(dateInformation)
+    if let id = id {
+      workoutManager.updateWorkoutRegistration(id, self.registeredDate)
+    }
   }
  
   func displayName() -> String {
@@ -47,5 +63,6 @@ extension Workout {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(name, forKey: .name)
     try container.encode(bodySection, forKey: .bodySection)
+    try container.encode(registeredDate, forKey: .registeredDate)
   }
 }

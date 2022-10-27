@@ -12,6 +12,12 @@ struct DateInformation: Hashable, Codable {
   private var month: Int
   private var day: Int
   
+  enum CodingKeys: String, CodingKey {
+    case year
+    case month
+    case day
+  }
+  
   var currentDate: String {
     return "\(self.year)_\(self.month)_\(self.day)"
   }
