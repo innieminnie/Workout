@@ -11,7 +11,7 @@ class Workout: Identifiable, Codable {
   var id: String?
   private var name: String
   var bodySection: BodySection
-  private var registeredDate: [DateInformation]
+  private var registeredDate: Set<DateInformation>
   
   enum CodingKeys: String, CodingKey {
     case name
@@ -31,7 +31,8 @@ class Workout: Identifiable, Codable {
     bodySection = try values.decode(BodySection.self, forKey: .bodySection)
     
     do {
-      registeredDate =  try values.decode([DateInformation].self, forKey: .registeredDate)
+      let arrayRegisteredDate =  try values.decode([DateInformation].self, forKey: .registeredDate)
+      registeredDate = Set(arrayRegisteredDate)
     } catch {
       registeredDate = []
     }
@@ -43,9 +44,11 @@ class Workout: Identifiable, Codable {
   }
   
   func addRegisteredDate(on dateInformation: DateInformation) {
-    self.registeredDate.append(dateInformation)
+    guard !registeredDate.contains(dateInformation) else { return }
+    
+    registeredDate.insert(dateInformation)
     if let id = id {
-      workoutManager.updateWorkoutRegistration(id, self.registeredDate)
+      workoutManager.updateWorkoutRegistration(id, registeredDate)
     }
   }
  
