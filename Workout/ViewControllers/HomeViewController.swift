@@ -10,15 +10,12 @@ import UIKit
 class HomeViewController: UIViewController {
   var selectedDayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
-      plannedWorkoutList = routineManager.plan(of: selectedDayInformation)
-      
       DispatchQueue.main.async {
         self.routineTableView.reloadData()
       }
     }
   }
   
-  private var plannedWorkoutList = [PlannedWorkout]()
   private let contentScrollView: UIScrollView = {
     let scrollView = UIScrollView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -74,14 +71,9 @@ class HomeViewController: UIViewController {
   
   @objc  private func checkRoutineData(_ notification: NSNotification) {
     guard let userInfo = notification.userInfo,
-          let dateInformation = userInfo["date"] as? DateInformation,
-          let dailyRoutine = userInfo["dailyRoutine"] as? [PlannedWorkout] else {
-      return
-    }
+          let dateInformation = userInfo["date"] as? DateInformation else { return }
     
     if selectedDayInformation == dateInformation {
-      self.plannedWorkoutList = dailyRoutine
-      
       DispatchQueue.main.async {
         self.routineTableView.reloadData()
       }
@@ -169,12 +161,11 @@ class HomeViewController: UIViewController {
 }
 extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
-    let plannedWorkoutNumber = plannedWorkoutList.count
+    let plannedWorkoutNumber = routineManager.plan(of: selectedDayInformation).count
     let newPlannedWorkouts = selectedWorkouts.enumerated().map({ (index, workout) in
       PlannedWorkout(workout, UInt(index + plannedWorkoutNumber), selectedDayInformation)
     })
     
-    plannedWorkoutList.append(contentsOf: newPlannedWorkouts)
     routineManager.addPlan(with: newPlannedWorkouts, on: selectedDayInformation)
     calendarView.updateSelectedCell()
     
@@ -188,7 +179,7 @@ extension HomeViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return plannedWorkoutList.count
+    return routineManager.plan(of: selectedDayInformation).count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -196,7 +187,7 @@ extension HomeViewController: UITableViewDataSource {
       return UITableViewCell()
     }
     
-    let workout = plannedWorkoutList[indexPath.row]
+    let workout = routineManager.plan(of: selectedDayInformation)[indexPath.row]
     cell.setUp(with: workout)
     cell.delegate = self
     
@@ -220,7 +211,7 @@ extension HomeViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      plannedWorkoutList = routineManager.removeWorkout(at: indexPath.row, on: selectedDayInformation)
+      routineManager.removeWorkout(at: indexPath.row, on: selectedDayInformation)
       calendarView.updateSelectedCell()
       tableView.deleteRows(at: [indexPath], with: .automatic)
     }
