@@ -60,6 +60,14 @@ class Workout: Identifiable, Codable {
     self.name = name
     self.bodySection = bodySection
   }
+  
+  func removeRegisteredRoutine() {
+    guard let id = self.id else { return }
+    
+    for date in registeredDate {
+      routineManager.removeRegisteredWorkout(code: id, on: date)
+    }
+  }
 }
 extension Workout {
   func encode(to encoder: Encoder) throws {

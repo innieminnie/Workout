@@ -40,9 +40,9 @@ class RoutineManager {
           }.sorted { plannedWorkout1, plannedWorkout2 in
             plannedWorkout1.sequenceNumber < plannedWorkout2.sequenceNumber
           }
-         
+          
           self.workoutPlanner[dateInformation] = dailyRoutine
-  
+          
           NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine, "date": dateInformation])
           
         } catch {
@@ -94,7 +94,15 @@ class RoutineManager {
     
     for (idx, workout) in workouts.enumerated() {
       workout.sequenceNumber = UInt(idx)
-      updateRoutine(workout: workout, on: dateInformation)
+    }
+    
+    do {
+      let data = try encoder.encode(workouts)
+      let json = try JSONSerialization.jsonObject(with: data)
+      let childUpdates = ["/routine/\(dateInformation)/": json]
+      ref.updateChildValues(childUpdates)
+    } catch {
+      print(error)
     }
   }
   
@@ -110,18 +118,37 @@ class RoutineManager {
     }
   }
   
-  func removeWorkout(at removingPosition: Int, on dateInformation: DateInformation) -> [PlannedWorkout] {
+  func removeWorkout(at removingPosition: Int, on dateInformation: DateInformation) {
     var reorderingPlan = self.plan(of: dateInformation)
     let removingWorkout = reorderingPlan[removingPosition]
     reorderingPlan.remove(at: removingPosition)
     workoutPlanner[dateInformation] = reorderingPlan
     
-    guard let id = removingWorkout.id else { return self.plan(of: dateInformation) }
+    guard let id = removingWorkout.id else { return }
     let itemRef = configureRoutineDatabaseReference(dateInformation: dateInformation)
     itemRef.child("/\(id)").removeValue()
     
     self.updatePlan(with: reorderingPlan, on: dateInformation)
-    return self.plan(of: dateInformation)
+  }
+  
+  func removeRegisteredWorkout(code workoutCode: String, on date: DateInformation) {
+    var reorderingPlan = self.plan(of: date)
+    var removingPosition = [Int]()
+    
+    for  index in (0..<reorderingPlan.count).reversed() {
+      if reorderingPlan[index].workoutCode == workoutCode { removingPosition.append(index) }
+    }
+    
+    for removingIndex in removingPosition {
+      reorderingPlan.remove(at: removingIndex)
+    }
+    
+    workoutPlanner[date] = reorderingPlan
+    
+    let itemRef = configureRoutineDatabaseReference(dateInformation: date)
+    itemRef.child("/\(workoutCode)").removeValue()
+    
+    self.updatePlan(with: reorderingPlan, on: date)
   }
   
   private func configureRoutineDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {

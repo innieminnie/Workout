@@ -86,6 +86,7 @@ class WorkoutManager {
     
     if let removingCode = removingWorkout.id {
       workoutCodeDictionary[removingCode] = nil
+      removingWorkout.removeRegisteredRoutine()
       
       let itemRef = ref.child("workout")
       itemRef.child("/\(removingCode)").removeValue()
