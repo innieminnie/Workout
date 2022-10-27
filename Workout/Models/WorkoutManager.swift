@@ -106,9 +106,9 @@ class WorkoutManager {
     }
   }
   
-  func updateWorkoutRegistration(_ code: String, _ registeredDate: [DateInformation]) {
+  func updateWorkoutRegistration(_ code: String, _ registeredDate: Set<DateInformation>) {
     do {
-      let data = try encoder.encode(registeredDate)
+      let data = try encoder.encode(Array(registeredDate))
       let json = try JSONSerialization.jsonObject(with: data)
       let childUpdates = ["/workout/\(code)/registeredDate": json]
       ref.updateChildValues(childUpdates)
