@@ -68,8 +68,7 @@ class RoutineManager {
         workout.id = key
         let data = try encoder.encode(workout)
         let json = try JSONSerialization.jsonObject(with: data)
-        
-        let childUpdates = ["/routine/\(dateInformation.currentDate)/\(key)/": json]
+        let childUpdates = ["/routine/\(dateInformation)/\(key)/": json]
         self.ref.updateChildValues(childUpdates)
       } catch {
         print(error)
@@ -104,7 +103,7 @@ class RoutineManager {
       guard let id = workout.id else { return }
       let data = try encoder.encode(workout)
       let json = try JSONSerialization.jsonObject(with: data)
-      let childUpdates = ["/routine/\(dateInformation.currentDate)/\(id)": json]
+      let childUpdates = ["/routine/\(dateInformation)/\(id)/": json]
       ref.updateChildValues(childUpdates)
     } catch {
       print(error)
@@ -126,7 +125,7 @@ class RoutineManager {
   }
   
   private func configureRoutineDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
-    return self.ref.child("routine/\(dateInfo.currentDate)")
+    return self.ref.child("routine/\(dateInfo)")
   }
 }
 
