@@ -106,6 +106,17 @@ class WorkoutManager {
     }
   }
   
+  func updateWorkoutRegistration(_ code: String, _ registeredDate: [DateInformation]) {
+    do {
+      let data = try encoder.encode(registeredDate)
+      let json = try JSONSerialization.jsonObject(with: data)
+      let childUpdates = ["/workout/\(code)/registeredDate": json]
+      ref.updateChildValues(childUpdates)
+    } catch {
+      print(error)
+    }
+  }
+  
   func checkNameValidation(_ previousName: String, _ name: String) -> Bool {
     let nameList = Set(self.workoutList.map { $0.displayName() }.filter{ $0 != previousName })
     return !nameList.contains(name)

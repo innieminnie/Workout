@@ -24,12 +24,14 @@ class PlannedWorkout: Identifiable, Codable {
     case sets
   }
   
-  init(_ workout: Workout, _ sequenceNumber: UInt ) {
+  init(_ workout: Workout, _ sequenceNumber: UInt, _ planningDate: DateInformation ) {
     guard let workoutCode = workout.id else { fatalError() }
     self.workoutCode = workoutCode
     self.sequenceNumber = sequenceNumber
     self.isDone = .doing
     self.sets = []
+    
+    workout.addRegisteredDate(on: planningDate)
   }
   
   required init(from decoder: Decoder) throws {
