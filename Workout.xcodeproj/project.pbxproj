@@ -51,6 +51,7 @@
 		D9D44E45290692A00035B8D0 /* BodySectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E43290692A00035B8D0 /* BodySectionCollectionViewCell.swift */; };
 		D9D44E46290692A00035B8D0 /* BodySectionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9D44E44290692A00035B8D0 /* BodySectionCollectionViewCell.xib */; };
 		D9D44E482907C1010035B8D0 /* WorkoutInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */; };
+		D9D44E4A2910F9540035B8D0 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E492910F9540035B8D0 /* PaddingLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 		D9D44E43290692A00035B8D0 /* BodySectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		D9D44E44290692A00035B8D0 /* BodySectionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BodySectionCollectionViewCell.xib; sourceTree = "<group>"; };
 		D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutInformationViewController.swift; sourceTree = "<group>"; };
+		D9D44E492910F9540035B8D0 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		F99F031903C6C522AC1CD969 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		FF5C8FD7B0C3E2936CFFA345 /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.debug.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -258,6 +260,7 @@
 				D98569EE2758F669007E517A /* RoundedCornerLabelView.swift */,
 				D9107C632836151300FABD37 /* WorkoutSetConfigurationView.swift */,
 				D9107C612833741800FABD37 /* RoutineTableView.swift */,
+				D9D44E492910F9540035B8D0 /* PaddingLabel.swift */,
 				D995871D286D523A0093E024 /* Extensions.swift */,
 			);
 			path = Views;
@@ -562,6 +565,7 @@
 				D9D44E482907C1010035B8D0 /* WorkoutInformationViewController.swift in Sources */,
 				D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */,
 				D9856A1527C0CBC2007E517A /* CalendarDateCollectionViewCell.swift in Sources */,
+				D9D44E4A2910F9540035B8D0 /* PaddingLabel.swift in Sources */,
 				D9107C582810045200FABD37 /* RoutineSelectionViewController.swift in Sources */,
 				D9107C5D282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift in Sources */,
 				D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */,
