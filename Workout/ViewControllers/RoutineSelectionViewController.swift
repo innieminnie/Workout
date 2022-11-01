@@ -47,7 +47,7 @@ class RoutineSelectionViewController: UIViewController {
   @objc func tappedAddRoutineButton(sender: UIButton) {
     if let selectedWorkoutIndexPaths = self.workoutListTableView.indexPathsForSelectedRows {
       self.selectedWorkouts = selectedWorkoutIndexPaths.map({ indexPath in
-        workoutManager.workout(at: indexPath.row)
+        workoutManager.workout(at: indexPath)
       })
     }
   
@@ -69,8 +69,13 @@ class RoutineSelectionViewController: UIViewController {
   }
 }
 extension RoutineSelectionViewController: UITableViewDataSource {
+  func numberOfSections(in tableView: UITableView) -> Int {
+    BodySection.allCases.count
+  }
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return workoutManager.numberOfWorkoutList()
+    let bodySection = BodySection.allCases[section]
+    return workoutManager.filteredWorkout(by: bodySection).count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -78,10 +83,14 @@ extension RoutineSelectionViewController: UITableViewDataSource {
       return UITableViewCell()
     }
     
-    let workout = workoutManager.workout(at: indexPath.row)
+    let workout = workoutManager.workout(at: indexPath)
     cell.setUp(with: workout)
     
     return cell
+  }
+  
+  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    return BodySection.allCases[section].rawValue
   }
 }
 extension RoutineSelectionViewController: UITableViewDelegate {
