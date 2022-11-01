@@ -13,8 +13,6 @@ class WorkoutManager {
   private let ref: DatabaseReference! = Database.database().reference()
   private let encoder = JSONEncoder()
   private let decoder = JSONDecoder()
-  
-  private var workoutList = [Workout]()
   private var workoutCodeDictionary = [String: Workout]()
   
   private init() { }
@@ -33,11 +31,9 @@ class WorkoutManager {
         do {
           let data = try JSONSerialization.data(withJSONObject: jsonValue)
           self.workoutCodeDictionary = try self.decoder.decode([String : Workout].self, from: data)
-          self.workoutList = self.workoutCodeDictionary.map { (key: String, value: Workout) -> Workout in
-            value.configureId(with: key)
-            return value
-          }.sorted { workout1, workout2 in
-            workout1.id < workout2.id
+          
+          for element in self.workoutCodeDictionary {
+            element.value.configureId(with: element.key)
           }
         } catch {
           print(error)
@@ -47,15 +43,10 @@ class WorkoutManager {
   }
   
   func numberOfWorkoutList() -> Int {
-    return workoutList.count
+    return workoutCodeDictionary.count
   }
   
   func register(workout: Workout) {
-    self.workoutList.append(workout)
-    workoutList.sort { workout1, workout2 in
-      return workout1.displayName() < workout2.displayName()
-    }
-    
     let itemRef = ref.child("workout")
     guard let key = itemRef.childByAutoId().key else { return }
     workout.configureId(with: key)
@@ -72,21 +63,21 @@ class WorkoutManager {
     }
   }
   
-  func workout(at index: Int) -> Workout {
-    return workoutList[index]
+  func workout(at indexPath: IndexPath) -> Workout {
+    let section = BodySection.allCases[indexPath.section]
+    let filteredWorkout = filteredWorkout(by: section)
+    
+    return filteredWorkout[indexPath.row]
   }
   
   func workoutByCode(_ code: String) -> Workout? {
     return workoutCodeDictionary[code]
   }
   
-  func removeWorkout(at index: Int) {
-    let removingWorkout = workoutList[index]
-    workoutList.remove(at: index)
-    
-    if let removingCode = removingWorkout.id {
+  func removeWorkout(_ workout: Workout) {
+    if let removingCode = workout.id {
       workoutCodeDictionary[removingCode] = nil
-      removingWorkout.removeRegisteredRoutine()
+      workout.removeRegisteredRoutine()
       
       let itemRef = ref.child("workout")
       itemRef.child("/\(removingCode)").removeValue()
@@ -119,8 +110,16 @@ class WorkoutManager {
   }
   
   func checkNameValidation(_ previousName: String, _ name: String) -> Bool {
-    let nameList = Set(self.workoutList.map { $0.displayName() }.filter{ $0 != previousName })
+    let nameList = Set(self.workoutCodeDictionary.values.map { $0.displayName() }.filter{ $0 != previousName })
     return !nameList.contains(name)
+  }
+  
+  func filteredWorkout(by bodySection: BodySection) -> [Workout] {
+    let filteredList = workoutCodeDictionary.values.filter { workout in
+      workout.bodySection == bodySection
+    }
+
+    return filteredList
   }
 }
 

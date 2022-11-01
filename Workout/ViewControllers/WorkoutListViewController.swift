@@ -42,11 +42,12 @@ class WorkoutListViewController: UITableViewController {
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+    return BodySection.allCases.count
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return workoutManager.numberOfWorkoutList()
+    let bodySection = BodySection.allCases[section]
+    return workoutManager.filteredWorkout(by: bodySection).count
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -54,14 +55,18 @@ class WorkoutListViewController: UITableViewController {
       return UITableViewCell()
     }
     
-    let workout = workoutManager.workout(at: indexPath.row)
+    let workout = workoutManager.workout(at: indexPath)
     cell.setUp(with: workout)
     
     return cell
   }
   
+  override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    return BodySection.allCases[section].rawValue
+  }
+  
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let workout = workoutManager.workout(at: indexPath.row)
+    let workout = workoutManager.workout(at: indexPath)
     let workoutInformationViewController = WorkoutInformationViewController()
     self.delegate = workoutInformationViewController
     workoutInformationViewController.delegate = self
@@ -71,7 +76,8 @@ class WorkoutListViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      workoutManager.removeWorkout(at: indexPath.row)
+      let removingWorkout = workoutManager.workout(at: indexPath)
+      workoutManager.removeWorkout(removingWorkout)
       tableView.deleteRows(at: [indexPath], with: .automatic)
     }
   }
