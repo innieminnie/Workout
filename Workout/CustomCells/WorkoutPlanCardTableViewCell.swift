@@ -133,28 +133,29 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
-    let newSetIndex = setStackView.arrangedSubviews.count
-    let setConfigurationView = WorkoutSetConfigurationView(index: newSetIndex)
-    
     guard let currentWorkout = self.currentWorkout else {
       return
     }
     
-    currentWorkout.addNewSet()
-    let currentDateInformation = delegate?.currentDateInformation()
-    routineManager.updateRoutine(workout: currentWorkout, on: currentDateInformation!)
-    
+    let newSetIndex = currentWorkout.sets.count
+    let newSetConfiguration = newSetIndex > 0 ? currentWorkout.sets[currentWorkout.sets.count - 1] : SetConfiguration()
+    let setConfigurationView = WorkoutSetConfigurationView(index: newSetIndex, setInformation: newSetConfiguration)
     setStackView.addArrangedSubview(setConfigurationView)
     if !doneButton.isEnabled { doneButton.isEnabled = true }
     setConfigurationView.delegate = self
     delegate?.cellExpand()
+    
+    currentWorkout.addNewSet(with: newSetConfiguration)
+    setSumLabel.text = "\(currentWorkout.totalSum)"
+    let currentDateInformation = delegate?.currentDateInformation()
+    routineManager.updateRoutine(workout: currentWorkout, on: currentDateInformation!)
   }
   
   @objc func tappedMinusSetButton(sender: UIButton) {
     guard let currentWorkout = self.currentWorkout, let lastSet = setStackView.arrangedSubviews.last as? WorkoutSetConfigurationView else {
       return
     }
-
+    
     lastSet.resetWeightAndCountValues()
     currentWorkout.removeSet(of: setStackView.arrangedSubviews.count - 1)
     let currentDateInformation = delegate?.currentDateInformation()

@@ -135,19 +135,6 @@ class WorkoutSetConfigurationView: UIView {
     return stackView
   }()
   
-  init(index: Int) {
-    super.init(frame: .zero)
-    
-    self.setIndex = index
-    weightTextField.delegate = self
-    countTextField.delegate = self
-    
-    configureWeightStackView()
-    configureCountStackView()
-    configureSetStackView()
-    setUpLayout()
-  }
-  
   init(index: Int, setInformation: SetConfiguration) {
     super.init(frame: .zero)
     
@@ -157,7 +144,7 @@ class WorkoutSetConfigurationView: UIView {
     
     configureWeightStackView()
     configureCountStackView()
-    configureSetStackView(w: setInformation.weight, c: setInformation.count)
+    configureSetStackView(with: setInformation)
     setUpLayout()
   }
   
@@ -187,23 +174,15 @@ class WorkoutSetConfigurationView: UIView {
     ])
   }
   
-  private func configureSetStackView() {
+  private func configureSetStackView(with setInformation: SetConfiguration) {
     setStackView.addArrangedSubview(setIndexLabel)
     setIndexLabel.text = "Set \(self.setIndex + 1)  "
     setStackView.addArrangedSubview(weightStackView)
     setStackView.addArrangedSubview(countStackView)
-    
     self.addSubview(setStackView)
-  }
-  private func configureSetStackView(w weight: Float, c count: UInt ) {
-    setStackView.addArrangedSubview(setIndexLabel)
-    setIndexLabel.text = "Set \(self.setIndex + 1)  "
-    setStackView.addArrangedSubview(weightStackView)
-    weightTextField.text = "\(weight)"
-    setStackView.addArrangedSubview(countStackView)
-    countTextField.text = "\(count)"
     
-    self.addSubview(setStackView)
+    weightTextField.text = "\(setInformation.displayWeight)"
+    countTextField.text = "\(setInformation.displayCount)"
   }
   
   private func setUpLayout() {
