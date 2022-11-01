@@ -22,10 +22,4 @@ import UIKit
     let size = super.intrinsicContentSize
     return CGSize(width: size.width + leftInset + rightInset, height: size.height + topInset + bottomInset)
   }
-  
-  override var bounds: CGRect {
-    didSet {
-      preferredMaxLayoutWidth = bounds.width - (leftInset + rightInset)
-    }
-  }
 }
