@@ -52,8 +52,8 @@ class PlannedWorkout: Identifiable, Codable {
     self.id = key
   }
   
-  func addNewSet() {
-    sets.append(SetConfiguration())
+  func addNewSet(with setConfiguration: SetConfiguration) {
+    sets.append(setConfiguration)
   }
   
   func updateWeight(of index: Int, to newValue: Float) {
