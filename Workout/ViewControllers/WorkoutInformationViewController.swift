@@ -53,6 +53,10 @@ class WorkoutInformationViewController: UIViewController {
     if view.frame.height - keyboardHeight < workoutSettingView.frame.origin.y + workoutViewHeight {
       workoutSettingView.frame.origin.y -= keyboardHeight
     }
+    
+    workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = false
+    workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(keyboardHeight + 10)).isActive = true
+    
   }
 
   @objc private func keyboardWillHide(notification: Notification) {
@@ -60,9 +64,12 @@ class WorkoutInformationViewController: UIViewController {
           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
-    
+
     let keyboardHeight = keyboardFrame.height
     workoutSettingView.frame.origin.y += keyboardHeight
+    
+    workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+    workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(keyboardHeight + 10)).isActive = false
   }
   
   @objc private func viewTapped() {
