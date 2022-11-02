@@ -29,6 +29,14 @@ class WorkoutListViewController: UITableViewController {
     return button
   }()
   
+  private var searchingList = [Workout]()
+  
+  private var isSearching: Bool {
+    let isSearchBarActive = self.navigationItem.searchController?.isActive ?? false
+    let isSearchBarEmpty = self.navigationItem.searchController?.searchBar.text?.isEmpty ?? false
+    return isSearchBarActive && !isSearchBarEmpty
+  }
+  
   weak var delegate: SendingWorkoutDelegate?
   
   override func viewDidLoad() {
@@ -42,12 +50,12 @@ class WorkoutListViewController: UITableViewController {
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return BodySection.allCases.count
+    return self.isSearching ? 1 : BodySection.allCases.count
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     let bodySection = BodySection.allCases[section]
-    return workoutManager.filteredWorkout(by: bodySection).count
+    return self.isSearching ? self.searchingList.count : workoutManager.filteredWorkout(by: bodySection).count
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -55,14 +63,14 @@ class WorkoutListViewController: UITableViewController {
       return UITableViewCell()
     }
     
-    let workout = workoutManager.workout(at: indexPath)
+    let workout = self.isSearching ? self.searchingList[indexPath.row] : workoutManager.workout(at: indexPath)
     cell.setUp(with: workout)
     
     return cell
   }
   
   override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return BodySection.allCases[section].rawValue
+    return self.isSearching ? "검색결과" : BodySection.allCases[section].rawValue
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -108,6 +116,16 @@ extension WorkoutListViewController: UpdateWorkoutDelegate {
   }
 
 }
+extension WorkoutListViewController: UISearchResultsUpdating {
+  func updateSearchResults(for searchController: UISearchController) {
+    guard let searchingText = searchController.searchBar.searchTextField.text else {
+      return
+    }
+    
+    self.searchingList = workoutManager.searchWorkouts(by: searchingText)
+    self.tableView.reloadData()
+  }
+}
 extension WorkoutListViewController {
   @objc private func buttonTouched(_ sender: UIButton) {
     sender.alpha = 0.8
@@ -136,6 +154,9 @@ extension WorkoutListViewController {
   
   private func setUpSearchController() {
     let searchController = UISearchController(searchResultsController: nil)
+    searchController.searchResultsUpdater = self
+    
+    self.navigationItem.hidesSearchBarWhenScrolling = false
     self.navigationItem.searchController = searchController
   }
   
