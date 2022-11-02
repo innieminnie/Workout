@@ -37,6 +37,10 @@ class WorkoutInformationViewController: UIViewController {
     self.view.addGestureRecognizer(viewTapGesture)
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    workoutSettingView.setFirstResponder()
+  }
+  
   @objc private func keyboardWillShow(notification: Notification) {
     guard let userInfo = notification.userInfo,
           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
