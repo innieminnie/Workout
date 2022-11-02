@@ -119,9 +119,6 @@ class WorkoutSettingView: UIView {
       buttonStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
     ])
     
-    let viewTapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
-    self.addGestureRecognizer(viewTapGesture)
-    
     nameTextField.delegate = self
   }
   
@@ -160,10 +157,6 @@ extension WorkoutSettingView: UITextFieldDelegate {
   }
 }
 extension WorkoutSettingView {
-  @objc private func viewTapped() {
-    self.endEditing(true)
-  }
-  
   @objc private func tappedCancel() {
     delegate?.tappedCancel()
   }
