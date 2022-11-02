@@ -148,6 +148,10 @@ class WorkoutSettingView: UIView {
     selectedBodySection = workout.bodySection
     previousName = workout.displayName()
   }
+  
+  func setFirstResponder() {
+    nameTextField.becomeFirstResponder()
+  }
 }
 extension WorkoutSettingView: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
