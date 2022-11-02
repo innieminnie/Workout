@@ -69,9 +69,14 @@ class WorkoutListViewController: UITableViewController {
     let workout = workoutManager.workout(at: indexPath)
     let workoutInformationViewController = WorkoutInformationViewController()
     self.delegate = workoutInformationViewController
-    workoutInformationViewController.delegate = self
+    workoutInformationViewController.updateWorkoutDelegate = self
     delegate?.showInformation(of: workout)
-    self.navigationController?.pushViewController(workoutInformationViewController, animated: true)
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+      self.present(workoutInformationViewController, animated: true)
+    }
+    
+    tableView.deselectRow(at: indexPath, animated: true)
   }
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -91,13 +96,12 @@ extension WorkoutListViewController: TabBarMenu {
     "list.bullet"
   }
 }
-extension WorkoutListViewController: AddNewWorkoutDelegate {
+extension WorkoutListViewController: UpdateWorkoutDelegate {
   func saveNewWorkout(workout: Workout) {
     workoutManager.register(workout: workout)
     tableView.reloadData()
   }
-}
-extension WorkoutListViewController: UpdateWorkoutDelegate {
+  
   func updateWorkout(code: String, name: String, bodySection: BodySection ) {
     workoutManager.updateWorkout(code, name, bodySection)
     tableView.reloadData()
@@ -114,8 +118,8 @@ extension WorkoutListViewController {
   }
   
   @objc private func tappedAddNewWorkout(_ sender: UIButton) {
-    let newWorkoutViewController = NewWorkoutViewController()
-    newWorkoutViewController.delegate = self
+    let newWorkoutViewController = WorkoutInformationViewController()
+    newWorkoutViewController.updateWorkoutDelegate = self
     
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
       self.present(newWorkoutViewController, animated: true) {
