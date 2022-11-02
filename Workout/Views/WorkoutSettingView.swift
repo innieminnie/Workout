@@ -17,14 +17,14 @@ protocol UpdateWorkoutActionDelegate: AnyObject {
   func register(_ name: String, _ bodySection: BodySection)
 }
 
-class NewWorkoutView: UIView {
+class WorkoutSettingView: UIView {
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     
+    label.text = "새로운 운동 등록"
     label.font = UIFont.preferredFont(forTextStyle: .title2)
     label.setContentHuggingPriority(.defaultHigh, for: .vertical)
-    label.text = "NEW"
     label.textColor = .black
     label.textAlignment = .center
     
@@ -42,23 +42,8 @@ class NewWorkoutView: UIView {
     return textField
   }()
   
-  private lazy var bodySectionSelectionCollectionView: UICollectionView = {
-    let layout = UICollectionViewFlowLayout()
-    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
-    
-    collectionView.allowsMultipleSelection = false
-    collectionView.showsHorizontalScrollIndicator = false
-    collectionView.showsVerticalScrollIndicator = false
-    
-    let nib = UINib(nibName: "BodySectionCollectionViewCell", bundle: nil)
-    collectionView.register(nib, forCellWithReuseIdentifier: BodySectionCollectionViewCell.identifier)
-    
-    return collectionView
-  }()
-  
+  private lazy var bodySectionCollectionView = BodySectionCollectionView()
+ 
   private lazy var cancelButton: UIButton = {
     let button = UIButton()
     
@@ -99,43 +84,43 @@ class NewWorkoutView: UIView {
   
   init() {
     super.init(frame: .zero)
+    self.backgroundColor = .white
     self.translatesAutoresizingMaskIntoConstraints = false
+    self.applyShadow()
     
-    bodySectionSelectionCollectionView.dataSource = self
-    bodySectionSelectionCollectionView.delegate = self
+    bodySectionCollectionView.dataSource = self
+    bodySectionCollectionView.delegate = self
     
     addSubview(titleLabel)
     addSubview(nameTextField)
-    addSubview(bodySectionSelectionCollectionView)
+    addSubview(bodySectionCollectionView)
     
     buttonStackView.addArrangedSubview(cancelButton)
     buttonStackView.addArrangedSubview(completeButton)
     addSubview(buttonStackView)
     
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-      
+      titleLabel.topAnchor.constraint(greaterThanOrEqualTo: self.topAnchor, constant: 30),
+      titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
+      titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
+     
       nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
       nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
       nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
-      nameTextField.bottomAnchor.constraint(equalTo: bodySectionSelectionCollectionView.topAnchor, constant: -20),
+      nameTextField.bottomAnchor.constraint(equalTo: bodySectionCollectionView.topAnchor, constant: -20),
       
-      bodySectionSelectionCollectionView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
-      bodySectionSelectionCollectionView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
-      bodySectionSelectionCollectionView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -20),
+      bodySectionCollectionView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
+      bodySectionCollectionView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
+      bodySectionCollectionView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -20),
       
       buttonStackView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
       buttonStackView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
-      buttonStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -300)
+      buttonStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
     ])
     
     let viewTapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
     self.addGestureRecognizer(viewTapGesture)
     
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     nameTextField.delegate = self
   }
   
@@ -157,18 +142,19 @@ class NewWorkoutView: UIView {
   }
   
   func setUp(with workout: Workout) {
+    titleLabel.text = "운동 정보"
     nameTextField.text = workout.displayName()
     selectedBodySection = workout.bodySection
     previousName = workout.displayName()
   }
 }
-extension NewWorkoutView: UITextFieldDelegate {
+extension WorkoutSettingView: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
   }
 }
-extension NewWorkoutView {
+extension WorkoutSettingView {
   @objc private func viewTapped() {
     self.endEditing(true)
   }
@@ -185,30 +171,8 @@ extension NewWorkoutView {
     
     self.delegate?.register(name, bodySection)
   }
-  
-  @objc private func keyboardWillShow(notification: Notification) {
-    guard let userInfo = notification.userInfo,
-          let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-      return
-    }
-    
-    let keyboardHeight = keyboardFrame.height
-    if self.frame.height - keyboardHeight < buttonStackView.frame.origin.y   {
-      buttonStackView.frame.origin.y -= keyboardHeight
-    }
-  }
-  
-  @objc private func keyboardWillHide(notification: Notification) {
-    guard let userInfo = notification.userInfo,
-          let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-      return
-    }
-    
-    let keyboardHeight = keyboardFrame.height
-    buttonStackView.frame.origin.y += keyboardHeight
-  }
 }
-extension NewWorkoutView: UICollectionViewDataSource {
+extension WorkoutSettingView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     BodySection.allCases.count
   }
@@ -232,9 +196,9 @@ extension NewWorkoutView: UICollectionViewDataSource {
     return cell
   }
 }
-extension NewWorkoutView: UICollectionViewDelegateFlowLayout {
+extension WorkoutSettingView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let cellWidth =  bodySectionSelectionCollectionView.frame.width / 4
+    let cellWidth =  bodySectionCollectionView.frame.width / 4
     let cellHeight = cellWidth / 2
     return CGSize(width: cellWidth, height: cellHeight)
   }
