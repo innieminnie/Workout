@@ -55,6 +55,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
       
       setStackView.removeArrangedSubview(lastSet)
       if setStackView.arrangedSubviews.isEmpty { doneButton.isEnabled = false }
+      lastSet.removeFromSuperview()
       delegate?.cellShrink()
     }
   }
