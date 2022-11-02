@@ -24,16 +24,16 @@
                                 <rect key="frame" x="10" y="8" width="358" height="192"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3wL-np-ctO">
-                                        <rect key="frame" x="0.0" y="0.0" width="46" height="192"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="179" height="192"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gn-bM-9ZQ" customClass="PaddingLabel" customModule="Workout" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="46" height="172.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gn-bM-9ZQ" customClass="PaddingLabel" customModule="Workout" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="179" height="172.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2x-Ko-409" customClass="PaddingLabel" customModule="Workout" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="172.5" width="46" height="19.5"/>
+                                                <rect key="frame" x="0.0" y="172.5" width="179" height="19.5"/>
                                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -41,12 +41,17 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="xFv-Ev-VNa" userLabel="ExtendableView">
-                                        <rect key="frame" x="46" y="0.0" width="239.5" height="192"/>
+                                        <rect key="frame" x="179" y="0.0" width="30" height="192"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="7oG-Ps-DGR"/>
+                                        </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tu-KF-9s6">
-                                        <rect key="frame" x="285.5" y="0.0" width="72.5" height="192"/>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="749" contentHorizontalAlignment="right" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tu-KF-9s6">
+                                        <rect key="frame" x="209" y="0.0" width="149" height="192"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="운동완료"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="운동완료">
+                                            <directionalEdgeInsets key="contentInsets" top="5" leading="0.0" bottom="0.0" trailing="10"/>
+                                        </buttonConfiguration>
                                     </button>
                                 </subviews>
                                 <constraints>
