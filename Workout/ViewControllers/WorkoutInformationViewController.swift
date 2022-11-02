@@ -32,6 +32,9 @@ class WorkoutInformationViewController: UIViewController {
     
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    
+    let viewTapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+    self.view.addGestureRecognizer(viewTapGesture)
   }
   
   @objc private func keyboardWillShow(notification: Notification) {
@@ -57,6 +60,10 @@ class WorkoutInformationViewController: UIViewController {
     let keyboardHeight = keyboardFrame.height
     workoutSettingView.frame.origin.y += keyboardHeight
   }
+  
+  @objc private func viewTapped() {
+    self.view.endEditing(true)
+  }
 }
 extension WorkoutInformationViewController: SendingWorkoutDelegate {
   func showInformation(of workout: Workout) {
@@ -65,6 +72,7 @@ extension WorkoutInformationViewController: SendingWorkoutDelegate {
   }
 }
 extension WorkoutInformationViewController: UpdateWorkoutActionDelegate {
+  
   func tappedCancel() {
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
       self.dismiss(animated: true, completion: nil)
@@ -81,5 +89,15 @@ extension WorkoutInformationViewController: UpdateWorkoutActionDelegate {
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
       self.dismiss(animated: true, completion: nil)
     }
+  }
+  
+  func resignFirstResponder(on textField: UITextField) {
+    textField.resignFirstResponder()
+  }
+}
+extension WorkoutInformationViewController: UITextFieldDelegate {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
   }
 }
