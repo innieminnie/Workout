@@ -44,6 +44,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   override func layoutSubviews() {
     super.layoutSubviews()
     contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+    containerView.applyShadow()
   }
   
   override func prepareForReuse() {
@@ -54,7 +55,6 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
       
       setStackView.removeArrangedSubview(lastSet)
       if setStackView.arrangedSubviews.isEmpty { doneButton.isEnabled = false }
-      lastSet.removeFromSuperview()
       delegate?.cellShrink()
     }
   }
