@@ -94,15 +94,7 @@ class RoutineManager {
     
     for (idx, workout) in workouts.enumerated() {
       workout.sequenceNumber = UInt(idx)
-    }
-    
-    do {
-      let data = try encoder.encode(workouts)
-      let json = try JSONSerialization.jsonObject(with: data)
-      let childUpdates = ["/routine/\(dateInformation)/": json]
-      ref.updateChildValues(childUpdates)
-    } catch {
-      print(error)
+      self.updateRoutine(workout: workout, on: dateInformation)
     }
   }
   
@@ -118,7 +110,7 @@ class RoutineManager {
     }
   }
   
-  func removeWorkout(at removingPosition: Int, on dateInformation: DateInformation) {
+  func removePlannedWorkout(at removingPosition: Int, on dateInformation: DateInformation) {
     var reorderingPlan = self.plan(of: dateInformation)
     let removingWorkout = reorderingPlan[removingPosition]
     reorderingPlan.remove(at: removingPosition)
