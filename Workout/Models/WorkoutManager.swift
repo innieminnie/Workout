@@ -121,6 +121,14 @@ class WorkoutManager {
 
     return filteredList
   }
+  
+  func searchWorkouts(by text: String) -> [Workout] {
+    let filteredList = workoutCodeDictionary.values.filter { workout in
+      workout.displayName().localizedCaseInsensitiveContains(text)
+    }
+    
+    return filteredList
+  }
 }
 
 let workoutManager = WorkoutManager.shared
