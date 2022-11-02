@@ -17,62 +17,44 @@
                 <rect key="frame" x="0.0" y="0.0" width="422" height="290"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rPl-bA-zga">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rPl-bA-zga" customClass="PaddingLabel" customModule="Workout" customModuleProvider="target">
                         <rect key="frame" x="22" y="13" width="378" height="264"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9OY-UG-Hsh">
-                                <rect key="frame" x="10" y="2" width="358" height="126"/>
+                                <rect key="frame" x="10" y="8" width="358" height="192"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" horizontalHuggingPriority="749" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="SjM-GV-1QV" userLabel="WorkoutNameView">
-                                        <rect key="frame" x="0.0" y="0.0" width="83.5" height="126"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3wL-np-ctO">
+                                        <rect key="frame" x="0.0" y="0.0" width="46" height="192"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gn-bM-9ZQ">
-                                                <rect key="frame" x="5" y="3" width="73.5" height="120"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gn-bM-9ZQ" customClass="PaddingLabel" customModule="Workout" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="46" height="172.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="5gn-bM-9ZQ" firstAttribute="leading" secondItem="SjM-GV-1QV" secondAttribute="leading" constant="5" id="ZHI-fG-6bf"/>
-                                            <constraint firstAttribute="trailing" secondItem="5gn-bM-9ZQ" secondAttribute="trailing" constant="5" id="dZs-9D-3o1"/>
-                                            <constraint firstAttribute="bottom" secondItem="5gn-bM-9ZQ" secondAttribute="bottom" constant="3" id="e6V-tX-yk4"/>
-                                            <constraint firstItem="5gn-bM-9ZQ" firstAttribute="top" secondItem="SjM-GV-1QV" secondAttribute="top" constant="3" id="irR-UU-KSv"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ec9-dv-sA9" userLabel="SetSumView">
-                                        <rect key="frame" x="83.5" y="0.0" width="20.5" height="126"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2x-Ko-409">
-                                                <rect key="frame" x="5" y="3" width="10.5" height="120"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2x-Ko-409" customClass="PaddingLabel" customModule="Workout" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="172.5" width="46" height="19.5"/>
+                                                <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="K2x-Ko-409" secondAttribute="bottom" constant="3" id="MtI-CN-bGc"/>
-                                            <constraint firstItem="K2x-Ko-409" firstAttribute="leading" secondItem="Ec9-dv-sA9" secondAttribute="leading" constant="5" id="cmg-On-n87"/>
-                                            <constraint firstItem="K2x-Ko-409" firstAttribute="top" secondItem="Ec9-dv-sA9" secondAttribute="top" constant="3" id="fVG-19-ljH"/>
-                                            <constraint firstAttribute="trailing" secondItem="K2x-Ko-409" secondAttribute="trailing" constant="5" id="vNq-CY-t8Q"/>
-                                        </constraints>
-                                    </view>
+                                    </stackView>
                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="xFv-Ev-VNa" userLabel="ExtendableView">
-                                        <rect key="frame" x="104" y="0.0" width="181.5" height="126"/>
+                                        <rect key="frame" x="46" y="0.0" width="239.5" height="192"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tu-KF-9s6">
-                                        <rect key="frame" x="285.5" y="0.0" width="72.5" height="126"/>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tu-KF-9s6">
+                                        <rect key="frame" x="285.5" y="0.0" width="72.5" height="192"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="운동완료"/>
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="Ec9-dv-sA9" firstAttribute="height" secondItem="SjM-GV-1QV" secondAttribute="height" id="8RQ-N7-cyL"/>
-                                    <constraint firstItem="xFv-Ev-VNa" firstAttribute="height" secondItem="SjM-GV-1QV" secondAttribute="height" id="AsX-FC-Zja"/>
+                                    <constraint firstItem="9tu-KF-9s6" firstAttribute="top" secondItem="3wL-np-ctO" secondAttribute="top" id="bHx-om-cw8"/>
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="t5W-2e-8UO" userLabel="Set Stack View">
-                                <rect key="frame" x="10" y="128" width="358" height="92"/>
+                                <rect key="frame" x="10" y="220" width="358" height="0.0"/>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="P7O-jz-dfQ" userLabel="Button Stack View">
                                 <rect key="frame" x="10" y="230" width="358" height="24"/>
@@ -95,13 +77,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="t5W-2e-8UO" firstAttribute="trailing" secondItem="9OY-UG-Hsh" secondAttribute="trailing" id="5f1-mr-UZD"/>
-                            <constraint firstItem="t5W-2e-8UO" firstAttribute="top" secondItem="9OY-UG-Hsh" secondAttribute="bottom" id="KuF-05-DRG"/>
+                            <constraint firstItem="t5W-2e-8UO" firstAttribute="top" secondItem="9OY-UG-Hsh" secondAttribute="bottom" constant="20" id="KuF-05-DRG"/>
                             <constraint firstAttribute="trailing" secondItem="9OY-UG-Hsh" secondAttribute="trailing" constant="10" id="Mku-7B-RXM"/>
                             <constraint firstItem="t5W-2e-8UO" firstAttribute="leading" secondItem="9OY-UG-Hsh" secondAttribute="leading" id="Nrb-aY-DpZ"/>
                             <constraint firstItem="P7O-jz-dfQ" firstAttribute="trailing" secondItem="9OY-UG-Hsh" secondAttribute="trailing" id="aYh-va-7ak"/>
                             <constraint firstItem="P7O-jz-dfQ" firstAttribute="leading" secondItem="9OY-UG-Hsh" secondAttribute="leading" id="b4a-12-jrg"/>
                             <constraint firstItem="9OY-UG-Hsh" firstAttribute="leading" secondItem="rPl-bA-zga" secondAttribute="leading" constant="10" id="cNj-Lw-kk4"/>
-                            <constraint firstItem="9OY-UG-Hsh" firstAttribute="top" secondItem="rPl-bA-zga" secondAttribute="top" constant="2" id="tFA-PH-39r"/>
+                            <constraint firstItem="9OY-UG-Hsh" firstAttribute="top" secondItem="rPl-bA-zga" secondAttribute="top" constant="8" id="tFA-PH-39r"/>
                             <constraint firstAttribute="bottom" secondItem="P7O-jz-dfQ" secondAttribute="bottom" constant="10" id="uAG-q0-8rJ"/>
                             <constraint firstItem="P7O-jz-dfQ" firstAttribute="top" secondItem="t5W-2e-8UO" secondAttribute="bottom" constant="10" id="vV9-90-7nK"/>
                         </constraints>
@@ -122,8 +104,8 @@
                 <outlet property="plusSetButton" destination="Fpt-gR-ZAj" id="nDs-UP-yLh"/>
                 <outlet property="setButtonStackView" destination="P7O-jz-dfQ" id="1lh-Ze-LMx"/>
                 <outlet property="setStackView" destination="t5W-2e-8UO" id="ZW7-jJ-KfT"/>
-                <outlet property="setSumLabel" destination="K2x-Ko-409" id="G73-E7-sTw"/>
-                <outlet property="workoutNameLabel" destination="5gn-bM-9ZQ" id="knL-oO-orG"/>
+                <outlet property="setSumLabel" destination="K2x-Ko-409" id="3eF-lg-fm7"/>
+                <outlet property="workoutNameLabel" destination="5gn-bM-9ZQ" id="R75-ql-OUK"/>
             </connections>
             <point key="canvasLocation" x="205.79710144927537" y="147.99107142857142"/>
         </tableViewCell>

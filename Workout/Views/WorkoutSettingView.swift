@@ -15,6 +15,7 @@ class BodySectionTapGesture: UITapGestureRecognizer {
 protocol UpdateWorkoutActionDelegate: AnyObject {
   func tappedCancel()
   func register(_ name: String, _ bodySection: BodySection)
+  func resignFirstResponder(on textField: UITextField)
 }
 
 class WorkoutSettingView: UIView {
@@ -31,7 +32,7 @@ class WorkoutSettingView: UIView {
     return label
   }()
   
-  private let nameTextField: UITextField = {
+  private lazy var nameTextField: UITextField = {
     let textField = UITextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     
@@ -150,7 +151,7 @@ class WorkoutSettingView: UIView {
 }
 extension WorkoutSettingView: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
+    delegate?.resignFirstResponder(on: textField)
     return true
   }
 }

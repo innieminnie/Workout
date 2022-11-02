@@ -17,8 +17,8 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   static let identifier = "workoutPlanCardTableViewCell"
   
   @IBOutlet weak var containerView: UIView!
-  @IBOutlet weak var workoutNameLabel: UILabel!
-  @IBOutlet weak var setSumLabel: UILabel!
+  @IBOutlet weak var workoutNameLabel: PaddingLabel!
+  @IBOutlet weak var setSumLabel: PaddingLabel!
   @IBOutlet weak var setStackView: UIStackView!
   @IBOutlet weak var setButtonStackView: UIStackView!
   @IBOutlet weak var plusSetButton: UIButton!
