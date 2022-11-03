@@ -236,8 +236,8 @@
 			children = (
 				D98569B3274CBAFB007E517A /* HomeViewController.swift */,
 				D98569E3274D0299007E517A /* WorkoutListViewController.swift */,
-				D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */,
 				D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */,
+				D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
