@@ -12,20 +12,8 @@ protocol SendingWorkoutDelegate: AnyObject {
 }
 
 class WorkoutListViewController: UITableViewController {
-  private lazy var addButton: UIButton = {
-    let button = UIButton()
-    button.translatesAutoresizingMaskIntoConstraints = false
-    
-    button.backgroundColor = .systemPurple
-    button.setTitle("+", for: .normal)
-    button.setTitleColor(.white, for: .normal)
-    button.applyShadow()
-    
-    button.addTarget(self, action: #selector(buttonTouched(_:)), for: .touchDown)
-    button.addTarget(self, action: #selector(buttonTouched(_:)), for: .touchDragEnter)
-    button.addTarget(self, action: #selector(buttonUntouched(_:)), for: .touchDragOutside)
-    button.addTarget(self, action: #selector(tappedAddNewWorkout(_:)), for: .touchUpInside)
-    
+  private lazy var addButton: UIBarButtonItem = {
+    let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(buttonTouched(_:)))
     return button
   }()
   
@@ -45,8 +33,6 @@ class WorkoutListViewController: UITableViewController {
     setUpNavigationController()
     setUpSearchController()
     setUpListTableView()
-    view.addSubview(addButton)
-    setUpLayout()
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -130,22 +116,12 @@ extension WorkoutListViewController: UISearchResultsUpdating {
   }
 }
 extension WorkoutListViewController {
-  @objc private func buttonTouched(_ sender: UIButton) {
-    sender.alpha = 0.8
-  }
-  
-  @objc private func buttonUntouched(_ sender: UIButton) {
-    sender.alpha = 1
-  }
-  
-  @objc private func tappedAddNewWorkout(_ sender: UIButton) {
+  @objc private func buttonTouched(_ sender: UIBarButtonItem) {
     let newWorkoutViewController = WorkoutInformationViewController()
     newWorkoutViewController.updateWorkoutDelegate = self
     
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-      self.present(newWorkoutViewController, animated: true) {
-        sender.alpha = 1
-      }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+      self.present(newWorkoutViewController, animated: true)
     }
   }
   
@@ -153,6 +129,7 @@ extension WorkoutListViewController {
     self.navigationController?.navigationBar.isHidden = false
     self.navigationController?.navigationBar.prefersLargeTitles = true
     self.navigationController?.navigationBar.topItem?.title = "나의 운동 목록"
+    self.navigationController?.navigationBar.topItem?.rightBarButtonItem = addButton
   }
   
   private func setUpSearchController() {
@@ -167,16 +144,5 @@ extension WorkoutListViewController {
     let nib = UINib(nibName: "WorkoutTableViewCell", bundle: nil)
     self.tableView.register(nib, forCellReuseIdentifier: WorkoutTableViewCell.identifier)
     self.tableView.separatorStyle = .none
-  }
-  
-  private func setUpLayout() {
-    NSLayoutConstraint.activate([
-      addButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-      addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-      addButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.2),
-      addButton.heightAnchor.constraint(equalTo:addButton.widthAnchor)
-    ])
-    
-    addButton.layer.cornerRadius = UIScreen.main.bounds.size.width * 0.1
   }
 }

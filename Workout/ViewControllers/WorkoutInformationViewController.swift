@@ -73,7 +73,7 @@ class WorkoutInformationViewController: UIViewController {
   }
   
   @objc private func viewTapped() {
-    self.view.endEditing(true)
+    self.dismiss(animated: true)
   }
 }
 extension WorkoutInformationViewController: SendingWorkoutDelegate {
