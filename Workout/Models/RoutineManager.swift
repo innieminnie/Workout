@@ -131,15 +131,15 @@ class RoutineManager {
       if reorderingPlan[index].workoutCode == workoutCode { removingPosition.append(index) }
     }
     
+    let itemRef = configureRoutineDatabaseReference(dateInformation: date)
+    
     for removingIndex in removingPosition {
+      guard let removingID = reorderingPlan[removingIndex].id else { continue }
+      itemRef.child("/\(removingID)").removeValue()
       reorderingPlan.remove(at: removingIndex)
     }
     
     workoutPlanner[date] = reorderingPlan
-    
-    let itemRef = configureRoutineDatabaseReference(dateInformation: date)
-    itemRef.child("/\(workoutCode)").removeValue()
-    
     self.updatePlan(with: reorderingPlan, on: date)
   }
   
