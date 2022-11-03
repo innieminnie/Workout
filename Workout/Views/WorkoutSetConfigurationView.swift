@@ -83,7 +83,7 @@ class WorkoutSetConfigurationView: UIView {
     
     textField.backgroundColor = .systemBlue
     textField.layer.cornerRadius = 5
-    textField.keyboardType = .decimalPad
+    textField.keyboardType = .numberPad
     textField.textAlignment = .center
     textField.placeholder = "\(0)"
     textField.text = "\(0)"
@@ -260,6 +260,7 @@ extension WorkoutSetConfigurationView: UITextFieldDelegate {
   }
   
   func textFieldDidEndEditing(_ textField: UITextField) {
+    print(textField.text)
     updateSetSum(sender: textField)
   }
 }
