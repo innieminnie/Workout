@@ -64,7 +64,6 @@ class CalendarView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.translatesAutoresizingMaskIntoConstraints = false
-    
     self.backgroundColor = .clear
     self.addSubview(currentMonthLabel)
     self.addSubview(rightButton)
@@ -82,13 +81,13 @@ class CalendarView: UIView {
       
       rightButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
       rightButton.leadingAnchor
-        .constraint(equalTo: currentMonthLabel.trailingAnchor, constant: 10),
+        .constraint(equalTo: self.trailingAnchor, constant: -50),
       
       leftButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
       leftButton.trailingAnchor
-        .constraint(equalTo: currentMonthLabel.leadingAnchor, constant: -10),
+        .constraint(equalTo: self.leadingAnchor, constant: 50),
       
-      weekdaysView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 10),
+      weekdaysView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 20),
       weekdaysView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
       weekdaysView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       
