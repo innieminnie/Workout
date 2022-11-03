@@ -70,6 +70,9 @@ class WorkoutListViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    let bodySection = BodySection.allCases[section]
+    if !self.isSearching && workoutManager.filteredWorkout(by: bodySection).count == 0 { return nil }
+    
     return self.isSearching ? "검색결과" : BodySection.allCases[section].rawValue
   }
   
