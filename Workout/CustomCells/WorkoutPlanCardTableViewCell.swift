@@ -34,7 +34,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     containerView.applyShadow()
     setStackView.translatesAutoresizingMaskIntoConstraints = false
     
-    setSumLabel.text = "\(currentWorkout?.totalSum ?? 0)"
+    setSumLabel.text = String(format: "%0.3f", currentWorkout?.totalSum ?? 0.0)
     doneButton.isEnabled = false
     doneButton.addTarget(self, action: #selector(tappedDoneButton(sender:)), for: .touchUpInside)
     plusSetButton.addTarget(self, action: #selector(tappedPlusSetButton(sender:)), for: .touchUpInside)
@@ -87,7 +87,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
       }
     }
     
-    setSumLabel.text = "\(currentWorkout?.totalSum ?? 0)"
+    setSumLabel.text = String(format: "%0.3f", currentWorkout?.totalSum ?? 0.0)
   }
   
   @objc func tappedDoneButton(sender: UIButton) {
@@ -147,7 +147,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     delegate?.cellExpand()
     
     currentWorkout.addNewSet(with: newSetConfiguration)
-    setSumLabel.text = "\(currentWorkout.totalSum)"
+    setSumLabel.text = String(format: "%0.3f", currentWorkout.totalSum)
     let currentDateInformation = delegate?.currentDateInformation()
     routineManager.updateRoutine(workout: currentWorkout, on: currentDateInformation!)
   }
@@ -192,7 +192,7 @@ extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
   }
   
   func setSumUpdated(from oldValue: Float, to newValue: Float) {
-    setSumLabel.text = "\(currentWorkout?.totalSum ?? 0)"
+    setSumLabel.text = String(format: "%0.3f", currentWorkout?.totalSum ?? 0.0)
   }
 }
 
