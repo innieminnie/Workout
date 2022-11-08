@@ -36,7 +36,8 @@ class WorkoutSettingView: UIView {
     let textField = UITextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     
-    textField.backgroundColor = .lightGray
+    textField.isUserInteractionEnabled = false
+    textField.backgroundColor = .clear
     textField.borderStyle = .roundedRect
     textField.placeholder = "등록할 운동명을 입력하세요."
     
@@ -55,11 +56,11 @@ class WorkoutSettingView: UIView {
     return button
   }()
   
-  private lazy var completeButton: UIButton = {
+  private lazy var updateButton: UIButton = {
     let button = UIButton()
     
-    button.addTarget(self, action: #selector(tappedComplete), for: .touchUpInside)
-    button.setTitle("완료", for: .normal)
+    button.addTarget(self, action: #selector(tappedUpdate), for: .touchUpInside)
+    button.setTitle("정보 수정", for: .normal)
     button.setTitleColor(.black, for: .normal)
     
     return button
@@ -80,6 +81,26 @@ class WorkoutSettingView: UIView {
   private var selectedCell: BodySectionCollectionViewCell?
   private var selectedBodySection: BodySection?
   private var previousName = String()
+  private var isEditable = false {
+    didSet {
+      if isEditable {
+        updateButton.setTitle("수정 완료", for: .normal)
+        
+        nameTextField.isUserInteractionEnabled = true
+        nameTextField.textColor = .black
+        
+        bodySectionCollectionView.isUserInteractionEnabled = true
+        setFirstResponder()
+      } else {
+        updateButton.setTitle("정보 수정", for: .normal)
+        
+        nameTextField.isUserInteractionEnabled = false
+        nameTextField.backgroundColor = .clear
+        
+        bodySectionCollectionView.isUserInteractionEnabled = false
+      }
+    }
+  }
   
   weak var delegate: UpdateWorkoutActionDelegate?
   
@@ -95,9 +116,10 @@ class WorkoutSettingView: UIView {
     addSubview(titleLabel)
     addSubview(nameTextField)
     addSubview(bodySectionCollectionView)
+    bodySectionCollectionView.isUserInteractionEnabled = false
     
     buttonStackView.addArrangedSubview(cancelButton)
-    buttonStackView.addArrangedSubview(completeButton)
+    buttonStackView.addArrangedSubview(updateButton)
     addSubview(buttonStackView)
     
     NSLayoutConstraint.activate([
@@ -161,13 +183,18 @@ extension WorkoutSettingView {
     delegate?.tappedCancel()
   }
 
-  @objc private func tappedComplete() {
-    guard let name = nameTextField.text else { print("필수사항을 전부 작성해주세요"); return }
-    guard let bodySectionCell = self.selectedCell else { print("필수사항을 전부 작성해주세요"); return }
-    guard let bodySection = bodySectionCell.getBodySection() else { return }
-    guard workoutManager.checkNameValidation(previousName, name) else { print("이미 사용중인 운동명이에요. 운동명을 변경해주세요"); return }
-    
-    self.delegate?.register(name, bodySection)
+  @objc private func tappedUpdate() {
+    if !self.isEditable {
+      self.isEditable = true
+    } else {
+      guard let name = nameTextField.text else { print("필수사항을 전부 작성해주세요"); return }
+      guard let bodySectionCell = self.selectedCell else { print("필수사항을 전부 작성해주세요"); return }
+      guard let bodySection = bodySectionCell.getBodySection() else { return }
+      guard workoutManager.checkNameValidation(previousName, name) else { print("이미 사용중인 운동명이에요. 운동명을 변경해주세요"); return }
+      
+      self.isEditable = false
+      self.delegate?.register(name, bodySection)
+    }
   }
 }
 extension WorkoutSettingView: UICollectionViewDataSource {
