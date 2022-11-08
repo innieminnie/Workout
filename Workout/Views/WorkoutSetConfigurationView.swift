@@ -260,7 +260,6 @@ extension WorkoutSetConfigurationView: UITextFieldDelegate {
   }
   
   func textFieldDidEndEditing(_ textField: UITextField) {
-    print(textField.text)
     updateSetSum(sender: textField)
   }
 }

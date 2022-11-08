@@ -27,14 +27,11 @@ class WorkoutInformationViewController: UIViewController {
     NSLayoutConstraint.activate([
       workoutSettingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       workoutSettingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+      workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150)
     ])
     
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    
-    let viewTapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
-    self.view.addGestureRecognizer(viewTapGesture)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +51,7 @@ class WorkoutInformationViewController: UIViewController {
       workoutSettingView.frame.origin.y -= keyboardHeight
     }
     
-    workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = false
+    workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150).isActive = false
     workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(keyboardHeight + 10)).isActive = true
     
   }
@@ -68,12 +65,8 @@ class WorkoutInformationViewController: UIViewController {
     let keyboardHeight = keyboardFrame.height
     workoutSettingView.frame.origin.y += keyboardHeight
     
-    workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+    workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150).isActive = true
     workoutSettingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(keyboardHeight + 10)).isActive = false
-  }
-  
-  @objc private func viewTapped() {
-    self.dismiss(animated: true)
   }
 }
 extension WorkoutInformationViewController: SendingWorkoutDelegate {
