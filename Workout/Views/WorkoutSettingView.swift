@@ -36,8 +36,9 @@ class WorkoutSettingView: UIView {
     let textField = UITextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     
-    textField.isUserInteractionEnabled = false
-    textField.backgroundColor = .clear
+    textField.isUserInteractionEnabled = true
+    textField.textColor = .black
+    textField.backgroundColor = .lightGray
     textField.borderStyle = .roundedRect
     textField.placeholder = "등록할 운동명을 입력하세요."
     
@@ -58,6 +59,18 @@ class WorkoutSettingView: UIView {
   
   private lazy var bodySectionCollectionView = BodySectionCollectionView()
   
+  private lazy var bodySectionCheckLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    label.text = " "
+    label.textColor = .red
+    label.textAlignment = .center
+    label.font = UIFont.systemFont(ofSize: 13)
+    
+    return label
+  }()
+  
   private lazy var cancelButton: UIButton = {
     let button = UIButton()
     
@@ -72,7 +85,7 @@ class WorkoutSettingView: UIView {
     let button = UIButton()
     
     button.addTarget(self, action: #selector(tappedUpdate), for: .touchUpInside)
-    button.setTitle("정보 수정", for: .normal)
+    button.setTitle("운동 등록", for: .normal)
     button.setTitleColor(.black, for: .normal)
     
     return button
@@ -93,7 +106,7 @@ class WorkoutSettingView: UIView {
   private var selectedCell: BodySectionCollectionViewCell?
   private var selectedBodySection: BodySection?
   private var previousName = String()
-  private var isEditable = false {
+  private var isEditable = true {
     didSet {
       if isEditable {
         updateButton.setTitle("수정 완료", for: .normal)
@@ -129,7 +142,7 @@ class WorkoutSettingView: UIView {
     addSubview(nameTextField)
     addSubview(nameCheckLabel)
     addSubview(bodySectionCollectionView)
-    bodySectionCollectionView.isUserInteractionEnabled = false
+    addSubview(bodySectionCheckLabel)
     
     buttonStackView.addArrangedSubview(cancelButton)
     buttonStackView.addArrangedSubview(updateButton)
@@ -151,7 +164,12 @@ class WorkoutSettingView: UIView {
       bodySectionCollectionView.topAnchor.constraint(equalTo: nameCheckLabel.bottomAnchor, constant: 20),
       bodySectionCollectionView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
       bodySectionCollectionView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
-      bodySectionCollectionView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -20),
+      bodySectionCollectionView.bottomAnchor.constraint(equalTo: bodySectionCheckLabel.topAnchor),
+      
+      bodySectionCheckLabel.topAnchor.constraint(equalTo: bodySectionCollectionView.bottomAnchor),
+      bodySectionCheckLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
+      bodySectionCheckLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
+      bodySectionCheckLabel.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -20),
       
       buttonStackView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
       buttonStackView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
@@ -179,6 +197,7 @@ class WorkoutSettingView: UIView {
   }
   
   func setUp(with workout: Workout) {
+    self.isEditable = false
     titleLabel.text = "운동 정보"
     nameTextField.text = workout.displayName()
     selectedBodySection = workout.bodySection
@@ -204,9 +223,13 @@ extension WorkoutSettingView {
     if !self.isEditable {
       self.isEditable = true
     } else {
-      guard let name = nameTextField.text, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-            let bodySectionCell = self.selectedCell else {
-        nameCheckLabel.text = "필수사항을 전부 입력해주세요 :)"
+      guard let name = nameTextField.text, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        nameCheckLabel.text = "새로운 운동명을 입력해주세요 :)"
+        return
+      }
+      
+      guard let bodySectionCell = self.selectedCell else {
+        bodySectionCheckLabel.text = "운동 부위를 선택해주세요 :)"
         return
       }
       
@@ -216,7 +239,6 @@ extension WorkoutSettingView {
         return
       }
       
-      self.isEditable = false
       self.delegate?.register(name, bodySection)
     }
   }
