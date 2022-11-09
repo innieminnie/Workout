@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,13 +26,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="179" height="192"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gn-bM-9ZQ" customClass="PaddingLabel" customModule="Workout" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="179" height="172.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="179" height="162.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2x-Ko-409" customClass="PaddingLabel" customModule="Workout" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="172.5" width="179" height="19.5"/>
+                                                <rect key="frame" x="0.0" y="162.5" width="179" height="29.5"/>
                                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -115,6 +114,17 @@
             <point key="canvasLocation" x="205.79710144927537" y="147.99107142857142"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="5gn-bM-9ZQ">
+            <size key="intrinsicContentSize" width="51.5" height="30.5"/>
+        </designable>
+        <designable name="K2x-Ko-409">
+            <size key="intrinsicContentSize" width="20" height="29.5"/>
+        </designable>
+        <designable name="rPl-bA-zga">
+            <size key="intrinsicContentSize" width="10" height="10"/>
+        </designable>
+    </designables>
     <resources>
         <image name="minus" catalog="system" width="128" height="24"/>
         <image name="plus" catalog="system" width="128" height="113"/>
