@@ -16,3 +16,15 @@ extension UIView {
     self.layer.masksToBounds = false
   }
 }
+extension UIButton {
+  func customizeConfiguration(with title: String) {
+    var customizeConfiguration = UIButton.Configuration.plain()
+    customizeConfiguration.title = title
+    customizeConfiguration.titleAlignment = .center
+    customizeConfiguration.baseForegroundColor = .black
+    customizeConfiguration.buttonSize = .medium
+    customizeConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)
+    
+    self.configuration = customizeConfiguration
+  }
+}
