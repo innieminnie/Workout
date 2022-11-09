@@ -21,7 +21,6 @@
 		D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569AF274CBAFB007E517A /* AppDelegate.swift */; };
 		D98569B2274CBAFB007E517A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569B1274CBAFB007E517A /* SceneDelegate.swift */; };
 		D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569B3274CBAFB007E517A /* HomeViewController.swift */; };
-		D98569B7274CBAFB007E517A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D98569B5274CBAFB007E517A /* Main.storyboard */; };
 		D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D98569B8274CBAFE007E517A /* Assets.xcassets */; };
 		D98569BC274CBAFE007E517A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D98569BA274CBAFE007E517A /* LaunchScreen.storyboard */; };
 		D98569C7274CBAFE007E517A /* WorkoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569C6274CBAFE007E517A /* WorkoutTests.swift */; };
@@ -91,7 +90,6 @@
 		D98569AF274CBAFB007E517A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D98569B1274CBAFB007E517A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D98569B3274CBAFB007E517A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		D98569B6274CBAFB007E517A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D98569B8274CBAFE007E517A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D98569BB274CBAFE007E517A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D98569BD274CBAFE007E517A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -204,7 +202,6 @@
 				D98569E6274D08AF007E517A /* TabBarController */,
 				D98569AF274CBAFB007E517A /* AppDelegate.swift */,
 				D98569B1274CBAFB007E517A /* SceneDelegate.swift */,
-				D98569B5274CBAFB007E517A /* Main.storyboard */,
 				D98569B8274CBAFE007E517A /* Assets.xcassets */,
 				D98569BA274CBAFE007E517A /* LaunchScreen.storyboard */,
 				D98569BD274CBAFE007E517A /* Info.plist */,
@@ -431,7 +428,6 @@
 				D9107C5E282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib in Resources */,
 				D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */,
 				D9D44E46290692A00035B8D0 /* BodySectionCollectionViewCell.xib in Resources */,
-				D98569B7274CBAFB007E517A /* Main.storyboard in Resources */,
 				D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */,
 				D9C5444E288FCAEF00A73730 /* GoogleService-Info.plist in Resources */,
 			);
@@ -628,14 +624,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D98569B5274CBAFB007E517A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D98569B6274CBAFB007E517A /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D98569BA274CBAFE007E517A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -772,6 +760,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5J284J6MNP;
 				INFOPLIST_FILE = Workout/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -779,7 +768,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.innie.Workout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -792,6 +781,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5J284J6MNP;
 				INFOPLIST_FILE = Workout/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -799,7 +789,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.innie.Workout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
