@@ -12,7 +12,7 @@ class CaledarDateTapGesture: UITapGestureRecognizer {
 }
 
 protocol CalendarViewDelegate: AnyObject {
-  func changedSelectedDay(to dateInformation: DateInformation)
+  func changedSelectedDay(to dateInformation: DateInformation?)
 }
 
 class CalendarView: UIView {
@@ -111,6 +111,7 @@ class CalendarView: UIView {
   @objc func tappedNextMonthButton(sender: UIButton) {
     displayingMonthInformation.changeToNextMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
+    delegate?.changedSelectedDay(to: nil)
     monthlyPageCollectionView.reloadData()
     monthlyPageCollectionView.layoutIfNeeded()
   }
@@ -118,6 +119,7 @@ class CalendarView: UIView {
   @objc func tappedLastMonthButton(sender: UIButton) {
     displayingMonthInformation.changeToLastMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
+    delegate?.changedSelectedDay(to: nil)
     monthlyPageCollectionView.reloadData()
     monthlyPageCollectionView.layoutIfNeeded()
   }
@@ -181,6 +183,7 @@ extension CalendarView: UICollectionViewDataSource {
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         cell.isToday = true
         self.selectedCell = cell
+        delegate?.changedSelectedDay(to: todayInformation)
       }
       
       cell.update(with: day, isCurrentMonth: true)
