@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-  var selectedDayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
+  var selectedDayInformation: DateInformation? = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
       DispatchQueue.main.async {
         self.routineTableView.reloadData()
@@ -160,6 +160,8 @@ class HomeViewController: UIViewController {
 }
 extension HomeViewController: RoutineSelectionDelegate {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
+    guard let selectedDayInformation = self.selectedDayInformation else { return }
+    
     let plannedWorkoutNumber = routineManager.plan(of: selectedDayInformation).count
     let newPlannedWorkouts = selectedWorkouts.enumerated().map({ (index, workout) in
       PlannedWorkout(workout, UInt(index + plannedWorkoutNumber), selectedDayInformation)
@@ -178,11 +180,14 @@ extension HomeViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    guard let selectedDayInformation = self.selectedDayInformation else { return 0 }
+    
     return routineManager.plan(of: selectedDayInformation).count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: WorkoutPlanCardTableViewCell.identifier, for: indexPath) as? WorkoutPlanCardTableViewCell else {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: WorkoutPlanCardTableViewCell.identifier, for: indexPath) as? WorkoutPlanCardTableViewCell,
+          let selectedDayInformation = self.selectedDayInformation else {
       return UITableViewCell()
     }
     
@@ -200,6 +205,7 @@ extension HomeViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
     guard sourceIndexPath.row != destinationIndexPath.row else { return }
     
+    guard let selectedDayInformation = self.selectedDayInformation else { return }
     routineManager.reorderPlan(on: selectedDayInformation, removeAt: sourceIndexPath.row, insertAt: destinationIndexPath.row)
   }
 }
@@ -210,6 +216,8 @@ extension HomeViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
+      guard let selectedDayInformation = self.selectedDayInformation else { return }
+      
       routineManager.removePlannedWorkout(at: indexPath.row, on: selectedDayInformation)
       calendarView.updateSelectedCell()
       tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -226,8 +234,8 @@ extension HomeViewController: TabBarMenu {
   }
 }
 extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
-  func currentDateInformation() -> DateInformation {
-    return self.selectedDayInformation
+  func currentDateInformation() -> DateInformation? {
+    return selectedDayInformation
   }
   
   func cellExpand() {
@@ -262,7 +270,7 @@ extension HomeViewController: UITableViewDropDelegate {
   }
 }
 extension HomeViewController: CalendarViewDelegate {
-  func changedSelectedDay(to dateInformation: DateInformation) {
+  func changedSelectedDay(to dateInformation: DateInformation?) {
     self.selectedDayInformation = dateInformation
   }
 }
