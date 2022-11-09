@@ -44,8 +44,20 @@ class WorkoutSettingView: UIView {
     return textField
   }()
   
+  private lazy var nameCheckLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    label.text = " "
+    label.textColor = .red
+    label.textAlignment = .center
+    label.font = UIFont.systemFont(ofSize: 13)
+    
+    return label
+  }()
+  
   private lazy var bodySectionCollectionView = BodySectionCollectionView()
- 
+  
   private lazy var cancelButton: UIButton = {
     let button = UIButton()
     
@@ -115,6 +127,7 @@ class WorkoutSettingView: UIView {
     
     addSubview(titleLabel)
     addSubview(nameTextField)
+    addSubview(nameCheckLabel)
     addSubview(bodySectionCollectionView)
     bodySectionCollectionView.isUserInteractionEnabled = false
     
@@ -126,12 +139,16 @@ class WorkoutSettingView: UIView {
       titleLabel.topAnchor.constraint(greaterThanOrEqualTo: self.topAnchor, constant: 30),
       titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
       titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
-     
+      
       nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
       nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
       nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
-      nameTextField.bottomAnchor.constraint(equalTo: bodySectionCollectionView.topAnchor, constant: -20),
       
+      nameCheckLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor),
+      nameCheckLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
+      nameCheckLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
+      
+      bodySectionCollectionView.topAnchor.constraint(equalTo: nameCheckLabel.bottomAnchor, constant: 20),
       bodySectionCollectionView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
       bodySectionCollectionView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
       bodySectionCollectionView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -20),
@@ -182,15 +199,22 @@ extension WorkoutSettingView {
   @objc private func tappedCancel() {
     delegate?.tappedCancel()
   }
-
+  
   @objc private func tappedUpdate() {
     if !self.isEditable {
       self.isEditable = true
     } else {
-      guard let name = nameTextField.text else { print("필수사항을 전부 작성해주세요"); return }
-      guard let bodySectionCell = self.selectedCell else { print("필수사항을 전부 작성해주세요"); return }
+      guard let name = nameTextField.text, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+            let bodySectionCell = self.selectedCell else {
+        nameCheckLabel.text = "필수사항을 전부 입력해주세요 :)"
+        return
+      }
+      
       guard let bodySection = bodySectionCell.getBodySection() else { return }
-      guard workoutManager.checkNameValidation(previousName, name) else { print("이미 사용중인 운동명이에요. 운동명을 변경해주세요"); return }
+      guard workoutManager.checkNameValidation(previousName, name) else {
+        nameCheckLabel.text = "\(name)는 이미 사용중인 운동명이에요 :)"
+        return
+      }
       
       self.isEditable = false
       self.delegate?.register(name, bodySection)
