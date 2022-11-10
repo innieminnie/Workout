@@ -58,6 +58,12 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     dateNumberLabel.text = "\(number)"
   }
   
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    dateBackgroundView.layer.cornerRadius = dateBackgroundView.frame.size.width / 2
+    dateBackgroundView.layer.masksToBounds = true
+  }
+  
   func updateStatus() {
     if let dateInformation = dateInformation {
       routineManager.readRoutineData(from: dateInformation)
