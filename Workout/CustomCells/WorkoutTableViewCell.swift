@@ -14,7 +14,10 @@ class WorkoutTableViewCell: UITableViewCell {
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    containerView.applyShadow()
+
+    containerView.applyCornerRadius()
+    contentView.applyShadow()
+    
   }
   
   override func layoutSubviews() {
@@ -24,7 +27,6 @@ class WorkoutTableViewCell: UITableViewCell {
   
   override func setSelected(_ selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)
-    // Configure the view for the selected state
   }
     
     func setUp(with workout: Workout) {

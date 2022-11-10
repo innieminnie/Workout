@@ -31,6 +31,7 @@ class HomeViewController: UIViewController {
     
     button.customizeConfiguration(with: "루틴 추가하기")
     button.backgroundColor = .white
+    button.applyCornerRadius()
     button.applyShadow()
     button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
     
@@ -147,8 +148,8 @@ class HomeViewController: UIViewController {
       addRoutineButton.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
       
       routineTableView.topAnchor.constraint(equalTo: addRoutineButton.bottomAnchor, constant: 10),
-      routineTableView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
-      routineTableView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
+      routineTableView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor),
+      routineTableView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor),
       routineTableView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -10),
     ])
   }
