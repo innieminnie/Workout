@@ -31,7 +31,9 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     
-    containerView.applyShadow()
+    containerView.applyCornerRadius()
+    contentView.applyShadow()
+    
     setStackView.translatesAutoresizingMaskIntoConstraints = false
     
     setSumLabel.text = String(format: "%0.3f", currentWorkout?.totalSum ?? 0.0)
@@ -44,7 +46,6 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   override func layoutSubviews() {
     super.layoutSubviews()
     contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
-    containerView.applyShadow()
   }
   
   override func prepareForReuse() {

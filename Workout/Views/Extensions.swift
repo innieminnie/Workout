@@ -8,11 +8,16 @@
 import UIKit
 
 extension UIView {
-  func applyShadow() {
+  func applyCornerRadius() {
     self.layer.cornerRadius = 8
-    self.layer.shadowColor = UIColor.gray.cgColor
-    self.layer.shadowOffset = CGSize(width: 3.0, height: 3.0)
-    self.layer.shadowOpacity = 0.3
+    self.layer.masksToBounds = true
+  }
+  
+  func applyShadow() {
+    self.layer.shadowColor = UIColor.black.cgColor
+    self.layer.shadowOpacity = 0.5
+    self.layer.shadowRadius = 5
+    self.layer.shadowOffset = CGSize(width: 0, height: 0)
     self.layer.masksToBounds = false
   }
 }
