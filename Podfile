@@ -6,6 +6,9 @@ target 'Workout' do
   use_frameworks!
   pod 'Firebase/Core'
   pod 'Firebase/Database'
+
+  pod 'KakaoSDKUser'
+  pod 'KakaoSDKAuth'
   # Pods for Workout
 
   target 'WorkoutTests' do
