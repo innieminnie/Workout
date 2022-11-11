@@ -33,3 +33,11 @@ extension UIButton {
     self.configuration = customizeConfiguration
   }
 }
+extension UIViewController {
+  func showSignInViewController() {
+    let signInViewController = SignInViewController()
+    signInViewController.modalPresentationStyle = .formSheet
+    signInViewController.isModalInPresentation = true
+    self.present(signInViewController, animated: false, completion: nil)
+  }
+}
