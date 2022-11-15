@@ -20,31 +20,25 @@ class SignInViewController: UIViewController {
   }
   
   private func setUpLoginButtons() {
-    let signInButton = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
-    signInButton.translatesAutoresizingMaskIntoConstraints = false
+    let appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
+    appleLoginButton.translatesAutoresizingMaskIntoConstraints = false
+    appleLoginButton.addTarget(self, action: #selector(tappedAppleSignInButton), for: .touchUpInside)
+    self.view.addSubview(appleLoginButton)
     
-    signInButton.addTarget(self, action: #selector(tappedAppleSignInButton), for: .touchUpInside)
-    self.view.addSubview(signInButton)
-    
-    NSLayoutConstraint.activate([
-      signInButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-      signInButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-      signInButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
-    ])
-    
-    let button = UIButton()
-    button.setTitle("카카오", for: .normal)
-    button.setTitleColor(.black, for: .normal)
-    button.backgroundColor = .systemYellow
-    button.translatesAutoresizingMaskIntoConstraints = false
-    
-    button.addTarget(self, action: #selector(tappedKakaoSignInButton), for: .touchUpInside)
-    self.view.addSubview(button)
+    let kakaoLoginButton = UIButton()
+    kakaoLoginButton.setImage(#imageLiteral(resourceName: "kakao_login_large_wide"), for: .normal)
+    kakaoLoginButton.translatesAutoresizingMaskIntoConstraints = false
+    kakaoLoginButton.addTarget(self, action: #selector(tappedKakaoSignInButton), for: .touchUpInside)
+    self.view.addSubview(kakaoLoginButton)
     
     NSLayoutConstraint.activate([
-      button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-      button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-      button.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 20)
+      appleLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+      appleLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+      appleLoginButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+      
+      kakaoLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+      kakaoLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+      kakaoLoginButton.topAnchor.constraint(equalTo: appleLoginButton.bottomAnchor, constant: 20)
     ])
   }
   
