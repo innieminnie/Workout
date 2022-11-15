@@ -52,20 +52,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if (AuthApi.hasToken()) {
       UserApi.shared.accessTokenInfo { (accessTokenInfo, error) in
         if let error = error {
-          if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true  {
             self.window?.rootViewController?.showSignInViewController()
-          }
-          else {
-            //기타 에러
-          }
-        }
-        else {
-          AuthenticationManager.shared.kakaoLoginProcess()
         }
       }
     }
     else {
-      //로그인 필요
       self.window?.rootViewController?.showSignInViewController()
     }
   }
