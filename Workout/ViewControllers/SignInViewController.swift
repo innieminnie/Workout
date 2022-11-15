@@ -7,6 +7,9 @@
 
 import UIKit
 import AuthenticationServices
+import FirebaseAuth
+
+
 
 class SignInViewController: UIViewController {
   
@@ -50,6 +53,7 @@ class SignInViewController: UIViewController {
   }
   
   @objc private func tappedKakaoSignInButton() {
-    //카카오로그인과정진행
+    AuthenticationManager.shared.kakaoLoginProcess()
+    self.dismiss(animated: true)
   }
 }

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseDatabase
 
 class WorkoutManager {
   static let shared = WorkoutManager()
@@ -18,7 +18,8 @@ class WorkoutManager {
   private init() { }
   
   func readWorkoutData() {
-    let itemRef = ref.child("workout")
+    guard let user = currentUser else { return }
+    let itemRef = ref.child("users/\(user.uid)/workout")
     
     itemRef.getData { error, snapshot in
       if let error = error {
@@ -47,7 +48,9 @@ class WorkoutManager {
   }
   
   func register(workout: Workout) {
-    let itemRef = ref.child("workout")
+    guard let user = currentUser else { return }
+    let itemRef = ref.child("users/\(user.uid)/workout")
+    
     guard let key = itemRef.childByAutoId().key else { return }
     workout.configureId(with: key)
     
@@ -55,7 +58,8 @@ class WorkoutManager {
       let data = try encoder.encode(workout)
       let json = try JSONSerialization.jsonObject(with: data)
       
-      let childUpdates = ["/workout/\(key)/": json]
+      let childUpdates = ["/users/\(user.uid)/workout/\(key)/": json]
+      
       self.ref.updateChildValues(childUpdates)
       self.workoutCodeDictionary[key] = workout
     } catch {
@@ -79,7 +83,9 @@ class WorkoutManager {
       workoutCodeDictionary[removingCode] = nil
       workout.removeRegisteredRoutine()
       
-      let itemRef = ref.child("workout")
+      guard let user = currentUser else { return }
+      let itemRef = ref.child("users/\(user.uid)/workout")
+      
       itemRef.child("/\(removingCode)").removeValue()
     }
   }
@@ -91,7 +97,10 @@ class WorkoutManager {
     do {
       let data = try encoder.encode(updatingWorkout)
       let json = try JSONSerialization.jsonObject(with: data)
-      let childUpdates = ["/workout/\(code)": json]
+      
+      guard let user = currentUser else { return }
+      let childUpdates = ["/users/\(user.uid)/workout/\(code)": json]
+      
       ref.updateChildValues(childUpdates)
     } catch {
       print(error)
@@ -102,7 +111,9 @@ class WorkoutManager {
     do {
       let data = try encoder.encode(Array(registeredDate))
       let json = try JSONSerialization.jsonObject(with: data)
-      let childUpdates = ["/workout/\(code)/registeredDate": json]
+      
+      guard let user = currentUser else { return }
+      let childUpdates = ["/users/\(user.uid)/workout/\(code)/registeredDate": json]
       ref.updateChildValues(childUpdates)
     } catch {
       print(error)
