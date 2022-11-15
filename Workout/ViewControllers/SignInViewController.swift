@@ -8,7 +8,7 @@
 import UIKit
 import AuthenticationServices
 import FirebaseAuth
-
+import GoogleSignIn
 
 
 class SignInViewController: UIViewController {
@@ -20,30 +20,49 @@ class SignInViewController: UIViewController {
   }
   
   private func setUpLoginButtons() {
-    let appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
+    let appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     appleLoginButton.translatesAutoresizingMaskIntoConstraints = false
     appleLoginButton.addTarget(self, action: #selector(tappedAppleSignInButton), for: .touchUpInside)
     self.view.addSubview(appleLoginButton)
     
+    let googleLoginButton = GIDSignInButton()
+    googleLoginButton.translatesAutoresizingMaskIntoConstraints = false
+    googleLoginButton.colorScheme = .dark
+    googleLoginButton.style = .wide
+    googleLoginButton.addTarget(self, action: #selector(tappedGoogleSignInButton), for: .touchUpInside)
+    self.view.addSubview(googleLoginButton)
+    
     let kakaoLoginButton = UIButton()
-    kakaoLoginButton.setImage(#imageLiteral(resourceName: "kakao_login_large_wide"), for: .normal)
     kakaoLoginButton.translatesAutoresizingMaskIntoConstraints = false
+    kakaoLoginButton.backgroundColor = 0xFEE500.converToRGB()
+    
+    kakaoLoginButton.setImage(#imageLiteral(resourceName: "kakao_login_large_wide"), for: .normal)
     kakaoLoginButton.addTarget(self, action: #selector(tappedKakaoSignInButton), for: .touchUpInside)
     self.view.addSubview(kakaoLoginButton)
     
     NSLayoutConstraint.activate([
-      appleLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-      appleLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+      appleLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
+      appleLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
       appleLoginButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
       
-      kakaoLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-      kakaoLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-      kakaoLoginButton.topAnchor.constraint(equalTo: appleLoginButton.bottomAnchor, constant: 20)
+      googleLoginButton.leadingAnchor.constraint(equalTo: appleLoginButton.leadingAnchor),
+      googleLoginButton.trailingAnchor.constraint(equalTo: appleLoginButton.trailingAnchor),
+      googleLoginButton.topAnchor.constraint(equalTo: appleLoginButton.bottomAnchor, constant: 10),
+      
+      kakaoLoginButton.leadingAnchor.constraint(equalTo: appleLoginButton.leadingAnchor),
+      kakaoLoginButton.trailingAnchor.constraint(equalTo: appleLoginButton.trailingAnchor),
+      kakaoLoginButton.topAnchor.constraint(equalTo: googleLoginButton.bottomAnchor, constant: 10),
     ])
   }
   
+  @objc private func tappedGoogleSignInButton() {
+    AuthenticationManager.shared.googleLoginProcess(presentingVC: self)
+    self.dismiss(animated: true)
+  }
+  
   @objc private func tappedAppleSignInButton() {
-    //애플로그인과정진행
+    AuthenticationManager.shared.appleLoginProcess()
+    self.dismiss(animated: true)
   }
   
   @objc private func tappedKakaoSignInButton() {

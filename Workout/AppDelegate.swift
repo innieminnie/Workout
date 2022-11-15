@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import AuthenticationServices
 import FirebaseCore
 import FirebaseAuth
-import AuthenticationServices
+import GoogleSignIn
 import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
@@ -33,13 +34,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UINavigationBar.appearance().scrollEdgeAppearance = appearance
     
     FirebaseApp.configure()
-    configureKakaoLogIn()
+    if AuthenticationManager.user == nil { configureKakaoLogIn() }
     
     return true
   }
   
   func application( _ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:] ) -> Bool {
-    if (AuthApi.isKakaoTalkLoginUrl(url)) {
+    if GIDSignIn.sharedInstance.handle(url) { return true }
+    else if (AuthApi.isKakaoTalkLoginUrl(url)) {
       return AuthController.handleOpenUrl(url: url)
     }
     
@@ -52,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if (AuthApi.hasToken()) {
       UserApi.shared.accessTokenInfo { (accessTokenInfo, error) in
         if let error = error {
-            self.window?.rootViewController?.showSignInViewController()
+          self.window?.rootViewController?.showSignInViewController()
         }
       }
     }

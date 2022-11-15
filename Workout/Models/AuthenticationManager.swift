@@ -9,6 +9,7 @@ import Foundation
 import FirebaseDatabase
 import FirebaseAuth
 import KakaoSDKUser
+import GoogleSignIn
 
 class AuthenticationManager {
   static let shared = AuthenticationManager()
@@ -16,7 +17,25 @@ class AuthenticationManager {
 
   private init() { }
   
-  func googleLoginProcess() {
+  func googleLoginProcess(presentingVC: UIViewController) {
+    guard let clientID = APIKey().googleClientID else { return }
+    let config = GIDConfiguration.init(clientID: clientID)
+    
+    GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { user, error in
+      if let error = error {
+        print(error)
+        return
+      }
+      
+      guard let authentication = user?.authentication, let idToken = authentication.idToken else { return }
+      let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+      Auth.auth().signIn(with: credential) { autoDataResult, error in
+        if let error = error { print(error) }
+      }
+    }
+  }
+  
+  func appleLoginProcess() {
     
   }
   
