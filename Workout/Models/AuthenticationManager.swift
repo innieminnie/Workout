@@ -16,22 +16,41 @@ class AuthenticationManager {
 
   private init() { }
   
+  func googleLoginProcess() {
+    
+  }
+  
   func kakaoLoginProcess() {
-    UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-      UserApi.shared.me { (user,error) in
+    if (UserApi.isKakaoTalkLoginAvailable()) {
+      UserApi.shared.loginWithKakaoTalk { oauthToken, error in
+        self.onKakaoLoginCompleted(oauthToken?.accessToken)
+      }
+    } else {
+      UserApi.shared.loginWithKakaoAccount { oauthToken, error in
+        self.onKakaoLoginCompleted(oauthToken?.accessToken)
+      }
+    }
+  }
+  
+  func onKakaoLoginCompleted(_ accessToken: String?) {
+    connectFirebaseAuthentication(accessToken)
+  }
+  
+  func connectFirebaseAuthentication(_ accessToken: String?) {
+    UserApi.shared.me() { user, error in
+      if error == nil {
         guard let user = user, let kakaoEmail = user.kakaoAccount?.email, let id = user.id else {
           return
         }
         
-        Auth.auth().createUser(withEmail: kakaoEmail, password: String(describing: id)) { (autoDataResult, error) in
-          if let error = error {
-            print(error)
-            Auth.auth().signIn(withEmail: kakaoEmail, password: String(describing: id)) { (autoDataResult, error) in
-            }
+        Auth.auth().createUser(withEmail: kakaoEmail, password: String(describing: id)) { autoDataResult, error in
+          if error != nil {
+            Auth.auth().signIn(withEmail: kakaoEmail, password: String(describing: id), completion: nil)
           }
         }
       }
     }
   }
 }
+    
 let currentUser = AuthenticationManager.user
