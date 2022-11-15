@@ -8,6 +8,8 @@ target 'Workout' do
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
 
+  pod 'GoogleSignIn'
+
   pod 'KakaoSDKUser'
   pod 'KakaoSDKAuth'
   # Pods for Workout
