@@ -51,6 +51,8 @@
 		D9D44E4A2910F9540035B8D0 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E492910F9540035B8D0 /* PaddingLabel.swift */; };
 		D9D44E4C2911F2FE0035B8D0 /* BodySectionCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E4B2911F2FE0035B8D0 /* BodySectionCollectionView.swift */; };
 		D9E09625291DF74C00AE710F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E09624291DF74C00AE710F /* SignInViewController.swift */; };
+		D9E096292922AEBA00AE710F /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E096282922AEBA00AE710F /* AuthenticationManager.swift */; };
+		D9E0962B2923564900AE710F /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E0962A2923564900AE710F /* APIKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +128,8 @@
 		D9D44E4B2911F2FE0035B8D0 /* BodySectionCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySectionCollectionView.swift; sourceTree = "<group>"; };
 		D9E09621291DF53F00AE710F /* Workout.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Workout.entitlements; sourceTree = "<group>"; };
 		D9E09624291DF74C00AE710F /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		D9E096282922AEBA00AE710F /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		D9E0962A2923564900AE710F /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		F99F031903C6C522AC1CD969 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		FF5C8FD7B0C3E2936CFFA345 /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.debug.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -272,12 +276,14 @@
 				D995872728894F500093E024 /* WorkoutStatus.swift */,
 				D9958721287CFFFD0093E024 /* SetConfiguration.swift */,
 				D9958723287E54E40093E024 /* PlannedWorkout.swift */,
+				D9E096282922AEBA00AE710F /* AuthenticationManager.swift */,
 				D98569F6275F717B007E517A /* WorkoutManager.swift */,
 				D9958717286153250093E024 /* RoutineManager.swift */,
 				D926672E27D1016F00A30366 /* MonthlyInformation.swift */,
 				D9107C5527F030B800FABD37 /* DateInformation.swift */,
 				D995871B286571BD0093E024 /* Weekday.swift */,
 				D9D44E4128FEC3AD0035B8D0 /* BodySection.swift */,
+				D9E0962A2923564900AE710F /* APIKey.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -575,6 +581,7 @@
 				D995872828894F500093E024 /* WorkoutStatus.swift in Sources */,
 				D9856A0C27BA4E69007E517A /* CalendarView.swift in Sources */,
 				D98569F7275F717B007E517A /* WorkoutManager.swift in Sources */,
+				D9E0962B2923564900AE710F /* APIKey.swift in Sources */,
 				D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */,
 				D9D44E45290692A00035B8D0 /* BodySectionCollectionViewCell.swift in Sources */,
 				D9958720286D6D760093E024 /* WeekdaysView.swift in Sources */,
@@ -583,6 +590,7 @@
 				D98569FE2760ADC0007E517A /* WorkoutTableViewCell.swift in Sources */,
 				D9107C642836151300FABD37 /* WorkoutSetConfigurationView.swift in Sources */,
 				D9107C60282E593C00FABD37 /* MonthlyPageCollectionView.swift in Sources */,
+				D9E096292922AEBA00AE710F /* AuthenticationManager.swift in Sources */,
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,
 				D9D44E4228FEC3AD0035B8D0 /* BodySection.swift in Sources */,
 				D995871E286D523A0093E024 /* Extensions.swift in Sources */,

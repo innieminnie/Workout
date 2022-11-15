@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseDatabase
 
 class RoutineManager {
   static let shared = RoutineManager()
@@ -68,7 +68,9 @@ class RoutineManager {
         workout.id = key
         let data = try encoder.encode(workout)
         let json = try JSONSerialization.jsonObject(with: data)
-        let childUpdates = ["/routine/\(dateInformation)/\(key)/": json]
+        
+        guard let user = currentUser else { return }
+        let childUpdates = ["/users/\(user.uid)/routine/\(dateInformation)/\(key)/": json]
         self.ref.updateChildValues(childUpdates)
       } catch {
         print(error)
@@ -103,7 +105,10 @@ class RoutineManager {
       guard let id = workout.id else { return }
       let data = try encoder.encode(workout)
       let json = try JSONSerialization.jsonObject(with: data)
-      let childUpdates = ["/routine/\(dateInformation)/\(id)/": json]
+      
+      guard let user = currentUser else { return }
+      let childUpdates = ["/users/\(user.uid)/routine/\(dateInformation)/\(id)/": json]
+      
       ref.updateChildValues(childUpdates)
     } catch {
       print(error)
@@ -144,7 +149,8 @@ class RoutineManager {
   }
   
   private func configureRoutineDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
-    return self.ref.child("routine/\(dateInfo)")
+    guard let uid = currentUser?.uid else { return self.ref }
+    return self.ref.child("users/\(uid)/routine/\(dateInfo)")
   }
 }
 
