@@ -149,8 +149,11 @@ class RoutineManager {
   }
   
   private func configureRoutineDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
-    guard let uid = currentUser?.uid else { return self.ref }
-    return self.ref.child("users/\(uid)/routine/\(dateInfo)")
+    if let currentUser = currentUser {
+      return self.ref.child("users/\(currentUser.uid)/routine/\(dateInfo)")
+    }
+      
+    return self.ref.child("users/\(HomeViewController.uid)/routine/\(dateInfo)")
   }
 }
 

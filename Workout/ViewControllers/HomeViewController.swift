@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class HomeViewController: UIViewController {
+  static var uid = String()
+  
   var selectedDayInformation: DateInformation? = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
       DispatchQueue.main.async {
@@ -41,10 +44,10 @@ class HomeViewController: UIViewController {
   private let routineTableView = RoutineTableView()
   
   private weak var editableField: UITextField?
+  private var handle: AuthStateDidChangeListenerHandle?
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    workoutManager.readWorkoutData()
     view.backgroundColor = .white
     view.addSubview(contentScrollView)
     
@@ -66,7 +69,20 @@ class HomeViewController: UIViewController {
   }
   
   override func viewWillAppear(_ animated: Bool) {
-    calendarView.updateSelectedCell()
+    handle = Auth.auth().addStateDidChangeListener { auth, user in
+      guard let user = user else { return }
+      
+      if currentUser == nil {
+        HomeViewController.uid = user.uid
+      }
+      
+      workoutManager.readWorkoutData()
+      self.calendarView.reloadUserData()
+    }
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    Auth.auth().removeStateDidChangeListener(handle!)
   }
   
   @objc  private func checkRoutineData(_ notification: NSNotification) {
