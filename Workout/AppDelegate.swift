@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UINavigationBar.appearance().scrollEdgeAppearance = appearance
     
     FirebaseApp.configure()
-    if AuthenticationManager.user == nil { configureKakaoLogIn() }
+    if AuthenticationManager.user == nil { self.configureKakaoLogIn() }
     
     return true
   }
@@ -53,13 +53,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     if (AuthApi.hasToken()) {
       UserApi.shared.accessTokenInfo { (accessTokenInfo, error) in
-        if let error = error {
-          self.window?.rootViewController?.showSignInViewController()
+        if let _ = error {
+          DispatchQueue.main.async {
+            self.window?.rootViewController?.showSignInViewController()
+          }
         }
       }
     }
     else {
-      self.window?.rootViewController?.showSignInViewController()
+      DispatchQueue.main.async {
+        self.window?.rootViewController?.showSignInViewController()
+      }
     }
   }
 }

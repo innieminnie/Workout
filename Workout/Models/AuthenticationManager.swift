@@ -10,6 +10,7 @@ import FirebaseDatabase
 import FirebaseAuth
 import KakaoSDKUser
 import GoogleSignIn
+import AuthenticationServices
 
 class AuthenticationManager {
   static let shared = AuthenticationManager()
@@ -35,8 +36,8 @@ class AuthenticationManager {
     }
   }
   
-  func appleLoginProcess() {
-    
+  func appleLoginProcess(with authorizationController: ASAuthorizationController) {
+    authorizationController.performRequests()
   }
   
   func kakaoLoginProcess() {
@@ -71,5 +72,5 @@ class AuthenticationManager {
     }
   }
 }
-    
+
 let currentUser = AuthenticationManager.user
