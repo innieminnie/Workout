@@ -14,12 +14,15 @@ class WorkoutManager {
   private let encoder = JSONEncoder()
   private let decoder = JSONDecoder()
   private var workoutCodeDictionary = [String: Workout]()
+  private var uid: String = {
+    if let currentUser = currentUser { return currentUser.uid }
+    else { return HomeViewController.uid }
+  }()
   
   private init() { }
   
   func readWorkoutData() {
-    guard let user = currentUser else { return }
-    let itemRef = ref.child("users/\(user.uid)/workout")
+    let itemRef = ref.child("users/\(self.uid)/workout")
     
     itemRef.getData { error, snapshot in
       if let error = error {
@@ -48,8 +51,7 @@ class WorkoutManager {
   }
   
   func register(workout: Workout) {
-    guard let user = currentUser else { return }
-    let itemRef = ref.child("users/\(user.uid)/workout")
+    let itemRef = ref.child("users/\(self.uid))/workout")
     
     guard let key = itemRef.childByAutoId().key else { return }
     workout.configureId(with: key)
@@ -58,7 +60,7 @@ class WorkoutManager {
       let data = try encoder.encode(workout)
       let json = try JSONSerialization.jsonObject(with: data)
       
-      let childUpdates = ["/users/\(user.uid)/workout/\(key)/": json]
+      let childUpdates = ["/users/\(self.uid)/workout/\(key)/": json]
       
       self.ref.updateChildValues(childUpdates)
       self.workoutCodeDictionary[key] = workout
@@ -83,8 +85,7 @@ class WorkoutManager {
       workoutCodeDictionary[removingCode] = nil
       workout.removeRegisteredRoutine()
       
-      guard let user = currentUser else { return }
-      let itemRef = ref.child("users/\(user.uid)/workout")
+      let itemRef = ref.child("users/\(self.uid)/workout")
       
       itemRef.child("/\(removingCode)").removeValue()
     }
@@ -98,8 +99,7 @@ class WorkoutManager {
       let data = try encoder.encode(updatingWorkout)
       let json = try JSONSerialization.jsonObject(with: data)
       
-      guard let user = currentUser else { return }
-      let childUpdates = ["/users/\(user.uid)/workout/\(code)": json]
+      let childUpdates = ["/users/\(self.uid)/\(code)": json]
       
       ref.updateChildValues(childUpdates)
     } catch {
@@ -112,8 +112,7 @@ class WorkoutManager {
       let data = try encoder.encode(Array(registeredDate))
       let json = try JSONSerialization.jsonObject(with: data)
       
-      guard let user = currentUser else { return }
-      let childUpdates = ["/users/\(user.uid)/workout/\(code)/registeredDate": json]
+      let childUpdates = ["/users/\(self.uid)/workout/\(code)/registeredDate": json]
       ref.updateChildValues(childUpdates)
     } catch {
       print(error)

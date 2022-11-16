@@ -20,10 +20,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    
     self.window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = BaseTabBarController()
-    window?.makeKeyAndVisible()
+    
+    FirebaseApp.configure()
+    configureKakaoLogIn()
+    
+    if AuthenticationManager.user == nil {
+      self.window?.rootViewController = SignInViewController()
+    } else {
+      self.window?.rootViewController = BaseTabBarController()
+    }
+    
+    self.window?.makeKeyAndVisible()
     
     let appearance = UINavigationBarAppearance()
     appearance.configureWithOpaqueBackground()
@@ -32,9 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     UINavigationBar.appearance().standardAppearance = appearance
     UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    
-    FirebaseApp.configure()
-    if AuthenticationManager.user == nil { self.configureKakaoLogIn() }
     
     return true
   }
@@ -55,15 +60,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       UserApi.shared.accessTokenInfo { (accessTokenInfo, error) in
         if let _ = error {
           DispatchQueue.main.async {
-            self.window?.rootViewController?.showSignInViewController()
+            self.window?.rootViewController = SignInViewController()
           }
+        }
+        
+        DispatchQueue.main.async {
+          self.window?.rootViewController = BaseTabBarController()
         }
       }
     }
-    else {
-      DispatchQueue.main.async {
-        self.window?.rootViewController?.showSignInViewController()
-      }
-    }
+  }
+  
+  func changeRootViewController(_ vc: UIViewController, animated: Bool) {
+    guard let window = window else { return }
+    window.rootViewController = vc
+    
+    UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil, completion: nil)
   }
 }
