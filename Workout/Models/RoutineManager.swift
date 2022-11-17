@@ -14,6 +14,10 @@ class RoutineManager {
   private let ref: DatabaseReference! = Database.database().reference()
   private let encoder = JSONEncoder()
   private let decoder = JSONDecoder()
+  private var uid: String = {
+    if let currentUser = currentUser { return currentUser.uid }
+    else { return HomeViewController.uid }
+  }()
   
   private init() {
     workoutPlanner = [:]
@@ -69,8 +73,7 @@ class RoutineManager {
         let data = try encoder.encode(workout)
         let json = try JSONSerialization.jsonObject(with: data)
         
-        guard let user = currentUser else { return }
-        let childUpdates = ["/users/\(user.uid)/routine/\(dateInformation)/\(key)/": json]
+        let childUpdates = ["/users/\(uid)/routine/\(dateInformation)/\(key)/": json]
         self.ref.updateChildValues(childUpdates)
       } catch {
         print(error)
@@ -106,9 +109,7 @@ class RoutineManager {
       let data = try encoder.encode(workout)
       let json = try JSONSerialization.jsonObject(with: data)
       
-      guard let user = currentUser else { return }
-      let childUpdates = ["/users/\(user.uid)/routine/\(dateInformation)/\(id)/": json]
-      
+      let childUpdates = ["/users/\(uid)/routine/\(dateInformation)/\(id)/": json]
       ref.updateChildValues(childUpdates)
     } catch {
       print(error)
