@@ -27,6 +27,7 @@ class CalendarView: UIView {
     button.addTarget(self, action: #selector(tappedNextMonthButton(sender:)), for: .touchUpInside)
     button.setTitle(">", for: .normal)
     button.setTitleColor(.black, for: .normal)
+    button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
     
     return button
   }()
@@ -38,6 +39,7 @@ class CalendarView: UIView {
     button.addTarget(self, action: #selector(tappedLastMonthButton(sender:)), for: .touchUpInside)
     button.setTitle("<", for: .normal)
     button.setTitleColor(.black, for: .normal)
+    button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
     
     return button
   }()
@@ -47,7 +49,7 @@ class CalendarView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     
     label.textAlignment = .center
-    label.font = UIFont.boldSystemFont(ofSize: 16)
+    label.font = UIFont.boldSystemFont(ofSize: 20)
     label.textColor = .black
     
     return label
@@ -64,7 +66,7 @@ class CalendarView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.translatesAutoresizingMaskIntoConstraints = false
-    self.backgroundColor = .clear
+    
     self.addSubview(currentMonthLabel)
     self.addSubview(rightButton)
     self.addSubview(leftButton)
@@ -76,7 +78,7 @@ class CalendarView: UIView {
     monthlyPageCollectionView.delegate = self
     
     NSLayoutConstraint.activate([
-      currentMonthLabel.topAnchor.constraint(equalTo: self.topAnchor),
+      currentMonthLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       currentMonthLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
       
       rightButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
@@ -87,9 +89,9 @@ class CalendarView: UIView {
       leftButton.trailingAnchor
         .constraint(equalTo: self.leadingAnchor, constant: 50),
       
-      weekdaysView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 20),
-      weekdaysView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      weekdaysView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      weekdaysView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 10),
+      weekdaysView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+      weekdaysView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
       
       monthlyPageCollectionView.topAnchor.constraint(equalTo: weekdaysView.bottomAnchor),
       monthlyPageCollectionView.leadingAnchor.constraint(equalTo: weekdaysView.leadingAnchor),

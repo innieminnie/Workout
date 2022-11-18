@@ -24,12 +24,15 @@ class WeekdaysView: UIView {
     super.init(frame: frame)
     self.translatesAutoresizingMaskIntoConstraints = false
   
+    self.backgroundColor = 0xF58423.converToRGB()
+    self.applyCornerRadius()
+    
     for dayName in weekdays {
       let weekdayLabel = UILabel()
       weekdayLabel.text = dayName
-      weekdayLabel.textColor = .darkGray
+      weekdayLabel.textColor = .white
       weekdayLabel.textAlignment = .center
-      weekdayLabel.font = .systemFont(ofSize: 15)
+      weekdayLabel.font = .boldSystemFont(ofSize: 15)
       containerStackView.addArrangedSubview(weekdayLabel)
     }
     
