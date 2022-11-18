@@ -107,7 +107,6 @@ extension RoutineSelectionViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
     guard tableView.indexPathsForSelectedRows != nil else {
       addRoutineButton.isEnabled = false
-      addRoutineButton.backgroundColor = 0xBEC0C2.converToRGB()
       return
     }
   }

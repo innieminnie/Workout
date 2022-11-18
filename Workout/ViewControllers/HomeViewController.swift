@@ -13,6 +13,16 @@ class HomeViewController: UIViewController {
   
   var selectedDayInformation: DateInformation? = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
+      if selectedDayInformation == nil {
+        addRoutineButton.isEnabled = false
+        addRoutineButton.customizeConfiguration(with: "등록 날짜를 먼저 선택해주세요", foregroundColor: .white)
+        addRoutineButton.backgroundColor = 0xBEC0C2.converToRGB()
+      } else {
+        addRoutineButton.isEnabled = true
+        addRoutineButton.customizeConfiguration(with: "운동을 추가할래요", foregroundColor: .white)
+        addRoutineButton.backgroundColor = 0x096DB6.converToRGB()
+      }
+      
       DispatchQueue.main.async {
         self.routineTableView.reloadData()
       }
