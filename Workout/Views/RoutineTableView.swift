@@ -23,7 +23,6 @@ class RoutineTableView: UITableView {
     super.init(frame: .zero, style: .plain)
     self.translatesAutoresizingMaskIntoConstraints = false
     
-    self.backgroundColor = .white
     let nib = UINib(nibName: "WorkoutPlanCardTableViewCell", bundle: nil)
     self.register(nib, forCellReuseIdentifier: WorkoutPlanCardTableViewCell.identifier)
     self.separatorStyle = .none

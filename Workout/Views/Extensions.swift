@@ -14,19 +14,20 @@ extension UIView {
   }
   
   func applyShadow() {
-    self.layer.shadowColor = UIColor.black.cgColor
-    self.layer.shadowOpacity = 0.5
-    self.layer.shadowRadius = 5
+    self.layer.shadowColor = 0xBEC0C2.converToRGB().cgColor
+    self.layer.shadowOpacity = 1
+    self.layer.shadowRadius = 3
     self.layer.shadowOffset = CGSize(width: 0, height: 0)
     self.layer.masksToBounds = false
   }
 }
 extension UIButton {
-  func customizeConfiguration(with title: String) {
+  func customizeConfiguration(with title: String, foregroundColor: UIColor) {
     var customizeConfiguration = UIButton.Configuration.plain()
     customizeConfiguration.title = title
     customizeConfiguration.titleAlignment = .center
-    customizeConfiguration.baseForegroundColor = .black
+    customizeConfiguration.attributedTitle?.font = UIFont.boldSystemFont(ofSize: 20)
+    customizeConfiguration.baseForegroundColor = foregroundColor
     customizeConfiguration.buttonSize = .medium
     customizeConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)
     

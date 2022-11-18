@@ -26,8 +26,8 @@ class RoutineSelectionViewController: UIViewController {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
-    button.customizeConfiguration(with: "선택한 운동 추가하기")
-    button.backgroundColor = .systemGray
+    button.customizeConfiguration(with: "선택한 운동을 추가할래요", foregroundColor: .white)
+    button.backgroundColor = 0xBEC0C2.converToRGB()
     button.applyCornerRadius()
     button.applyShadow()
     button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
@@ -98,7 +98,7 @@ extension RoutineSelectionViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     guard addRoutineButton.isEnabled else {
       addRoutineButton.isEnabled = true
-      addRoutineButton.backgroundColor = .white
+      addRoutineButton.backgroundColor = 0x096DB6.converToRGB()
       return
     }
   }
@@ -106,7 +106,7 @@ extension RoutineSelectionViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
     guard tableView.indexPathsForSelectedRows != nil else {
       addRoutineButton.isEnabled = false
-      addRoutineButton.backgroundColor = .systemGray
+      addRoutineButton.backgroundColor = 0xBEC0C2.converToRGB()
       return
     }
   }

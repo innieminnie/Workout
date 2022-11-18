@@ -32,8 +32,8 @@ class HomeViewController: UIViewController {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
-    button.customizeConfiguration(with: "루틴 추가하기")
-    button.backgroundColor = .white
+    button.customizeConfiguration(with: "운동을 추가할래요", foregroundColor: .white)
+    button.backgroundColor = 0x096DB6.converToRGB()
     button.applyCornerRadius()
     button.applyShadow()
     button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
