@@ -16,7 +16,7 @@ extension UIView {
   func applyShadow() {
     self.layer.shadowColor = 0xBEC0C2.converToRGB().cgColor
     self.layer.shadowOpacity = 1
-    self.layer.shadowRadius = 3
+    self.layer.shadowRadius = 10
     self.layer.shadowOffset = CGSize(width: 0, height: 0)
     self.layer.masksToBounds = false
   }

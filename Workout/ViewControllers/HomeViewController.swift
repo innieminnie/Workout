@@ -45,7 +45,6 @@ class HomeViewController: UIViewController {
     button.customizeConfiguration(with: "운동을 추가할래요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 20))
     button.backgroundColor = 0x096DB6.converToRGB()
     button.applyCornerRadius(24)
-    button.applyShadow()
     button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
     
     return button
