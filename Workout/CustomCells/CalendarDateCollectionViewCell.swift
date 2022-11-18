@@ -19,17 +19,26 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   override var isSelected: Bool {
     didSet{
       if isSelected {
-        self.dateBackgroundView.backgroundColor = 0xF58423.converToRGB()
-        self.dateNumberLabel.textColor = .white
-        self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        DispatchQueue.main.async {
+          self.dateBackgroundView.layer.borderColor = 0xBEC0C2.converToRGB().cgColor
+          self.dateBackgroundView.layer.borderWidth = 4
+          self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        }
       }
       else {
-        self.dateBackgroundView.backgroundColor = .clear
-        self.dateNumberLabel.textColor = isCurrentMonth ? .black : .systemGray
-        self.dateNumberLabel.font = UIFont.systemFont(ofSize: 15)
+        DispatchQueue.main.async {
+          self.dateBackgroundView.layer.borderColor = UIColor.clear.cgColor
+          self.dateBackgroundView.layer.borderWidth = 0
+          self.dateNumberLabel.font = UIFont.systemFont(ofSize: 15)
+        }
       }
       
-      if isToday { self.dateNumberLabel.textColor = 0x096DB6.converToRGB(); self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17) }
+      if isToday {
+        DispatchQueue.main.async {
+          self.dateNumberLabel.textColor = 0x096DB6.converToRGB()
+          self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        }
+      }
     }
   }
   
@@ -84,13 +93,20 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     if self.dateInformation == dateInformation {
       if !dailyRoutine.isEmpty {
         DispatchQueue.main.async {
-          self.dateBackgroundView.layer.borderColor = 0xBEC0C2.converToRGB().cgColor
-          self.dateBackgroundView.layer.borderWidth = 2
+          self.dateBackgroundView.backgroundColor = 0xF58423.converToRGB()
+          self.dateNumberLabel.textColor = .white
         }
       } else {
         DispatchQueue.main.async {
-          self.dateBackgroundView.layer.borderColor = UIColor.clear.cgColor
-          self.dateBackgroundView.layer.borderWidth = 0
+          self.dateBackgroundView.backgroundColor = .clear
+          self.dateNumberLabel.textColor = .black
+        }
+      }
+      
+      if isToday {
+        DispatchQueue.main.async {
+          self.dateNumberLabel.textColor = 0x096DB6.converToRGB()
+          self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17)
         }
       }
     }
