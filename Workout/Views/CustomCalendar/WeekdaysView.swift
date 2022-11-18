@@ -25,7 +25,7 @@ class WeekdaysView: UIView {
     self.translatesAutoresizingMaskIntoConstraints = false
   
     self.backgroundColor = 0xF58423.converToRGB()
-    self.applyCornerRadius()
+    self.applyCornerRadius(8)
     
     for dayName in weekdays {
       let weekdayLabel = UILabel()

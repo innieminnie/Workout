@@ -18,6 +18,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   
   @IBOutlet weak var containerView: UIView!
   @IBOutlet weak var workoutNameLabel: PaddingLabel!
+  @IBOutlet weak var bodySectionLabel: PaddingLabel!
   @IBOutlet weak var setSumLabel: PaddingLabel!
   @IBOutlet weak var setStackView: UIStackView!
   @IBOutlet weak var setButtonStackView: UIStackView!
@@ -31,14 +32,19 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     
-    containerView.applyCornerRadius()
+    containerView.applyCornerRadius(24)
     contentView.applyShadow()
     
     setStackView.translatesAutoresizingMaskIntoConstraints = false
     
     setSumLabel.text = String(format: "%0.3f", currentWorkout?.totalSum ?? 0.0)
+    
     doneButton.isEnabled = false
+    doneButton.backgroundColor = 0x096DB6.converToRGB()
+    doneButton.tintColor = .white
     doneButton.addTarget(self, action: #selector(tappedDoneButton(sender:)), for: .touchUpInside)
+    doneButton.applyCornerRadius(12)
+    
     plusSetButton.addTarget(self, action: #selector(tappedPlusSetButton(sender:)), for: .touchUpInside)
     minusSetButton.addTarget(self, action: #selector(tappedMinusSetButton(sender:)), for: .touchUpInside)
   }
@@ -70,7 +76,8 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     let sets = plannedWorkout.sets
     
     workoutNameLabel.text = plannedWorkout.checkWorkoutName()
-    doneButton.setTitle(plannedWorkout.isDone.buttonTitle, for: .normal)
+    bodySectionLabel.text = plannedWorkout.checkWorkoutBodySection()
+    doneButton.customizeConfiguration(with: plannedWorkout.isDone.buttonTitle, foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15))
     setButtonStackView.isHidden = plannedWorkout.isDone.rawValue
     
     if !sets.isEmpty {
@@ -130,7 +137,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     
     guard let currentDateInformation = delegate?.currentDateInformation() else { return }
     routineManager.updateRoutine(workout: currentWorkout, on: currentDateInformation)
-    doneButton.setTitle(currentWorkout.isDone.buttonTitle, for: .normal)
+    doneButton.customizeConfiguration(with: currentWorkout.isDone.buttonTitle, foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15))
     setButtonStackView.isHidden = currentWorkout.isDone.rawValue
   }
   
