@@ -91,7 +91,8 @@ extension RoutineSelectionViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return BodySection.allCases[section].rawValue
+    let bodySection = BodySection.allCases[section]
+    return workoutManager.filteredWorkout(by: bodySection).count == 0 ? nil : BodySection.allCases[section].rawValue
   }
 }
 extension RoutineSelectionViewController: UITableViewDelegate {
