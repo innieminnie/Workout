@@ -29,7 +29,7 @@ class MonthlyPageCollectionView: UICollectionView {
     self.backgroundColor = .white
     self.layer.borderColor = 0xF58423.converToRGB().cgColor
     self.layer.borderWidth = 2
-    self.applyCornerRadius()
+    self.applyCornerRadius(16)
     
     let nib = UINib(nibName: "CalendarDateCollectionViewCell", bundle: nil)
     self.register(nib, forCellWithReuseIdentifier: CalendarDateCollectionViewCell.identifier)

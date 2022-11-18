@@ -15,7 +15,7 @@ class WorkoutTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
 
-    containerView.applyCornerRadius()
+    containerView.applyCornerRadius(24)
     contentView.applyShadow()
     
   }

@@ -8,8 +8,8 @@
 import UIKit
 
 extension UIView {
-  func applyCornerRadius() {
-    self.layer.cornerRadius = 8
+  func applyCornerRadius(_ cornerRadius: CGFloat) {
+    self.layer.cornerRadius = cornerRadius
     self.layer.masksToBounds = true
   }
   
@@ -22,11 +22,11 @@ extension UIView {
   }
 }
 extension UIButton {
-  func customizeConfiguration(with title: String, foregroundColor: UIColor) {
+  func customizeConfiguration(with title: String, foregroundColor: UIColor, font: UIFont) {
     var customizeConfiguration = UIButton.Configuration.plain()
     customizeConfiguration.title = title
     customizeConfiguration.titleAlignment = .center
-    customizeConfiguration.attributedTitle?.font = UIFont.boldSystemFont(ofSize: 20)
+    customizeConfiguration.attributedTitle?.font = font
     customizeConfiguration.baseForegroundColor = foregroundColor
     customizeConfiguration.buttonSize = .medium
     customizeConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)

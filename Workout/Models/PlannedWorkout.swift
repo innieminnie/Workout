@@ -80,6 +80,11 @@ class PlannedWorkout: Identifiable, Codable {
     guard let workout = workoutManager.workoutByCode(self.workoutCode) else { return "    " }
     return workout.displayName()
   }
+  
+  func checkWorkoutBodySection() -> String {
+    guard let workout = workoutManager.workoutByCode(self.workoutCode) else { return "    " }
+    return workout.bodySection.rawValue
+  }
 }
 extension PlannedWorkout {
   func encode(to encoder: Encoder) throws {
