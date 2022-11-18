@@ -29,7 +29,6 @@ class RoutineSelectionViewController: UIViewController {
     button.customizeConfiguration(with: "선택한 운동을 추가할래요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 20))
     button.backgroundColor = 0xBEC0C2.converToRGB()
     button.applyCornerRadius(24)
-    button.applyShadow()
     button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
     button.isEnabled = false
     
