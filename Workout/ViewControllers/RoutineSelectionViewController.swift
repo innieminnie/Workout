@@ -93,6 +93,11 @@ extension RoutineSelectionViewController: UITableViewDataSource {
     let bodySection = BodySection.allCases[section]
     return workoutManager.filteredWorkout(by: bodySection).count == 0 ? nil : BodySection.allCases[section].rawValue
   }
+  
+  func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    let headerView = view as! UITableViewHeaderFooterView
+    headerView.textLabel?.textColor = 0x096DB6.converToRGB()
+  }
 }
 extension RoutineSelectionViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
