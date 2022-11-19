@@ -101,6 +101,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
       } else {
         DispatchQueue.main.async {
           self.dateBackgroundView.backgroundColor = .clear
+          self.isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
         }
       }
       
