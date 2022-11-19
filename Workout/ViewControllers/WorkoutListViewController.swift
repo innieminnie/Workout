@@ -62,6 +62,11 @@ class WorkoutListViewController: UITableViewController {
     return self.isSearching ? "검색결과" : BodySection.allCases[section].rawValue
   }
   
+  override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    let headerView = view as! UITableViewHeaderFooterView
+    headerView.textLabel?.textColor = 0x096DB6.converToRGB()
+  }
+  
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let workout = workoutManager.workout(at: indexPath)
     let workoutInformationViewController = WorkoutInformationViewController()
