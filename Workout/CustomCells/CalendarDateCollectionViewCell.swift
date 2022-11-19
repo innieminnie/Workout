@@ -27,8 +27,8 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
       }
       else {
         DispatchQueue.main.async {
-          self.dateBackgroundView.layer.borderColor = UIColor.clear.cgColor
-          self.dateBackgroundView.layer.borderWidth = 0
+          self.dateBackgroundView.layer.borderColor = UIColor.white.cgColor
+          self.dateBackgroundView.layer.borderWidth = 4
           self.dateNumberLabel.font = UIFont.systemFont(ofSize: 15)
         }
       }
@@ -36,7 +36,6 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
       if isToday {
         DispatchQueue.main.async {
           self.dateNumberLabel.textColor = 0x096DB6.converToRGB()
-          self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17)
         }
       }
     }
@@ -63,9 +62,12 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     self.isCurrentMonth = isCurrentMonth
     isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
     
+    self.dateBackgroundView.layer.borderColor = UIColor.white.cgColor
+    self.dateBackgroundView.layer.borderWidth = 4
+    
     if isToday {
       self.isSelected = true
-      self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17)
+      self.dateBackgroundView.layer.borderColor = 0xBEC0C2.converToRGB().cgColor
     }
     
     dateNumberLabel.text = "\(number)"
@@ -99,14 +101,12 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
       } else {
         DispatchQueue.main.async {
           self.dateBackgroundView.backgroundColor = .clear
-          self.isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
         }
       }
       
       if isToday {
         DispatchQueue.main.async {
           self.dateNumberLabel.textColor = 0x096DB6.converToRGB()
-          self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17)
         }
       }
     }
