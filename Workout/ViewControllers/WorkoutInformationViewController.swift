@@ -35,7 +35,7 @@ class WorkoutInformationViewController: UIViewController {
   }
   
   override func viewWillAppear(_ animated: Bool) {
-    workoutSettingView.setFirstResponder()
+//    workoutSettingView.setFirstResponder()
   }
   
   @objc private func keyboardWillShow(notification: Notification) {
