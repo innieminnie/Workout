@@ -16,7 +16,6 @@ class BodySectionCollectionViewCell: UICollectionViewCell {
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    // Initialization code
   }
   
   func setUp(with bodySection: BodySection) {
@@ -35,7 +34,7 @@ class BodySectionCollectionViewCell: UICollectionViewCell {
       roundedCornerLabelView.bottomAnchor.constraint(equalTo: bodySectionLabelView.bottomAnchor, constant: -5)
     ])
     
-    isSelected ? showSelectedStatus() : showDeselectedStatus()
+    if isSelected { showSelectedStatus() }
   }
   
   func showSelectedStatus() {

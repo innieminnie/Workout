@@ -32,12 +32,14 @@ class WorkoutSettingView: UIView {
     return label
   }()
   
-  private lazy var nameTextField: UITextField = {
-    let textField = UITextField()
+  private lazy var nameTextField: UITextFieldWithPadding = {
+    let textField = UITextFieldWithPadding()
     textField.translatesAutoresizingMaskIntoConstraints = false
     
     textField.isUserInteractionEnabled = true
     textField.textColor = .black
+    textField.textAlignment = .center
+    textField.font = UIFont.preferredFont(forTextStyle: .title1)
     textField.backgroundColor = .lightGray
     textField.borderStyle = .roundedRect
     textField.placeholder = "등록할 운동명을 입력하세요."
@@ -73,21 +75,23 @@ class WorkoutSettingView: UIView {
   
   private lazy var cancelButton: UIButton = {
     let button = UIButton()
+    button.customizeConfiguration(with: "취소", foregroundColor: .red, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
+    button.backgroundColor = .white
+    button.layer.borderColor = 0xBEC0C2.converToRGB().cgColor
+    button.layer.borderWidth = 2
+    button.applyCornerRadius(12)
     
     button.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
-    button.setTitle("취소", for: .normal)
-    button.setTitleColor(.red, for: .normal)
-    
     return button
   }()
   
   private lazy var updateButton: UIButton = {
     let button = UIButton()
+    button.customizeConfiguration(with: "등록할게요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
+    button.backgroundColor = 0x096DB6.converToRGB()
+    button.applyCornerRadius(12)
     
     button.addTarget(self, action: #selector(tappedUpdate), for: .touchUpInside)
-    button.setTitle("운동 등록", for: .normal)
-    button.setTitleColor(.black, for: .normal)
-    
     return button
   }()
   
@@ -98,7 +102,7 @@ class WorkoutSettingView: UIView {
     stackView.alignment = .center
     stackView.axis = .horizontal
     stackView.distribution = .fillEqually
-    stackView.spacing = 3
+    stackView.spacing = 10
     
     return stackView
   }()
@@ -109,18 +113,23 @@ class WorkoutSettingView: UIView {
   private var isEditable = true {
     didSet {
       if isEditable {
-        updateButton.setTitle("수정 완료", for: .normal)
+        self.titleLabel.isHidden = true
+        
+        updateButton.customizeConfiguration(with: "등록할게요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
         
         nameTextField.isUserInteractionEnabled = true
         nameTextField.textColor = .black
+        nameTextField.backgroundColor = .lightGray
+        nameTextField.borderStyle = .roundedRect
         
         bodySectionCollectionView.isUserInteractionEnabled = true
         setFirstResponder()
       } else {
-        updateButton.setTitle("정보 수정", for: .normal)
+        updateButton.customizeConfiguration(with: "수정할래요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
         
         nameTextField.isUserInteractionEnabled = false
         nameTextField.backgroundColor = .clear
+        nameTextField.borderStyle = .none
         
         bodySectionCollectionView.isUserInteractionEnabled = false
       }
@@ -133,7 +142,7 @@ class WorkoutSettingView: UIView {
     super.init(frame: .zero)
     self.backgroundColor = .white
     self.translatesAutoresizingMaskIntoConstraints = false
-    self.applyShadow()
+    self.applyCornerRadius(24)
     
     bodySectionCollectionView.dataSource = self
     bodySectionCollectionView.delegate = self
@@ -149,11 +158,11 @@ class WorkoutSettingView: UIView {
     addSubview(buttonStackView)
     
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(greaterThanOrEqualTo: self.topAnchor, constant: 30),
+      titleLabel.topAnchor.constraint(greaterThanOrEqualTo: self.topAnchor, constant: 20),
       titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
       titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
       
-      nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+      nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
       nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
       nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
       
@@ -161,7 +170,7 @@ class WorkoutSettingView: UIView {
       nameCheckLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
       nameCheckLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
       
-      bodySectionCollectionView.topAnchor.constraint(equalTo: nameCheckLabel.bottomAnchor, constant: 20),
+      bodySectionCollectionView.topAnchor.constraint(equalTo: nameCheckLabel.bottomAnchor),
       bodySectionCollectionView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
       bodySectionCollectionView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
       bodySectionCollectionView.bottomAnchor.constraint(equalTo: bodySectionCheckLabel.topAnchor),
@@ -169,7 +178,7 @@ class WorkoutSettingView: UIView {
       bodySectionCheckLabel.topAnchor.constraint(equalTo: bodySectionCollectionView.bottomAnchor),
       bodySectionCheckLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
       bodySectionCheckLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
-      bodySectionCheckLabel.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -20),
+      bodySectionCheckLabel.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -10),
       
       buttonStackView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
       buttonStackView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),

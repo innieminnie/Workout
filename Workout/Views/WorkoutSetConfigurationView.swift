@@ -267,7 +267,7 @@ extension WorkoutSetConfigurationView: UITextFieldDelegate {
 }
 
 class UITextFieldWithPadding: UITextField {
-  var textPadding = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 10)
+  var textPadding = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 10)
   
   override func textRect(forBounds bounds: CGRect) -> CGRect {
     let rect = super.textRect(forBounds: bounds)

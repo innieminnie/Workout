@@ -22,8 +22,7 @@ class RoundedCornerLabelView: UIView {
     super.init(frame: .zero)
     self.translatesAutoresizingMaskIntoConstraints = false
     
-    self.layer.cornerRadius = 13
-    self.layer.borderWidth = 1
+    self.applyCornerRadius(8)
     self.backgroundColor = .white
   }
   
@@ -32,6 +31,9 @@ class RoundedCornerLabelView: UIView {
     
     self.titleLabel.text = title
     self.titleLabel.textColor = .black
+    self.layer.borderColor = 0xF58423.converToRGB().cgColor
+    self.layer.borderWidth = 2
+    
     addSubview(titleLabel)
     
     NSLayoutConstraint.activate([
@@ -47,7 +49,7 @@ class RoundedCornerLabelView: UIView {
   }
   
   func changeToSelectedBackgroundColor() {
-    self.backgroundColor = .blue
+    self.backgroundColor = 0xF58423.converToRGB()
   }
   
   func changeToDeselectedBackgroundColor() {
