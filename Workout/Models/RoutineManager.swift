@@ -16,7 +16,7 @@ class RoutineManager {
   private let decoder = JSONDecoder()
   private var uid: String = {
     if let currentUser = currentUser { return currentUser.uid }
-    else { return HomeViewController.uid }
+    else { return HomeViewController.signedUpUser }
   }()
   
   private init() {
@@ -154,7 +154,7 @@ class RoutineManager {
       return self.ref.child("users/\(currentUser.uid)/routine/\(dateInfo)")
     }
       
-    return self.ref.child("users/\(HomeViewController.uid)/routine/\(dateInfo)")
+    return self.ref.child("users/\(HomeViewController.signedUpUser)/routine/\(dateInfo)")
   }
 }
 

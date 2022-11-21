@@ -15,8 +15,13 @@ import AuthenticationServices
 class AuthenticationManager {
   static let shared = AuthenticationManager()
   static let user = Auth.auth().currentUser
+  static var userEmail = ""
   
   private init() { }
+  
+  func setAccountInformation(_ email: String) {
+    AuthenticationManager.userEmail = email
+  }
   
   func googleLoginProcess(presentingVC: SignInViewController) {
     guard let clientID = APIKey().googleClientID else { return }

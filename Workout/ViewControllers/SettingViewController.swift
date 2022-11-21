@@ -8,7 +8,7 @@
 import UIKit
 
 class SettingViewController: UIViewController {
-  var labelTitles = ["계정", "로그아웃"]
+  private let labelTitles = ["계정", "로그아웃"]
   
   private lazy var settingTableView: UITableView = {
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
