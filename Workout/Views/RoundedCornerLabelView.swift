@@ -31,7 +31,7 @@ class RoundedCornerLabelView: UIView {
     
     self.titleLabel.text = title
     self.titleLabel.textColor = .black
-    self.layer.borderColor = 0xF58423.converToRGB().cgColor
+    self.layer.borderColor = 0xF58423.convertToRGB().cgColor
     self.layer.borderWidth = 2
     
     addSubview(titleLabel)
@@ -49,7 +49,7 @@ class RoundedCornerLabelView: UIView {
   }
   
   func changeToSelectedBackgroundColor() {
-    self.backgroundColor = 0xF58423.converToRGB()
+    self.backgroundColor = 0xF58423.convertToRGB()
   }
   
   func changeToDeselectedBackgroundColor() {

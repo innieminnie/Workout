@@ -14,7 +14,7 @@ extension UIView {
   }
   
   func applyShadow() {
-    self.layer.shadowColor = 0xBEC0C2.converToRGB().cgColor
+    self.layer.shadowColor = 0xBEC0C2.convertToRGB().cgColor
     self.layer.shadowOpacity = 1
     self.layer.shadowRadius = 10
     self.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -43,7 +43,7 @@ extension UIViewController {
   }
 }
 extension Int {
-  func converToRGB() -> UIColor {
+  func convertToRGB() -> UIColor {
     return UIColor(
         red: CGFloat((Float((self & 0xff0000) >> 16)) / 255.0),
         green: CGFloat((Float((self & 0x00ff00) >> 8)) / 255.0),

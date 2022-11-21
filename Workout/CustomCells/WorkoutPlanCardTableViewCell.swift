@@ -41,22 +41,22 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     setSumLabel.text = String(format: "%0.3f", currentWorkout?.totalSum ?? 0.0)
     
     doneButton.isEnabled = false
-    doneButton.backgroundColor = 0x096DB6.converToRGB()
+    doneButton.backgroundColor = 0x096DB6.convertToRGB()
     doneButton.tintColor = .white
     doneButton.addTarget(self, action: #selector(tappedDoneButton(sender:)), for: .touchUpInside)
     doneButton.applyCornerRadius(12)
     
     plusSetButton.addTarget(self, action: #selector(tappedPlusSetButton(sender:)), for: .touchUpInside)
     plusSetButton.tintColor = .white
-    plusSetButton.backgroundColor = 0x096DB6.converToRGB()
+    plusSetButton.backgroundColor = 0x096DB6.convertToRGB()
     plusSetButton.applyCornerRadius(12)
     
     minusSetButton.addTarget(self, action: #selector(tappedMinusSetButton(sender:)), for: .touchUpInside)
     minusSetButton.tintColor = .white
-    minusSetButton.backgroundColor = 0x096DB6.converToRGB()
+    minusSetButton.backgroundColor = 0x096DB6.convertToRGB()
     minusSetButton.applyCornerRadius(12)
     
-    dividerView.backgroundColor = 0xF58423.converToRGB()
+    dividerView.backgroundColor = 0xF58423.convertToRGB()
   }
   
   override func layoutSubviews() {
@@ -90,11 +90,11 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     
     let isDone = plannedWorkout.isDone.rawValue
     if isDone {
-      doneButton.customizeConfiguration(with: plannedWorkout.isDone.buttonTitle, foregroundColor: 0x096DB6.converToRGB(), font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .small)
+      doneButton.customizeConfiguration(with: plannedWorkout.isDone.buttonTitle, foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .small)
       doneButton.backgroundColor = .white
     } else {
       doneButton.customizeConfiguration(with: plannedWorkout.isDone.buttonTitle, foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .small)
-      doneButton.backgroundColor = 0x096DB6.converToRGB()
+      doneButton.backgroundColor = 0x096DB6.convertToRGB()
     }
         
     setButtonStackView.isHidden = isDone
@@ -143,7 +143,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
       
       currentWorkout.isDone = .done
       
-      doneButton.customizeConfiguration(with: currentWorkout.isDone.buttonTitle, foregroundColor: 0x096DB6.converToRGB(), font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .small)
+      doneButton.customizeConfiguration(with: currentWorkout.isDone.buttonTitle, foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .small)
       doneButton.backgroundColor = .white
     case .done:
       for workoutSetView in setStackView.arrangedSubviews {
@@ -157,7 +157,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
       currentWorkout.isDone = .doing
       
       doneButton.customizeConfiguration(with: currentWorkout.isDone.buttonTitle, foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .small)
-      doneButton.backgroundColor = 0x096DB6.converToRGB()
+      doneButton.backgroundColor = 0x096DB6.convertToRGB()
     }
     
     guard let currentDateInformation = delegate?.currentDateInformation() else { return }
