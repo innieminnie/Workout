@@ -18,6 +18,9 @@
 		D9107C622833741800FABD37 /* RoutineTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C612833741800FABD37 /* RoutineTableView.swift */; };
 		D9107C642836151300FABD37 /* WorkoutSetConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C632836151300FABD37 /* WorkoutSetConfigurationView.swift */; };
 		D926672F27D1016F00A30366 /* MonthlyInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D926672E27D1016F00A30366 /* MonthlyInformation.swift */; };
+		D92D2412292B0BC400031670 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D2411292B0BC400031670 /* SettingViewController.swift */; };
+		D92D2417292B14D400031670 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D2415292B14D400031670 /* SettingTableViewCell.swift */; };
+		D92D2418292B14D400031670 /* SettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D92D2416292B14D400031670 /* SettingTableViewCell.xib */; };
 		D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569AF274CBAFB007E517A /* AppDelegate.swift */; };
 		D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569B3274CBAFB007E517A /* HomeViewController.swift */; };
 		D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D98569B8274CBAFE007E517A /* Assets.xcassets */; };
@@ -88,6 +91,9 @@
 		D9107C612833741800FABD37 /* RoutineTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineTableView.swift; sourceTree = "<group>"; };
 		D9107C632836151300FABD37 /* WorkoutSetConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetConfigurationView.swift; sourceTree = "<group>"; };
 		D926672E27D1016F00A30366 /* MonthlyInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyInformation.swift; sourceTree = "<group>"; };
+		D92D2411292B0BC400031670 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		D92D2415292B14D400031670 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		D92D2416292B14D400031670 /* SettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingTableViewCell.xib; sourceTree = "<group>"; };
 		D98569AC274CBAFB007E517A /* Workout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98569AF274CBAFB007E517A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D98569B3274CBAFB007E517A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -238,6 +244,7 @@
 			children = (
 				D98569B3274CBAFB007E517A /* HomeViewController.swift */,
 				D98569E3274D0299007E517A /* WorkoutListViewController.swift */,
+				D92D2411292B0BC400031670 /* SettingViewController.swift */,
 				D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */,
 				D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */,
 				D9E09624291DF74C00AE710F /* SignInViewController.swift */,
@@ -299,6 +306,8 @@
 				D9107C5C282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib */,
 				D9D44E43290692A00035B8D0 /* BodySectionCollectionViewCell.swift */,
 				D9D44E44290692A00035B8D0 /* BodySectionCollectionViewCell.xib */,
+				D92D2415292B14D400031670 /* SettingTableViewCell.swift */,
+				D92D2416292B14D400031670 /* SettingTableViewCell.xib */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -433,6 +442,7 @@
 			files = (
 				D9856A1627C0CBC2007E517A /* CalendarDateCollectionViewCell.xib in Resources */,
 				D9107C5E282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib in Resources */,
+				D92D2418292B14D400031670 /* SettingTableViewCell.xib in Resources */,
 				D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */,
 				D9D44E46290692A00035B8D0 /* BodySectionCollectionViewCell.xib in Resources */,
 				D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */,
@@ -570,6 +580,7 @@
 				D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */,
 				D9856A1527C0CBC2007E517A /* CalendarDateCollectionViewCell.swift in Sources */,
 				D9D44E4C2911F2FE0035B8D0 /* BodySectionCollectionView.swift in Sources */,
+				D92D2412292B0BC400031670 /* SettingViewController.swift in Sources */,
 				D9D44E4A2910F9540035B8D0 /* PaddingLabel.swift in Sources */,
 				D9107C582810045200FABD37 /* RoutineSelectionViewController.swift in Sources */,
 				D9107C5D282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift in Sources */,
@@ -594,6 +605,7 @@
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,
 				D9D44E4228FEC3AD0035B8D0 /* BodySection.swift in Sources */,
 				D995871E286D523A0093E024 /* Extensions.swift in Sources */,
+				D92D2417292B14D400031670 /* SettingTableViewCell.swift in Sources */,
 				D98569E8274D2A3D007E517A /* TabBarMenu.swift in Sources */,
 				D9958724287E54E40093E024 /* PlannedWorkout.swift in Sources */,
 				D926672F27D1016F00A30366 /* MonthlyInformation.swift in Sources */,
