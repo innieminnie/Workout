@@ -21,17 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     self.window = UIWindow(frame: UIScreen.main.bounds)
-        
-    FirebaseApp.configure()
-    configureKakaoLogIn()
-    
-    if AuthenticationManager.user == nil {
-      self.window?.rootViewController = SignInViewController()
-    } else {
-      self.window?.rootViewController = BaseTabBarController()
-    }
-    
-    self.window?.makeKeyAndVisible()
     
     let appearance = UINavigationBarAppearance()
     appearance.configureWithOpaqueBackground()
@@ -41,34 +30,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UINavigationBar.appearance().standardAppearance = appearance
     UINavigationBar.appearance().scrollEdgeAppearance = appearance
     
+    FirebaseApp.configure()
+    
+    if AuthenticationManager.user == nil {
+      self.window?.rootViewController = SignInViewController()
+    } else {
+      self.window?.rootViewController = BaseTabBarController()
+    }
+    
+    self.window?.makeKeyAndVisible()
+    
     return true
   }
   
   func application( _ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:] ) -> Bool {
+    KakaoSDK.initSDK(appKey: APIKey().kakaoNativeAppKey)
+    
     if GIDSignIn.sharedInstance.handle(url) { return true }
     else if (AuthApi.isKakaoTalkLoginUrl(url)) {
       return AuthController.handleOpenUrl(url: url)
     }
     
     return false
-  }
-  
-  private func configureKakaoLogIn() {
-    KakaoSDK.initSDK(appKey: APIKey().kakaoNativeAppKey)
-    
-    if (AuthApi.hasToken()) {
-      UserApi.shared.accessTokenInfo { (accessTokenInfo, error) in
-        if let _ = error {
-          DispatchQueue.main.async {
-            self.window?.rootViewController = SignInViewController()
-          }
-        }
-        
-        DispatchQueue.main.async {
-          self.window?.rootViewController = BaseTabBarController()
-        }
-      }
-    }
   }
   
   func changeRootViewController(_ vc: UIViewController, animated: Bool) {

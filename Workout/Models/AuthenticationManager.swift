@@ -75,8 +75,9 @@ class AuthenticationManager {
         Auth.auth().createUser(withEmail: kakaoEmail, password: String(describing: id)) { autoDataResult, error in
           if error != nil {
             Auth.auth().signIn(withEmail: kakaoEmail, password: String(describing: id), completion: nil)
-            presentingVC.completeSignInProcess()
           }
+          
+          presentingVC.completeSignInProcess()
         }
       }
     }
