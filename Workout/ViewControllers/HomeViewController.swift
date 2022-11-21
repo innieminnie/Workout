@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 
 class HomeViewController: UIViewController {
-  static var uid = String()
+  static var signedUpUser = String()
   
   var selectedDayInformation: DateInformation? = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
@@ -74,20 +74,8 @@ class HomeViewController: UIViewController {
     
     configureNotification()
     configureGestureRecognizer()
+    configureAuthListener()
     setUpLayout()
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    handle = Auth.auth().addStateDidChangeListener { auth, user in
-      guard let user = user else { return }
-      
-      if currentUser == nil {
-        HomeViewController.uid = user.uid
-      }
-      
-      workoutManager.readWorkoutData()
-      self.calendarView.reloadUserData()
-    }
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -156,6 +144,19 @@ class HomeViewController: UIViewController {
     contentScrollView.addGestureRecognizer(tapGestureRecognizer)
   }
   
+  private func configureAuthListener() {
+    handle = Auth.auth().addStateDidChangeListener { auth, user in
+      guard let user = user, let email = user.email else { return }
+      
+      AuthenticationManager.shared.setAccountInformation(email)
+      
+      if currentUser == nil {
+        HomeViewController.signedUpUser = user.uid
+      }
+      
+      workoutManager.readWorkoutData()
+    }
+  }
   private func setUpLayout() {
     NSLayoutConstraint.activate([
       contentScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
