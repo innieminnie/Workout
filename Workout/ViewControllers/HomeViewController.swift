@@ -131,10 +131,15 @@ class HomeViewController: UIViewController {
     }
   }
   
+  @objc private func updateCalendar(_ notification: NSNotification) {
+    self.calendarView.reloadUserData()
+  }
+  
   private func configureNotification() {
     NotificationCenter.default.addObserver(self, selector: #selector(trackTappedTextField), name: NSNotification.Name("TappedTextField"), object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(self.checkRoutineData(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.updateCalendar(_:)), name: Notification.Name("ReadWorkoutData"), object: nil)
   }
   
   private func configureGestureRecognizer() {
@@ -157,6 +162,7 @@ class HomeViewController: UIViewController {
       workoutManager.readWorkoutData()
     }
   }
+  
   private func setUpLayout() {
     NSLayoutConstraint.activate([
       contentScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),

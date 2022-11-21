@@ -110,6 +110,12 @@ class CalendarView: UIView {
     }
   }
   
+  func reloadUserData() {
+    DispatchQueue.main.async {
+      self.monthlyPageCollectionView.reloadData()
+    }
+  }
+  
   @objc func tappedNextMonthButton(sender: UIButton) {
     displayingMonthInformation.changeToNextMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
