@@ -10,35 +10,34 @@ import UIKit
 class SettingViewController: UIViewController {
   var labelTitles = ["계정", "로그아웃"]
   
+  private lazy var settingTableView: UITableView = {
+    let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let nib = UINib(nibName: "SettingTableViewCell", bundle: nil)
+    tableView.register(nib, forCellReuseIdentifier:SettingTableViewCell.identifier)
+    
+    return tableView
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
-    let tableView = UITableView(frame: .zero, style: .insetGrouped)
-    tableView.translatesAutoresizingMaskIntoConstraints = false
-    self.view.addSubview(tableView)
-    tableView.delegate = self
-    tableView.dataSource = self
-    let nib = UINib(nibName: "SettingTableViewCell", bundle: nil)
-    tableView.register(nib, forCellReuseIdentifier:SettingTableViewCell.identifier)
-    NSLayoutConstraint.activate([
-      tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-      tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-      tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-      tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-    ])
+    self.view.addSubview(settingTableView)
+    settingTableView.delegate = self
+    settingTableView.dataSource = self
+    
+    setUpLayout()
   }
   
-  
-  /*
-   // MARK: - Navigation
-   
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destination.
-   // Pass the selected object to the new view controller.
-   }
-   */
-  
+  private func setUpLayout() {
+    NSLayoutConstraint.activate([
+      settingTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+      settingTableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+      settingTableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+      settingTableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+    ])
+  }
 }
 extension SettingViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -50,7 +49,7 @@ extension SettingViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return "로그인 정보"
+    return "계정"
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,7 +63,7 @@ extension SettingViewController: UITableViewDelegate {
 }
 extension SettingViewController: TabBarMenu {
   var tabTitle: String {
-    return "사용자정보"
+    return "설정"
   }
   
   var icon: String {
