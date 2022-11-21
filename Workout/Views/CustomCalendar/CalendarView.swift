@@ -104,10 +104,6 @@ class CalendarView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func reloadUserData() {
-    self.monthlyPageCollectionView.reloadData()
-  }
-  
   func updateSelectedCell() {
     if let selectedCell = selectedCell {
       selectedCell.updateStatus()
