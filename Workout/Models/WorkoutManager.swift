@@ -14,10 +14,10 @@ class WorkoutManager {
   private let encoder = JSONEncoder()
   private let decoder = JSONDecoder()
   private var workoutCodeDictionary = [String: Workout]()
-  private var uid: String = {
+  private var uid: String {
     if let currentUser = currentUser { return currentUser.uid }
     else { return HomeViewController.signedUpUser }
-  }()
+  }
   
   private init() { }
   
