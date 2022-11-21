@@ -42,6 +42,8 @@ class WorkoutManager {
         } catch {
           print(error)
         }
+        
+        NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: nil)
       }
     }
   }
