@@ -14,10 +14,10 @@ class RoutineManager {
   private let ref: DatabaseReference! = Database.database().reference()
   private let encoder = JSONEncoder()
   private let decoder = JSONDecoder()
-  private var uid: String = {
+  private var uid: String {
     if let currentUser = currentUser { return currentUser.uid }
     else { return HomeViewController.signedUpUser }
-  }()
+  }
   
   private init() {
     workoutPlanner = [:]

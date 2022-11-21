@@ -85,6 +85,12 @@ class AuthenticationManager {
   }
   
   func logoutProcess() {
+    do {
+      try Auth.auth().signOut()
+    } catch let signOutError as NSError {
+      print("Error signing out: %@", signOutError)
+    }
+    
     if (AuthApi.hasToken()) {
       UserApi.shared.logout {(error) in
         if let error = error {
@@ -94,12 +100,6 @@ class AuthenticationManager {
           print("logout() success.")
         }
       }
-    }
-    
-    do {
-      try Auth.auth().signOut()
-    } catch let signOutError as NSError {
-      print("Error signing out: %@", signOutError)
     }
   }
 }
