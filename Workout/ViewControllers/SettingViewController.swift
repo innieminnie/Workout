@@ -59,7 +59,23 @@ extension SettingViewController: UITableViewDataSource {
   }
 }
 extension SettingViewController: UITableViewDelegate {
-  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if labelTitles[indexPath.row] == "로그아웃" {
+      let alert = UIAlertController(title: "정말 로그아웃할건가요?", message: nil, preferredStyle: .alert)
+      let cancelAction = UIAlertAction(title: "아니요", style: .cancel)
+      let completeAction = UIAlertAction(title: "네", style: .destructive) { alertAction in
+        AuthenticationManager.shared.logoutProcess()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.changeRootViewController(SignInViewController(), animated: true)
+      }
+      
+      alert.addAction(cancelAction)
+      alert.addAction(completeAction)
+      self.present(alert, animated: false, completion: nil)
+    }
+    
+    tableView.deselectRow(at: indexPath, animated: true)
+  }
 }
 extension SettingViewController: TabBarMenu {
   var tabTitle: String {
