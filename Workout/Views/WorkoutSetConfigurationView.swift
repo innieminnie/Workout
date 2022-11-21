@@ -56,7 +56,7 @@ class WorkoutSetConfigurationView: UIView {
     let textField = UITextFieldWithPadding()
     textField.translatesAutoresizingMaskIntoConstraints = false
     
-    textField.backgroundColor = 0xBEC0C2.converToRGB()
+    textField.backgroundColor = 0xBEC0C2.convertToRGB()
     textField.applyCornerRadius(8)
     textField.keyboardType = .decimalPad
     textField.textAlignment = .right
@@ -82,7 +82,7 @@ class WorkoutSetConfigurationView: UIView {
     let textField = UITextFieldWithPadding()
     textField.translatesAutoresizingMaskIntoConstraints = false
     
-    textField.backgroundColor = 0xBEC0C2.converToRGB()
+    textField.backgroundColor = 0xBEC0C2.convertToRGB()
     textField.applyCornerRadius(8)
     textField.keyboardType = .numberPad
     textField.textAlignment = .right
@@ -230,22 +230,22 @@ class WorkoutSetConfigurationView: UIView {
   
   func showDoingStatusView() {
     weightTextField.isUserInteractionEnabled = true
-    weightTextField.backgroundColor = 0xBEC0C2.converToRGB()
+    weightTextField.backgroundColor = 0xBEC0C2.convertToRGB()
     weightTextField.textColor = .black
     
     countTextField.isUserInteractionEnabled = true
-    countTextField.backgroundColor = 0xBEC0C2.converToRGB()
+    countTextField.backgroundColor = 0xBEC0C2.convertToRGB()
     countTextField.textColor = .black
   }
   
   func showDoneStatusView() {
     weightTextField.isUserInteractionEnabled = false
     weightTextField.backgroundColor = .clear
-    weightTextField.textColor = 0x096DB6.converToRGB()
+    weightTextField.textColor = 0x096DB6.convertToRGB()
     
     countTextField.isUserInteractionEnabled = false
     countTextField.backgroundColor = .clear
-    countTextField.textColor = 0x096DB6.converToRGB()
+    countTextField.textColor = 0x096DB6.convertToRGB()
   }
   
   func allFieldsAreWritten() -> Bool {

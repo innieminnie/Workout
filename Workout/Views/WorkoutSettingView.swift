@@ -77,7 +77,7 @@ class WorkoutSettingView: UIView {
     let button = UIButton()
     button.customizeConfiguration(with: "취소", foregroundColor: .red, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
     button.backgroundColor = .white
-    button.layer.borderColor = 0xBEC0C2.converToRGB().cgColor
+    button.layer.borderColor = 0xBEC0C2.convertToRGB().cgColor
     button.layer.borderWidth = 2
     button.applyCornerRadius(12)
     
@@ -88,7 +88,7 @@ class WorkoutSettingView: UIView {
   private lazy var updateButton: UIButton = {
     let button = UIButton()
     button.customizeConfiguration(with: "등록할게요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
-    button.backgroundColor = 0x096DB6.converToRGB()
+    button.backgroundColor = 0x096DB6.convertToRGB()
     button.applyCornerRadius(12)
     
     button.addTarget(self, action: #selector(tappedUpdate), for: .touchUpInside)

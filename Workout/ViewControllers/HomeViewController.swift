@@ -16,11 +16,11 @@ class HomeViewController: UIViewController {
       if selectedDayInformation == nil {
         addRoutineButton.isEnabled = false
         addRoutineButton.customizeConfiguration(with: "등록 날짜를 먼저 선택해주세요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 20), buttonSize: .medium)
-        addRoutineButton.backgroundColor = 0xBEC0C2.converToRGB()
+        addRoutineButton.backgroundColor = 0xBEC0C2.convertToRGB()
       } else {
         addRoutineButton.isEnabled = true
         addRoutineButton.customizeConfiguration(with: "운동을 추가할래요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 20), buttonSize: .medium)
-        addRoutineButton.backgroundColor = 0x096DB6.converToRGB()
+        addRoutineButton.backgroundColor = 0x096DB6.convertToRGB()
       }
       
       DispatchQueue.main.async {
@@ -43,7 +43,7 @@ class HomeViewController: UIViewController {
     button.translatesAutoresizingMaskIntoConstraints = false
     
     button.customizeConfiguration(with: "운동을 추가할래요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 20), buttonSize: .medium)
-    button.backgroundColor = 0x096DB6.converToRGB()
+    button.backgroundColor = 0x096DB6.convertToRGB()
     button.applyCornerRadius(24)
     button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
     

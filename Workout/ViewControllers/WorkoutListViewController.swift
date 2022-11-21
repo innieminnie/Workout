@@ -64,7 +64,7 @@ class WorkoutListViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
     let headerView = view as! UITableViewHeaderFooterView
-    headerView.textLabel?.textColor = 0x096DB6.converToRGB()
+    headerView.textLabel?.textColor = 0x096DB6.convertToRGB()
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

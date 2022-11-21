@@ -35,7 +35,7 @@ class SignInViewController: UIViewController {
     
     let kakaoLoginButton = UIButton()
     kakaoLoginButton.translatesAutoresizingMaskIntoConstraints = false
-    kakaoLoginButton.backgroundColor = 0xFEE500.converToRGB()
+    kakaoLoginButton.backgroundColor = 0xFEE500.convertToRGB()
     
     kakaoLoginButton.setImage(#imageLiteral(resourceName: "kakao_login_large_wide"), for: .normal)
     kakaoLoginButton.addTarget(self, action: #selector(tappedKakaoSignInButton), for: .touchUpInside)

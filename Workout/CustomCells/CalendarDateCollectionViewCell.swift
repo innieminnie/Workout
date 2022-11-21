@@ -20,7 +20,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     didSet{
       if isSelected {
         DispatchQueue.main.async {
-          self.dateBackgroundView.layer.borderColor = 0xBEC0C2.converToRGB().cgColor
+          self.dateBackgroundView.layer.borderColor = 0xBEC0C2.convertToRGB().cgColor
           self.dateBackgroundView.layer.borderWidth = 4
           self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17)
         }
@@ -35,7 +35,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
       
       if isToday {
         DispatchQueue.main.async {
-          self.dateNumberLabel.textColor = 0x096DB6.converToRGB()
+          self.dateNumberLabel.textColor = 0x096DB6.convertToRGB()
         }
       }
     }
@@ -67,7 +67,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     
     if isToday {
       self.isSelected = true
-      self.dateBackgroundView.layer.borderColor = 0xBEC0C2.converToRGB().cgColor
+      self.dateBackgroundView.layer.borderColor = 0xBEC0C2.convertToRGB().cgColor
     }
     
     dateNumberLabel.text = "\(number)"
@@ -95,7 +95,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     if self.dateInformation == dateInformation {
       if !dailyRoutine.isEmpty {
         DispatchQueue.main.async {
-          self.dateBackgroundView.backgroundColor = 0xF58423.converToRGB()
+          self.dateBackgroundView.backgroundColor = 0xF58423.convertToRGB()
           self.dateNumberLabel.textColor = .white
         }
       } else {
@@ -107,7 +107,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
       
       if isToday {
         DispatchQueue.main.async {
-          self.dateNumberLabel.textColor = 0x096DB6.converToRGB()
+          self.dateNumberLabel.textColor = 0x096DB6.convertToRGB()
         }
       }
     }
