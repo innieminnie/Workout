@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UINavigationBar.appearance().scrollEdgeAppearance = appearance
     
     FirebaseApp.configure()
+    KakaoSDK.initSDK(appKey: APIKey().kakaoNativeAppKey)
     
     if AuthenticationManager.user == nil {
       self.window?.rootViewController = SignInViewController()
@@ -44,8 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application( _ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:] ) -> Bool {
-    KakaoSDK.initSDK(appKey: APIKey().kakaoNativeAppKey)
-    
     if GIDSignIn.sharedInstance.handle(url) { return true }
     else if (AuthApi.isKakaoTalkLoginUrl(url)) {
       return AuthController.handleOpenUrl(url: url)

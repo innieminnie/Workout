@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseDatabase
 import FirebaseAuth
+import KakaoSDKAuth
 import KakaoSDKUser
 import GoogleSignIn
 import AuthenticationServices
@@ -80,6 +81,25 @@ class AuthenticationManager {
           presentingVC.completeSignInProcess()
         }
       }
+    }
+  }
+  
+  func logoutProcess() {
+    if (AuthApi.hasToken()) {
+      UserApi.shared.logout {(error) in
+        if let error = error {
+          print(error)
+        }
+        else {
+          print("logout() success.")
+        }
+      }
+    }
+    
+    do {
+      try Auth.auth().signOut()
+    } catch let signOutError as NSError {
+      print("Error signing out: %@", signOutError)
     }
   }
 }
