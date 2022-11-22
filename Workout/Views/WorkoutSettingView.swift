@@ -64,6 +64,10 @@ class WorkoutSettingView: UIView {
     let uiSegmentedControl = UISegmentedControl(items: unitsLabel)
     uiSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
     
+    uiSegmentedControl.layer.borderColor = 0xF58423.convertToRGB().withAlphaComponent(0.3).cgColor
+    uiSegmentedControl.layer.borderWidth = 1
+    uiSegmentedControl.selectedSegmentTintColor = 0xF58423.convertToRGB()
+    
     uiSegmentedControl.addTarget(self, action: #selector(selectedWeightUnit(sender:)), for: .valueChanged)
     return uiSegmentedControl
   }()

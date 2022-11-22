@@ -31,7 +31,7 @@ class RoundedCornerLabelView: UIView {
     
     self.titleLabel.text = title
     self.titleLabel.textColor = .black
-    self.layer.borderColor = 0xF58423.convertToRGB().cgColor
+    self.layer.borderColor = 0xF58423.convertToRGB().withAlphaComponent(0.3).cgColor
     self.layer.borderWidth = 2
     
     addSubview(titleLabel)
