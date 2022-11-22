@@ -20,7 +20,7 @@ class SettingTableViewCell: UITableViewCell {
   }
   
   func setUp(with title: String) {
-    if title == "계정" {
+    if title == "email" {
       self.titleLabel.text = AuthenticationManager.userEmail
     } else {
       self.titleLabel.text = title
