@@ -14,7 +14,7 @@ class BodySectionTapGesture: UITapGestureRecognizer {
 
 protocol UpdateWorkoutActionDelegate: AnyObject {
   func tappedCancel()
-  func register(_ name: String, _ bodySection: BodySection)
+  func register(_ name: String, _ weightUnit: WeightUnit, _ bodySection: BodySection)
   func resignFirstResponder(on textField: UITextField)
 }
 
@@ -57,6 +57,15 @@ class WorkoutSettingView: UIView {
     label.font = UIFont.systemFont(ofSize: 13)
     
     return label
+  }()
+  
+  private lazy var weightUnitSegmentedControl: UISegmentedControl = {
+    let unitsLabel = WeightUnit.allCases.map { $0.rawValue }
+    let uiSegmentedControl = UISegmentedControl(items: unitsLabel)
+    uiSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+    
+    uiSegmentedControl.addTarget(self, action: #selector(selectedWeightUnit(sender:)), for: .valueChanged)
+    return uiSegmentedControl
   }()
   
   private lazy var bodySectionCollectionView = BodySectionCollectionView()
@@ -109,6 +118,7 @@ class WorkoutSettingView: UIView {
   
   private var selectedCell: BodySectionCollectionViewCell?
   private var selectedBodySection: BodySection?
+  private var selectedWeightUnit: WeightUnit?
   private var previousName = String()
   private var isEditable = true {
     didSet {
@@ -122,6 +132,7 @@ class WorkoutSettingView: UIView {
         nameTextField.backgroundColor = .lightGray
         nameTextField.borderStyle = .roundedRect
         
+        weightUnitSegmentedControl.isUserInteractionEnabled = true
         bodySectionCollectionView.isUserInteractionEnabled = true
         setFirstResponder()
       } else {
@@ -131,6 +142,7 @@ class WorkoutSettingView: UIView {
         nameTextField.backgroundColor = .clear
         nameTextField.borderStyle = .none
         
+        weightUnitSegmentedControl.isUserInteractionEnabled = false
         bodySectionCollectionView.isUserInteractionEnabled = false
       }
     }
@@ -150,6 +162,7 @@ class WorkoutSettingView: UIView {
     addSubview(titleLabel)
     addSubview(nameTextField)
     addSubview(nameCheckLabel)
+    addSubview(weightUnitSegmentedControl)
     addSubview(bodySectionCollectionView)
     addSubview(bodySectionCheckLabel)
     
@@ -170,7 +183,11 @@ class WorkoutSettingView: UIView {
       nameCheckLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
       nameCheckLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
       
-      bodySectionCollectionView.topAnchor.constraint(equalTo: nameCheckLabel.bottomAnchor),
+      weightUnitSegmentedControl.topAnchor.constraint(equalTo: nameCheckLabel.bottomAnchor),
+      weightUnitSegmentedControl.centerXAnchor.constraint(equalTo: nameCheckLabel.centerXAnchor),
+      weightUnitSegmentedControl.widthAnchor.constraint(equalTo: nameCheckLabel.widthAnchor, multiplier: 0.5),
+      
+      bodySectionCollectionView.topAnchor.constraint(equalTo: weightUnitSegmentedControl.bottomAnchor, constant: 10),
       bodySectionCollectionView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
       bodySectionCollectionView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
       bodySectionCollectionView.bottomAnchor.constraint(equalTo: bodySectionCheckLabel.topAnchor),
@@ -192,6 +209,17 @@ class WorkoutSettingView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
+  @objc private func selectedWeightUnit(sender: UISegmentedControl) {
+    switch sender.selectedSegmentIndex {
+    case 0:
+      self.selectedWeightUnit =  .kg
+    case 1:
+      self.selectedWeightUnit = .lb
+    default:
+      break
+    }
+  }
+  
   @objc private func cellTapped(gesture: BodySectionTapGesture) {
     if let currentSelectedCell = selectedCell {
       currentSelectedCell.isSelected = false
@@ -205,11 +233,26 @@ class WorkoutSettingView: UIView {
     }
   }
   
+  private func setSelectedWeightUnit() {
+    guard let selectedWeightUnit = selectedWeightUnit else {
+      return
+    }
+    
+    switch selectedWeightUnit {
+    case .kg:
+      self.weightUnitSegmentedControl.selectedSegmentIndex = 0
+    case .lb:
+      self.weightUnitSegmentedControl.selectedSegmentIndex = 1
+    }
+  }
+  
   func setUp(with workout: Workout) {
     self.isEditable = false
     titleLabel.text = "운동 정보"
     nameTextField.text = workout.displayName()
     selectedBodySection = workout.bodySection
+    selectedWeightUnit = workout.weightUnit
+    setSelectedWeightUnit()
     previousName = workout.displayName()
   }
   
@@ -248,7 +291,9 @@ extension WorkoutSettingView {
         return
       }
       
-      self.delegate?.register(name, bodySection)
+      guard let weightUnit = self.selectedWeightUnit else { return }
+      
+      self.delegate?.register(name, weightUnit, bodySection)
     }
   }
 }
