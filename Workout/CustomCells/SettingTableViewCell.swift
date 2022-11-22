@@ -23,6 +23,7 @@ class SettingTableViewCell: UITableViewCell {
     if title == "email" {
       self.titleLabel.text = AuthenticationManager.userEmail
     } else {
+      self.accessoryType = .disclosureIndicator
       self.titleLabel.text = title
     }
   }
