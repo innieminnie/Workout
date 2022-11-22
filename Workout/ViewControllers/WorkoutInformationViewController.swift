@@ -9,7 +9,7 @@ import UIKit
 
 protocol UpdateWorkoutDelegate: AnyObject {
   func saveNewWorkout(workout: Workout)
-  func updateWorkout(code: String, name: String, bodySection: BodySection)
+  func updateWorkout(code: String, name: String, weightUnit: WeightUnit, bodySection: BodySection)
 }
 
 class WorkoutInformationViewController: UIViewController {
@@ -83,9 +83,9 @@ extension WorkoutInformationViewController: UpdateWorkoutActionDelegate {
     }
   }
   
-  func register(_ name: String, _ bodySection: BodySection) {
+  func register(_ name: String, _ weightUnit: WeightUnit, _ bodySection: BodySection) {
     if let workoutCode = handlingWorkoutCode {
-      self.updateWorkoutDelegate?.updateWorkout(code: workoutCode, name: name, bodySection: bodySection)
+      self.updateWorkoutDelegate?.updateWorkout(code: workoutCode, name: name, weightUnit: weightUnit, bodySection: bodySection)
     } else {
       self.updateWorkoutDelegate?.saveNewWorkout(workout: Workout(name, bodySection))
     }

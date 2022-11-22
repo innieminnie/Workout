@@ -104,8 +104,8 @@ extension WorkoutListViewController: UpdateWorkoutDelegate {
     tableView.reloadData()
   }
   
-  func updateWorkout(code: String, name: String, bodySection: BodySection ) {
-    workoutManager.updateWorkout(code, name, bodySection)
+  func updateWorkout(code: String, name: String, weightUnit: WeightUnit, bodySection: BodySection ) {
+    workoutManager.updateWorkout(code, name, weightUnit, bodySection)
     tableView.reloadData()
   }
 

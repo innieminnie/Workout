@@ -7,21 +7,29 @@
 
 import Foundation
 
+enum WeightUnit: String, CaseIterable, Codable {
+  case kg = "kg"
+  case lb = "lb"
+}
+
 class Workout: Identifiable, Codable {
   var id: String?
   private var name: String
   var bodySection: BodySection
+  var weightUnit: WeightUnit
   private var registeredDate: Set<DateInformation>
   
   enum CodingKeys: String, CodingKey {
     case name
     case bodySection
+    case weightUnit
     case registeredDate
   }
   
   init(_ name: String, _ bodySection: BodySection) {
     self.name = name
     self.bodySection = bodySection
+    self.weightUnit = .kg
     self.registeredDate = []
   }
   
@@ -29,6 +37,7 @@ class Workout: Identifiable, Codable {
     let values = try decoder.container(keyedBy: CodingKeys.self)
     name = try values.decode(String.self, forKey: .name)
     bodySection = try values.decode(BodySection.self, forKey: .bodySection)
+    weightUnit = try values.decode(WeightUnit.self, forKey: .weightUnit)
     
     do {
       let arrayRegisteredDate =  try values.decode([DateInformation].self, forKey: .registeredDate)
@@ -56,9 +65,10 @@ class Workout: Identifiable, Codable {
     return self.name
   }
   
-  func update(_ name: String, _ bodySection: BodySection) {
+  func update(_ name: String, _ bodySection: BodySection, _ weightUnit: WeightUnit) {
     self.name = name
     self.bodySection = bodySection
+    self.weightUnit = weightUnit
   }
   
   func removeRegisteredRoutine() {
@@ -74,6 +84,7 @@ extension Workout {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(name, forKey: .name)
     try container.encode(bodySection, forKey: .bodySection)
+    try container.encode(weightUnit, forKey: .weightUnit)
     try container.encode(registeredDate, forKey: .registeredDate)
   }
 }

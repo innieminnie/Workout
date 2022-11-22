@@ -93,9 +93,9 @@ class WorkoutManager {
     }
   }
   
-  func updateWorkout(_ code: String, _ name: String, _ bodySection: BodySection) {
+  func updateWorkout(_ code: String, _ name: String, _ weightUnit: WeightUnit, _ bodySection: BodySection) {
     guard let updatingWorkout = workoutCodeDictionary[code] else { return }
-    updatingWorkout.update(name, bodySection)
+    updatingWorkout.update(name, bodySection, weightUnit)
     
     do {
       let data = try encoder.encode(updatingWorkout)
