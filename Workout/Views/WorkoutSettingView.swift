@@ -72,6 +72,18 @@ class WorkoutSettingView: UIView {
     return uiSegmentedControl
   }()
   
+  private lazy var weightUnitCheckLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    label.text = " "
+    label.textColor = .red
+    label.textAlignment = .center
+    label.font = UIFont.systemFont(ofSize: 13)
+    
+    return label
+  }()
+  
   private lazy var bodySectionCollectionView = BodySectionCollectionView()
   
   private lazy var bodySectionCheckLabel: UILabel = {
@@ -167,6 +179,7 @@ class WorkoutSettingView: UIView {
     addSubview(nameTextField)
     addSubview(nameCheckLabel)
     addSubview(weightUnitSegmentedControl)
+    addSubview(weightUnitCheckLabel)
     addSubview(bodySectionCollectionView)
     addSubview(bodySectionCheckLabel)
     
@@ -191,7 +204,11 @@ class WorkoutSettingView: UIView {
       weightUnitSegmentedControl.centerXAnchor.constraint(equalTo: nameCheckLabel.centerXAnchor),
       weightUnitSegmentedControl.widthAnchor.constraint(equalTo: nameCheckLabel.widthAnchor, multiplier: 0.5),
       
-      bodySectionCollectionView.topAnchor.constraint(equalTo: weightUnitSegmentedControl.bottomAnchor, constant: 10),
+      weightUnitCheckLabel.topAnchor.constraint(equalTo: weightUnitSegmentedControl.bottomAnchor),
+      weightUnitCheckLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
+      weightUnitCheckLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
+      
+      bodySectionCollectionView.topAnchor.constraint(equalTo: weightUnitCheckLabel.bottomAnchor),
       bodySectionCollectionView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
       bodySectionCollectionView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
       bodySectionCollectionView.bottomAnchor.constraint(equalTo: bodySectionCheckLabel.topAnchor),
@@ -284,6 +301,11 @@ extension WorkoutSettingView {
         return
       }
       
+      guard let weightUnit = self.selectedWeightUnit else {
+        weightUnitCheckLabel.text = "무게단위를 선택해주세요 :)"
+        return
+      }
+      
       guard let bodySectionCell = self.selectedCell else {
         bodySectionCheckLabel.text = "운동 부위를 선택해주세요 :)"
         return
@@ -295,7 +317,6 @@ extension WorkoutSettingView {
         return
       }
       
-      guard let weightUnit = self.selectedWeightUnit else { return }
       
       self.delegate?.register(name, weightUnit, bodySection)
     }
