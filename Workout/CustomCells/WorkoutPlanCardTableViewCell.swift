@@ -98,12 +98,13 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     }
         
     setButtonStackView.isHidden = isDone
+    let weightUnit = plannedWorkout.checkWeightUnit()
     
     if !sets.isEmpty {
       if !doneButton.isEnabled { doneButton.isEnabled = true }
       
       for (idx, singleSet) in sets.enumerated() {
-        let setConfigurationView = WorkoutSetConfigurationView(index: idx, setInformation: singleSet)
+        let setConfigurationView = WorkoutSetConfigurationView(index: idx, setInformation: singleSet, unit: weightUnit)
         setStackView.addArrangedSubview(setConfigurationView)
         setConfigurationView.delegate = self
         delegate?.cellExpand()
@@ -173,7 +174,8 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     
     let newSetIndex = currentWorkout.sets.count
     let newSetConfiguration = newSetIndex > 0 ? currentWorkout.sets[currentWorkout.sets.count - 1] : SetConfiguration()
-    let setConfigurationView = WorkoutSetConfigurationView(index: newSetIndex, setInformation: newSetConfiguration)
+    let weightUnit = currentWorkout.checkWeightUnit()
+    let setConfigurationView = WorkoutSetConfigurationView(index: newSetIndex, setInformation: newSetConfiguration, unit: weightUnit)
     setStackView.addArrangedSubview(setConfigurationView)
     if !doneButton.isEnabled { doneButton.isEnabled = true }
     setConfigurationView.delegate = self

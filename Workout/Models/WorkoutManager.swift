@@ -101,7 +101,7 @@ class WorkoutManager {
       let data = try encoder.encode(updatingWorkout)
       let json = try JSONSerialization.jsonObject(with: data)
       
-      let childUpdates = ["/users/\(self.uid)/\(code)": json]
+      let childUpdates = ["/users/\(self.uid)/workout/\(code)": json]
       
       ref.updateChildValues(childUpdates)
     } catch {

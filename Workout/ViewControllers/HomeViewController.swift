@@ -78,6 +78,10 @@ class HomeViewController: UIViewController {
     setUpLayout()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    calendarView.reloadUserData()
+  }
+  
   override func viewWillDisappear(_ animated: Bool) {
     Auth.auth().removeStateDidChangeListener(handle!)
   }

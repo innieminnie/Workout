@@ -34,9 +34,6 @@ class WorkoutInformationViewController: UIViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-//    workoutSettingView.setFirstResponder()
-  }
   
   @objc private func keyboardWillShow(notification: Notification) {
     guard let userInfo = notification.userInfo,

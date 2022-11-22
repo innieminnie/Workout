@@ -85,6 +85,11 @@ class PlannedWorkout: Identifiable, Codable {
     guard let workout = workoutManager.workoutByCode(self.workoutCode) else { return "    " }
     return workout.bodySection.rawValue
   }
+  
+  func checkWeightUnit() -> WeightUnit {
+    guard let workout = workoutManager.workoutByCode(self.workoutCode) else { return .kg }
+    return workout.weightUnit
+  }
 }
 extension PlannedWorkout {
   func encode(to encoder: Encoder) throws {

@@ -137,7 +137,7 @@ class WorkoutSetConfigurationView: UIView {
     return stackView
   }()
   
-  init(index: Int, setInformation: SetConfiguration) {
+  init(index: Int, setInformation: SetConfiguration, unit: WeightUnit) {
     super.init(frame: .zero)
     
     self.setIndex = index
@@ -146,6 +146,7 @@ class WorkoutSetConfigurationView: UIView {
     
     configureWeightStackView()
     configureCountStackView()
+    configureWeightUnit(with: unit)
     configureSetStackView(with: setInformation)
     setUpLayout()
   }
@@ -174,6 +175,10 @@ class WorkoutSetConfigurationView: UIView {
     NSLayoutConstraint.activate([
       countTextField.widthAnchor.constraint(equalTo: countUnitLabel.widthAnchor, multiplier: 1.5)
     ])
+  }
+  
+  private func configureWeightUnit(with unit: WeightUnit) {
+    weightUnitLabel.text = unit.rawValue
   }
   
   private func configureSetStackView(with setInformation: SetConfiguration) {
