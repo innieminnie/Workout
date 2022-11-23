@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import MessageUI
 
 class SettingViewController: UIViewController {
-  private let settingMenus = [SettingMenu("계정",["email"]), SettingMenu("지원", ["알림 설정", "문의/의견 이메일 보내기", "앱 리뷰 작성하기", "버전 정보"])]
+  private let settingMenus = [SettingMenu("계정",["email"]), SettingMenu("지원", ["문의/의견 이메일 보내기"])]
   
   private lazy var logoutButton: UIButton = {
     let button = UIButton()
@@ -67,6 +68,26 @@ class SettingViewController: UIViewController {
       logoutButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
     ])
   }
+  
+  private func openMail() {
+    if MFMailComposeViewController.canSendMail() {
+      let composeVC = MFMailComposeViewController()
+      composeVC.mailComposeDelegate = self
+      composeVC.setToRecipients(["pitapatpumping.help@gmail.com"])
+      composeVC.setSubject("득근득근에게...")
+      
+      guard let dictionary = Bundle.main.infoDictionary,
+            let version = dictionary["CFBundleShortVersionString"] as? String else {
+        return
+      }
+      
+      composeVC.setMessageBody("이곳에 내용을 적어 보내주세요 :) \n\n\n 앱 버전정보: \(version)", isHTML: false)
+      
+      present(composeVC, animated: true)
+    } else {
+      print("메시지 전송 불가")
+    }
+  }
 }
 extension SettingViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -89,6 +110,10 @@ extension SettingViewController: UITableViewDataSource {
 }
 extension SettingViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if settingMenus[indexPath.section].subMenus[indexPath.row] == "문의/의견 이메일 보내기" {
+      openMail()
+    }
+    
     tableView.deselectRow(at: indexPath, animated: true)
   }
 }
@@ -100,6 +125,21 @@ extension SettingViewController: TabBarMenu {
   var icon: String {
     return "gearshape.fill"
   }
-  
-  
+}
+extension SettingViewController: MFMailComposeViewControllerDelegate {
+  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    switch result {
+    case .sent:
+      print("sent")
+    case .cancelled:
+      print("cancelled")
+    case .failed:
+      print("failed")
+    case .saved:
+      print("saved")
+    @unknown default:
+      fatalError()
+    }
+    controller.dismiss(animated: true, completion: nil)
+  }
 }
