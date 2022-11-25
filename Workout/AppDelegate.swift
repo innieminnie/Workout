@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Network
 import AuthenticationServices
 import FirebaseCore
 import FirebaseAuth
@@ -18,10 +19,11 @@ import KakaoSDKUser
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
+  let monitor = NWPathMonitor()
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     self.window = UIWindow(frame: UIScreen.main.bounds)
-   
+    
     let appearance = UINavigationBarAppearance()
     appearance.configureWithOpaqueBackground()
     appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
@@ -30,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UINavigationBar.appearance().standardAppearance = appearance
     UINavigationBar.appearance().scrollEdgeAppearance = appearance
     
+    setMonitor()
     FirebaseApp.configure()
     KakaoSDK.initSDK(appKey: APIKey().kakaoNativeAppKey)
     
@@ -40,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     self.window?.makeKeyAndVisible()
-    
     return true
   }
   
@@ -58,5 +60,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window.rootViewController = vc
     
     UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil, completion: nil)
+  }
+  
+  func setMonitor() {
+    monitor.start(queue: .global())
+    monitor.pathUpdateHandler = { path in
+      if path.status == .satisfied {
+        DispatchQueue.main.async {
+          if self.window?.rootViewController is NetworkConfirmViewController {
+            if AuthenticationManager.user == nil {
+              self.changeRootViewController(SignInViewController(), animated: true)
+            } else {
+              self.changeRootViewController(BaseTabBarController(), animated: true)
+            }
+          } else if self.window?.rootViewController == nil {
+            return
+          }
+        }
+      } else {
+        DispatchQueue.main.async {
+          self.changeRootViewController(NetworkConfirmViewController(), animated: true)
+        }
+      }
+    }
   }
 }
