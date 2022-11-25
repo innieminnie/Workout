@@ -141,6 +141,10 @@ class WorkoutManager {
     
     return filteredList
   }
+  
+  func totalWorkoutsCount() -> Int {
+    return workoutCodeDictionary.count
+  }
 }
 
 let workoutManager = WorkoutManager.shared

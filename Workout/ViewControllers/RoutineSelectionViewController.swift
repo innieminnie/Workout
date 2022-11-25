@@ -35,13 +35,32 @@ class RoutineSelectionViewController: UIViewController {
     return button
   }()
   
+  private lazy  var noticeLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    let notice = "등록된 운동이 없어요.\n\"목록\"에서 운동 종목을 추가해보세요!"
+    label.text = notice
+    label.textAlignment = .center
+    label.numberOfLines = 0
+    label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+    
+    return label
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
-    view.addSubview(workoutListTableView)
-    view.addSubview(addRoutineButton)
-    setUpListTableView()
-    setUpLayout()
+    
+    if workoutManager.totalWorkoutsCount() == 0 {
+      view.addSubview(noticeLabel)
+      setUpNoticeLabel()
+    } else {
+      view.addSubview(workoutListTableView)
+      view.addSubview(addRoutineButton)
+      setUpListTableView()
+      setUpLayout()
+    }
   }
 
   @objc func tappedAddRoutineButton(sender: UIButton) {
@@ -53,6 +72,15 @@ class RoutineSelectionViewController: UIViewController {
   
     self.delegate?.addSelectedWorkouts(self.selectedWorkouts)
     self.dismiss(animated: true, completion: nil)
+  }
+  
+  private func setUpNoticeLabel() {
+    NSLayoutConstraint.activate([
+      noticeLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+      noticeLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+      noticeLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+      noticeLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+    ])
   }
   
   private func setUpLayout() {
