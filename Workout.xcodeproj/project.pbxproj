@@ -22,6 +22,7 @@
 		D92D2417292B14D400031670 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D2415292B14D400031670 /* SettingTableViewCell.swift */; };
 		D92D2418292B14D400031670 /* SettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D92D2416292B14D400031670 /* SettingTableViewCell.xib */; };
 		D92D241A292CB67F00031670 /* SettingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D2419292CB67F00031670 /* SettingMenu.swift */; };
+		D92D241C292E444A00031670 /* NetworkConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */; };
 		D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569AF274CBAFB007E517A /* AppDelegate.swift */; };
 		D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569B3274CBAFB007E517A /* HomeViewController.swift */; };
 		D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D98569B8274CBAFE007E517A /* Assets.xcassets */; };
@@ -96,6 +97,7 @@
 		D92D2415292B14D400031670 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		D92D2416292B14D400031670 /* SettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingTableViewCell.xib; sourceTree = "<group>"; };
 		D92D2419292CB67F00031670 /* SettingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMenu.swift; sourceTree = "<group>"; };
+		D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfirmViewController.swift; sourceTree = "<group>"; };
 		D98569AC274CBAFB007E517A /* Workout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98569AF274CBAFB007E517A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D98569B3274CBAFB007E517A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */,
 				D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */,
 				D9E09624291DF74C00AE710F /* SignInViewController.swift */,
+				D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				D9107C60282E593C00FABD37 /* MonthlyPageCollectionView.swift in Sources */,
 				D9E096292922AEBA00AE710F /* AuthenticationManager.swift in Sources */,
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,
+				D92D241C292E444A00031670 /* NetworkConfirmViewController.swift in Sources */,
 				D9D44E4228FEC3AD0035B8D0 /* BodySection.swift in Sources */,
 				D995871E286D523A0093E024 /* Extensions.swift in Sources */,
 				D92D2417292B14D400031670 /* SettingTableViewCell.swift in Sources */,
