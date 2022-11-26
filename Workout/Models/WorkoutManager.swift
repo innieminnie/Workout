@@ -26,7 +26,7 @@ class WorkoutManager {
     
     itemRef.getData { error, snapshot in
       if let error = error {
-        print(error)
+        NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
       } else if snapshot.exists() {
         guard let jsonValue = snapshot.value as? [String: Any] else {
           return
@@ -40,7 +40,7 @@ class WorkoutManager {
             element.value.configureId(with: element.key)
           }
         } catch {
-          print(error)
+          NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
         }
         
         NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: nil)

@@ -157,7 +157,11 @@ extension SignInViewController: ASAuthorizationControllerPresentationContextProv
           // Error. If error.code == .MissingOrInvalidNonce, make sure
           // you're sending the SHA256-hashed nonce as a hex string with
           // your request to Apple.
-          print(error.localizedDescription)
+          
+          let alert = UIAlertController(title: "\(error.localizedDescription)\n 로그인에 실패했어요. 잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
+          let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+          alert.addAction(action)
+          self.present(alert, animated: false, completion: nil)
           return
         }
         // User is signed in to Firebase with Apple.
@@ -167,6 +171,10 @@ extension SignInViewController: ASAuthorizationControllerPresentationContextProv
   }
   
   func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-    print(error)
+    let alert = UIAlertController(title: "\(error.localizedDescription)\n 로그인에 실패했어요. 잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
+    let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+    alert.addAction(action)
+    self.present(alert, animated: false, completion: nil)
+    return
   }
 }
