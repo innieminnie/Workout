@@ -28,7 +28,7 @@ class RoutineManager {
     
     itemRef.getData { error, snapshot in
       if let error = error {
-        print(error)
+        NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
       } else if snapshot.exists() {
         guard let jsonValue = snapshot.value as? [String: Any] else {
           return
@@ -50,7 +50,7 @@ class RoutineManager {
           NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine, "date": dateInformation])
           
         } catch {
-          print(error)
+          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
         }
       } else {
         NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": [], "date": dateInformation])
