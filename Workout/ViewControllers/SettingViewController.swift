@@ -15,7 +15,7 @@ class SettingViewController: UIViewController {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
-    button.customizeConfiguration(with: "로그아웃", foregroundColor: .red, font: .systemFont(ofSize: 15), buttonSize: .medium)
+    button.customizeConfiguration(with: "로그아웃", foregroundColor: .red, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
     button.backgroundColor = 0xBEC0C2.convertToRGB()
     button.addTarget(self, action: #selector(tappedLogout), for: .touchUpInside)
     return button

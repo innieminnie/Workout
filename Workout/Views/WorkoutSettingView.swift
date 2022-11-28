@@ -24,7 +24,7 @@ class WorkoutSettingView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     
     label.text = "새로운 운동 등록"
-    label.font = UIFont.preferredFont(forTextStyle: .title2)
+    label.font = UIFont.Pretendard(type: .Regular, size: 17)
     label.setContentHuggingPriority(.defaultHigh, for: .vertical)
     label.textColor = .black
     label.textAlignment = .center
@@ -39,7 +39,7 @@ class WorkoutSettingView: UIView {
     textField.isUserInteractionEnabled = true
     textField.textColor = .black
     textField.textAlignment = .center
-    textField.font = UIFont.preferredFont(forTextStyle: .title1)
+    textField.font = UIFont.Pretendard(type: .Bold, size: 20)
     textField.backgroundColor = .lightGray
     textField.borderStyle = .roundedRect
     textField.placeholder = "등록할 운동명을 입력하세요."
@@ -54,7 +54,7 @@ class WorkoutSettingView: UIView {
     label.text = " "
     label.textColor = .red
     label.textAlignment = .center
-    label.font = UIFont.systemFont(ofSize: 13)
+    label.font = UIFont.Pretendard(type: .Regular, size: 12)
     
     return label
   }()
@@ -79,7 +79,7 @@ class WorkoutSettingView: UIView {
     label.text = " "
     label.textColor = .red
     label.textAlignment = .center
-    label.font = UIFont.systemFont(ofSize: 13)
+    label.font = UIFont.Pretendard(type: .Regular, size: 12)
     
     return label
   }()
@@ -93,14 +93,14 @@ class WorkoutSettingView: UIView {
     label.text = " "
     label.textColor = .red
     label.textAlignment = .center
-    label.font = UIFont.systemFont(ofSize: 13)
+    label.font = UIFont.Pretendard(type: .Regular, size: 12)
     
     return label
   }()
   
   private lazy var cancelButton: UIButton = {
     let button = UIButton()
-    button.customizeConfiguration(with: "취소", foregroundColor: .red, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
+    button.customizeConfiguration(with: "취소", foregroundColor: .red, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
     button.backgroundColor = .white
     button.layer.borderColor = 0xBEC0C2.convertToRGB().cgColor
     button.layer.borderWidth = 2
@@ -112,7 +112,7 @@ class WorkoutSettingView: UIView {
   
   private lazy var updateButton: UIButton = {
     let button = UIButton()
-    button.customizeConfiguration(with: "등록할게요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
+    button.customizeConfiguration(with: "등록할게요", foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
     button.backgroundColor = 0x096DB6.convertToRGB()
     button.applyCornerRadius(12)
     
@@ -141,7 +141,7 @@ class WorkoutSettingView: UIView {
       if isEditable {
         self.titleLabel.isHidden = true
         
-        updateButton.customizeConfiguration(with: "등록할게요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
+        updateButton.customizeConfiguration(with: "등록할게요", foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
         
         nameTextField.isUserInteractionEnabled = true
         nameTextField.textColor = .black
@@ -152,7 +152,7 @@ class WorkoutSettingView: UIView {
         bodySectionCollectionView.isUserInteractionEnabled = true
         setFirstResponder()
       } else {
-        updateButton.customizeConfiguration(with: "수정할래요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
+        updateButton.customizeConfiguration(with: "수정할래요", foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
         
         nameTextField.isUserInteractionEnabled = false
         nameTextField.backgroundColor = .clear

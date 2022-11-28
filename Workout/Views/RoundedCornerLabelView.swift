@@ -14,6 +14,7 @@ class RoundedCornerLabelView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     
     label.textAlignment = .center
+    label.font = UIFont.Pretendard(type: .Regular, size: 15)
     
     return label
   }()

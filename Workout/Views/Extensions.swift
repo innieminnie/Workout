@@ -51,3 +51,43 @@ extension Int {
         alpha: 1.0)
   }
 }
+extension UIFont {
+  class func Pretendard(type: PretendardType, size: CGFloat) -> UIFont! {
+    guard let font = UIFont(name: type.name, size: size) else {
+      return nil
+    }
+    return font
+  }
+
+  public enum PretendardType {
+    case Bold
+    case ExtraBold
+    case ExtraLight
+    case Light
+    case Medium
+    case Regular
+    case Semibold
+    case Thin
+
+    var name: String {
+      switch self {
+      case .Bold:
+        return "Pretendard-Bold"
+      case .ExtraBold:
+        return "Pretendard-ExtraBold"
+      case .ExtraLight:
+        return "Pretendard-ExtraLight"
+      case .Light:
+        return "Pretendard-Light"
+      case .Medium:
+        return "Pretendard-Medium"
+      case .Regular:
+        return "Pretendard-Regular"
+      case .Semibold:
+        return "Pretendard-SemiBold"
+      case .Thin:
+        return "Pretendard-Thin"
+      }
+    }
+  }
+}

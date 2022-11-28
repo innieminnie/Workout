@@ -27,7 +27,7 @@ class CalendarView: UIView {
     button.addTarget(self, action: #selector(tappedNextMonthButton(sender:)), for: .touchUpInside)
     button.setTitle(">", for: .normal)
     button.setTitleColor(.black, for: .normal)
-    button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+    button.titleLabel?.font = UIFont.Pretendard(type: .Bold, size: 20)
     
     return button
   }()
@@ -39,8 +39,7 @@ class CalendarView: UIView {
     button.addTarget(self, action: #selector(tappedLastMonthButton(sender:)), for: .touchUpInside)
     button.setTitle("<", for: .normal)
     button.setTitleColor(.black, for: .normal)
-    button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-    
+    button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 20)
     return button
   }()
   
@@ -49,7 +48,7 @@ class CalendarView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     
     label.textAlignment = .center
-    label.font = UIFont.boldSystemFont(ofSize: 20)
+    label.font = UIFont.Pretendard(type: .Bold, size: 20)
     label.textColor = .black
     
     return label

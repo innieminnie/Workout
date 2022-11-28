@@ -26,7 +26,7 @@ class RoutineSelectionViewController: UIViewController {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
-    button.customizeConfiguration(with: "선택한 운동을 추가할게요", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 20), buttonSize: .medium)
+    button.customizeConfiguration(with: "선택한 운동을 추가할게요", foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .medium)
     button.backgroundColor = 0xBEC0C2.convertToRGB()
     button.applyCornerRadius(24)
     button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
@@ -43,7 +43,7 @@ class RoutineSelectionViewController: UIViewController {
     label.text = notice
     label.textAlignment = .center
     label.numberOfLines = 0
-    label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+    label.font = UIFont.Pretendard(type: .Bold, size: 20)
     
     return label
   }()
@@ -125,6 +125,7 @@ extension RoutineSelectionViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
     let headerView = view as! UITableViewHeaderFooterView
     headerView.textLabel?.textColor = 0x096DB6.convertToRGB()
+    headerView.textLabel?.font = UIFont.Pretendard(type: .Regular, size: 15)
   }
 }
 extension RoutineSelectionViewController: UITableViewDelegate {

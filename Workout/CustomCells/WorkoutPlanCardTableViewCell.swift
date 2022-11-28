@@ -90,10 +90,10 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     
     let isDone = plannedWorkout.isDone.rawValue
     if isDone {
-      doneButton.customizeConfiguration(with: plannedWorkout.isDone.buttonTitle, foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .small)
+      doneButton.customizeConfiguration(with: plannedWorkout.isDone.buttonTitle, foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .small)
       doneButton.backgroundColor = .white
     } else {
-      doneButton.customizeConfiguration(with: plannedWorkout.isDone.buttonTitle, foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .small)
+      doneButton.customizeConfiguration(with: plannedWorkout.isDone.buttonTitle, foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .small)
       doneButton.backgroundColor = 0x096DB6.convertToRGB()
     }
         
@@ -144,7 +144,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
       
       currentWorkout.isDone = .done
       
-      doneButton.customizeConfiguration(with: currentWorkout.isDone.buttonTitle, foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .small)
+      doneButton.customizeConfiguration(with: currentWorkout.isDone.buttonTitle, foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .small)
       doneButton.backgroundColor = .white
     case .done:
       for workoutSetView in setStackView.arrangedSubviews {
@@ -157,7 +157,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
       
       currentWorkout.isDone = .doing
       
-      doneButton.customizeConfiguration(with: currentWorkout.isDone.buttonTitle, foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .small)
+      doneButton.customizeConfiguration(with: currentWorkout.isDone.buttonTitle, foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .small)
       doneButton.backgroundColor = 0x096DB6.convertToRGB()
     }
     
