@@ -30,6 +30,8 @@ class AuthenticationManager {
     
     GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { user, error in
       if let error = error {
+        if (error as NSError).code == GIDSignInError.canceled.rawValue { return }
+        
         let alert = UIAlertController(title: "\(error)\n 로그인에 실패했어요. 잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
         alert.addAction(action)
