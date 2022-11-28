@@ -82,7 +82,6 @@ class SignInViewController: UIViewController {
     self.view.addSubview(logoImageView)
     
     NSLayoutConstraint.activate([
-      
       titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
       titleLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor,constant: -100),
       
@@ -95,10 +94,9 @@ class SignInViewController: UIViewController {
       appleLoginButton.heightAnchor.constraint(equalTo: googleLoginButton.heightAnchor),
       kakaoLoginButton.heightAnchor.constraint(equalTo: googleLoginButton.heightAnchor),
       
-      buttonsStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+      buttonsStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
       buttonsStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
       buttonsStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 10),
-      
     ])
   }
   
