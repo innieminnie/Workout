@@ -32,7 +32,7 @@ class WeekdaysView: UIView {
       weekdayLabel.text = dayName
       weekdayLabel.textColor = .white
       weekdayLabel.textAlignment = .center
-      weekdayLabel.font = .boldSystemFont(ofSize: 15)
+      weekdayLabel.font = UIFont.Pretendard(type: .Medium, size: 15)
       containerStackView.addArrangedSubview(weekdayLabel)
     }
     

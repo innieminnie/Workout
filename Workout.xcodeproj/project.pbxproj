@@ -55,6 +55,14 @@
 		D9D44E482907C1010035B8D0 /* WorkoutInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */; };
 		D9D44E4A2910F9540035B8D0 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E492910F9540035B8D0 /* PaddingLabel.swift */; };
 		D9D44E4C2911F2FE0035B8D0 /* BodySectionCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E4B2911F2FE0035B8D0 /* BodySectionCollectionView.swift */; };
+		D9DA404F2934A04F00DBBEDD /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9DA40472934A04E00DBBEDD /* Pretendard-Thin.otf */; };
+		D9DA40502934A04F00DBBEDD /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9DA40482934A04E00DBBEDD /* Pretendard-Medium.otf */; };
+		D9DA40512934A04F00DBBEDD /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9DA40492934A04E00DBBEDD /* Pretendard-ExtraLight.otf */; };
+		D9DA40522934A04F00DBBEDD /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9DA404A2934A04E00DBBEDD /* Pretendard-Regular.otf */; };
+		D9DA40532934A04F00DBBEDD /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9DA404B2934A04E00DBBEDD /* Pretendard-SemiBold.otf */; };
+		D9DA40542934A04F00DBBEDD /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9DA404C2934A04F00DBBEDD /* Pretendard-Light.otf */; };
+		D9DA40552934A04F00DBBEDD /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9DA404D2934A04F00DBBEDD /* Pretendard-Bold.otf */; };
+		D9DA40562934A04F00DBBEDD /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9DA404E2934A04F00DBBEDD /* Pretendard-ExtraBold.otf */; };
 		D9E09625291DF74C00AE710F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E09624291DF74C00AE710F /* SignInViewController.swift */; };
 		D9E096292922AEBA00AE710F /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E096282922AEBA00AE710F /* AuthenticationManager.swift */; };
 		D9E0962B2923564900AE710F /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E0962A2923564900AE710F /* APIKey.swift */; };
@@ -136,6 +144,14 @@
 		D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutInformationViewController.swift; sourceTree = "<group>"; };
 		D9D44E492910F9540035B8D0 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		D9D44E4B2911F2FE0035B8D0 /* BodySectionCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySectionCollectionView.swift; sourceTree = "<group>"; };
+		D9DA40472934A04E00DBBEDD /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		D9DA40482934A04E00DBBEDD /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		D9DA40492934A04E00DBBEDD /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		D9DA404A2934A04E00DBBEDD /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		D9DA404B2934A04E00DBBEDD /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		D9DA404C2934A04F00DBBEDD /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		D9DA404D2934A04F00DBBEDD /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		D9DA404E2934A04F00DBBEDD /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		D9E09621291DF53F00AE710F /* Workout.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Workout.entitlements; sourceTree = "<group>"; };
 		D9E09624291DF74C00AE710F /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		D9E096282922AEBA00AE710F /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
@@ -217,6 +233,7 @@
 				D9856A00278EA442007E517A /* CustomCells */,
 				D98569E6274D08AF007E517A /* TabBarController */,
 				D98569AF274CBAFB007E517A /* AppDelegate.swift */,
+				D9DA404629349FCA00DBBEDD /* Fonts */,
 				D98569B8274CBAFE007E517A /* Assets.xcassets */,
 				D98569BD274CBAFE007E517A /* Info.plist */,
 				D9C5444D288FCAEF00A73730 /* GoogleService-Info.plist */,
@@ -326,6 +343,21 @@
 				D9107C5F282E593C00FABD37 /* MonthlyPageCollectionView.swift */,
 			);
 			path = CustomCalendar;
+			sourceTree = "<group>";
+		};
+		D9DA404629349FCA00DBBEDD /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D9DA404D2934A04F00DBBEDD /* Pretendard-Bold.otf */,
+				D9DA404E2934A04F00DBBEDD /* Pretendard-ExtraBold.otf */,
+				D9DA40492934A04E00DBBEDD /* Pretendard-ExtraLight.otf */,
+				D9DA404C2934A04F00DBBEDD /* Pretendard-Light.otf */,
+				D9DA40482934A04E00DBBEDD /* Pretendard-Medium.otf */,
+				D9DA404A2934A04E00DBBEDD /* Pretendard-Regular.otf */,
+				D9DA404B2934A04E00DBBEDD /* Pretendard-SemiBold.otf */,
+				D9DA40472934A04E00DBBEDD /* Pretendard-Thin.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		EC923787E737CBCCCCCA25B7 /* Frameworks */ = {
@@ -447,13 +479,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9856A1627C0CBC2007E517A /* CalendarDateCollectionViewCell.xib in Resources */,
+				D9DA40552934A04F00DBBEDD /* Pretendard-Bold.otf in Resources */,
+				D9DA40522934A04F00DBBEDD /* Pretendard-Regular.otf in Resources */,
+				D9DA40502934A04F00DBBEDD /* Pretendard-Medium.otf in Resources */,
+				D9DA40532934A04F00DBBEDD /* Pretendard-SemiBold.otf in Resources */,
 				D9107C5E282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib in Resources */,
 				D92D2418292B14D400031670 /* SettingTableViewCell.xib in Resources */,
+				D9DA404F2934A04F00DBBEDD /* Pretendard-Thin.otf in Resources */,
 				D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */,
 				D9D44E46290692A00035B8D0 /* BodySectionCollectionViewCell.xib in Resources */,
+				D9DA40562934A04F00DBBEDD /* Pretendard-ExtraBold.otf in Resources */,
 				D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */,
 				D9C5444E288FCAEF00A73730 /* GoogleService-Info.plist in Resources */,
+				D9DA40542934A04F00DBBEDD /* Pretendard-Light.otf in Resources */,
 				D9D055E62923760100DC428E /* Launch Screen.storyboard in Resources */,
+				D9DA40512934A04F00DBBEDD /* Pretendard-ExtraLight.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

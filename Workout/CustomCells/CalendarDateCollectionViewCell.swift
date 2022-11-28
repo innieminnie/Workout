@@ -22,14 +22,14 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
         DispatchQueue.main.async {
           self.dateBackgroundView.layer.borderColor = 0xBEC0C2.convertToRGB().cgColor
           self.dateBackgroundView.layer.borderWidth = 4
-          self.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: 17)
+          self.dateNumberLabel.font = UIFont.Pretendard(type: .Bold, size: 17)
         }
       }
       else {
         DispatchQueue.main.async {
           self.dateBackgroundView.layer.borderColor = UIColor.white.cgColor
           self.dateBackgroundView.layer.borderWidth = 4
-          self.dateNumberLabel.font = UIFont.systemFont(ofSize: 15)
+          self.dateNumberLabel.font = UIFont.Pretendard(type: .Regular, size: 15)
         }
       }
       
@@ -55,7 +55,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     self.dateBackgroundView.layer.borderColor = UIColor.clear.cgColor
     self.dateBackgroundView.layer.borderWidth = 0
     self.dateNumberLabel.textColor = .black
-    self.dateNumberLabel.font = UIFont.systemFont(ofSize: 15)
+    self.dateNumberLabel.font = UIFont.Pretendard(type: .Regular, size: 15)
   }
   
   func update(with number: Int, isCurrentMonth: Bool) {

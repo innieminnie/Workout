@@ -17,7 +17,7 @@ class NetworkConfirmViewController: UIViewController {
     label.text = notice
     label.textAlignment = .center
     label.numberOfLines = 0
-    label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+    label.font = UIFont.Pretendard(type: .Bold, size: 20)
     
     return label
   }()
