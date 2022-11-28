@@ -20,39 +20,85 @@ class SignInViewController: UIViewController {
     setUpLoginButtons()
   }
   
+  private lazy var titleLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    label.text = "오늘도 득근득근"
+    label.font = UIFont.Pretendard(type: .ExtraBold, size: 30)
+    
+    return label
+  }()
+  
+  private lazy var logoImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    imageView.contentMode = .scaleAspectFit
+    imageView.image = UIImage(named: "signin_logo")
+    
+    return imageView
+  }()
+  
+  private lazy var buttonsStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    stackView.axis = .vertical
+    stackView.spacing = 5
+    stackView.alignment = .center
+    stackView.distribution = .fillEqually
+    
+    return stackView
+  }()
+
   private func setUpLoginButtons() {
     let appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     appleLoginButton.translatesAutoresizingMaskIntoConstraints = false
     appleLoginButton.addTarget(self, action: #selector(tappedAppleSignInButton), for: .touchUpInside)
-    self.view.addSubview(appleLoginButton)
     
     let googleLoginButton = GIDSignInButton()
     googleLoginButton.translatesAutoresizingMaskIntoConstraints = false
     googleLoginButton.colorScheme = .dark
     googleLoginButton.style = .wide
+    googleLoginButton.backgroundColor = 0x4285F4.convertToRGB()
+    googleLoginButton.layer.cornerRadius = 6
     googleLoginButton.addTarget(self, action: #selector(tappedGoogleSignInButton), for: .touchUpInside)
-    self.view.addSubview(googleLoginButton)
     
     let kakaoLoginButton = UIButton()
     kakaoLoginButton.translatesAutoresizingMaskIntoConstraints = false
     kakaoLoginButton.backgroundColor = 0xFEE500.convertToRGB()
-    
     kakaoLoginButton.setImage(#imageLiteral(resourceName: "kakao_login_large_wide"), for: .normal)
+    kakaoLoginButton.layer.cornerRadius = 6
+    kakaoLoginButton.imageView?.contentMode = .scaleAspectFill
     kakaoLoginButton.addTarget(self, action: #selector(tappedKakaoSignInButton), for: .touchUpInside)
-    self.view.addSubview(kakaoLoginButton)
+    
+    buttonsStackView.addArrangedSubview(appleLoginButton)
+    buttonsStackView.addArrangedSubview(googleLoginButton)
+    buttonsStackView.addArrangedSubview(kakaoLoginButton)
+    
+    self.view.addSubview(titleLabel)
+    self.view.addSubview(buttonsStackView)
+    self.view.addSubview(logoImageView)
     
     NSLayoutConstraint.activate([
-      appleLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-      appleLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-      appleLoginButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
       
-      googleLoginButton.leadingAnchor.constraint(equalTo: appleLoginButton.leadingAnchor),
-      googleLoginButton.trailingAnchor.constraint(equalTo: appleLoginButton.trailingAnchor),
-      googleLoginButton.topAnchor.constraint(equalTo: appleLoginButton.bottomAnchor, constant: 10),
+      titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+      titleLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor,constant: -100),
       
-      kakaoLoginButton.leadingAnchor.constraint(equalTo: appleLoginButton.leadingAnchor),
-      kakaoLoginButton.trailingAnchor.constraint(equalTo: appleLoginButton.trailingAnchor),
-      kakaoLoginButton.topAnchor.constraint(equalTo: googleLoginButton.bottomAnchor, constant: 10),
+      logoImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+      logoImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+      logoImageView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9),
+      
+      appleLoginButton.widthAnchor.constraint(equalTo: googleLoginButton.widthAnchor),
+      kakaoLoginButton.widthAnchor.constraint(equalTo: googleLoginButton.widthAnchor),
+      appleLoginButton.heightAnchor.constraint(equalTo: googleLoginButton.heightAnchor),
+      kakaoLoginButton.heightAnchor.constraint(equalTo: googleLoginButton.heightAnchor),
+      
+      buttonsStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+      buttonsStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
+      buttonsStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 10),
+      
     ])
   }
   
