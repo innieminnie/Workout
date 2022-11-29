@@ -87,19 +87,17 @@ class HomeViewController: UIViewController {
   }
   
   @objc  private func checkRoutineData(_ notification: NSNotification) {
-    guard let userInfo = notification.userInfo else { return }
-    guard let dateInformation = userInfo["date"] as? DateInformation else {
-      if let error = userInfo["error"] as? Error {
+    guard let userInfo = notification.userInfo, let dateInformation = userInfo["date"] as? DateInformation else { return }
+    
+    if selectedDayInformation == dateInformation {
+      if let error = notification.userInfo?["error"] as? Error {
         let alert = UIAlertController(title: "\(error)\n데이터 읽기에 실패했어요.\n잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
         alert.addAction(action)
         self.present(alert, animated: false, completion: nil)
         return
       }
-      return
-    }
-    
-    if selectedDayInformation == dateInformation {
+      
       DispatchQueue.main.async {
         self.routineTableView.reloadData()
       }

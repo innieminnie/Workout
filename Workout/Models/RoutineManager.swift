@@ -28,7 +28,9 @@ class RoutineManager {
     
     itemRef.getData { error, snapshot in
       if let error = error {
-        NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
+        DispatchQueue.main.async {
+          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
+        }
       } else if snapshot.exists() {
         guard let jsonValue = snapshot.value as? [String: Any] else {
           return
@@ -47,13 +49,18 @@ class RoutineManager {
           
           self.workoutPlanner[dateInformation] = dailyRoutine
           
-          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine, "date": dateInformation])
-          
+          DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine, "date": dateInformation])
+          }
         } catch {
-          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
+          DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
+          }
         }
       } else {
-        NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": [], "date": dateInformation])
+        DispatchQueue.main.async {
+          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": [], "date": dateInformation])
+        }
       }
     }
   }
@@ -153,7 +160,7 @@ class RoutineManager {
     if let currentUser = currentUser {
       return self.ref.child("users/\(currentUser.uid)/routine/\(dateInfo)")
     }
-      
+    
     return self.ref.child("users/\(HomeViewController.signedUpUser)/routine/\(dateInfo)")
   }
 }
