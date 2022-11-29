@@ -20,12 +20,24 @@ class SignInViewController: UIViewController {
     setUpLoginButtons()
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    UIView.animate(withDuration: 2) {
+      self.titleLabel.alpha = 1
+    } completion: { finished in
+      UIView.animate(withDuration: 1) {
+        self.buttonsStackView.alpha = 1
+      }
+    }
+  }
+  
+  
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     
     label.text = "오늘도 득근득근"
     label.font = UIFont.Pretendard(type: .ExtraBold, size: 30)
+    label.alpha = 0
     
     return label
   }()
@@ -48,10 +60,11 @@ class SignInViewController: UIViewController {
     stackView.spacing = 5
     stackView.alignment = .center
     stackView.distribution = .fillEqually
+    stackView.alpha = 0
     
     return stackView
   }()
-
+  
   private func setUpLoginButtons() {
     let appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     appleLoginButton.translatesAutoresizingMaskIntoConstraints = false
@@ -83,10 +96,10 @@ class SignInViewController: UIViewController {
     
     NSLayoutConstraint.activate([
       titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      titleLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor,constant: -100),
+      titleLabel.bottomAnchor.constraint(equalTo: logoImageView.topAnchor),
       
       logoImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      logoImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+      logoImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
       logoImageView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9),
       
       appleLoginButton.widthAnchor.constraint(equalTo: googleLoginButton.widthAnchor),
