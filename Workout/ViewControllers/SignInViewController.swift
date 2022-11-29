@@ -22,25 +22,9 @@ class SignInViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     UIView.animate(withDuration: 2) {
-      self.titleLabel.alpha = 1
-    } completion: { finished in
-      UIView.animate(withDuration: 1) {
-        self.buttonsStackView.alpha = 1
-      }
+      self.buttonsStackView.alpha = 1
     }
   }
-  
-  
-  private lazy var titleLabel: UILabel = {
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    
-    label.text = "오늘도 득근득근"
-    label.font = UIFont.Pretendard(type: .ExtraBold, size: 30)
-    label.alpha = 0
-    
-    return label
-  }()
   
   private lazy var logoImageView: UIImageView = {
     let imageView = UIImageView()
@@ -90,14 +74,10 @@ class SignInViewController: UIViewController {
     buttonsStackView.addArrangedSubview(googleLoginButton)
     buttonsStackView.addArrangedSubview(kakaoLoginButton)
     
-    self.view.addSubview(titleLabel)
     self.view.addSubview(buttonsStackView)
     self.view.addSubview(logoImageView)
     
     NSLayoutConstraint.activate([
-      titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      titleLabel.bottomAnchor.constraint(equalTo: logoImageView.topAnchor),
-      
       logoImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
       logoImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
       logoImageView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9),

@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="signin_logo" translatesAutoresizingMaskIntoConstraints="NO" id="8kE-0E-n6r">
-                                <rect key="frame" x="20.5" y="389" width="373" height="118.5"/>
+                                <rect key="frame" x="20.5" y="373" width="373" height="150"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
@@ -34,6 +34,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="signin_logo" width="639.5" height="118.5"/>
+        <image name="signin_logo" width="645" height="150"/>
     </resources>
 </document>
