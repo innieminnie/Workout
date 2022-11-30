@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D98569AB274CBAFB007E517A"
                BuildableName = "Workout.app"
-               BlueprintName = "Workout"
+               BlueprintName = "pitapatpumping"
                ReferencedContainer = "container:Workout.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -66,7 +66,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D98569AB274CBAFB007E517A"
             BuildableName = "Workout.app"
-            BlueprintName = "Workout"
+            BlueprintName = "pitapatpumping"
             ReferencedContainer = "container:Workout.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -83,7 +83,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D98569AB274CBAFB007E517A"
             BuildableName = "Workout.app"
-            BlueprintName = "Workout"
+            BlueprintName = "pitapatpumping"
             ReferencedContainer = "container:Workout.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
