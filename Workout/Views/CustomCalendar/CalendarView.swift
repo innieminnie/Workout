@@ -55,7 +55,7 @@ class CalendarView: UIView {
   }()
   
   private let weekdaysView = WeekdaysView()
-
+  
   private let monthlyPageCollectionView = MonthlyPageCollectionView()
   
   private var selectedCell: CalendarDateCollectionViewCell?
@@ -119,16 +119,38 @@ class CalendarView: UIView {
     displayingMonthInformation.changeToNextMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
     delegate?.changedSelectedDay(to: nil)
-    monthlyPageCollectionView.reloadData()
-    monthlyPageCollectionView.layoutIfNeeded()
+    
+    DispatchQueue.main.async {
+      UIView.animate(withDuration: 0.5) {
+        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: self.bounds.width, y: 0)
+        self.monthlyPageCollectionView.alpha = 0
+      } completion: { _ in
+        self.monthlyPageCollectionView.reloadData()
+        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: 0, y: 0)
+        UIView.animate(withDuration: 0.3) {
+          self.monthlyPageCollectionView.alpha = 1
+        }
+      }
+    }
   }
   
   @objc func tappedLastMonthButton(sender: UIButton) {
     displayingMonthInformation.changeToLastMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
     delegate?.changedSelectedDay(to: nil)
-    monthlyPageCollectionView.reloadData()
-    monthlyPageCollectionView.layoutIfNeeded()
+    
+    DispatchQueue.main.async {
+      UIView.animate(withDuration: 0.5) {
+        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: -self.bounds.width, y: 0)
+        self.monthlyPageCollectionView.alpha = 0
+      } completion: { _ in
+        self.monthlyPageCollectionView.reloadData()
+        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: 0, y: 0)
+        UIView.animate(withDuration: 0.3) {
+          self.monthlyPageCollectionView.alpha = 1
+        }
+      }
+    }
   }
   
   @objc private func cellTapped(gesture: CaledarDateTapGesture) {
