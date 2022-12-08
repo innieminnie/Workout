@@ -36,6 +36,8 @@ class MonthlyPageCollectionView: UICollectionView {
     self.showsHorizontalScrollIndicator = false
     self.showsVerticalScrollIndicator = false
     self.allowsMultipleSelection = false
+    
+    
   }
   
   required init?(coder: NSCoder) {

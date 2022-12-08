@@ -24,7 +24,7 @@ class CalendarView: UIView {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
-    button.addTarget(self, action: #selector(tappedNextMonthButton(sender:)), for: .touchUpInside)
+    button.addTarget(self, action: #selector(tappedNextMonthButton), for: .touchUpInside)
     button.setTitle(">", for: .normal)
     button.setTitleColor(.black, for: .normal)
     button.titleLabel?.font = UIFont.Pretendard(type: .Bold, size: 20)
@@ -36,7 +36,7 @@ class CalendarView: UIView {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
-    button.addTarget(self, action: #selector(tappedLastMonthButton(sender:)), for: .touchUpInside)
+    button.addTarget(self, action: #selector(tappedLastMonthButton), for: .touchUpInside)
     button.setTitle("<", for: .normal)
     button.setTitleColor(.black, for: .normal)
     button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 20)
@@ -76,6 +76,8 @@ class CalendarView: UIView {
     monthlyPageCollectionView.dataSource = self
     monthlyPageCollectionView.delegate = self
     
+    configureSwipeGestures()
+
     NSLayoutConstraint.activate([
       currentMonthLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       currentMonthLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -103,6 +105,16 @@ class CalendarView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
+  private func configureSwipeGestures() {
+    let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(tappedLastMonthButton))
+    swipeRightGestureRecognizer.direction = .right
+    self.addGestureRecognizer(swipeRightGestureRecognizer)
+    
+    let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(tappedNextMonthButton))
+    swipeLeftGestureRecognizer.direction = .left
+    self.addGestureRecognizer(swipeLeftGestureRecognizer)
+  }
+  
   func updateSelectedCell() {
     if let selectedCell = selectedCell {
       selectedCell.updateStatus()
@@ -115,14 +127,14 @@ class CalendarView: UIView {
     }
   }
   
-  @objc func tappedNextMonthButton(sender: UIButton) {
+  @objc private func tappedNextMonthButton() {
     displayingMonthInformation.changeToNextMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
     delegate?.changedSelectedDay(to: nil)
     
     DispatchQueue.main.async {
       UIView.animate(withDuration: 0.5) {
-        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: self.bounds.width, y: 0)
+        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: -self.bounds.width, y: 0)
         self.monthlyPageCollectionView.alpha = 0
       } completion: { _ in
         self.monthlyPageCollectionView.reloadData()
@@ -134,14 +146,14 @@ class CalendarView: UIView {
     }
   }
   
-  @objc func tappedLastMonthButton(sender: UIButton) {
+  @objc private func tappedLastMonthButton() {
     displayingMonthInformation.changeToLastMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
     delegate?.changedSelectedDay(to: nil)
     
     DispatchQueue.main.async {
       UIView.animate(withDuration: 0.5) {
-        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: -self.bounds.width, y: 0)
+        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: self.bounds.width, y: 0)
         self.monthlyPageCollectionView.alpha = 0
       } completion: { _ in
         self.monthlyPageCollectionView.reloadData()
