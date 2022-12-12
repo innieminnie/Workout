@@ -22,6 +22,18 @@ extension UIView {
   }
 }
 extension UIButton {
+  func configureDisableMode(title: String) {
+    self.isEnabled = false
+    self.customizeConfiguration(with: title, foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .medium)
+    self.backgroundColor = 0xBEC0C2.convertToRGB()
+  }
+  
+  func configureAbleMode(title: String) {
+    self.isEnabled = true
+    self.customizeConfiguration(with: title, foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .medium)
+    self.backgroundColor = 0x096DB6.convertToRGB()
+  }
+  
   func customizeConfiguration(with title: String, foregroundColor: UIColor, font: UIFont, buttonSize: UIButton.Configuration.Size ) {
     var customizeConfiguration = UIButton.Configuration.plain()
     customizeConfiguration.title = title
