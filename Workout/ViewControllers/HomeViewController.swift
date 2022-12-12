@@ -55,11 +55,10 @@ class HomeViewController: UIViewController {
     view.addSubview(contentScrollView)
     
     contentScrollView.addSubview(calendarView)
-    calendarView.delegate = self
-    
     contentScrollView.addSubview(addRoutineButton)
-    
     contentScrollView.addSubview(routineTableView)
+    
+    calendarView.delegate = self
     routineTableView.delegate = self
     routineTableView.dataSource = self
     routineTableView.dragInteractionEnabled = true
@@ -149,6 +148,13 @@ class HomeViewController: UIViewController {
     }
   }
   
+  private func updateTableView() {
+    routineTableView.beginUpdates()
+    routineTableView.endUpdates()
+  }
+}
+
+extension HomeViewController {
   private func configureNotification() {
     NotificationCenter.default.addObserver(self, selector: #selector(trackTappedTextField), name: NSNotification.Name("TappedTextField"), object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
@@ -197,13 +203,8 @@ class HomeViewController: UIViewController {
       routineTableView.topAnchor.constraint(equalTo: addRoutineButton.bottomAnchor, constant: 10),
       routineTableView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor),
       routineTableView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor),
-      routineTableView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -10),
+      routineTableView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -50),
     ])
-  }
-  
-  private func updateTableView() {
-    routineTableView.beginUpdates()
-    routineTableView.endUpdates()
   }
 }
 extension HomeViewController: RoutineSelectionDelegate {
@@ -218,8 +219,14 @@ extension HomeViewController: RoutineSelectionDelegate {
     routineManager.addPlan(with: newPlannedWorkouts, on: selectedDayInformation)
     calendarView.updateSelectedCell()
     
-    routineTableView.reloadData()
+    routineTableView.beginUpdates()
+    for i in plannedWorkoutNumber..<routineManager.plan(of: selectedDayInformation).count {
+      self.routineTableView.insertRows(at: [IndexPath(item: i, section: 0)], with: .right)
+    }
     routineTableView.layoutIfNeeded()
+    routineTableView.endUpdates()
+    
+    contentScrollView.scrollToBottom()
   }
 }
 extension HomeViewController: UITableViewDataSource {
