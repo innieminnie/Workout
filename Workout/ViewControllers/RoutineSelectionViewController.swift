@@ -26,11 +26,9 @@ class RoutineSelectionViewController: UIViewController {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
-    button.customizeConfiguration(with: "선택한 운동을 추가할게요", foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .medium)
-    button.backgroundColor = 0xBEC0C2.convertToRGB()
+    button.configureDisableMode(title: "선택한 운동을 추가할게요")
     button.applyCornerRadius(24)
     button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
-    button.isEnabled = false
     
     return button
   }()
