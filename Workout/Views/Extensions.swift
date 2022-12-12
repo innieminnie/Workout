@@ -103,3 +103,13 @@ extension UIFont {
     }
   }
 }
+extension UIScrollView {
+   func scrollToBottom() {
+     if self.contentSize.height < self.bounds.size.height { return }
+     
+     let bottomOffset = CGPoint(x: 0, y: self.contentSize.height)
+     UIView.animate(withDuration: 2) {
+       self.setContentOffset(bottomOffset, animated: false)
+     }
+  }
+}
