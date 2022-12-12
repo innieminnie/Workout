@@ -119,8 +119,9 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedDoneButton(sender: UIButton) {
-    guard let currentWorkout = self.currentWorkout else { return }
+    NotificationCenter.default.post(name: NSNotification.Name("CheckKeyboard"), object: nil)
     
+    guard let currentWorkout = self.currentWorkout else { return }
     switch currentWorkout.isDone {
     case .doing:
       for workoutSetView in setStackView.arrangedSubviews {
@@ -167,7 +168,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedPlusSetButton(sender: UIButton) {
-    resignFirstResponder()
+    NotificationCenter.default.post(name: NSNotification.Name("CheckKeyboard"), object: nil)
     guard let currentWorkout = self.currentWorkout else {
       return
     }
@@ -188,7 +189,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
   }
   
   @objc func tappedMinusSetButton(sender: UIButton) {
-    resignFirstResponder()
+    NotificationCenter.default.post(name: NSNotification.Name("CheckKeyboard"), object: nil)
     guard let currentWorkout = self.currentWorkout, let lastSet = setStackView.arrangedSubviews.last as? WorkoutSetConfigurationView else {
       return
     }

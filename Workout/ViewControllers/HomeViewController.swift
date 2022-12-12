@@ -11,7 +11,7 @@ import FirebaseAuth
 class HomeViewController: UIViewController {
   static var signedUpUser = String()
   
-  var selectedDayInformation: DateInformation? = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
+  private var selectedDayInformation: DateInformation? = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
       if selectedDayInformation == nil {
         addRoutineButton.configureDisableMode(title: "등록 날짜를 먼저 선택해주세요")
@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
   
   private let routineTableView = RoutineTableView()
   
-  private weak var editableField: UITextField?
+  private var editableField: UITextField?
   private var handle: AuthStateDidChangeListenerHandle?
   
   override func viewDidLoad() {
@@ -154,6 +154,7 @@ class HomeViewController: UIViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(self.checkRoutineData(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(self.updateCalendar(_:)), name: Notification.Name("ReadWorkoutData"), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: Notification.Name("CheckKeyboard"), object: nil)
   }
   
   private func configureGestureRecognizer() {
