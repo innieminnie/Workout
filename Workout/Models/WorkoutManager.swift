@@ -16,7 +16,7 @@ class WorkoutManager {
   private var workoutCodeDictionary = [String: Workout]()
   private var uid: String {
     if let currentUser = currentUser { return currentUser.uid }
-    else { return HomeViewController.signedUpUser }
+    else { return AuthenticationManager.signedUpUser }
   }
   
   private init() { }

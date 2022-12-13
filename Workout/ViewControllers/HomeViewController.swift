@@ -9,8 +9,6 @@ import UIKit
 import FirebaseAuth
 
 class HomeViewController: UIViewController {
-  static var signedUpUser = String()
-  
   private var selectedDayInformation: DateInformation? = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
     didSet {
       if selectedDayInformation == nil {
@@ -292,7 +290,7 @@ extension HomeViewController {
       AuthenticationManager.shared.setAccountInformation(email)
       
       if currentUser == nil {
-        HomeViewController.signedUpUser = user.uid
+        AuthenticationManager.signedUpUser = user.uid
       }
       
       workoutManager.readWorkoutData()
