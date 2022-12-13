@@ -163,7 +163,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     }
     
     guard let currentDateInformation = delegate?.currentDateInformation() else { return }
-    routineManager.updateRoutine(workout: currentWorkout, on: currentDateInformation)
+    routineManager.updatePlan(with: [currentWorkout], on: currentDateInformation)
     setButtonStackView.isHidden = currentWorkout.isDone.rawValue
   }
   
@@ -185,7 +185,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     currentWorkout.addNewSet(with: newSetConfiguration)
     setSumLabel.text = String(format: "%0.3f", currentWorkout.totalSum)
     guard let currentDateInformation = delegate?.currentDateInformation() else { return }
-    routineManager.updateRoutine(workout: currentWorkout, on: currentDateInformation)
+    routineManager.updatePlan(with: [currentWorkout], on: currentDateInformation)
   }
   
   @objc func tappedMinusSetButton(sender: UIButton) {
@@ -197,7 +197,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     lastSet.resetWeightAndCountValues()
     currentWorkout.removeSet(of: setStackView.arrangedSubviews.count - 1)
     guard let currentDateInformation = delegate?.currentDateInformation() else { return }
-    routineManager.updateRoutine(workout: currentWorkout, on: currentDateInformation)
+    routineManager.updatePlan(with: [currentWorkout], on: currentDateInformation)
     
     setStackView.removeArrangedSubview(lastSet)
     if setStackView.arrangedSubviews.isEmpty { doneButton.isEnabled = false }
@@ -214,7 +214,7 @@ extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
     currentWorkout.updateWeight(of: index, to: newValue )
     
     guard let currentDateInformation = delegate?.currentDateInformation() else { return }
-    routineManager.updateRoutine(workout: currentWorkout, on: currentDateInformation)
+    routineManager.updatePlan(with: [currentWorkout], on: currentDateInformation)
   }
   
   func countValueUpdated(to newValue: UInt, of index: Int) {
@@ -225,7 +225,7 @@ extension WorkoutPlanCardTableViewCell: WorkoutSetConfigurationViewDelegate {
     currentWorkout.updateCount(of: index, to: newValue )
     
     guard let currentDateInformation = delegate?.currentDateInformation() else { return }
-    routineManager.updateRoutine(workout: currentWorkout, on: currentDateInformation)
+    routineManager.updatePlan(with: [currentWorkout], on: currentDateInformation)
   }
   
   func setSumUpdated(from oldValue: Float, to newValue: Float) {

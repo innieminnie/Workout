@@ -23,7 +23,11 @@ class NetworkManager {
   func workoutReference() -> DatabaseReference {
     return ref.child("users/\(self.uid)/workout")
   }
-
+  
+  func routineReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
+    return self.ref.child("users/\(self.uid)/routine/\(dateInfo)")
+  }
+  
   func updateWorkoutData(workout: Workout, key: String) {
     do {
       let data = try self.encoder.encode(workout)
@@ -46,6 +50,39 @@ class NetworkManager {
       print(error)
     }
   }
+  
+  func addRoutineData(workouts: [PlannedWorkout], on dateInformation: DateInformation) {
+    let itemRef = self.routineReference(dateInformation: dateInformation)
+    
+    for workout in workouts {
+      do {
+        guard let key = itemRef.childByAutoId().key else { return }
+        
+        workout.id = key
+        let data = try encoder.encode(workout)
+        let json = try JSONSerialization.jsonObject(with: data)
+        
+        let childUpdates = ["/users/\(self.uid)/routine/\(dateInformation)/\(key)/": json]
+        self.ref.updateChildValues(childUpdates)
+      } catch {
+        print(error)
+      }
+    }
+  }
+  
+  func updateRoutineData(workout: PlannedWorkout, on dateInformation: DateInformation) {
+    do {
+      guard let id = workout.id else { return }
+      let data = try encoder.encode(workout)
+      let json = try JSONSerialization.jsonObject(with: data)
+      
+      let childUpdates = ["/users/\(self.uid)/routine/\(dateInformation)/\(id)/": json]
+      ref.updateChildValues(childUpdates)
+    } catch {
+      print(error)
+    }
+  }
+  
 }
 
 let networkManager = NetworkManager.shared
