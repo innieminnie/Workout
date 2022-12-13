@@ -16,6 +16,7 @@ import AuthenticationServices
 class AuthenticationManager {
   static let shared = AuthenticationManager()
   static let user = Auth.auth().currentUser
+  static var signedUpUser = String()
   static var userEmail = ""
   
   private init() { }
