@@ -11,20 +11,12 @@ import FirebaseDatabase
 class RoutineManager {
   static let shared = RoutineManager()
   private var workoutPlanner: [DateInformation : [PlannedWorkout]]
-  private let ref: DatabaseReference! = Database.database().reference()
-  private let encoder = JSONEncoder()
-  private let decoder = JSONDecoder()
-  private var uid: String {
-    if let currentUser = currentUser { return currentUser.uid }
-    else { return AuthenticationManager.signedUpUser }
-  }
-  
   private init() {
     workoutPlanner = [:]
   }
   
   func readRoutineData(from dateInformation: DateInformation) {
-    let itemRef = configureRoutineDatabaseReference(dateInformation: dateInformation)
+    let itemRef = networkManager.routineReference(dateInformation: dateInformation)
     
     itemRef.getData { error, snapshot in
       if let error = error {
@@ -38,7 +30,7 @@ class RoutineManager {
         
         do {
           let data = try JSONSerialization.data(withJSONObject: jsonValue)
-          let decodedRoutine = try self.decoder.decode([String : PlannedWorkout].self, from: data)
+          let decodedRoutine = try NetworkManager.decoder.decode([String : PlannedWorkout].self, from: data)
           
           let dailyRoutine = decodedRoutine.map { (key: String, value: PlannedWorkout) -> PlannedWorkout in
             value.setId(with: key)
@@ -70,24 +62,8 @@ class RoutineManager {
   }
   
   func addPlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
-    let itemRef = configureRoutineDatabaseReference(dateInformation: dateInformation)
-    
-    for workout in workouts {
-      do {
-        guard let key = itemRef.childByAutoId().key else { return }
-        
-        workout.id = key
-        let data = try encoder.encode(workout)
-        let json = try JSONSerialization.jsonObject(with: data)
-        
-        let childUpdates = ["/users/\(uid)/routine/\(dateInformation)/\(key)/": json]
-        self.ref.updateChildValues(childUpdates)
-      } catch {
-        print(error)
-      }
-    }
-    
     workoutPlanner[dateInformation] =  plan(of: dateInformation) + workouts
+    networkManager.addRoutineData(workouts: workouts, on: dateInformation)
   }
   
   func reorderPlan(on date: DateInformation, removeAt removingPosition: Int, insertAt insertingPosition: Int) {
@@ -106,20 +82,7 @@ class RoutineManager {
     
     for (idx, workout) in workouts.enumerated() {
       workout.sequenceNumber = UInt(idx)
-      self.updateRoutine(workout: workout, on: dateInformation)
-    }
-  }
-  
-  func updateRoutine(workout: PlannedWorkout, on dateInformation: DateInformation) {
-    do {
-      guard let id = workout.id else { return }
-      let data = try encoder.encode(workout)
-      let json = try JSONSerialization.jsonObject(with: data)
-      
-      let childUpdates = ["/users/\(uid)/routine/\(dateInformation)/\(id)/": json]
-      ref.updateChildValues(childUpdates)
-    } catch {
-      print(error)
+      networkManager.updateRoutineData(workout: workout, on: dateInformation)
     }
   }
   
@@ -130,7 +93,7 @@ class RoutineManager {
     workoutPlanner[dateInformation] = reorderingPlan
     
     guard let id = removingWorkout.id else { return }
-    let itemRef = configureRoutineDatabaseReference(dateInformation: dateInformation)
+    let itemRef = networkManager.routineReference(dateInformation: dateInformation)
     itemRef.child("/\(id)").removeValue()
     
     self.updatePlan(with: reorderingPlan, on: dateInformation)
@@ -144,7 +107,7 @@ class RoutineManager {
       if reorderingPlan[index].workoutCode == workoutCode { removingPosition.append(index) }
     }
     
-    let itemRef = configureRoutineDatabaseReference(dateInformation: date)
+    let itemRef = networkManager.routineReference(dateInformation: date)
     
     for removingIndex in removingPosition {
       guard let removingID = reorderingPlan[removingIndex].id else { continue }
@@ -154,14 +117,6 @@ class RoutineManager {
     
     workoutPlanner[date] = reorderingPlan
     self.updatePlan(with: reorderingPlan, on: date)
-  }
-  
-  private func configureRoutineDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
-    if let currentUser = currentUser {
-      return self.ref.child("users/\(currentUser.uid)/routine/\(dateInfo)")
-    }
-    
-    return self.ref.child("users/\(AuthenticationManager.signedUpUser)/routine/\(dateInfo)")
   }
 }
 
