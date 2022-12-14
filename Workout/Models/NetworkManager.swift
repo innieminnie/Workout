@@ -28,13 +28,42 @@ class NetworkManager {
     return self.ref.child("users/\(self.uid)/routine/\(dateInfo)")
   }
   
+  func fetchWorkoutData(completion: @escaping ([String: Workout]?, Error?) -> Void) {
+    let itemRef = self.workoutReference()
+    itemRef.getData { error, snapshot in
+      if let error = error {
+        completion(nil, error)
+      } else if snapshot.exists() {
+        guard let jsonValue = snapshot.value as? [String: Any] else {
+          return
+        }
+        
+        do {
+          let data = try JSONSerialization.data(withJSONObject: jsonValue)
+          let workoutDictionary = try NetworkManager.decoder.decode([String : Workout].self, from: data)
+          completion(workoutDictionary, nil)
+        } catch {
+          completion(nil, error)
+        }
+        
+        completion(nil, error)
+      }
+    }
+  }
+  
+  func createWorkoutId (workout: Workout, completion: @escaping (String) -> Void) {
+    let itemRef = self.workoutReference()
+    if let key = itemRef.childByAutoId().key {
+     completion(key)
+    }
+  }
+  
   func updateWorkoutData(workout: Workout, key: String) {
     do {
       let data = try self.encoder.encode(workout)
       let json = try JSONSerialization.jsonObject(with: data)
       let childUpdates = ["/users/\(self.uid)/workout/\(key)/": json]
       self.ref.updateChildValues(childUpdates)
-      
     } catch {
       print(error)
     }
@@ -48,6 +77,13 @@ class NetworkManager {
       self.ref.updateChildValues(childUpdates)
     } catch {
       print(error)
+    }
+  }
+  
+  func removeWorkoutData(workout: Workout) {
+    if let workoutCode = workout.id {
+      let itemRef = self.workoutReference()
+      itemRef.child("/\(workoutCode)").removeValue()
     }
   }
   
