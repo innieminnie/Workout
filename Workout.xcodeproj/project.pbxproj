@@ -10,7 +10,8 @@
 		4A6CEB5081AB1E5A2834EF3D /* Pods_WorkoutTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C91FA5CF04E0FEEAEACA381 /* Pods_WorkoutTests.framework */; };
 		4C3988A463A1F982733EE8DF /* Pods_Workout_WorkoutUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDBD3D5358DED387EC7D5D6 /* Pods_Workout_WorkoutUITests.framework */; };
 		888A3D77AF8FFADA94784FD7 /* Pods_Workout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A28C81A3BC9D5256A166A164 /* Pods_Workout.framework */; };
-		D90B7DFC2948AAB60003B3CA /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90B7DFB2948AAB60003B3CA /* NetworkManager.swift */; };
+		D90B7DFE294A1C760003B3CA /* WorkoutNetworkConnecter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90B7DFD294A1C760003B3CA /* WorkoutNetworkConnecter.swift */; };
+		D90B7E00294A1DC70003B3CA /* RoutineNetworkConnecter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90B7DFF294A1DC70003B3CA /* RoutineNetworkConnecter.swift */; };
 		D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C5527F030B800FABD37 /* DateInformation.swift */; };
 		D9107C582810045200FABD37 /* RoutineSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */; };
 		D9107C5D282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C5B282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift */; };
@@ -95,7 +96,8 @@
 		9C91FA5CF04E0FEEAEACA381 /* Pods_WorkoutTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkoutTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A28C81A3BC9D5256A166A164 /* Pods_Workout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Workout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDBD3D5358DED387EC7D5D6 /* Pods_Workout_WorkoutUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Workout_WorkoutUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D90B7DFB2948AAB60003B3CA /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		D90B7DFD294A1C760003B3CA /* WorkoutNetworkConnecter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutNetworkConnecter.swift; sourceTree = "<group>"; };
+		D90B7DFF294A1DC70003B3CA /* RoutineNetworkConnecter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineNetworkConnecter.swift; sourceTree = "<group>"; };
 		D9107C5527F030B800FABD37 /* DateInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInformation.swift; sourceTree = "<group>"; };
 		D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSelectionViewController.swift; sourceTree = "<group>"; };
 		D9107C5B282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPlanCardTableViewCell.swift; sourceTree = "<group>"; };
@@ -313,9 +315,10 @@
 				D9958721287CFFFD0093E024 /* SetConfiguration.swift */,
 				D995872728894F500093E024 /* WorkoutStatus.swift */,
 				D9E096282922AEBA00AE710F /* AuthenticationManager.swift */,
-				D90B7DFB2948AAB60003B3CA /* NetworkManager.swift */,
 				D98569F6275F717B007E517A /* WorkoutManager.swift */,
+				D90B7DFD294A1C760003B3CA /* WorkoutNetworkConnecter.swift */,
 				D9958717286153250093E024 /* RoutineManager.swift */,
+				D90B7DFF294A1DC70003B3CA /* RoutineNetworkConnecter.swift */,
 				D926672E27D1016F00A30366 /* MonthlyInformation.swift */,
 				D9107C5527F030B800FABD37 /* DateInformation.swift */,
 				D995871B286571BD0093E024 /* Weekday.swift */,
@@ -633,11 +636,12 @@
 				D9958718286153250093E024 /* RoutineManager.swift in Sources */,
 				D9D44E482907C1010035B8D0 /* WorkoutInformationViewController.swift in Sources */,
 				D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */,
-				D90B7DFC2948AAB60003B3CA /* NetworkManager.swift in Sources */,
 				D9856A1527C0CBC2007E517A /* CalendarDateCollectionViewCell.swift in Sources */,
 				D9D44E4C2911F2FE0035B8D0 /* BodySectionCollectionView.swift in Sources */,
+				D90B7DFE294A1C760003B3CA /* WorkoutNetworkConnecter.swift in Sources */,
 				D92D2412292B0BC400031670 /* SettingViewController.swift in Sources */,
 				D9D44E4A2910F9540035B8D0 /* PaddingLabel.swift in Sources */,
+				D90B7E00294A1DC70003B3CA /* RoutineNetworkConnecter.swift in Sources */,
 				D9107C582810045200FABD37 /* RoutineSelectionViewController.swift in Sources */,
 				D9107C5D282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift in Sources */,
 				D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */,

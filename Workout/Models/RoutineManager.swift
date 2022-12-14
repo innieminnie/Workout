@@ -6,17 +6,18 @@
 //
 
 import Foundation
-import FirebaseDatabase
 
 class RoutineManager {
   static let shared = RoutineManager()
+  
+  private let networkConnecter = RoutineNetworkConnecter()
   private var workoutPlanner: [DateInformation : [PlannedWorkout]]
   private init() {
     workoutPlanner = [:]
   }
   
   func readRoutineData(from dateInformation: DateInformation) {
-    networkManager.fetchRoutineData(dateInformation: dateInformation) { decodedRoutine, error in
+    networkConnecter.fetchRoutineData(dateInformation: dateInformation) { decodedRoutine, error in
       if let error = error {
         NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
         return
@@ -47,7 +48,7 @@ class RoutineManager {
   
   func addPlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
     workoutPlanner[dateInformation] =  plan(of: dateInformation) + workouts
-    networkManager.addRoutineData(workouts: workouts, on: dateInformation)
+    networkConnecter.addRoutineData(workouts: workouts, on: dateInformation)
   }
   
   func reorderPlan(on date: DateInformation, removeAt removingPosition: Int, insertAt insertingPosition: Int) {
@@ -66,7 +67,7 @@ class RoutineManager {
     
     for (idx, workout) in workouts.enumerated() {
       workout.sequenceNumber = UInt(idx)
-      networkManager.updateRoutineData(workout: workout, on: dateInformation)
+      networkConnecter.updateRoutineData(workout: workout, on: dateInformation)
     }
   }
   
@@ -76,7 +77,7 @@ class RoutineManager {
     reorderingPlan.remove(at: removingPosition)
     workoutPlanner[dateInformation] = reorderingPlan
     guard let id = removingWorkout.id else { return }
-    networkManager.removeRoutineData(id: id, on: dateInformation)
+    networkConnecter.removeRoutineData(id: id, on: dateInformation)
     self.updatePlan(with: reorderingPlan, on: dateInformation)
   }
   
@@ -88,7 +89,7 @@ class RoutineManager {
       if reorderingPlan[index].workoutCode == workoutCode { removingPosition.append(index) }
     }
     
-    let itemRef = networkManager.routineReference(dateInformation: date)
+    let itemRef = networkConnecter.routineReference(dateInformation: date)
     
     for removingIndex in removingPosition {
       guard let removingID = reorderingPlan[removingIndex].id else { continue }

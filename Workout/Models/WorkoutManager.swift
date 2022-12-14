@@ -6,16 +6,17 @@
 //
 
 import Foundation
-import FirebaseDatabase
 
 class WorkoutManager {
   static let shared = WorkoutManager()
+  
+  private let networkConnecter = WorkoutNetworkConnecter()
   private var workoutCodeDictionary = [String: Workout]()
   
   private init() { }
   
   func readWorkoutData() {
-    networkManager.fetchWorkoutData { workoutDictionary, error in
+    networkConnecter.fetchWorkoutData { workoutDictionary, error in
       if let error = error {
         NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
         return
@@ -36,10 +37,10 @@ class WorkoutManager {
   }
   
   func register(workout: Workout) {
-    networkManager.createWorkoutId(workout: workout) { key in
+    networkConnecter.createWorkoutId(workout: workout) { key in
       workout.configureId(with: key)
       self.workoutCodeDictionary[key] = workout
-      networkManager.updateWorkoutData(workout: workout, key: key)
+      self.networkConnecter.updateWorkoutData(workout: workout, key: key)
     }
   }
   
@@ -58,18 +59,18 @@ class WorkoutManager {
     if let removingCode = workout.id {
       workoutCodeDictionary[removingCode] = nil
       workout.removeRegisteredRoutine()
-      networkManager.removeWorkoutData(workout: workout)
+      networkConnecter.removeWorkoutData(workout: workout)
     }
   }
   
   func updateWorkout(_ code: String, _ name: String, _ weightUnit: WeightUnit, _ bodySection: BodySection) {
     guard let updatingWorkout = workoutCodeDictionary[code] else { return }
     updatingWorkout.update(name, bodySection, weightUnit)
-    networkManager.updateWorkoutData(workout: updatingWorkout, key: code)
+    networkConnecter.updateWorkoutData(workout: updatingWorkout, key: code)
   }
   
   func updateWorkoutRegistration(_ code: String, _ registeredDate: Set<DateInformation>) {
-    networkManager.updateWorkoutRegistrationDate(code: code, date: registeredDate)
+    networkConnecter.updateWorkoutRegistrationDate(code: code, date: registeredDate)
   }
   
   func checkNameValidation(_ previousName: String, _ name: String) -> Bool {
