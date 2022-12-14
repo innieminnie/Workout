@@ -11,31 +11,22 @@ import FirebaseDatabase
 class WorkoutManager {
   static let shared = WorkoutManager()
   private var workoutCodeDictionary = [String: Workout]()
-  private var itemRef: DatabaseReference { networkManager.workoutReference() }
   
   private init() { }
   
   func readWorkoutData() {
-    itemRef.getData { error, snapshot in
+    networkManager.fetchWorkoutData { workoutDictionary, error in
       if let error = error {
         NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
-      } else if snapshot.exists() {
-        guard let jsonValue = snapshot.value as? [String: Any] else {
-          return
-        }
-        
-        do {
-          let data = try JSONSerialization.data(withJSONObject: jsonValue)
-          self.workoutCodeDictionary = try NetworkManager.decoder.decode([String : Workout].self, from: data)
-          
-          for element in self.workoutCodeDictionary {
-            element.value.configureId(with: element.key)
-          }
-        } catch {
-          NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
-        }
-        
-        NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: nil)
+        return
+      }
+      
+      if let workoutDictionary = workoutDictionary {
+        self.workoutCodeDictionary = workoutDictionary
+      }
+      
+      for element in self.workoutCodeDictionary {
+        element.value.configureId(with: element.key)
       }
     }
   }
@@ -45,10 +36,11 @@ class WorkoutManager {
   }
   
   func register(workout: Workout) {
-    guard let key = itemRef.childByAutoId().key else { return }
-    workout.configureId(with: key)
-    self.workoutCodeDictionary[key] = workout
-    networkManager.updateWorkoutData(workout: workout, key: key)
+    networkManager.createWorkoutId(workout: workout) { key in
+      workout.configureId(with: key)
+      self.workoutCodeDictionary[key] = workout
+      networkManager.updateWorkoutData(workout: workout, key: key)
+    }
   }
   
   func workout(at indexPath: IndexPath) -> Workout {
@@ -66,7 +58,7 @@ class WorkoutManager {
     if let removingCode = workout.id {
       workoutCodeDictionary[removingCode] = nil
       workout.removeRegisteredRoutine()
-      itemRef.child("/\(removingCode)").removeValue()
+      networkManager.removeWorkoutData(workout: workout)
     }
   }
   
