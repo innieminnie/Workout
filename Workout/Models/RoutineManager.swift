@@ -16,44 +16,28 @@ class RoutineManager {
   }
   
   func readRoutineData(from dateInformation: DateInformation) {
-    let itemRef = networkManager.routineReference(dateInformation: dateInformation)
-    
-    itemRef.getData { error, snapshot in
+    networkManager.fetchRoutineData(dateInformation: dateInformation) { decodedRoutine, error in
       if let error = error {
-        DispatchQueue.main.async {
-          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
-        }
-      } else if snapshot.exists() {
-        guard let jsonValue = snapshot.value as? [String: Any] else {
-          return
+        NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
+        return
+      }
+      
+      if let decodedRoutine = decodedRoutine {
+        let dailyRoutine = decodedRoutine.map { (key: String, value: PlannedWorkout) -> PlannedWorkout in
+          value.setId(with: key)
+          return value
+        }.sorted { plannedWorkout1, plannedWorkout2 in
+          plannedWorkout1.sequenceNumber < plannedWorkout2.sequenceNumber
         }
         
-        do {
-          let data = try JSONSerialization.data(withJSONObject: jsonValue)
-          let decodedRoutine = try NetworkManager.decoder.decode([String : PlannedWorkout].self, from: data)
-          
-          let dailyRoutine = decodedRoutine.map { (key: String, value: PlannedWorkout) -> PlannedWorkout in
-            value.setId(with: key)
-            return value
-          }.sorted { plannedWorkout1, plannedWorkout2 in
-            plannedWorkout1.sequenceNumber < plannedWorkout2.sequenceNumber
-          }
-          
-          self.workoutPlanner[dateInformation] = dailyRoutine
-          
-          DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine, "date": dateInformation])
-          }
-        } catch {
-          DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
-          }
-        }
-      } else {
+        self.workoutPlanner[dateInformation] = dailyRoutine
+        
         DispatchQueue.main.async {
-          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": [], "date": dateInformation])
+          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine, "date": dateInformation])
         }
       }
+      
+      
     }
   }
   
@@ -91,11 +75,8 @@ class RoutineManager {
     let removingWorkout = reorderingPlan[removingPosition]
     reorderingPlan.remove(at: removingPosition)
     workoutPlanner[dateInformation] = reorderingPlan
-    
     guard let id = removingWorkout.id else { return }
-    let itemRef = networkManager.routineReference(dateInformation: dateInformation)
-    itemRef.child("/\(id)").removeValue()
-    
+    networkManager.removeRoutineData(id: id, on: dateInformation)
     self.updatePlan(with: reorderingPlan, on: dateInformation)
   }
   
