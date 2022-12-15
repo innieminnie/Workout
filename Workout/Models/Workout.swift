@@ -60,6 +60,14 @@ class Workout: Identifiable, Codable {
       workoutManager.updateWorkoutRegistration(id, registeredDate)
     }
   }
+  
+  func removeRegisteredDate(on dateInformation: DateInformation) {
+    registeredDate.remove(dateInformation)
+    
+    if let id = id {
+      workoutManager.updateWorkoutRegistration(id, registeredDate)
+    }
+  }
  
   func displayName() -> String {
     return self.name
