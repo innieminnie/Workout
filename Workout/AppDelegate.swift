@@ -57,9 +57,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func changeRootViewController(_ vc: UIViewController, animated: Bool) {
     guard let window = window else { return }
-    window.rootViewController = vc
     
-    UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil, completion: nil)
+    DispatchQueue.main.async {
+      window.rootViewController = vc
+      UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil, completion: nil)
+    }
   }
   
   func setMonitor() {
@@ -74,13 +76,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               self.changeRootViewController(BaseTabBarController(), animated: true)
             }
           } else if self.window?.rootViewController == nil {
+            if AuthenticationManager.user == nil {
+              self.window?.rootViewController = SignInViewController()
+            } else {
+              self.window?.rootViewController = BaseTabBarController()
+            }
+            
             return
           }
         }
       } else {
-        DispatchQueue.main.async {
-          self.changeRootViewController(NetworkConfirmViewController(), animated: true)
-        }
+        self.changeRootViewController(NetworkConfirmViewController(), animated: true)
       }
     }
   }
