@@ -124,6 +124,17 @@ class AuthenticationManager {
       }
     }
   }
+  
+  func signoutProcess() {
+    logoutProcess()
+    AuthenticationManager.user?.delete { error in
+      if let error = error {
+        print(error)
+      } else {
+        print("delete success.")
+      }
+    }
+  }
 }
 
 let currentUser = AuthenticationManager.user
