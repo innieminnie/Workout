@@ -9,14 +9,6 @@ import Foundation
 import FirebaseDatabase
 
 struct RoutineNetworkConnecter {
-  private let encoder = JSONEncoder()
-  private let decoder = JSONDecoder()
-  private let ref: DatabaseReference! = Database.database().reference()
-  private var uid: String {
-    if let currentUser = currentUser { return currentUser.uid }
-    else { return AuthenticationManager.signedUpUser }
-  }
-  
   init() { }
   
   func routineReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
@@ -81,5 +73,22 @@ struct RoutineNetworkConnecter {
   func removeRoutineData(id: String, on dateInformation: DateInformation) {
     let itemRef = self.routineReference(dateInformation: dateInformation)
     itemRef.child("/\(id)").removeValue()
+  }
+}
+extension RoutineNetworkConnecter: NetworkAccessible {
+  var encoder: JSONEncoder {
+    return NetworkServiceInformation.encoder
+  }
+  
+  var decoder: JSONDecoder {
+    return NetworkServiceInformation.decoder
+  }
+  
+  var ref: DatabaseReference! {
+    return NetworkServiceInformation.ref
+  }
+  
+  var uid: String {
+    return NetworkServiceInformation.uid
   }
 }
