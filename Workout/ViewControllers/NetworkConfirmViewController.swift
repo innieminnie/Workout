@@ -36,10 +36,6 @@ class NetworkConfirmViewController: UIViewController {
       noticeLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -12),
       noticeLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
       noticeLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-      
-//      retryButton.topAnchor.constraint(equalTo: noticeLabel.bottomAnchor, constant: 10),
-//      retryButton.leadingAnchor.constraint(equalTo: noticeLabel.leadingAnchor),
-//      retryButton.trailingAnchor.constraint(equalTo: noticeLabel.trailingAnchor)
     ])
   }
   
