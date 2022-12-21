@@ -95,11 +95,9 @@ class RoutineManager {
       if reorderingPlan[index].workoutCode == workoutCode { removingPosition.append(index) }
     }
     
-    let itemRef = networkConnecter.routineReference(dateInformation: date)
-    
     for removingIndex in removingPosition {
       guard let removingID = reorderingPlan[removingIndex].id else { continue }
-      itemRef.child("/\(removingID)").removeValue()
+      networkConnecter.removeRoutineData(id: removingID, on: date)
       reorderingPlan.remove(at: removingIndex)
     }
     
