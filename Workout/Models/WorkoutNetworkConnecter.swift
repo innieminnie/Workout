@@ -11,7 +11,7 @@ import FirebaseDatabase
 struct WorkoutNetworkConnecter {
   init() { }
   
-  func workoutReference() -> DatabaseReference {
+  private func workoutReference() -> DatabaseReference {
     return ref.child("users/\(self.uid)/workout")
   }
   

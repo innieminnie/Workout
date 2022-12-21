@@ -11,7 +11,7 @@ import FirebaseDatabase
 struct RoutineNetworkConnecter {
   init() { }
   
-  func routineReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
+  private func routineReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
     return self.ref.child("users/\(self.uid)/routine/\(dateInfo)")
   }
   
