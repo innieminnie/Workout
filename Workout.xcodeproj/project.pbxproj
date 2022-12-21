@@ -25,6 +25,7 @@
 		D92D2418292B14D400031670 /* SettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D92D2416292B14D400031670 /* SettingTableViewCell.xib */; };
 		D92D241A292CB67F00031670 /* SettingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D2419292CB67F00031670 /* SettingMenu.swift */; };
 		D92D241C292E444A00031670 /* NetworkConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */; };
+		D961A0542953422D00494B85 /* NetworkServiceInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D961A0532953422D00494B85 /* NetworkServiceInformation.swift */; };
 		D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569AF274CBAFB007E517A /* AppDelegate.swift */; };
 		D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569B3274CBAFB007E517A /* HomeViewController.swift */; };
 		D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D98569B8274CBAFE007E517A /* Assets.xcassets */; };
@@ -111,6 +112,7 @@
 		D92D2416292B14D400031670 /* SettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingTableViewCell.xib; sourceTree = "<group>"; };
 		D92D2419292CB67F00031670 /* SettingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMenu.swift; sourceTree = "<group>"; };
 		D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfirmViewController.swift; sourceTree = "<group>"; };
+		D961A0532953422D00494B85 /* NetworkServiceInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceInformation.swift; sourceTree = "<group>"; };
 		D98569AC274CBAFB007E517A /* pitapatpumping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pitapatpumping.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98569AF274CBAFB007E517A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D98569B3274CBAFB007E517A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				D9958721287CFFFD0093E024 /* SetConfiguration.swift */,
 				D995872728894F500093E024 /* WorkoutStatus.swift */,
 				D9E096282922AEBA00AE710F /* AuthenticationManager.swift */,
+				D961A0532953422D00494B85 /* NetworkServiceInformation.swift */,
 				D98569F6275F717B007E517A /* WorkoutManager.swift */,
 				D90B7DFD294A1C760003B3CA /* WorkoutNetworkConnecter.swift */,
 				D9958717286153250093E024 /* RoutineManager.swift */,
@@ -662,6 +665,7 @@
 				D98569FE2760ADC0007E517A /* WorkoutTableViewCell.swift in Sources */,
 				D9107C642836151300FABD37 /* WorkoutSetConfigurationView.swift in Sources */,
 				D9107C60282E593C00FABD37 /* MonthlyPageCollectionView.swift in Sources */,
+				D961A0542953422D00494B85 /* NetworkServiceInformation.swift in Sources */,
 				D9E096292922AEBA00AE710F /* AuthenticationManager.swift in Sources */,
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,
 				D92D241C292E444A00031670 /* NetworkConfirmViewController.swift in Sources */,
@@ -846,7 +850,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Workout/Workout.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 5J284J6MNP;
 				INFOPLIST_FILE = Workout/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -870,7 +874,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Workout/Workout.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 5J284J6MNP;
 				INFOPLIST_FILE = Workout/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
