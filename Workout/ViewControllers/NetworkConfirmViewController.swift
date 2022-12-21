@@ -38,10 +38,6 @@ class NetworkConfirmViewController: UIViewController {
       noticeLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
     ])
   }
-  
-  @objc private func tappedRetryButton() {
-    self.dismiss(animated: true)
-  }
 }
 
 extension UIViewController {
