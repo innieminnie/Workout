@@ -11,9 +11,10 @@ class WorkoutManager {
   static let shared = WorkoutManager()
   
   private let networkConnecter = WorkoutNetworkConnecter()
-  private var workoutCodeDictionary = [String: Workout]()
-  
-  private init() { }
+  private var workoutCodeDictionary: [String: Workout]
+  private init() {
+    workoutCodeDictionary = [ : ]
+  }
   
   func readWorkoutData() {
     networkConnecter.fetchWorkoutData { workoutDictionary, error in
