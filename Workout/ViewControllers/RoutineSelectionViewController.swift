@@ -23,12 +23,11 @@ class RoutineSelectionViewController: UIViewController {
   }()
   
   private lazy var addRoutineButton: UIButton = {
-    let button = UIButton()
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedAddRoutineButton() })
     button.translatesAutoresizingMaskIntoConstraints = false
     
     button.configureDisableMode(title: "선택한 운동을 추가할게요")
     button.applyCornerRadius(24)
-    button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
     
     return button
   }()
@@ -61,7 +60,7 @@ class RoutineSelectionViewController: UIViewController {
     }
   }
 
-  @objc func tappedAddRoutineButton(sender: UIButton) {
+  private func tappedAddRoutineButton() {
     if let selectedWorkoutIndexPaths = self.workoutListTableView.indexPathsForSelectedRows {
       self.selectedWorkouts = selectedWorkoutIndexPaths.map({ indexPath in
         workoutManager.workout(at: indexPath)

@@ -43,15 +43,15 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     doneButton.isEnabled = false
     doneButton.backgroundColor = 0x096DB6.convertToRGB()
     doneButton.tintColor = .white
-    doneButton.addTarget(self, action: #selector(tappedDoneButton(sender:)), for: .touchUpInside)
+    doneButton.addAction(UIAction { _ in self.tappedDoneButton()}, for: .touchUpInside)
     doneButton.applyCornerRadius(12)
     
-    plusSetButton.addTarget(self, action: #selector(tappedPlusSetButton(sender:)), for: .touchUpInside)
+    plusSetButton.addAction(UIAction { _ in self.tappedPlusSetButton() }, for: .touchUpInside)
     plusSetButton.tintColor = .white
     plusSetButton.backgroundColor = 0x096DB6.convertToRGB()
     plusSetButton.applyCornerRadius(12)
     
-    minusSetButton.addTarget(self, action: #selector(tappedMinusSetButton(sender:)), for: .touchUpInside)
+    minusSetButton.addAction(UIAction { _ in self.tappedMinusSetButton() }, for: .touchUpInside)
     minusSetButton.tintColor = .white
     minusSetButton.backgroundColor = 0x096DB6.convertToRGB()
     minusSetButton.applyCornerRadius(12)
@@ -118,7 +118,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     setSumLabel.text = String(format: "%0.3f", currentWorkout?.totalSum ?? 0.0)
   }
   
-  @objc func tappedDoneButton(sender: UIButton) {
+  private func tappedDoneButton() {
     NotificationCenter.default.post(name: NSNotification.Name("CheckKeyboard"), object: nil)
     
     guard let currentWorkout = self.currentWorkout else { return }
@@ -167,7 +167,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     setButtonStackView.isHidden = currentWorkout.isDone.rawValue
   }
   
-  @objc func tappedPlusSetButton(sender: UIButton) {
+  private func tappedPlusSetButton() {
     NotificationCenter.default.post(name: NSNotification.Name("CheckKeyboard"), object: nil)
     guard let currentWorkout = self.currentWorkout else {
       return
@@ -188,7 +188,7 @@ class WorkoutPlanCardTableViewCell: UITableViewCell {
     routineManager.updatePlan(with: [currentWorkout], on: currentDateInformation)
   }
   
-  @objc func tappedMinusSetButton(sender: UIButton) {
+  private func tappedMinusSetButton() {
     NotificationCenter.default.post(name: NSNotification.Name("CheckKeyboard"), object: nil)
     guard let currentWorkout = self.currentWorkout, let lastSet = setStackView.arrangedSubviews.last as? WorkoutSetConfigurationView else {
       return
