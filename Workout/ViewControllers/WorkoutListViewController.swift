@@ -13,7 +13,7 @@ protocol SendingWorkoutDelegate: AnyObject {
 
 class WorkoutListViewController: UITableViewController {
   private lazy var addButton: UIBarButtonItem = {
-    let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(buttonTouched(_:)))
+    let button = UIBarButtonItem(systemItem: .add, primaryAction: UIAction { _ in self.addButtonTouched() })
     return button
   }()
   
@@ -122,7 +122,7 @@ extension WorkoutListViewController: UISearchResultsUpdating {
   }
 }
 extension WorkoutListViewController {
-  @objc private func buttonTouched(_ sender: UIBarButtonItem) {
+  private func addButtonTouched() {
     let newWorkoutViewController = WorkoutInformationViewController()
     newWorkoutViewController.updateWorkoutDelegate = self
     

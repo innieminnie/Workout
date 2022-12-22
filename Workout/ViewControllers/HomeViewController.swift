@@ -33,11 +33,11 @@ class HomeViewController: UIViewController {
   private let calendarView = CalendarView(frame: .zero)
   
   private lazy var addRoutineButton: UIButton = {
-    let button = UIButton()
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedAddRoutineButton() })
     button.translatesAutoresizingMaskIntoConstraints = false
+    
     button.configureAbleMode(title: "운동을 추가할래요")
     button.applyCornerRadius(24)
-    button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
     
     return button
   }()
@@ -76,7 +76,7 @@ class HomeViewController: UIViewController {
     Auth.auth().removeStateDidChangeListener(handle!)
   }
   
-  @objc private func tappedAddRoutineButton(sender: UIButton) {
+  private func tappedAddRoutineButton() {
     hideKeyboard()
     
     let routineSelectionViewController = RoutineSelectionViewController()

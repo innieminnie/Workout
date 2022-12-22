@@ -21,25 +21,16 @@ class CalendarView: UIView {
   private var displayingMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
   
   private lazy var rightButton: UIButton = {
-    let button = UIButton()
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToNextMonth() })
     button.translatesAutoresizingMaskIntoConstraints = false
-    
-    button.addTarget(self, action: #selector(tappedNextMonthButton), for: .touchUpInside)
-    button.setTitle(">", for: .normal)
-    button.setTitleColor(.black, for: .normal)
-    button.titleLabel?.font = UIFont.Pretendard(type: .Bold, size: 20)
-    
+    button.customizeConfiguration(with: ">", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
     return button
   }()
   
   private lazy var leftButton: UIButton = {
-    let button = UIButton()
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToLastMonth() })
     button.translatesAutoresizingMaskIntoConstraints = false
-    
-    button.addTarget(self, action: #selector(tappedLastMonthButton), for: .touchUpInside)
-    button.setTitle("<", for: .normal)
-    button.setTitleColor(.black, for: .normal)
-    button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 20)
+    button.customizeConfiguration(with: "<", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
     return button
   }()
   
@@ -106,11 +97,11 @@ class CalendarView: UIView {
   }
   
   private func configureSwipeGestures() {
-    let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(tappedLastMonthButton))
+    let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToLastMonth))
     swipeRightGestureRecognizer.direction = .right
     self.addGestureRecognizer(swipeRightGestureRecognizer)
     
-    let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(tappedNextMonthButton))
+    let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToNextMonth))
     swipeLeftGestureRecognizer.direction = .left
     self.addGestureRecognizer(swipeLeftGestureRecognizer)
   }
@@ -127,7 +118,7 @@ class CalendarView: UIView {
     }
   }
   
-  @objc private func tappedNextMonthButton() {
+  @objc private func moveToNextMonth() {
     displayingMonthInformation.changeToNextMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
     delegate?.changedSelectedDay(to: nil)
@@ -146,7 +137,7 @@ class CalendarView: UIView {
     }
   }
   
-  @objc private func tappedLastMonthButton() {
+  @objc private func moveToLastMonth() {
     displayingMonthInformation.changeToLastMonth()
     currentMonthLabel.text = displayingMonthInformation.currentDate
     delegate?.changedSelectedDay(to: nil)

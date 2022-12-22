@@ -35,15 +35,17 @@ extension UIButton {
   }
   
   func customizeConfiguration(with title: String, foregroundColor: UIColor, font: UIFont, buttonSize: UIButton.Configuration.Size ) {
-    var customizeConfiguration = UIButton.Configuration.plain()
-    customizeConfiguration.title = title
-    customizeConfiguration.titleAlignment = .center
-    customizeConfiguration.attributedTitle?.font = font
-    customizeConfiguration.baseForegroundColor = foregroundColor
-    customizeConfiguration.buttonSize = buttonSize
-    customizeConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)
-    
-    self.configuration = customizeConfiguration
+    self.configurationUpdateHandler = { [unowned self] button in
+      var customizeConfiguration = UIButton.Configuration.plain()
+      customizeConfiguration.title = title
+      customizeConfiguration.titleAlignment = .center
+      customizeConfiguration.attributedTitle?.font = font
+      customizeConfiguration.baseForegroundColor = foregroundColor
+      customizeConfiguration.buttonSize = buttonSize
+      customizeConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)
+      
+      self.configuration = customizeConfiguration
+    }
   }
 }
 extension UIViewController {
