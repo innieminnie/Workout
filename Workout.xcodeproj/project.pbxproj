@@ -51,6 +51,7 @@
 		D9958722287CFFFD0093E024 /* SetConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9958721287CFFFD0093E024 /* SetConfiguration.swift */; };
 		D9958724287E54E40093E024 /* PlannedWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9958723287E54E40093E024 /* PlannedWorkout.swift */; };
 		D995872828894F500093E024 /* WorkoutStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D995872728894F500093E024 /* WorkoutStatus.swift */; };
+		D99CA6F0295D918E003D2BB5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D99CA6EF295D918E003D2BB5 /* GoogleService-Info.plist */; };
 		D9D055E62923760100DC428E /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9D055E52923760100DC428E /* Launch.storyboard */; };
 		D9D44E4228FEC3AD0035B8D0 /* BodySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E4128FEC3AD0035B8D0 /* BodySection.swift */; };
 		D9D44E45290692A00035B8D0 /* BodySectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D44E43290692A00035B8D0 /* BodySectionCollectionViewCell.swift */; };
@@ -67,7 +68,6 @@
 		D9DA40552934A04F00DBBEDD /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9DA404D2934A04F00DBBEDD /* Pretendard-Bold.otf */; };
 		D9DA40562934A04F00DBBEDD /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9DA404E2934A04F00DBBEDD /* Pretendard-ExtraBold.otf */; };
 		D9DA405A293707DA00DBBEDD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9DA405C293707DA00DBBEDD /* InfoPlist.strings */; };
-		D9DA406129370F2600DBBEDD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9DA406029370F2500DBBEDD /* GoogleService-Info.plist */; };
 		D9E09625291DF74C00AE710F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E09624291DF74C00AE710F /* SignInViewController.swift */; };
 		D9E096292922AEBA00AE710F /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E096282922AEBA00AE710F /* AuthenticationManager.swift */; };
 		D9E0962B2923564900AE710F /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E0962A2923564900AE710F /* APIKey.swift */; };
@@ -115,11 +115,11 @@
 		D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfirmViewController.swift; sourceTree = "<group>"; };
 		D961A0532953422D00494B85 /* NetworkServiceInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceInformation.swift; sourceTree = "<group>"; };
 		D961A07129544C7400494B85 /* UITextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldWithPadding.swift; sourceTree = "<group>"; };
+		D961A0B8295D8A0200494B85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D98569AC274CBAFB007E517A /* pitapatpumping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pitapatpumping.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98569AF274CBAFB007E517A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D98569B3274CBAFB007E517A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D98569B8274CBAFE007E517A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D98569BD274CBAFE007E517A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D98569C2274CBAFE007E517A /* WorkoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98569C6274CBAFE007E517A /* WorkoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTests.swift; sourceTree = "<group>"; };
 		D98569C8274CBAFE007E517A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -145,6 +145,7 @@
 		D9958721287CFFFD0093E024 /* SetConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetConfiguration.swift; sourceTree = "<group>"; };
 		D9958723287E54E40093E024 /* PlannedWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedWorkout.swift; sourceTree = "<group>"; };
 		D995872728894F500093E024 /* WorkoutStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatus.swift; sourceTree = "<group>"; };
+		D99CA6EF295D918E003D2BB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D9D055E52923760100DC428E /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		D9D44E4128FEC3AD0035B8D0 /* BodySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySection.swift; sourceTree = "<group>"; };
 		D9D44E43290692A00035B8D0 /* BodySectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySectionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -162,7 +163,6 @@
 		D9DA404E2934A04F00DBBEDD /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		D9DA405B293707DA00DBBEDD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D9DA405D2937080000DBBEDD /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D9DA406029370F2500DBBEDD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../.Trash/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D9E09621291DF53F00AE710F /* Workout.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Workout.entitlements; sourceTree = "<group>"; };
 		D9E09624291DF74C00AE710F /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		D9E096282922AEBA00AE710F /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
@@ -246,8 +246,8 @@
 				D98569AF274CBAFB007E517A /* AppDelegate.swift */,
 				D9DA404629349FCA00DBBEDD /* Fonts */,
 				D98569B8274CBAFE007E517A /* Assets.xcassets */,
-				D98569BD274CBAFE007E517A /* Info.plist */,
-				D9DA406029370F2500DBBEDD /* GoogleService-Info.plist */,
+				D961A0B8295D8A0200494B85 /* Info.plist */,
+				D99CA6EF295D918E003D2BB5 /* GoogleService-Info.plist */,
 				D9DA405C293707DA00DBBEDD /* InfoPlist.strings */,
 				D9D055E52923760100DC428E /* Launch.storyboard */,
 			);
@@ -506,8 +506,8 @@
 				D9DA404F2934A04F00DBBEDD /* Pretendard-Thin.otf in Resources */,
 				D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */,
 				D9D44E46290692A00035B8D0 /* BodySectionCollectionViewCell.xib in Resources */,
-				D9DA406129370F2600DBBEDD /* GoogleService-Info.plist in Resources */,
 				D9DA40562934A04F00DBBEDD /* Pretendard-ExtraBold.otf in Resources */,
+				D99CA6F0295D918E003D2BB5 /* GoogleService-Info.plist in Resources */,
 				D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */,
 				D9DA40542934A04F00DBBEDD /* Pretendard-Light.otf in Resources */,
 				D9D055E62923760100DC428E /* Launch.storyboard in Resources */,
@@ -780,6 +780,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = /Users/innie/Desktop/myapp/Workout/Workout/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -836,6 +837,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = /Users/innie/Desktop/myapp/Workout/Workout/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
