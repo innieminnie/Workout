@@ -244,12 +244,7 @@
 				D9856A00278EA442007E517A /* CustomCells */,
 				D98569E6274D08AF007E517A /* TabBarController */,
 				D98569AF274CBAFB007E517A /* AppDelegate.swift */,
-				D9DA404629349FCA00DBBEDD /* Fonts */,
-				D98569B8274CBAFE007E517A /* Assets.xcassets */,
-				D961A0B8295D8A0200494B85 /* Info.plist */,
-				D99CA6EF295D918E003D2BB5 /* GoogleService-Info.plist */,
-				D9DA405C293707DA00DBBEDD /* InfoPlist.strings */,
-				D9D055E52923760100DC428E /* Launch.storyboard */,
+				D99CA713295DA056003D2BB5 /* SupportingFiles */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -359,6 +354,19 @@
 				D9107C5F282E593C00FABD37 /* MonthlyPageCollectionView.swift */,
 			);
 			path = CustomCalendar;
+			sourceTree = "<group>";
+		};
+		D99CA713295DA056003D2BB5 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				D9DA404629349FCA00DBBEDD /* Fonts */,
+				D98569B8274CBAFE007E517A /* Assets.xcassets */,
+				D961A0B8295D8A0200494B85 /* Info.plist */,
+				D99CA6EF295D918E003D2BB5 /* GoogleService-Info.plist */,
+				D9DA405C293707DA00DBBEDD /* InfoPlist.strings */,
+				D9D055E52923760100DC428E /* Launch.storyboard */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 		D9DA404629349FCA00DBBEDD /* Fonts */ = {
