@@ -10,7 +10,12 @@ import Foundation
 struct MonthlyInformation {
   private var year: Int
   private var month: Int
-  private var startDate: Date { "\(self.year)-\(self.month)-01".date! }
+  private var startDate: Date {
+    let currentMonthStartDateComponents = DateComponents(year: self.year, month: self.month, day: 1)
+    let date = Calendar.current.date(from: currentMonthStartDateComponents)
+    
+    return date!
+  }
   private var numberOfDaysInMonth: Int {
     let dateComponents = DateComponents(year: self.year, month: self.month)
     
