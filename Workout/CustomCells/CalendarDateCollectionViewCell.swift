@@ -9,6 +9,7 @@ import UIKit
 
 class CalendarDateCollectionViewCell: UICollectionViewCell {
   static let identifier = "calendarDateCollectionViewCell"
+  
   private var isCurrentMonth = true
   var isToday = false
   var dateInformation: DateInformation?
@@ -45,6 +46,10 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     super.awakeFromNib()
     
     NotificationCenter.default.addObserver(self, selector: #selector(self.checkRoutineData(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
+    
+    self.dateBackgroundView.backgroundColor = .clear
+    self.dateBackgroundView.layer.borderColor = UIColor.clear.cgColor
+    self.dateBackgroundView.layer.borderWidth = 0
   }
   
   override func prepareForReuse() {
@@ -58,11 +63,27 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     self.dateNumberLabel.font = UIFont.Pretendard(type: .Regular, size: 15)
   }
   
-  func update(with number: Int, isCurrentMonth: Bool) {
-    self.isCurrentMonth = isCurrentMonth
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    dateBackgroundView.layer.cornerRadius = dateBackgroundView.frame.size.width / 2
+    dateBackgroundView.layer.masksToBounds = true
+  }
+  
+  func setUp(with information: (dateComponent: DateComponents, isCurrentMonth: Bool)) {
+    guard let year = information.dateComponent.year,
+          let month = information.dateComponent.month,
+          let day = information.dateComponent.day else { return }
+    
+    self.dateInformation = DateInformation(year, month, day)
+    self.isCurrentMonth = information.isCurrentMonth
+    
+    dateNumberLabel.text = "\(day)"
+    setInitialUI()
+  }
+  
+  private func setInitialUI() {
     isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
     
-    self.dateBackgroundView.layer.borderColor = UIColor.white.cgColor
     self.dateBackgroundView.layer.borderWidth = 4
     
     if isToday {
@@ -70,16 +91,14 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
       self.dateBackgroundView.layer.borderColor = 0xBEC0C2.convertToRGB().cgColor
     }
     
-    dateNumberLabel.text = "\(number)"
+    updateData()
   }
   
-  override func draw(_ rect: CGRect) {
-    super.draw(rect)
-    dateBackgroundView.layer.cornerRadius = dateBackgroundView.frame.size.width / 2
-    dateBackgroundView.layer.masksToBounds = true
+  func updateRoutine() {
+    self.updateData()
   }
   
-  func updateStatus() {
+  private func updateData() {
     if let dateInformation = dateInformation {
       routineManager.readRoutineData(from: dateInformation)
     }

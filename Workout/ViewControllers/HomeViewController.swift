@@ -9,7 +9,8 @@ import UIKit
 import FirebaseAuth
 
 class HomeViewController: UIViewController {
-  private var selectedDayInformation: DateInformation? = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date())) {
+  private var handle: AuthStateDidChangeListenerHandle?
+  private var selectedDayInformation: DateInformation? = DateInformation(date: Date()) {
     didSet {
       if selectedDayInformation == nil {
         addRoutineButton.configureDisableMode(title: "등록 날짜를 먼저 선택해주세요")
@@ -29,9 +30,7 @@ class HomeViewController: UIViewController {
     
     return scrollView
   }()
-  
   private let calendarView = CalendarView(frame: .zero)
-  
   private lazy var addRoutineButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedAddRoutineButton() })
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -41,10 +40,8 @@ class HomeViewController: UIViewController {
     
     return button
   }()
-  
   private let routineTableView = RoutineTableView()
   private var editableField: UITextField?
-  private var handle: AuthStateDidChangeListenerHandle?
   
   override func viewDidLoad() {
     super.viewDidLoad()

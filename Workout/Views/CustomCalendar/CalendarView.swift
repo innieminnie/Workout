@@ -16,9 +16,15 @@ protocol CalendarViewDelegate: AnyObject {
 }
 
 class CalendarView: UIView {
-  private let todayInformation = DateInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()), Calendar.current.component(.day, from: Date()))
+  static let defaultDate = Date()
   
-  private var displayingMonthInformation = MonthlyInformation(Calendar.current.component(.year, from: Date()), Calendar.current.component(.month, from: Date()))
+  private let todayInformation = DateInformation(date: CalendarView.defaultDate)
+  private var displayingMonthInformation = MonthlyInformation(date: CalendarView.defaultDate) {
+    didSet {
+      currentMonthLabel.text = displayingMonthInformation.currentMonthTitle
+    }
+  }
+  weak var delegate: CalendarViewDelegate?
   
   private lazy var rightButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToNextMonth() })
@@ -26,14 +32,12 @@ class CalendarView: UIView {
     button.customizeConfiguration(with: ">", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
     return button
   }()
-  
   private lazy var leftButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToLastMonth() })
     button.translatesAutoresizingMaskIntoConstraints = false
     button.customizeConfiguration(with: "<", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
     return button
   }()
-  
   private let currentMonthLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -44,14 +48,9 @@ class CalendarView: UIView {
     
     return label
   }()
-  
   private let weekdaysView = WeekdaysView()
-  
   private let monthlyPageCollectionView = MonthlyPageCollectionView()
-  
   private var selectedCell: CalendarDateCollectionViewCell?
-  
-  weak var delegate: CalendarViewDelegate?
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -63,12 +62,12 @@ class CalendarView: UIView {
     self.addSubview(weekdaysView)
     self.addSubview(monthlyPageCollectionView)
     
-    currentMonthLabel.text = displayingMonthInformation.currentDate
+    currentMonthLabel.text = displayingMonthInformation.currentMonthTitle
     monthlyPageCollectionView.dataSource = self
     monthlyPageCollectionView.delegate = self
     
     configureSwipeGestures()
-
+    
     NSLayoutConstraint.activate([
       currentMonthLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
       currentMonthLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -96,6 +95,18 @@ class CalendarView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
+  func updateSelectedCell() {
+    if let selectedCell = selectedCell {
+      selectedCell.updateRoutine()
+    }
+  }
+  
+  func reloadUserData() {
+    DispatchQueue.main.async {
+      self.monthlyPageCollectionView.reloadData()
+    }
+  }
+  
   private func configureSwipeGestures() {
     let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToLastMonth))
     swipeRightGestureRecognizer.direction = .right
@@ -106,21 +117,8 @@ class CalendarView: UIView {
     self.addGestureRecognizer(swipeLeftGestureRecognizer)
   }
   
-  func updateSelectedCell() {
-    if let selectedCell = selectedCell {
-      selectedCell.updateStatus()
-    }
-  }
-  
-  func reloadUserData() {
-    DispatchQueue.main.async {
-      self.monthlyPageCollectionView.reloadData()
-    }
-  }
-  
   @objc private func moveToNextMonth() {
     displayingMonthInformation.changeToNextMonth()
-    currentMonthLabel.text = displayingMonthInformation.currentDate
     delegate?.changedSelectedDay(to: nil)
     
     DispatchQueue.main.async {
@@ -139,7 +137,6 @@ class CalendarView: UIView {
   
   @objc private func moveToLastMonth() {
     displayingMonthInformation.changeToLastMonth()
-    currentMonthLabel.text = displayingMonthInformation.currentDate
     delegate?.changedSelectedDay(to: nil)
     
     DispatchQueue.main.async {
@@ -188,7 +185,7 @@ extension CalendarView: UICollectionViewDelegateFlowLayout {
 }
 extension CalendarView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return displayingMonthInformation.numberOfDaysToDisplay()
+    return displayingMonthInformation.numberOfDaysToDisplay
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -196,54 +193,20 @@ extension CalendarView: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
     
-    let numberOfDaysInCurrentMonth = displayingMonthInformation.numberOfDays
-    let currentMonthCellRange = (0..<numberOfDaysInCurrentMonth).map { $0 + displayingMonthInformation.weekDayIndexOfFirstDay }
-    
-    if indexPath.row < displayingMonthInformation.weekDayIndexOfFirstDay {
-      let (lastYear, lastMonth) = displayingMonthInformation.lastMonthInformation()
-      let day = MonthlyInformation.numberOfDays(lastYear, lastMonth) - displayingMonthInformation.weekDayIndexOfFirstDay + indexPath.row + 1
-      cell.dateInformation = DateInformation(lastYear, lastMonth, day)
-      
-      cell.update(with: day, isCurrentMonth: false)
-    } else if currentMonthCellRange.contains(indexPath.row) {
-      let (year, month) = displayingMonthInformation.currentMonthInformation()
-      let day = indexPath.row - displayingMonthInformation.weekDayIndexOfFirstDay + 1
-      cell.dateInformation = DateInformation(year, month, day)
-      
-      if displayingMonthInformation.currentDate == todayInformation.currentMonthlyDate
-          && day == Calendar.current.component(.day, from: Date()) {
-        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
-        cell.isToday = true
-        self.selectedCell = cell
-        delegate?.changedSelectedDay(to: todayInformation)
-      }
-      
-      cell.update(with: day, isCurrentMonth: true)
-    } else {
-      let (nextYear, nextMonth) = displayingMonthInformation.nextMonthInformation()
-      let day = indexPath.row - (numberOfDaysInCurrentMonth + displayingMonthInformation.weekDayIndexOfFirstDay) + 1
-      cell.dateInformation = DateInformation(nextYear, nextMonth, day)
-      
-      cell.update(with: day, isCurrentMonth: false)
+    let cellDateInfo = displayingMonthInformation.dateComponentsInformation(at: indexPath.row)
+    cell.setUp(with: cellDateInfo)
+   
+    if cell.dateInformation == todayInformation {
+      collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
+      cell.isToday = true
+      self.selectedCell = cell
+      delegate?.changedSelectedDay(to: todayInformation)
     }
-    
-    cell.updateStatus()
     
     let calendarDateTapGesture = CaledarDateTapGesture(target: self, action: #selector(cellTapped(gesture:)))
     calendarDateTapGesture.tappedCell = cell
     cell.addGestureRecognizer(calendarDateTapGesture)
     
     return cell
-  }
-}
-extension String {
-  static var dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd"
-    return formatter
-  }()
-  
-  var date: Date? {
-    return String.dateFormatter.date(from: self)
   }
 }
