@@ -324,7 +324,6 @@
 				D9107C5527F030B800FABD37 /* DateInformation.swift */,
 				D995871B286571BD0093E024 /* Weekday.swift */,
 				D92D2419292CB67F00031670 /* SettingMenu.swift */,
-				D9E0962A2923564900AE710F /* APIKey.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -359,11 +358,12 @@
 		D99CA713295DA056003D2BB5 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				D9DA404629349FCA00DBBEDD /* Fonts */,
-				D98569B8274CBAFE007E517A /* Assets.xcassets */,
+				D9E0962A2923564900AE710F /* APIKey.swift */,
 				D961A0B8295D8A0200494B85 /* Info.plist */,
 				D99CA6EF295D918E003D2BB5 /* GoogleService-Info.plist */,
 				D9DA405C293707DA00DBBEDD /* InfoPlist.strings */,
+				D9DA404629349FCA00DBBEDD /* Fonts */,
+				D98569B8274CBAFE007E517A /* Assets.xcassets */,
 				D9D055E52923760100DC428E /* Launch.storyboard */,
 			);
 			path = SupportingFiles;
