@@ -16,17 +16,6 @@ extension Int {
         alpha: 1.0)
   }
 }
-extension String {
-  static var dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd"
-    return formatter
-  }()
-  
-  var date: Date? {
-    return String.dateFormatter.date(from: self)
-  }
-}
 extension Date {
   func changeToDateComponents() -> DateComponents {
     let year = Calendar.current.component(.year, from: self)
