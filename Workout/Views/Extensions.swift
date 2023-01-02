@@ -7,6 +7,35 @@
 
 import UIKit
 
+extension Int {
+  func convertToRGB() -> UIColor {
+    return UIColor(
+        red: CGFloat((Float((self & 0xff0000) >> 16)) / 255.0),
+        green: CGFloat((Float((self & 0x00ff00) >> 8)) / 255.0),
+        blue: CGFloat((Float((self & 0x0000ff) >> 0)) / 255.0),
+        alpha: 1.0)
+  }
+}
+extension String {
+  static var dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    return formatter
+  }()
+  
+  var date: Date? {
+    return String.dateFormatter.date(from: self)
+  }
+}
+extension Date {
+  func changeToDateComponents() -> DateComponents {
+    let year = Calendar.current.component(.year, from: self)
+    let month = Calendar.current.component(.month, from: self)
+    let day = Calendar.current.component(.day, from: self)
+    
+    return DateComponents(year: year, month: month, day: day)
+  }
+}
 extension UIView {
   func applyCornerRadius(_ cornerRadius: CGFloat) {
     self.layer.cornerRadius = cornerRadius
@@ -54,15 +83,6 @@ extension UIViewController {
     signInViewController.modalPresentationStyle = .formSheet
     signInViewController.isModalInPresentation = true
     self.present(signInViewController, animated: false, completion: nil)
-  }
-}
-extension Int {
-  func convertToRGB() -> UIColor {
-    return UIColor(
-        red: CGFloat((Float((self & 0xff0000) >> 16)) / 255.0),
-        green: CGFloat((Float((self & 0x00ff00) >> 8)) / 255.0),
-        blue: CGFloat((Float((self & 0x0000ff) >> 0)) / 255.0),
-        alpha: 1.0)
   }
 }
 extension UIFont {

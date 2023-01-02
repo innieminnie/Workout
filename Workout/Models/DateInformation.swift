@@ -27,4 +27,10 @@ struct DateInformation: Hashable, Codable {
     self.month = month
     self.day = day
   }
+  
+  init(date: Date) {
+    self.year = Calendar.current.component(.year, from: date)
+    self.month = Calendar.current.component(.month, from: date)
+    self.day = Calendar.current.component(.day, from: date)
+  }
 }
