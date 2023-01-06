@@ -16,6 +16,11 @@ protocol CalendarViewDelegate: AnyObject {
 }
 
 class CalendarView: UIView {
+  private enum CalendarState: String {
+    case folded = "달력펼치기"
+    case opened = "달력접기"
+  }
+  
   static let defaultDate = Date()
   
   private let todayInformation = DateInformation(date: CalendarView.defaultDate)
@@ -24,20 +29,13 @@ class CalendarView: UIView {
       currentMonthLabel.text = displayingMonthInformation.currentMonthTitle
     }
   }
+  private var calendarState: CalendarState = .opened {
+    didSet {
+      self.calendarStateButton.customizeConfiguration(with: self.calendarState.rawValue, foregroundColor: .black, font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+    }
+  }
   weak var delegate: CalendarViewDelegate?
   
-  private lazy var rightButton: UIButton = {
-    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToNextMonth() })
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.customizeConfiguration(with: ">", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
-    return button
-  }()
-  private lazy var leftButton: UIButton = {
-    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToLastMonth() })
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.customizeConfiguration(with: "<", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
-    return button
-  }()
   private let currentMonthLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,6 +45,29 @@ class CalendarView: UIView {
     label.textColor = .black
     
     return label
+  }()
+  private lazy var rightButton: UIButton = {
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToNextMonth() })
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.customizeConfiguration(with: ">", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
+    
+    return button
+  }()
+  private lazy var leftButton: UIButton = {
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToLastMonth() })
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.customizeConfiguration(with: "<", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
+    
+    return button
+  }()
+  private lazy var calendarStateButton: UIButton = {
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.updateCalendarState() })
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.customizeConfiguration(with: self.calendarState.rawValue, foregroundColor: .black, font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+    button.contentVerticalAlignment = .top
+    button.contentHorizontalAlignment = .right
+    
+    return button
   }()
   private let weekdaysView = WeekdaysView()
   private let monthlyPageCollectionView = MonthlyPageCollectionView()
@@ -59,6 +80,7 @@ class CalendarView: UIView {
     self.addSubview(currentMonthLabel)
     self.addSubview(rightButton)
     self.addSubview(leftButton)
+    self.addSubview(calendarStateButton)
     self.addSubview(weekdaysView)
     self.addSubview(monthlyPageCollectionView)
     
@@ -70,15 +92,17 @@ class CalendarView: UIView {
     
     NSLayoutConstraint.activate([
       currentMonthLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      currentMonthLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      currentMonthLabel.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor, constant: 10),
+      currentMonthLabel.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor, constant: -10),
       
       rightButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
-      rightButton.leadingAnchor
-        .constraint(equalTo: self.trailingAnchor, constant: -50),
       
       leftButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
       leftButton.trailingAnchor
         .constraint(equalTo: self.leadingAnchor, constant: 50),
+      
+      calendarStateButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
+      calendarStateButton.trailingAnchor.constraint(equalTo: weekdaysView.trailingAnchor),
       
       weekdaysView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 10),
       weekdaysView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
@@ -115,6 +139,10 @@ class CalendarView: UIView {
     let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToNextMonth))
     swipeLeftGestureRecognizer.direction = .left
     self.addGestureRecognizer(swipeLeftGestureRecognizer)
+  }
+  
+  private func updateCalendarState() {
+    self.calendarState = self.calendarState == .opened ? .folded : .opened
   }
   
   @objc private func moveToNextMonth() {
