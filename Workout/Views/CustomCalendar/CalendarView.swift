@@ -32,6 +32,13 @@ class CalendarView: UIView {
   private var calendarState: CalendarState = .opened {
     didSet {
       self.calendarStateButton.customizeConfiguration(with: self.calendarState.rawValue, foregroundColor: .black, font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+      if calendarState == .opened {
+        rightButton.isHidden = false
+        leftButton.isHidden = false
+      } else {
+        rightButton.isHidden = true
+        leftButton.isHidden = true
+      }
     }
   }
   weak var delegate: CalendarViewDelegate?
