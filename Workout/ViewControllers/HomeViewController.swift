@@ -16,6 +16,7 @@ class HomeViewController: UIViewController {
         addRoutineButton.configureDisableMode(title: "등록 날짜를 먼저 선택해주세요")
       } else {
         addRoutineButton.configureAbleMode(title: "운동을 추가할래요")
+        self.navigationController?.navigationBar.topItem?.title = selectedDayInformation?.fullDate
       }
       
       DispatchQueue.main.async {
@@ -31,6 +32,9 @@ class HomeViewController: UIViewController {
     return scrollView
   }()
   private let calendarView = CalendarView(frame: .zero)
+  private let routineTableView = RoutineTableView()
+  private var editableField: UITextField?
+  private var calendarViewBottomConstraint: NSLayoutConstraint!
   private lazy var addRoutineButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedAddRoutineButton() })
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -40,8 +44,10 @@ class HomeViewController: UIViewController {
     
     return button
   }()
-  private let routineTableView = RoutineTableView()
-  private var editableField: UITextField?
+  private lazy var openCalendarButton: UIBarButtonItem = {
+    let button = UIBarButtonItem(title: "달력펼치기", primaryAction: UIAction { _ in self.openCalendar() })
+    return button
+  }()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -61,6 +67,7 @@ class HomeViewController: UIViewController {
     
     configureNotification()
     configureGestureRecognizer()
+    configureNavigationController()
     configureAuthListener()
     setUpLayout()
   }
@@ -80,6 +87,33 @@ class HomeViewController: UIViewController {
     routineSelectionViewController.delegate = self
     routineSelectionViewController.modalPresentationStyle = .formSheet
     self.present(routineSelectionViewController, animated: true, completion: nil)
+  }
+  
+  private func openCalendar() {
+    calendarView.isHidden = false
+    NSLayoutConstraint.deactivate([calendarViewBottomConstraint])
+    
+    if let navigationController = self.navigationController {
+      navigationController.navigationBar.isHidden = true
+    }
+    
+    UIView.animate(withDuration: 0.7) {
+      self.view.layoutIfNeeded()
+    }
+  }
+  
+  private func foldCalendar() {
+    self.calendarView.isHidden = true
+    calendarViewBottomConstraint = calendarView.bottomAnchor.constraint(equalTo: calendarView.topAnchor)
+    NSLayoutConstraint.activate([calendarViewBottomConstraint])
+    
+    if let navigationController = self.navigationController {
+      navigationController.navigationBar.isHidden = false
+    }
+    
+    UIView.animate(withDuration: 0.7) {
+      self.view.layoutIfNeeded()
+    }
   }
 }
 extension HomeViewController: UITableViewDataSource {
@@ -173,6 +207,10 @@ extension HomeViewController: RoutineSelectionDelegate {
 extension HomeViewController: CalendarViewDelegate {
   func changedSelectedDay(to dateInformation: DateInformation?) {
     self.selectedDayInformation = dateInformation
+  }
+  
+  func calendarIsFolded() {
+    foldCalendar()
   }
 }
 extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
@@ -278,6 +316,11 @@ extension HomeViewController {
     tapGestureRecognizer.numberOfTapsRequired = 1
     tapGestureRecognizer.isEnabled = true
     contentScrollView.addGestureRecognizer(tapGestureRecognizer)
+  }
+  
+  private func configureNavigationController() {
+    self.navigationController?.navigationBar.isHidden = true
+    self.navigationController?.navigationBar.topItem?.rightBarButtonItem = openCalendarButton
   }
   
   private func configureAuthListener() {
