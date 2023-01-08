@@ -80,6 +80,68 @@ class HomeViewController: UIViewController {
     Auth.auth().removeStateDidChangeListener(handle!)
   }
   
+  private func configureNotification() {
+    NotificationCenter.default.addObserver(self, selector: #selector(trackTappedTextField), name: NSNotification.Name("TappedTextField"), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.checkRoutineData(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.updateCalendar(_:)), name: Notification.Name("ReadWorkoutData"), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: Notification.Name("CheckKeyboard"), object: nil)
+  }
+  
+  private func configureGestureRecognizer() {
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+    tapGestureRecognizer.numberOfTapsRequired = 1
+    tapGestureRecognizer.isEnabled = true
+    contentScrollView.addGestureRecognizer(tapGestureRecognizer)
+  }
+  
+  private func configureNavigationController() {
+    self.navigationController?.navigationBar.isHidden = true
+    self.navigationController?.navigationBar.topItem?.rightBarButtonItem = openCalendarButton
+  }
+  
+  private func configureAuthListener() {
+    handle = Auth.auth().addStateDidChangeListener { auth, user in
+      guard let user = user, let email = user.email else { return }
+      
+      AuthenticationManager.shared.setAccountInformation(email)
+      
+      if currentUser == nil {
+        AuthenticationManager.signedUpUser = user.uid
+      }
+      
+      workoutManager.readWorkoutData()
+    }
+  }
+  
+  private func updateTableView() {
+    routineTableView.beginUpdates()
+    routineTableView.endUpdates()
+  }
+  
+  private func setUpLayout() {
+    NSLayoutConstraint.activate([
+      contentScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+      contentScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+      contentScrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+      contentScrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+      
+      calendarView.topAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.topAnchor, constant: 10),
+      calendarView.leadingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.leadingAnchor),
+      calendarView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
+      calendarView.widthAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.widthAnchor),
+      
+      addRoutineButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
+      addRoutineButton.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
+      addRoutineButton.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
+      
+      routineTableView.topAnchor.constraint(equalTo: addRoutineButton.bottomAnchor, constant: 10),
+      routineTableView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor),
+      routineTableView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor),
+      routineTableView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -50),
+    ])
+  }
+  
   private func tappedAddRoutineButton() {
     hideKeyboard()
     
@@ -113,6 +175,66 @@ class HomeViewController: UIViewController {
     
     UIView.animate(withDuration: 0.7) {
       self.view.layoutIfNeeded()
+    }
+  }
+  
+  @objc private func trackTappedTextField(notification: Notification) {
+    if let activatedField = notification.object as? UITextField {
+      self.editableField = activatedField
+      activatedField.selectAll(nil)
+    }
+  }
+  
+  @objc private func keyboardWillShow(notification: NSNotification) {
+    guard let userInfo = notification.userInfo,
+          let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+      return
+    }
+    
+    let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardFrame.height, right: 0.0)
+    contentScrollView.contentInset = contentInsets
+    contentScrollView.verticalScrollIndicatorInsets = contentInsets
+    
+    if let activeField = editableField {
+      let activeRect = activeField.convert(activeField.bounds, to: contentScrollView)
+      contentScrollView.scrollRectToVisible(activeRect, animated: true)
+    }
+  }
+  
+  @objc  private func checkRoutineData(_ notification: NSNotification) {
+    guard let userInfo = notification.userInfo, let dateInformation = userInfo["date"] as? DateInformation else { return }
+    
+    if selectedDayInformation == dateInformation {
+      if let error = notification.userInfo?["error"] as? Error {
+        let alert = UIAlertController(title: "\(error)\n데이터 읽기에 실패했어요.\n잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: false, completion: nil)
+        return
+      }
+      
+      DispatchQueue.main.async {
+        self.routineTableView.reloadData()
+      }
+    }
+  }
+
+  @objc private func updateCalendar(_ notification: NSNotification) {
+    if let userInfo = notification.userInfo,
+       let error = userInfo["error"] as? Error {
+      let alert = UIAlertController(title: "\(error)\n데이터 읽기에 실패했어요.\n잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
+      let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+      alert.addAction(action)
+      self.present(alert, animated: false, completion: nil)
+      return
+    } else {
+      self.calendarView.reloadUserData()
+    }
+  }
+  
+  @objc private func hideKeyboard() {
+    if let activatedField = editableField {
+      activatedField.resignFirstResponder()
     }
   }
 }
@@ -243,125 +365,5 @@ extension HomeViewController: TabBarMenu {
   }
 }
 extension HomeViewController {
-  private func configureNotification() {
-    NotificationCenter.default.addObserver(self, selector: #selector(trackTappedTextField), name: NSNotification.Name("TappedTextField"), object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardDidShowNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(self.checkRoutineData(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(self.updateCalendar(_:)), name: Notification.Name("ReadWorkoutData"), object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: Notification.Name("CheckKeyboard"), object: nil)
-  }
-  
-  @objc private func trackTappedTextField(notification: Notification) {
-    if let activatedField = notification.object as? UITextField {
-      self.editableField = activatedField
-      activatedField.selectAll(nil)
-    }
-  }
-  
-  @objc private func keyboardWillShow(notification: NSNotification) {
-    guard let userInfo = notification.userInfo,
-          let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-      return
-    }
-    
-    let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardFrame.height, right: 0.0)
-    contentScrollView.contentInset = contentInsets
-    contentScrollView.verticalScrollIndicatorInsets = contentInsets
-    
-    if let activeField = editableField {
-      let activeRect = activeField.convert(activeField.bounds, to: contentScrollView)
-      contentScrollView.scrollRectToVisible(activeRect, animated: true)
-    }
-  }
-  
-  @objc  private func checkRoutineData(_ notification: NSNotification) {
-    guard let userInfo = notification.userInfo, let dateInformation = userInfo["date"] as? DateInformation else { return }
-    
-    if selectedDayInformation == dateInformation {
-      if let error = notification.userInfo?["error"] as? Error {
-        let alert = UIAlertController(title: "\(error)\n데이터 읽기에 실패했어요.\n잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
-        let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
-        alert.addAction(action)
-        self.present(alert, animated: false, completion: nil)
-        return
-      }
-      
-      DispatchQueue.main.async {
-        self.routineTableView.reloadData()
-      }
-    }
-  }
-
-  @objc private func updateCalendar(_ notification: NSNotification) {
-    if let userInfo = notification.userInfo,
-       let error = userInfo["error"] as? Error {
-      let alert = UIAlertController(title: "\(error)\n데이터 읽기에 실패했어요.\n잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
-      let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
-      alert.addAction(action)
-      self.present(alert, animated: false, completion: nil)
-      return
-    } else {
-      self.calendarView.reloadUserData()
-    }
-  }
-  
-  @objc private func hideKeyboard() {
-    if let activatedField = editableField {
-      activatedField.resignFirstResponder()
-    }
-  }
-  
-  private func configureGestureRecognizer() {
-    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-    tapGestureRecognizer.numberOfTapsRequired = 1
-    tapGestureRecognizer.isEnabled = true
-    contentScrollView.addGestureRecognizer(tapGestureRecognizer)
-  }
-  
-  private func configureNavigationController() {
-    self.navigationController?.navigationBar.isHidden = true
-    self.navigationController?.navigationBar.topItem?.rightBarButtonItem = openCalendarButton
-  }
-  
-  private func configureAuthListener() {
-    handle = Auth.auth().addStateDidChangeListener { auth, user in
-      guard let user = user, let email = user.email else { return }
-      
-      AuthenticationManager.shared.setAccountInformation(email)
-      
-      if currentUser == nil {
-        AuthenticationManager.signedUpUser = user.uid
-      }
-      
-      workoutManager.readWorkoutData()
-    }
-  }
-  
-  private func updateTableView() {
-    routineTableView.beginUpdates()
-    routineTableView.endUpdates()
-  }
-  
-  private func setUpLayout() {
-    NSLayoutConstraint.activate([
-      contentScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-      contentScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-      contentScrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-      contentScrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-      
-      calendarView.topAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.topAnchor, constant: 10),
-      calendarView.leadingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.leadingAnchor),
-      calendarView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
-      calendarView.widthAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.widthAnchor),
-      
-      addRoutineButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
-      addRoutineButton.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
-      addRoutineButton.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
-      
-      routineTableView.topAnchor.constraint(equalTo: addRoutineButton.bottomAnchor, constant: 10),
-      routineTableView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor),
-      routineTableView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor),
-      routineTableView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -50),
-    ])
-  }
+ 
 }
