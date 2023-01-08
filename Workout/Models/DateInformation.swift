@@ -11,15 +11,26 @@ struct DateInformation: Hashable, Codable {
   private var year: Int
   private var month: Int
   private var day: Int
+  private var weekdayName: String {
+    let dateComponent = DateComponents(calendar: Calendar.current, year: self.year, month: self.month, day: self.day)
+    let date = dateComponent.date!
+    let weekday = Weekday(Calendar.current.component(.weekday, from: date))
+  
+    return weekday  .weekdayName()
+  }
+  
+  
+  var currentMonthlyDate: String {
+    return "\(self.year)년 \(self.month)월"
+  }
+  var fullDate: String {
+    return "\(self.year)년 \(self.month)월 \(self.day)일 \(self.weekdayName)"
+  }
   
   enum CodingKeys: String, CodingKey {
     case year
     case month
     case day
-  }
-  
-  var currentMonthlyDate: String {
-    return "\(self.year)년 \(self.month)월"
   }
   
   init(_ year: Int, _ month: Int, _ day: Int) {

@@ -9,6 +9,8 @@ import Foundation
 
 struct Weekday {
   static let daysInWeek = 7
+  static let weekdaysName = ["월", "화", "수", "목", "금", "토", "일"]
+  
   var weekDayIndex: Int
   
   init(_ weekdayIndex: Int) {
@@ -36,5 +38,9 @@ struct Weekday {
     }
     
     return -1
+  }
+  
+  func weekdayName() -> String {
+    return Weekday.weekdaysName[self.convertWeekdayIndexToMondayBased()]
   }
 }

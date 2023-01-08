@@ -13,15 +13,13 @@ class CaledarDateTapGesture: UITapGestureRecognizer {
 
 protocol CalendarViewDelegate: AnyObject {
   func changedSelectedDay(to dateInformation: DateInformation?)
+  func calendarIsFolded()
 }
 
 class CalendarView: UIView {
-  private enum CalendarState: String {
-    case folded = "달력펼치기"
-    case opened = "달력접기"
-  }
-  
   static let defaultDate = Date()
+  
+  weak var delegate: CalendarViewDelegate?
   
   private let todayInformation = DateInformation(date: CalendarView.defaultDate)
   private var displayingMonthInformation = MonthlyInformation(date: CalendarView.defaultDate) {
@@ -29,19 +27,6 @@ class CalendarView: UIView {
       currentMonthLabel.text = displayingMonthInformation.currentMonthTitle
     }
   }
-  private var calendarState: CalendarState = .opened {
-    didSet {
-      self.calendarStateButton.customizeConfiguration(with: self.calendarState.rawValue, foregroundColor: .black, font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
-      if calendarState == .opened {
-        rightButton.isHidden = false
-        leftButton.isHidden = false
-      } else {
-        rightButton.isHidden = true
-        leftButton.isHidden = true
-      }
-    }
-  }
-  weak var delegate: CalendarViewDelegate?
   
   private let currentMonthLabel: UILabel = {
     let label = UILabel()
@@ -53,6 +38,9 @@ class CalendarView: UIView {
     
     return label
   }()
+  private let weekdaysView = WeekdaysView()
+  private let monthlyPageCollectionView = MonthlyPageCollectionView()
+  private var selectedCell: CalendarDateCollectionViewCell?
   private lazy var rightButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToNextMonth() })
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -68,17 +56,14 @@ class CalendarView: UIView {
     return button
   }()
   private lazy var calendarStateButton: UIButton = {
-    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.updateCalendarState() })
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.foldCalendar() })
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.customizeConfiguration(with: self.calendarState.rawValue, foregroundColor: .black, font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+    button.customizeConfiguration(with: "달력접기", foregroundColor: .black, font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
     button.contentVerticalAlignment = .top
     button.contentHorizontalAlignment = .right
     
     return button
   }()
-  private let weekdaysView = WeekdaysView()
-  private let monthlyPageCollectionView = MonthlyPageCollectionView()
-  private var selectedCell: CalendarDateCollectionViewCell?
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -126,18 +111,6 @@ class CalendarView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func updateSelectedCell() {
-    if let selectedCell = selectedCell {
-      selectedCell.updateRoutine()
-    }
-  }
-  
-  func reloadUserData() {
-    DispatchQueue.main.async {
-      self.monthlyPageCollectionView.reloadData()
-    }
-  }
-  
   private func configureSwipeGestures() {
     let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToLastMonth))
     swipeRightGestureRecognizer.direction = .right
@@ -148,8 +121,8 @@ class CalendarView: UIView {
     self.addGestureRecognizer(swipeLeftGestureRecognizer)
   }
   
-  private func updateCalendarState() {
-    self.calendarState = self.calendarState == .opened ? .folded : .opened
+  private func foldCalendar() {
+    delegate?.calendarIsFolded()
   }
   
   @objc private func moveToNextMonth() {
@@ -200,6 +173,18 @@ class CalendarView: UIView {
     
     if let selectedDayInformation = selectedCell?.dateInformation {
       delegate?.changedSelectedDay(to: selectedDayInformation)
+    }
+  }
+  
+  func updateSelectedCell() {
+    if let selectedCell = selectedCell {
+      selectedCell.updateRoutine()
+    }
+  }
+  
+  func reloadUserData() {
+    DispatchQueue.main.async {
+      self.monthlyPageCollectionView.reloadData()
     }
   }
 }
