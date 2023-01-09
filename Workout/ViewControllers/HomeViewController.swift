@@ -164,7 +164,43 @@ class HomeViewController: UIViewController {
     }
   }
   
+  private func shakeAddRoutineButton() {
+    let dur = 0.1
+    
+    UIView.animateKeyframes(withDuration: dur*5, delay: 0, options: [],
+                            animations: {
+      UIView.addKeyframe(withRelativeStartTime: 0.0,
+                         relativeDuration: dur) {
+        self.addRoutineButton.transform = CGAffineTransform(rotationAngle: -.pi/64)
+      }
+      UIView.addKeyframe(withRelativeStartTime: dur,
+                         relativeDuration: dur) {
+        self.addRoutineButton.transform = CGAffineTransform(rotationAngle: +.pi/64)
+      }
+      UIView.addKeyframe(withRelativeStartTime: dur*2,
+                         relativeDuration: dur) {
+        self.addRoutineButton.transform = CGAffineTransform(rotationAngle: -.pi/64)
+      }
+      UIView.addKeyframe(withRelativeStartTime: dur*3,
+                         relativeDuration: dur) {
+        self.addRoutineButton.transform = CGAffineTransform(rotationAngle: +.pi/64)
+      }
+      UIView.addKeyframe(withRelativeStartTime: dur*4,
+                         relativeDuration: dur) {
+        self.addRoutineButton.transform = CGAffineTransform.identity
+      }
+    },
+                            
+    completion: nil
+    )
+  }
+  
   private func foldCalendar() {
+    guard selectedDayInformation != nil else {
+      shakeAddRoutineButton()
+      return
+    }
+    
     self.calendarView.isHidden = true
     calendarViewBottomConstraint = calendarView.bottomAnchor.constraint(equalTo: calendarView.topAnchor)
     NSLayoutConstraint.activate([calendarViewBottomConstraint])
@@ -218,7 +254,7 @@ class HomeViewController: UIViewController {
       }
     }
   }
-
+  
   @objc private func updateCalendar(_ notification: NSNotification) {
     if let userInfo = notification.userInfo,
        let error = userInfo["error"] as? Error {
@@ -363,7 +399,4 @@ extension HomeViewController: TabBarMenu {
   var icon: String {
     return "house.fill"
   }
-}
-extension HomeViewController {
- 
 }
