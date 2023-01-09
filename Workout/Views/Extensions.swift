@@ -48,7 +48,7 @@ extension UIButton {
   
   func configureAbleMode(title: String) {
     self.isEnabled = true
-    self.customizeConfiguration(with: title, foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .medium)
+    self.customizeConfiguration(with: title, foregroundColor: .white, font: UIFont.Pretendard(type: .Semibold, size: 15), buttonSize: .medium)
     self.backgroundColor = 0x096DB6.convertToRGB()
   }
   
