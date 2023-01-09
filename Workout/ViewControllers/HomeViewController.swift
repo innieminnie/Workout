@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import AVFoundation
 
 class HomeViewController: UIViewController {
   private var handle: AuthStateDidChangeListenerHandle?
@@ -165,6 +166,7 @@ class HomeViewController: UIViewController {
   }
   
   private func shakeAddRoutineButton() {
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     let dur = 0.1
     
     UIView.animateKeyframes(withDuration: dur*5, delay: 0, options: [],
