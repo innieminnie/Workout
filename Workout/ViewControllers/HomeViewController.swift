@@ -14,10 +14,25 @@ class HomeViewController: UIViewController {
   private var selectedDayInformation: DateInformation? = DateInformation(date: Date()) {
     didSet {
       if selectedDayInformation == nil {
-        addRoutineButton.configureDisableMode(title: "등록 날짜를 먼저 선택해주세요")
+        guard let last = buttonStackView.arrangedSubviews.last, last === retrievePastRoutineButton else { return }
+        
+        UIView.animate(withDuration: 0.3) {
+          self.addRoutineButton.configureDisableMode(title: "등록 날짜를 먼저 선택해주세요")
+          last.isHidden = true
+          self.retrievePastRoutineButton.isHidden = true
+        } completion: { _ in
+          self.buttonStackView.removeArrangedSubview(last)
+        }
       } else {
-        addRoutineButton.configureAbleMode(title: "운동을 추가할래요")
         self.navigationController?.navigationBar.topItem?.title = selectedDayInformation?.fullDate
+        guard buttonStackView.arrangedSubviews.count == 1 else { return }
+        buttonStackView.addArrangedSubview(retrievePastRoutineButton)
+        
+        UIView.animate(withDuration: 0.3) {
+          self.addRoutineButton.configureAbleMode(title: "운동 추가하기")
+          self.retrievePastRoutineButton.isHidden = false
+        }
+      
       }
       
       DispatchQueue.main.async {
@@ -40,10 +55,28 @@ class HomeViewController: UIViewController {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedAddRoutineButton() })
     button.translatesAutoresizingMaskIntoConstraints = false
     
-    button.configureAbleMode(title: "운동을 추가할래요")
+    button.configureAbleMode(title: "운동 추가하기")
     button.applyCornerRadius(24)
     
     return button
+  }()
+  private lazy var retrievePastRoutineButton: UIButton = {
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedRetrievePastRoutineButton() })
+    button.translatesAutoresizingMaskIntoConstraints = false
+    
+    button.configureAbleMode(title: "이전 내역 불러오기")
+    button.applyCornerRadius(24)
+    return button
+  }()
+  private let buttonStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    stackView.axis = .horizontal
+    stackView.distribution = .fillEqually
+    stackView.spacing = 5
+    
+    return stackView
   }()
   private lazy var openCalendarButton: UIBarButtonItem = {
     let button = UIBarButtonItem(title: "달력펼치기", primaryAction: UIAction { _ in self.openCalendar() })
@@ -56,7 +89,9 @@ class HomeViewController: UIViewController {
     view.addSubview(contentScrollView)
     
     contentScrollView.addSubview(calendarView)
-    contentScrollView.addSubview(addRoutineButton)
+    buttonStackView.addArrangedSubview(addRoutineButton)
+    buttonStackView.addArrangedSubview(retrievePastRoutineButton)
+    contentScrollView.addSubview(buttonStackView)
     contentScrollView.addSubview(routineTableView)
     
     calendarView.delegate = self
@@ -132,11 +167,11 @@ class HomeViewController: UIViewController {
       calendarView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
       calendarView.widthAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.widthAnchor),
       
-      addRoutineButton.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
-      addRoutineButton.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 10),
-      addRoutineButton.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -10),
+      buttonStackView.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
+      buttonStackView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 5),
+      buttonStackView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -5),
       
-      routineTableView.topAnchor.constraint(equalTo: addRoutineButton.bottomAnchor, constant: 10),
+      routineTableView.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: 10),
       routineTableView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor),
       routineTableView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor),
       routineTableView.bottomAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.bottomAnchor, constant: -50),
@@ -150,6 +185,10 @@ class HomeViewController: UIViewController {
     routineSelectionViewController.delegate = self
     routineSelectionViewController.modalPresentationStyle = .formSheet
     self.present(routineSelectionViewController, animated: true, completion: nil)
+  }
+  
+  private func tappedRetrievePastRoutineButton() {
+    print("tapped")
   }
   
   private func openCalendar() {
