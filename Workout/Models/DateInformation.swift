@@ -11,6 +11,21 @@ struct DateInformation: Hashable, Codable {
   private var year: Int
   private var month: Int
   private var day: Int
+  private var weekdayName: String {
+    let dateComponent = DateComponents(calendar: Calendar.current, year: self.year, month: self.month, day: self.day)
+    let date = dateComponent.date!
+    let weekday = Weekday(Calendar.current.component(.weekday, from: date))
+  
+    return weekday  .weekdayName()
+  }
+  
+  
+  var currentMonthlyDate: String {
+    return "\(self.year)년 \(self.month)월"
+  }
+  var fullDate: String {
+    return "\(self.year)년 \(self.month)월 \(self.day)일 \(self.weekdayName)"
+  }
   
   enum CodingKeys: String, CodingKey {
     case year
@@ -18,13 +33,27 @@ struct DateInformation: Hashable, Codable {
     case day
   }
   
-  var currentMonthlyDate: String {
-    return "\(self.year)년 \(self.month)월"
-  }
-  
   init(_ year: Int, _ month: Int, _ day: Int) {
     self.year = year
     self.month = month
     self.day = day
   }
+  
+  init(date: Date) {
+    self.year = Calendar.current.component(.year, from: date)
+    self.month = Calendar.current.component(.month, from: date)
+    self.day = Calendar.current.component(.day, from: date)
+  }
 }
+extension DateInformation: Comparable {
+  static func < (lhs: DateInformation, rhs: DateInformation) -> Bool {
+    if lhs.year == rhs.year {
+      if lhs.month == rhs.month {
+        return lhs.day <= rhs.day
+      }
+      return lhs.month < rhs.month
+    }
+    return lhs.year < rhs.year
+  }
+}
+

@@ -9,7 +9,9 @@ import UIKit
 
 protocol RoutineSelectionDelegate: AnyObject {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout])
+  func copyPlannedWorkouts(from date: DateInformation)
 }
+
 class RoutineSelectionViewController: UIViewController {
   private var selectedWorkouts = [Workout]()
   weak var delegate: RoutineSelectionDelegate?
@@ -23,14 +25,11 @@ class RoutineSelectionViewController: UIViewController {
   }()
   
   private lazy var addRoutineButton: UIButton = {
-    let button = UIButton()
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedAddRoutineButton() })
     button.translatesAutoresizingMaskIntoConstraints = false
     
-    button.customizeConfiguration(with: "선택한 운동을 추가할게요", foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .medium)
-    button.backgroundColor = 0xBEC0C2.convertToRGB()
+    button.configureDisableMode(title: "선택한 운동을 추가할게요")
     button.applyCornerRadius(24)
-    button.addTarget(self, action: #selector(tappedAddRoutineButton(sender:)), for: .touchUpInside)
-    button.isEnabled = false
     
     return button
   }()
@@ -63,15 +62,16 @@ class RoutineSelectionViewController: UIViewController {
     }
   }
 
-  @objc func tappedAddRoutineButton(sender: UIButton) {
+  private func tappedAddRoutineButton() {
     if let selectedWorkoutIndexPaths = self.workoutListTableView.indexPathsForSelectedRows {
       self.selectedWorkouts = selectedWorkoutIndexPaths.map({ indexPath in
         workoutManager.workout(at: indexPath)
       })
     }
   
-    self.delegate?.addSelectedWorkouts(self.selectedWorkouts)
-    self.dismiss(animated: true, completion: nil)
+    self.dismiss(animated: true) {
+      self.delegate?.addSelectedWorkouts(self.selectedWorkouts)
+    }
   }
   
   private func setUpNoticeLabel() {

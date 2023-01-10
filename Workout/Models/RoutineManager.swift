@@ -6,63 +6,44 @@
 //
 
 import Foundation
-import FirebaseDatabase
 
 class RoutineManager {
   static let shared = RoutineManager()
-  private var workoutPlanner: [DateInformation : [PlannedWorkout]]
-  private let ref: DatabaseReference! = Database.database().reference()
-  private let encoder = JSONEncoder()
-  private let decoder = JSONDecoder()
-  private var uid: String {
-    if let currentUser = currentUser { return currentUser.uid }
-    else { return HomeViewController.signedUpUser }
-  }
   
+  private let networkConnecter = RoutineNetworkConnecter()
+  private var workoutPlanner: [DateInformation : [PlannedWorkout]]
   private init() {
     workoutPlanner = [:]
   }
   
   func readRoutineData(from dateInformation: DateInformation) {
-    let itemRef = configureRoutineDatabaseReference(dateInformation: dateInformation)
-    
-    itemRef.getData { error, snapshot in
+    networkConnecter.fetchRoutineData(dateInformation: dateInformation) { decodedRoutine, error in
       if let error = error {
-        DispatchQueue.main.async {
-          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
-        }
-      } else if snapshot.exists() {
-        guard let jsonValue = snapshot.value as? [String: Any] else {
-          return
+        NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
+        return
+      }
+      
+      if let decodedRoutine = decodedRoutine {
+        let dailyRoutine = decodedRoutine.map { (key: String, value: PlannedWorkout) -> PlannedWorkout in
+          value.setId(with: key)
+          return value
+        }.sorted { plannedWorkout1, plannedWorkout2 in
+          plannedWorkout1.sequenceNumber < plannedWorkout2.sequenceNumber
         }
         
-        do {
-          let data = try JSONSerialization.data(withJSONObject: jsonValue)
-          let decodedRoutine = try self.decoder.decode([String : PlannedWorkout].self, from: data)
-          
-          let dailyRoutine = decodedRoutine.map { (key: String, value: PlannedWorkout) -> PlannedWorkout in
-            value.setId(with: key)
-            return value
-          }.sorted { plannedWorkout1, plannedWorkout2 in
-            plannedWorkout1.sequenceNumber < plannedWorkout2.sequenceNumber
-          }
-          
-          self.workoutPlanner[dateInformation] = dailyRoutine
-          
-          DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine, "date": dateInformation])
-          }
-        } catch {
-          DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["error": error])
-          }
-        }
-      } else {
+        self.workoutPlanner[dateInformation] = dailyRoutine
+        
         DispatchQueue.main.async {
-          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": [], "date": dateInformation])
+          NotificationCenter.default.post(name: Notification.Name("ReadRoutineData"), object: nil, userInfo: ["dailyRoutine": dailyRoutine, "date": dateInformation])
         }
       }
+      
+      
     }
+  }
+  
+  func recentRoutines() -> [DateInformation : [PlannedWorkout]] {
+    return self.workoutPlanner.filter { $0.value.count > 0 }
   }
   
   func plan(of dateInformation: DateInformation) -> [PlannedWorkout] {
@@ -70,24 +51,9 @@ class RoutineManager {
   }
   
   func addPlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
-    let itemRef = configureRoutineDatabaseReference(dateInformation: dateInformation)
-    
-    for workout in workouts {
-      do {
-        guard let key = itemRef.childByAutoId().key else { return }
-        
-        workout.id = key
-        let data = try encoder.encode(workout)
-        let json = try JSONSerialization.jsonObject(with: data)
-        
-        let childUpdates = ["/users/\(uid)/routine/\(dateInformation)/\(key)/": json]
-        self.ref.updateChildValues(childUpdates)
-      } catch {
-        print(error)
-      }
-    }
-    
+    let startingIndex = plan(of: dateInformation).count
     workoutPlanner[dateInformation] =  plan(of: dateInformation) + workouts
+    networkConnecter.addRoutineData(workouts: workouts, on: dateInformation, startingIndex: startingIndex)
   }
   
   func reorderPlan(on date: DateInformation, removeAt removingPosition: Int, insertAt insertingPosition: Int) {
@@ -106,21 +72,12 @@ class RoutineManager {
     
     for (idx, workout) in workouts.enumerated() {
       workout.sequenceNumber = UInt(idx)
-      self.updateRoutine(workout: workout, on: dateInformation)
+      networkConnecter.updateRoutineData(workout: workout, on: dateInformation)
     }
   }
   
-  func updateRoutine(workout: PlannedWorkout, on dateInformation: DateInformation) {
-    do {
-      guard let id = workout.id else { return }
-      let data = try encoder.encode(workout)
-      let json = try JSONSerialization.jsonObject(with: data)
-      
-      let childUpdates = ["/users/\(uid)/routine/\(dateInformation)/\(id)/": json]
-      ref.updateChildValues(childUpdates)
-    } catch {
-      print(error)
-    }
+  func updateRoutineData(with workout: PlannedWorkout, on dateInformation: DateInformation) {
+    networkConnecter.updateRoutineData(workout: workout, on: dateInformation)
   }
   
   func removePlannedWorkout(at removingPosition: Int, on dateInformation: DateInformation) {
@@ -130,9 +87,12 @@ class RoutineManager {
     workoutPlanner[dateInformation] = reorderingPlan
     
     guard let id = removingWorkout.id else { return }
-    let itemRef = configureRoutineDatabaseReference(dateInformation: dateInformation)
-    itemRef.child("/\(id)").removeValue()
-    
+    networkConnecter.removeRoutineData(id: id, on: dateInformation)
+    let workoutCode = removingWorkout.workoutCode
+    if let workout = workoutManager.workoutByCode(workoutCode) {
+      workout.removeRegisteredDate(on: dateInformation)
+    }
+   
     self.updatePlan(with: reorderingPlan, on: dateInformation)
   }
   
@@ -144,24 +104,14 @@ class RoutineManager {
       if reorderingPlan[index].workoutCode == workoutCode { removingPosition.append(index) }
     }
     
-    let itemRef = configureRoutineDatabaseReference(dateInformation: date)
-    
     for removingIndex in removingPosition {
       guard let removingID = reorderingPlan[removingIndex].id else { continue }
-      itemRef.child("/\(removingID)").removeValue()
+      networkConnecter.removeRoutineData(id: removingID, on: date)
       reorderingPlan.remove(at: removingIndex)
     }
     
     workoutPlanner[date] = reorderingPlan
     self.updatePlan(with: reorderingPlan, on: date)
-  }
-  
-  private func configureRoutineDatabaseReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
-    if let currentUser = currentUser {
-      return self.ref.child("users/\(currentUser.uid)/routine/\(dateInfo)")
-    }
-    
-    return self.ref.child("users/\(HomeViewController.signedUpUser)/routine/\(dateInfo)")
   }
 }
 

@@ -54,6 +54,7 @@ class WorkoutSetConfigurationView: UIView {
   
   private lazy var weightTextField: UITextFieldWithPadding = {
     let textField = UITextFieldWithPadding()
+    textField.addAction(UIAction { _ in self.textFieldValueChanged(sender: textField) }, for: .editingChanged)
     textField.translatesAutoresizingMaskIntoConstraints = false
     
     textField.backgroundColor = 0xBEC0C2.convertToRGB()
@@ -64,7 +65,6 @@ class WorkoutSetConfigurationView: UIView {
     textField.placeholder = "\(0.0)"
     textField.text = "\(0.0)"
     
-    textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
     return textField
   }()
   
@@ -80,6 +80,7 @@ class WorkoutSetConfigurationView: UIView {
   
   private lazy var countTextField: UITextFieldWithPadding = {
     let textField = UITextFieldWithPadding()
+    textField.addAction(UIAction { _ in self.textFieldValueChanged(sender: textField) }, for: .editingChanged)
     textField.translatesAutoresizingMaskIntoConstraints = false
     
     textField.backgroundColor = 0xBEC0C2.convertToRGB()
@@ -90,7 +91,6 @@ class WorkoutSetConfigurationView: UIView {
     textField.placeholder = "\(0)"
     textField.text = "\(0)"
     
-    textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
     return textField
   }()
   
@@ -159,6 +159,36 @@ class WorkoutSetConfigurationView: UIView {
     delegate?.setSumUpdated(from: setSum, to: 0)
   }
   
+  func resetWeightAndCountValues() {
+    self.weightValue = 0
+    self.countValue = 0
+  }
+  
+  func showDoingStatusView() {
+    weightTextField.isUserInteractionEnabled = true
+    weightTextField.backgroundColor = 0xBEC0C2.convertToRGB()
+    weightTextField.textColor = .black
+    
+    countTextField.isUserInteractionEnabled = true
+    countTextField.backgroundColor = 0xBEC0C2.convertToRGB()
+    countTextField.textColor = .black
+  }
+  
+  func showDoneStatusView() {
+    weightTextField.isUserInteractionEnabled = false
+    weightTextField.backgroundColor = .clear
+    weightTextField.textColor = 0x096DB6.convertToRGB()
+    
+    countTextField.isUserInteractionEnabled = false
+    countTextField.backgroundColor = .clear
+    countTextField.textColor = 0x096DB6.convertToRGB()
+  }
+  
+  func allFieldsAreWritten() -> Bool {
+    return weightTextField.hasText && countTextField.hasText
+  }
+}
+extension WorkoutSetConfigurationView {
   private func configureWeightStackView() {
     weightStackView.addArrangedSubview(weightTextField)
     weightStackView.addArrangedSubview(weightUnitLabel)
@@ -228,36 +258,7 @@ class WorkoutSetConfigurationView: UIView {
     }
   }
   
-  func resetWeightAndCountValues() {
-    self.weightValue = 0
-    self.countValue = 0
-  }
-  
-  func showDoingStatusView() {
-    weightTextField.isUserInteractionEnabled = true
-    weightTextField.backgroundColor = 0xBEC0C2.convertToRGB()
-    weightTextField.textColor = .black
-    
-    countTextField.isUserInteractionEnabled = true
-    countTextField.backgroundColor = 0xBEC0C2.convertToRGB()
-    countTextField.textColor = .black
-  }
-  
-  func showDoneStatusView() {
-    weightTextField.isUserInteractionEnabled = false
-    weightTextField.backgroundColor = .clear
-    weightTextField.textColor = 0x096DB6.convertToRGB()
-    
-    countTextField.isUserInteractionEnabled = false
-    countTextField.backgroundColor = .clear
-    countTextField.textColor = 0x096DB6.convertToRGB()
-  }
-  
-  func allFieldsAreWritten() -> Bool {
-    return weightTextField.hasText && countTextField.hasText
-  }
-  
-  @objc private func textFieldValueChanged(sender: UITextField) {
+  private func textFieldValueChanged(sender: UITextField) {
     updateSetSum(sender: sender)
   }
 }
@@ -268,19 +269,5 @@ extension WorkoutSetConfigurationView: UITextFieldDelegate {
   
   func textFieldDidEndEditing(_ textField: UITextField) {
     updateSetSum(sender: textField)
-  }
-}
-
-class UITextFieldWithPadding: UITextField {
-  var textPadding = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 10)
-  
-  override func textRect(forBounds bounds: CGRect) -> CGRect {
-    let rect = super.textRect(forBounds: bounds)
-    return rect.inset(by: textPadding)
-  }
-  
-  override func editingRect(forBounds bounds: CGRect) -> CGRect {
-    let rect = super.editingRect(forBounds: bounds)
-    return rect.inset(by: textPadding)
   }
 }

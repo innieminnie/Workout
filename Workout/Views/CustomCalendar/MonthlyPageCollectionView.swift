@@ -27,15 +27,14 @@ class MonthlyPageCollectionView: UICollectionView {
     self.translatesAutoresizingMaskIntoConstraints = false
     
     self.backgroundColor = .white
-    self.layer.borderColor = 0xF58423.convertToRGB().cgColor
-    self.layer.borderWidth = 2
-    self.applyCornerRadius(16)
     
     let nib = UINib(nibName: "CalendarDateCollectionViewCell", bundle: nil)
     self.register(nib, forCellWithReuseIdentifier: CalendarDateCollectionViewCell.identifier)
     self.showsHorizontalScrollIndicator = false
     self.showsVerticalScrollIndicator = false
     self.allowsMultipleSelection = false
+    
+    
   }
   
   required init?(coder: NSCoder) {

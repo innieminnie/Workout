@@ -12,12 +12,22 @@ class SettingViewController: UIViewController {
   private let settingMenus = [SettingMenu("계정",["email"]), SettingMenu("지원", ["문의/의견 이메일 보내기"])]
   
   private lazy var logoutButton: UIButton = {
-    let button = UIButton()
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedLogout()})
     button.translatesAutoresizingMaskIntoConstraints = false
     
     button.customizeConfiguration(with: "로그아웃", foregroundColor: .red, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
     button.backgroundColor = 0xBEC0C2.convertToRGB()
-    button.addTarget(self, action: #selector(tappedLogout), for: .touchUpInside)
+    
+    return button
+  }()
+  
+  private lazy var signoutButton: UIButton = {
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedSignout() })
+    button.translatesAutoresizingMaskIntoConstraints = false
+    
+    button.customizeConfiguration(with: "계정 삭제", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
+    button.backgroundColor = 0xBEC0C2.convertToRGB()
+    
     return button
   }()
   
@@ -36,17 +46,32 @@ class SettingViewController: UIViewController {
     self.view.backgroundColor = .white
     self.view.addSubview(settingTableView)
     self.view.addSubview(logoutButton)
+    self.view.addSubview(signoutButton)
     settingTableView.delegate = self
     settingTableView.dataSource = self
     
     setUpLayout()
   }
   
-  @objc private func tappedLogout() {
+   private func tappedLogout() {
     let alert = UIAlertController(title: "정말 로그아웃할건가요?", message: nil, preferredStyle: .alert)
     let cancelAction = UIAlertAction(title: "아니요", style: .cancel)
     let completeAction = UIAlertAction(title: "네", style: .destructive) { alertAction in
       AuthenticationManager.shared.logoutProcess()
+      let appDelegate = UIApplication.shared.delegate as! AppDelegate
+      appDelegate.changeRootViewController(SignInViewController(), animated: true)
+    }
+    
+    alert.addAction(cancelAction)
+    alert.addAction(completeAction)
+    self.present(alert, animated: false, completion: nil)
+  }
+  
+  private func tappedSignout() {
+    let alert = UIAlertController(title: "정말 계정을 삭제할건가요?", message: nil, preferredStyle: .alert)
+    let cancelAction = UIAlertAction(title: "아니요", style: .cancel)
+    let completeAction = UIAlertAction(title: "네", style: .destructive) { alertAction in
+      AuthenticationManager.shared.signoutProcess()
       let appDelegate = UIApplication.shared.delegate as! AppDelegate
       appDelegate.changeRootViewController(SignInViewController(), animated: true)
     }
@@ -65,7 +90,11 @@ class SettingViewController: UIViewController {
       
       logoutButton.leadingAnchor.constraint(equalTo: settingTableView.leadingAnchor),
       logoutButton.trailingAnchor.constraint(equalTo: settingTableView.trailingAnchor),
-      logoutButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+      logoutButton.bottomAnchor.constraint(equalTo: signoutButton.topAnchor),
+      
+      signoutButton.leadingAnchor.constraint(equalTo: settingTableView.leadingAnchor),
+      signoutButton.trailingAnchor.constraint(equalTo: settingTableView.trailingAnchor),
+      signoutButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
     ])
   }
   

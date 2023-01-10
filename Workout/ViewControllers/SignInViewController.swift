@@ -52,23 +52,23 @@ class SignInViewController: UIViewController {
   private func setUpLoginButtons() {
     let appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     appleLoginButton.translatesAutoresizingMaskIntoConstraints = false
-    appleLoginButton.addTarget(self, action: #selector(tappedAppleSignInButton), for: .touchUpInside)
+    appleLoginButton.addAction(UIAction { _ in self.tappedAppleSignInButton() }, for: .touchUpInside)
     
     let googleLoginButton = GIDSignInButton()
+    googleLoginButton.addAction(UIAction { _ in self.tappedGoogleSignInButton() }, for: .touchUpInside)
     googleLoginButton.translatesAutoresizingMaskIntoConstraints = false
     googleLoginButton.colorScheme = .dark
     googleLoginButton.style = .wide
     googleLoginButton.backgroundColor = 0x4285F4.convertToRGB()
     googleLoginButton.layer.cornerRadius = 6
-    googleLoginButton.addTarget(self, action: #selector(tappedGoogleSignInButton), for: .touchUpInside)
     
     let kakaoLoginButton = UIButton()
+    kakaoLoginButton.addAction(UIAction { _ in self.tappedKakaoSignInButton() }, for: .touchUpInside)
     kakaoLoginButton.translatesAutoresizingMaskIntoConstraints = false
     kakaoLoginButton.backgroundColor = 0xFEE500.convertToRGB()
     kakaoLoginButton.setImage(#imageLiteral(resourceName: "kakao_login_large_wide"), for: .normal)
     kakaoLoginButton.layer.cornerRadius = 6
     kakaoLoginButton.imageView?.contentMode = .scaleAspectFill
-    kakaoLoginButton.addTarget(self, action: #selector(tappedKakaoSignInButton), for: .touchUpInside)
     
     buttonsStackView.addArrangedSubview(appleLoginButton)
     buttonsStackView.addArrangedSubview(googleLoginButton)
@@ -93,11 +93,18 @@ class SignInViewController: UIViewController {
     ])
   }
   
-  @objc private func tappedGoogleSignInButton() {
+  func completeSignInProcess() {
+    let baseTabBarController = BaseTabBarController()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    appDelegate.changeRootViewController(baseTabBarController, animated: true)
+  }
+}
+extension SignInViewController {
+  private func tappedGoogleSignInButton() {
     AuthenticationManager.shared.googleLoginProcess(presentingVC: self)
   }
   
-  @objc private func tappedAppleSignInButton() {
+  private func tappedAppleSignInButton() {
     let nonce = randomNonceString()
     currentNonce = nonce
     
@@ -112,14 +119,8 @@ class SignInViewController: UIViewController {
     AuthenticationManager.shared.appleLoginProcess(with: authorizationController)
   }
   
-  @objc private func tappedKakaoSignInButton() {
+  private func tappedKakaoSignInButton() {
     AuthenticationManager.shared.kakaoLoginProcess(presentingVC: self)
-  }
-  
-  func completeSignInProcess() {
-    let baseTabBarController = BaseTabBarController()
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    appDelegate.changeRootViewController(baseTabBarController, animated: true)
   }
   
   private func sha256(_ input: String) -> String {

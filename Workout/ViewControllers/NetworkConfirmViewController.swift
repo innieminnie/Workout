@@ -22,25 +22,11 @@ class NetworkConfirmViewController: UIViewController {
     return label
   }()
   
-//  private lazy var retryButton: UIButton = {
-//    let button = UIButton()
-//    button.translatesAutoresizingMaskIntoConstraints = false
-//
-//    button.customizeConfiguration(with: "재시도", foregroundColor: .white, font: UIFont.boldSystemFont(ofSize: 15), buttonSize: .medium)
-//    button.backgroundColor = 0x096DB6.convertToRGB()
-//    button.applyCornerRadius(12)
-//    button.isEnabled = false
-//    self.retryButton.addTarget(self, action: #selector(tappedRetryButton), for: .touchUpInside)
-//
-//    return button
-//  }()
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
     
     self.view.addSubview(noticeLabel)
-//    self.view.addSubview(retryButton)
     setUpLayout()
   }
   
@@ -50,18 +36,7 @@ class NetworkConfirmViewController: UIViewController {
       noticeLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -12),
       noticeLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
       noticeLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-      
-//      retryButton.topAnchor.constraint(equalTo: noticeLabel.bottomAnchor, constant: 10),
-//      retryButton.leadingAnchor.constraint(equalTo: noticeLabel.leadingAnchor),
-//      retryButton.trailingAnchor.constraint(equalTo: noticeLabel.trailingAnchor)
     ])
-  }
-  
-  func activateRetryButton() {
-//    retryButton.isEnabled = true
-  }
-  @objc private func tappedRetryButton() {
-    self.dismiss(animated: true)
   }
 }
 

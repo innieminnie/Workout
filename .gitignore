@@ -6,11 +6,11 @@
 Workout/Base.lproj
 
 ### API Key ###
-Workout/Models/APIKey.swift
-Workout/Info.plist
+Workout/SupportingFiles/APIKey.swift
+Workout/SupportingFiles/Info.plist
 
 ### Firebase Database ###
-Workout/GoogleService-Info.plist
+Workout/SupportingFiles/GoogleService-Info.plist
 
 ### CocoaPods ###
 ## CocoaPods GitIgnore Template

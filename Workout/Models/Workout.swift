@@ -50,12 +50,22 @@ class Workout: Identifiable, Codable {
   func configureId(with id: String) {
     guard self.id == nil else { return }
     self.id = id
+    
+    fetchRegisteredRoutine()
   }
   
   func addRegisteredDate(on dateInformation: DateInformation) {
     guard !registeredDate.contains(dateInformation) else { return }
     
     registeredDate.insert(dateInformation)
+    if let id = id {
+      workoutManager.updateWorkoutRegistration(id, registeredDate)
+    }
+  }
+  
+  func removeRegisteredDate(on dateInformation: DateInformation) {
+    registeredDate.remove(dateInformation)
+    
     if let id = id {
       workoutManager.updateWorkoutRegistration(id, registeredDate)
     }
@@ -76,6 +86,12 @@ class Workout: Identifiable, Codable {
     
     for date in registeredDate {
       routineManager.removeRegisteredWorkout(code: id, on: date)
+    }
+  }
+  
+  private func fetchRegisteredRoutine() {
+    for date in registeredDate {
+      routineManager.readRoutineData(from: date)
     }
   }
 }
