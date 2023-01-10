@@ -71,6 +71,10 @@ class RoutineManager {
     }
   }
   
+  func updateRoutineData(with workout: PlannedWorkout, on dateInformation: DateInformation) {
+    networkConnecter.updateRoutineData(workout: workout, on: dateInformation)
+  }
+  
   func removePlannedWorkout(at removingPosition: Int, on dateInformation: DateInformation) {
     var reorderingPlan = self.plan(of: dateInformation)
     let removingWorkout = reorderingPlan[removingPosition]
