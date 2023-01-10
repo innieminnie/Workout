@@ -13,6 +13,7 @@ class PreviousRecordViewController: UIViewController {
   private let previousRecordsTableView: UITableView = {
     let tableView = UITableView()
     tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.separatorStyle = .none
     
     return tableView
   }()
@@ -127,21 +128,26 @@ extension PreviousRecordViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: WorkoutTableViewCell.identifier, for: indexPath) as? WorkoutTableViewCell else {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: RecordTableViewCell.identifier, for: indexPath) as? RecordTableViewCell else {
       return UITableViewCell()
     }
+    
+    let recordDate = self.records[indexPath.section].key
+    let workoutData = routineManager.plan(of: recordDate)
+    cell.setUp(with: workoutData)
     
     return cell
   }
   
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return self.records[section].key.fullDate
+    return "\(self.records[section].key.fullDate)요일의 기록"
   }
   
   func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
     let headerView = view as! UITableViewHeaderFooterView
-    headerView.textLabel?.textColor = 0x096DB6.convertToRGB()
-    headerView.textLabel?.font = UIFont.Pretendard(type: .Regular, size: 15)
+    headerView.tintColor = 0xF58423.convertToRGB()
+    headerView.textLabel?.textColor = .white
+    headerView.textLabel?.font = UIFont.Pretendard(type: .Bold, size: 15)
   }
 }
 extension PreviousRecordViewController: UITableViewDelegate {
@@ -167,8 +173,7 @@ extension PreviousRecordViewController {
     previousRecordsTableView.dataSource = self
     previousRecordsTableView.delegate = self
     
-    let nib = UINib(nibName: "WorkoutTableViewCell", bundle: nil)
-    self.previousRecordsTableView.register(nib, forCellReuseIdentifier: WorkoutTableViewCell.identifier)
-    self.previousRecordsTableView.separatorStyle = .none
+    let nib = UINib(nibName: "RecordTableViewCell", bundle: nil)
+    self.previousRecordsTableView.register(nib, forCellReuseIdentifier: RecordTableViewCell.identifier)
   }
 }

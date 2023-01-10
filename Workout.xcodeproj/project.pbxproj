@@ -72,6 +72,8 @@
 		D9E096292922AEBA00AE710F /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E096282922AEBA00AE710F /* AuthenticationManager.swift */; };
 		D9E0962B2923564900AE710F /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E0962A2923564900AE710F /* APIKey.swift */; };
 		D9E67B78296D299400B704DB /* PreviousRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E67B77296D299400B704DB /* PreviousRecordViewController.swift */; };
+		D9E67B7B296DAA8B00B704DB /* RecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E67B79296DAA8B00B704DB /* RecordTableViewCell.swift */; };
+		D9E67B7C296DAA8B00B704DB /* RecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9E67B7A296DAA8B00B704DB /* RecordTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +171,8 @@
 		D9E096282922AEBA00AE710F /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		D9E0962A2923564900AE710F /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		D9E67B77296D299400B704DB /* PreviousRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousRecordViewController.swift; sourceTree = "<group>"; };
+		D9E67B79296DAA8B00B704DB /* RecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordTableViewCell.swift; sourceTree = "<group>"; };
+		D9E67B7A296DAA8B00B704DB /* RecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordTableViewCell.xib; sourceTree = "<group>"; };
 		F99F031903C6C522AC1CD969 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		FF5C8FD7B0C3E2936CFFA345 /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.debug.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -344,6 +348,8 @@
 				D9D44E44290692A00035B8D0 /* BodySectionCollectionViewCell.xib */,
 				D92D2415292B14D400031670 /* SettingTableViewCell.swift */,
 				D92D2416292B14D400031670 /* SettingTableViewCell.xib */,
+				D9E67B79296DAA8B00B704DB /* RecordTableViewCell.swift */,
+				D9E67B7A296DAA8B00B704DB /* RecordTableViewCell.xib */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -520,6 +526,7 @@
 				D9DA40562934A04F00DBBEDD /* Pretendard-ExtraBold.otf in Resources */,
 				D99CA6F0295D918E003D2BB5 /* GoogleService-Info.plist in Resources */,
 				D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */,
+				D9E67B7C296DAA8B00B704DB /* RecordTableViewCell.xib in Resources */,
 				D9DA40542934A04F00DBBEDD /* Pretendard-Light.otf in Resources */,
 				D9D055E62923760100DC428E /* Launch.storyboard in Resources */,
 				D9DA40512934A04F00DBBEDD /* Pretendard-ExtraLight.otf in Resources */,
@@ -660,6 +667,7 @@
 				D9D44E4A2910F9540035B8D0 /* PaddingLabel.swift in Sources */,
 				D90B7E00294A1DC70003B3CA /* RoutineNetworkConnecter.swift in Sources */,
 				D9107C582810045200FABD37 /* RoutineSelectionViewController.swift in Sources */,
+				D9E67B7B296DAA8B00B704DB /* RecordTableViewCell.swift in Sources */,
 				D9107C5D282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift in Sources */,
 				D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */,
 				D9107C622833741800FABD37 /* RoutineTableView.swift in Sources */,
