@@ -42,13 +42,18 @@ class RoutineManager {
     }
   }
   
+  func recentRoutines() -> [DateInformation : [PlannedWorkout]] {
+    return self.workoutPlanner.filter { $0.value.count > 0 }
+  }
+  
   func plan(of dateInformation: DateInformation) -> [PlannedWorkout] {
     return workoutPlanner[dateInformation] ?? []
   }
   
   func addPlan(with workouts: [PlannedWorkout], on dateInformation: DateInformation) {
+    let startingIndex = plan(of: dateInformation).count
     workoutPlanner[dateInformation] =  plan(of: dateInformation) + workouts
-    networkConnecter.addRoutineData(workouts: workouts, on: dateInformation)
+    networkConnecter.addRoutineData(workouts: workouts, on: dateInformation, startingIndex: startingIndex)
   }
   
   func reorderPlan(on date: DateInformation, removeAt removingPosition: Int, insertAt insertingPosition: Int) {
