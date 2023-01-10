@@ -62,13 +62,13 @@ class WorkoutSettingView: UIView {
   private lazy var weightUnitSegmentedControl: UISegmentedControl = {
     let unitsLabel = WeightUnit.allCases.map { $0.rawValue }
     let uiSegmentedControl = UISegmentedControl(items: unitsLabel)
+    uiSegmentedControl.addAction( UIAction { _ in self.selectedWeightUnit(sender: uiSegmentedControl) }, for: .valueChanged)
     uiSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
     
     uiSegmentedControl.layer.borderColor = 0xF58423.convertToRGB().withAlphaComponent(0.3).cgColor
     uiSegmentedControl.layer.borderWidth = 1
     uiSegmentedControl.selectedSegmentTintColor = 0xF58423.convertToRGB()
     
-    uiSegmentedControl.addTarget(self, action: #selector(selectedWeightUnit(sender:)), for: .valueChanged)
     return uiSegmentedControl
   }()
   
@@ -99,24 +99,26 @@ class WorkoutSettingView: UIView {
   }()
   
   private lazy var cancelButton: UIButton = {
-    let button = UIButton()
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedCancel() })
     button.customizeConfiguration(with: "취소", foregroundColor: .red, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    
     button.backgroundColor = .white
     button.layer.borderColor = 0xBEC0C2.convertToRGB().cgColor
     button.layer.borderWidth = 2
     button.applyCornerRadius(12)
     
-    button.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
     return button
   }()
   
   private lazy var updateButton: UIButton = {
-    let button = UIButton()
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedUpdate() })
     button.customizeConfiguration(with: "등록할게요", foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    
     button.backgroundColor = 0x096DB6.convertToRGB()
     button.applyCornerRadius(12)
     
-    button.addTarget(self, action: #selector(tappedUpdate), for: .touchUpInside)
     return button
   }()
   
@@ -230,43 +232,6 @@ class WorkoutSettingView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  @objc private func selectedWeightUnit(sender: UISegmentedControl) {
-    switch sender.selectedSegmentIndex {
-    case 0:
-      self.selectedWeightUnit =  .kg
-    case 1:
-      self.selectedWeightUnit = .lb
-    default:
-      break
-    }
-  }
-  
-  @objc private func cellTapped(gesture: BodySectionTapGesture) {
-    if let currentSelectedCell = selectedCell {
-      currentSelectedCell.isSelected = false
-      currentSelectedCell.showDeselectedStatus()
-    }
-    
-    if let currentTappedCell = gesture.tappedCell {
-      currentTappedCell.isSelected = true
-      currentTappedCell.showSelectedStatus()
-      self.selectedCell = currentTappedCell
-    }
-  }
-  
-  private func setSelectedWeightUnit() {
-    guard let selectedWeightUnit = selectedWeightUnit else {
-      return
-    }
-    
-    switch selectedWeightUnit {
-    case .kg:
-      self.weightUnitSegmentedControl.selectedSegmentIndex = 0
-    case .lb:
-      self.weightUnitSegmentedControl.selectedSegmentIndex = 1
-    }
-  }
-  
   func setUp(with workout: Workout) {
     self.isEditable = false
     titleLabel.text = "운동 정보"
@@ -288,11 +253,11 @@ extension WorkoutSettingView: UITextFieldDelegate {
   }
 }
 extension WorkoutSettingView {
-  @objc private func tappedCancel() {
+  private func tappedCancel() {
     delegate?.tappedCancel()
   }
   
-  @objc private func tappedUpdate() {
+  private func tappedUpdate() {
     if !self.isEditable {
       self.isEditable = true
     } else {
@@ -319,6 +284,43 @@ extension WorkoutSettingView {
       
       
       self.delegate?.register(name, weightUnit, bodySection)
+    }
+  }
+  
+  private func selectedWeightUnit(sender: UISegmentedControl) {
+    switch sender.selectedSegmentIndex {
+    case 0:
+      self.selectedWeightUnit =  .kg
+    case 1:
+      self.selectedWeightUnit = .lb
+    default:
+      break
+    }
+  }
+  
+  private func setSelectedWeightUnit() {
+    guard let selectedWeightUnit = selectedWeightUnit else {
+      return
+    }
+    
+    switch selectedWeightUnit {
+    case .kg:
+      self.weightUnitSegmentedControl.selectedSegmentIndex = 0
+    case .lb:
+      self.weightUnitSegmentedControl.selectedSegmentIndex = 1
+    }
+  }
+  
+  @objc private func cellTapped(gesture: BodySectionTapGesture) {
+    if let currentSelectedCell = selectedCell {
+      currentSelectedCell.isSelected = false
+      currentSelectedCell.showDeselectedStatus()
+    }
+    
+    if let currentTappedCell = gesture.tappedCell {
+      currentTappedCell.isSelected = true
+      currentTappedCell.showSelectedStatus()
+      self.selectedCell = currentTappedCell
     }
   }
 }

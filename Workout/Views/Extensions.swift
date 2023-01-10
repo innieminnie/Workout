@@ -7,6 +7,24 @@
 
 import UIKit
 
+extension Int {
+  func convertToRGB() -> UIColor {
+    return UIColor(
+        red: CGFloat((Float((self & 0xff0000) >> 16)) / 255.0),
+        green: CGFloat((Float((self & 0x00ff00) >> 8)) / 255.0),
+        blue: CGFloat((Float((self & 0x0000ff) >> 0)) / 255.0),
+        alpha: 1.0)
+  }
+}
+extension Date {
+  func changeToDateComponents() -> DateComponents {
+    let year = Calendar.current.component(.year, from: self)
+    let month = Calendar.current.component(.month, from: self)
+    let day = Calendar.current.component(.day, from: self)
+    
+    return DateComponents(year: year, month: month, day: day)
+  }
+}
 extension UIView {
   func applyCornerRadius(_ cornerRadius: CGFloat) {
     self.layer.cornerRadius = cornerRadius
@@ -22,16 +40,30 @@ extension UIView {
   }
 }
 extension UIButton {
+  func configureDisableMode(title: String) {
+    self.isEnabled = false
+    self.customizeConfiguration(with: title, foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .medium)
+    self.backgroundColor = 0xBEC0C2.convertToRGB()
+  }
+  
+  func configureAbleMode(title: String) {
+    self.isEnabled = true
+    self.customizeConfiguration(with: title, foregroundColor: .white, font: UIFont.Pretendard(type: .Semibold, size: 15), buttonSize: .medium)
+    self.backgroundColor = 0x096DB6.convertToRGB()
+  }
+  
   func customizeConfiguration(with title: String, foregroundColor: UIColor, font: UIFont, buttonSize: UIButton.Configuration.Size ) {
-    var customizeConfiguration = UIButton.Configuration.plain()
-    customizeConfiguration.title = title
-    customizeConfiguration.titleAlignment = .center
-    customizeConfiguration.attributedTitle?.font = font
-    customizeConfiguration.baseForegroundColor = foregroundColor
-    customizeConfiguration.buttonSize = buttonSize
-    customizeConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)
-    
-    self.configuration = customizeConfiguration
+    self.configurationUpdateHandler = { [unowned self] button in
+      var customizeConfiguration = UIButton.Configuration.plain()
+      customizeConfiguration.title = title
+      customizeConfiguration.titleAlignment = .center
+      customizeConfiguration.attributedTitle?.font = font
+      customizeConfiguration.baseForegroundColor = foregroundColor
+      customizeConfiguration.buttonSize = buttonSize
+      customizeConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)
+      
+      self.configuration = customizeConfiguration
+    }
   }
 }
 extension UIViewController {
@@ -40,15 +72,6 @@ extension UIViewController {
     signInViewController.modalPresentationStyle = .formSheet
     signInViewController.isModalInPresentation = true
     self.present(signInViewController, animated: false, completion: nil)
-  }
-}
-extension Int {
-  func convertToRGB() -> UIColor {
-    return UIColor(
-        red: CGFloat((Float((self & 0xff0000) >> 16)) / 255.0),
-        green: CGFloat((Float((self & 0x00ff00) >> 8)) / 255.0),
-        blue: CGFloat((Float((self & 0x0000ff) >> 0)) / 255.0),
-        alpha: 1.0)
   }
 }
 extension UIFont {
@@ -89,5 +112,15 @@ extension UIFont {
         return "Pretendard-Thin"
       }
     }
+  }
+}
+extension UIScrollView {
+   func scrollToBottom() {
+     if self.contentSize.height < self.bounds.size.height { return }
+     
+     let bottomOffset = CGPoint(x: 0, y: self.contentSize.height)
+     UIView.animate(withDuration: 2) {
+       self.setContentOffset(bottomOffset, animated: false)
+     }
   }
 }
