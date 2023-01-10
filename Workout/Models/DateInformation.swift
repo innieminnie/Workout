@@ -45,3 +45,15 @@ struct DateInformation: Hashable, Codable {
     self.day = Calendar.current.component(.day, from: date)
   }
 }
+extension DateInformation: Comparable {
+  static func < (lhs: DateInformation, rhs: DateInformation) -> Bool {
+    if lhs.year == rhs.year {
+      if lhs.month == rhs.month {
+        return lhs.day <= rhs.day
+      }
+      return lhs.month < rhs.month
+    }
+    return lhs.year < rhs.year
+  }
+}
+

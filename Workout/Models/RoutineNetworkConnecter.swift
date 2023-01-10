@@ -38,14 +38,16 @@ struct RoutineNetworkConnecter {
     }
   }
   
-  func addRoutineData(workouts: [PlannedWorkout], on dateInformation: DateInformation) {
+  func addRoutineData(workouts: [PlannedWorkout], on dateInformation: DateInformation, startingIndex: Int) {
     let itemRef = self.routineReference(dateInformation: dateInformation)
     
-    for workout in workouts {
+    for (idx, workout) in workouts.enumerated() {
       do {
         guard let key = itemRef.childByAutoId().key else { return }
         
         workout.id = key
+        workout.sequenceNumber = UInt(startingIndex + idx)
+        
         let data = try encoder.encode(workout)
         let json = try JSONSerialization.jsonObject(with: data)
         

@@ -25,7 +25,13 @@ class HomeViewController: UIViewController {
         }
       } else {
         self.navigationController?.navigationBar.topItem?.title = selectedDayInformation?.fullDate
-        guard buttonStackView.arrangedSubviews.count == 1 else { return }
+        guard buttonStackView.arrangedSubviews.count == 1 else {
+          DispatchQueue.main.async {
+            self.routineTableView.reloadData()
+          }
+          return
+        }
+        
         buttonStackView.addArrangedSubview(retrievePastRoutineButton)
         
         UIView.animate(withDuration: 0.3) {
@@ -188,7 +194,18 @@ class HomeViewController: UIViewController {
   }
   
   private func tappedRetrievePastRoutineButton() {
-    print("tapped")
+    let previousRecordViewController = PreviousRecordViewController()
+    previousRecordViewController.delegate = self
+    
+    if let selectedDayInformation = self.selectedDayInformation {
+      let recentTenRecords = routineManager.recentRoutines()
+        .filter { $0.key <= selectedDayInformation }
+      
+      previousRecordViewController.setUpDateInformation(with: self.selectedDayInformation)
+      previousRecordViewController.setUpSelection(with: recentTenRecords)
+    }
+    
+    self.present(previousRecordViewController, animated: true)
   }
   
   private func openCalendar() {
@@ -382,6 +399,26 @@ extension HomeViewController: UITableViewDropDelegate {
   }
 }
 extension HomeViewController: RoutineSelectionDelegate {
+  func copyPlannedWorkouts(from date: DateInformation) {
+    guard let selectedDayInformation = self.selectedDayInformation else { return }
+    
+    let plannedWorkoutNumber = routineManager.plan(of: selectedDayInformation).count
+    let copyingPlan = routineManager.plan(of: date).map { $0.copy(on: selectedDayInformation) }
+    
+    routineManager.addPlan(with: copyingPlan, on: selectedDayInformation)
+    calendarView.updateSelectedCell()
+    
+    routineTableView.beginUpdates()
+    for i in plannedWorkoutNumber..<routineManager.plan(of: selectedDayInformation).count {
+      self.routineTableView.insertRows(at: [IndexPath(item: i, section: 0)], with: .right)
+    }
+    routineTableView.layoutIfNeeded()
+    routineTableView.endUpdates()
+    
+    contentScrollView.scrollToBottom()
+    
+  }
+  
   func addSelectedWorkouts(_ selectedWorkouts: [Workout]) {
     guard let selectedDayInformation = self.selectedDayInformation else { return }
     

@@ -91,7 +91,29 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
       self.dateBackgroundView.layer.borderColor = 0xBEC0C2.convertToRGB().cgColor
     }
     
-    updateData()
+    updateUI()
+  }
+  
+  private func updateUI() {
+    if let dateInformation = dateInformation {
+      if !routineManager.plan(of: dateInformation).isEmpty {
+        DispatchQueue.main.async {
+          self.dateBackgroundView.backgroundColor = 0xF58423.convertToRGB()
+          self.dateNumberLabel.textColor = .white
+        }
+      } else {
+        DispatchQueue.main.async {
+          self.dateBackgroundView.backgroundColor = .clear
+          self.isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
+        }
+      }
+    }
+    
+    if isToday {
+      DispatchQueue.main.async {
+        self.dateNumberLabel.textColor = 0x096DB6.convertToRGB()
+      }
+    }
   }
   
   func updateRoutine() {
@@ -111,24 +133,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
       return
     }
     
-    if self.dateInformation == dateInformation {
-      if !dailyRoutine.isEmpty {
-        DispatchQueue.main.async {
-          self.dateBackgroundView.backgroundColor = 0xF58423.convertToRGB()
-          self.dateNumberLabel.textColor = .white
-        }
-      } else {
-        DispatchQueue.main.async {
-          self.dateBackgroundView.backgroundColor = .clear
-          self.isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
-        }
-      }
-      
-      if isToday {
-        DispatchQueue.main.async {
-          self.dateNumberLabel.textColor = 0x096DB6.convertToRGB()
-        }
-      }
-    }
+    guard self.dateInformation == dateInformation else { return }
+    updateUI()
   }
 }

@@ -9,7 +9,9 @@ import UIKit
 
 protocol RoutineSelectionDelegate: AnyObject {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout])
+  func copyPlannedWorkouts(from date: DateInformation)
 }
+
 class RoutineSelectionViewController: UIViewController {
   private var selectedWorkouts = [Workout]()
   weak var delegate: RoutineSelectionDelegate?
@@ -67,8 +69,9 @@ class RoutineSelectionViewController: UIViewController {
       })
     }
   
-    self.delegate?.addSelectedWorkouts(self.selectedWorkouts)
-    self.dismiss(animated: true, completion: nil)
+    self.dismiss(animated: true) {
+      self.delegate?.addSelectedWorkouts(self.selectedWorkouts)
+    }
   }
   
   private func setUpNoticeLabel() {
