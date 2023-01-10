@@ -16,6 +16,7 @@ import AuthenticationServices
 class AuthenticationManager {
   static let shared = AuthenticationManager()
   static let user = Auth.auth().currentUser
+  static var signedUpUser = String()
   static var userEmail = ""
   
   private init() { }
@@ -120,6 +121,17 @@ class AuthenticationManager {
         else {
           print("logout() success.")
         }
+      }
+    }
+  }
+  
+  func signoutProcess() {
+    logoutProcess()
+    AuthenticationManager.user?.delete { error in
+      if let error = error {
+        print(error)
+      } else {
+        print("delete success.")
       }
     }
   }

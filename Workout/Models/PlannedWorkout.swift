@@ -48,6 +48,15 @@ class PlannedWorkout: Identifiable, Codable {
     }
   }
   
+  func copy(on date: DateInformation) -> PlannedWorkout {
+    guard let workout = workoutManager.workoutByCode(self.workoutCode) else { fatalError() }
+
+    let copiedItem = PlannedWorkout(workout, self.sequenceNumber, date)
+    copiedItem.sets = self.sets
+    
+    return copiedItem
+  }
+  
   func setId(with key: String) {
     self.id = key
   }

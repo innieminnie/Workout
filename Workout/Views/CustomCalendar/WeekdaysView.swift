@@ -8,7 +8,7 @@
 import UIKit
 
 class WeekdaysView: UIView {
-  private let weekdays = ["월", "화", "수", "목", "금", "토", "일"]
+  private let weekdays = Weekday.weekdaysName
   
   private let containerStackView: UIStackView = {
     let stackView = UIStackView()
