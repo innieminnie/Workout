@@ -6,44 +6,29 @@
 //
 
 import Foundation
-import FirebaseDatabase
 
 class WorkoutManager {
   static let shared = WorkoutManager()
-  private let ref: DatabaseReference! = Database.database().reference()
-  private let encoder = JSONEncoder()
-  private let decoder = JSONDecoder()
-  private var workoutCodeDictionary = [String: Workout]()
-  private var uid: String {
-    if let currentUser = currentUser { return currentUser.uid }
-    else { return HomeViewController.signedUpUser }
+  
+  private let networkConnecter = WorkoutNetworkConnecter()
+  private var workoutCodeDictionary: [String: Workout]
+  private init() {
+    workoutCodeDictionary = [ : ]
   }
   
-  private init() { }
-  
   func readWorkoutData() {
-    let itemRef = ref.child("users/\(self.uid)/workout")
-    
-    itemRef.getData { error, snapshot in
+    networkConnecter.fetchWorkoutData { workoutDictionary, error in
       if let error = error {
         NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
-      } else if snapshot.exists() {
-        guard let jsonValue = snapshot.value as? [String: Any] else {
-          return
-        }
-        
-        do {
-          let data = try JSONSerialization.data(withJSONObject: jsonValue)
-          self.workoutCodeDictionary = try self.decoder.decode([String : Workout].self, from: data)
-          
-          for element in self.workoutCodeDictionary {
-            element.value.configureId(with: element.key)
-          }
-        } catch {
-          NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
-        }
-        
-        NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: nil)
+        return
+      }
+      
+      if let workoutDictionary = workoutDictionary {
+        self.workoutCodeDictionary = workoutDictionary
+      }
+      
+      for element in self.workoutCodeDictionary {
+        element.value.configureId(with: element.key)
       }
     }
   }
@@ -53,21 +38,10 @@ class WorkoutManager {
   }
   
   func register(workout: Workout) {
-    let itemRef = ref.child("users/\(self.uid))/workout")
-    
-    guard let key = itemRef.childByAutoId().key else { return }
-    workout.configureId(with: key)
-    
-    do {
-      let data = try encoder.encode(workout)
-      let json = try JSONSerialization.jsonObject(with: data)
-      
-      let childUpdates = ["/users/\(self.uid)/workout/\(key)/": json]
-      
-      self.ref.updateChildValues(childUpdates)
+    networkConnecter.createWorkoutId(workout: workout) { key in
+      workout.configureId(with: key)
       self.workoutCodeDictionary[key] = workout
-    } catch {
-      print(error)
+      self.networkConnecter.updateWorkoutData(workout: workout, key: key)
     }
   }
   
@@ -86,39 +60,18 @@ class WorkoutManager {
     if let removingCode = workout.id {
       workoutCodeDictionary[removingCode] = nil
       workout.removeRegisteredRoutine()
-      
-      let itemRef = ref.child("users/\(self.uid)/workout")
-      
-      itemRef.child("/\(removingCode)").removeValue()
+      networkConnecter.removeWorkoutData(workout: workout)
     }
   }
   
   func updateWorkout(_ code: String, _ name: String, _ weightUnit: WeightUnit, _ bodySection: BodySection) {
     guard let updatingWorkout = workoutCodeDictionary[code] else { return }
     updatingWorkout.update(name, bodySection, weightUnit)
-    
-    do {
-      let data = try encoder.encode(updatingWorkout)
-      let json = try JSONSerialization.jsonObject(with: data)
-      
-      let childUpdates = ["/users/\(self.uid)/workout/\(code)": json]
-      
-      ref.updateChildValues(childUpdates)
-    } catch {
-      print(error)
-    }
+    networkConnecter.updateWorkoutData(workout: updatingWorkout, key: code)
   }
   
   func updateWorkoutRegistration(_ code: String, _ registeredDate: Set<DateInformation>) {
-    do {
-      let data = try encoder.encode(Array(registeredDate))
-      let json = try JSONSerialization.jsonObject(with: data)
-      
-      let childUpdates = ["/users/\(self.uid)/workout/\(code)/registeredDate": json]
-      ref.updateChildValues(childUpdates)
-    } catch {
-      print(error)
-    }
+    networkConnecter.updateWorkoutRegistrationDate(code: code, date: registeredDate)
   }
   
   func checkNameValidation(_ previousName: String, _ name: String) -> Bool {
