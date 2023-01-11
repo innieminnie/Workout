@@ -85,8 +85,10 @@ class AuthenticationManager {
         }
         
         Auth.auth().createUser(withEmail: kakaoEmail, password: String(describing: id)) { autoDataResult, error in
-          if error != nil {
-            let errorCode = AuthErrorCode(rawValue: error!._code)
+          if let error = error {
+            let nsError = error as NSError
+            let errorCode = AuthErrorCode.Code.init(rawValue: nsError.code)
+            
             switch errorCode {
             case .emailAlreadyInUse:
               let alert = UIAlertController(title: "다른 로그인 방식으로 해당 이메일 계정을 사용한 기록이 있어요.\n\n 다른 로그인 방식을 시도해주세요!", message: nil, preferredStyle: .alert)

@@ -20,7 +20,7 @@ struct WorkoutNetworkConnecter {
     itemRef.getData { error, snapshot in
       if let error = error {
         completion(nil, error)
-      } else if snapshot.exists() {
+      } else if let snapshot = snapshot, snapshot.exists() {
         guard let jsonValue = snapshot.value as? [String: Any] else {
           return
         }

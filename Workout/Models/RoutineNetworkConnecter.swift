@@ -17,10 +17,11 @@ struct RoutineNetworkConnecter {
   
   func fetchRoutineData(dateInformation: DateInformation, completion: @escaping([String : PlannedWorkout]?, Error?) -> Void) {
     let itemRef = self.routineReference(dateInformation: dateInformation)
+    
     itemRef.getData { error, snapshot in
       if let error = error {
         completion(nil, error)
-      } else if snapshot.exists() {
+      } else if let snapshot = snapshot, snapshot.exists() {
         guard let jsonValue = snapshot.value as? [String: Any] else {
           return
         }
