@@ -12,6 +12,17 @@ enum WeightUnit: String, CaseIterable, Codable {
   case lb = "lb"
 }
 
+enum BodySection: String, CaseIterable, Codable {
+  case chest = "가슴"
+  case abs = "복근"
+  case shoulder = "어깨"
+  case biceps = "이두"
+  case triceps = "삼두"
+  case back = "등"
+  case hip = "엉덩이"
+  case leg = "다리"
+}
+
 class Workout: Identifiable, Codable {
   var id: String?
   private var name: String

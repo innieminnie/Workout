@@ -14,7 +14,7 @@ class PlannedWorkout: Identifiable, Codable {
   var isDone: WorkoutStatus
   var sets: [SetConfiguration]
   var totalSum: Float {
-    return sets.reduce(0){ return $0 + $1.weightTimesCount()}
+    return sets.reduce(0) { return $0 + $1.weightTimesCount() }
   }
   
   enum CodingKeys: String, CodingKey {
