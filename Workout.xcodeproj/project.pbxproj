@@ -288,13 +288,13 @@
 			children = (
 				D98569B3274CBAFB007E517A /* HomeViewController.swift */,
 				D98569E3274D0299007E517A /* WorkoutListViewController.swift */,
-				D92D2411292B0BC400031670 /* SettingViewController.swift */,
-				D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */,
 				D9107C572810045200FABD37 /* WorkoutSelectionViewController.swift */,
+				D9E6ABF929715CCF002FB36C /* WorkoutListDataSource.swift */,
+				D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */,
+				D92D2411292B0BC400031670 /* SettingViewController.swift */,
 				D9E09624291DF74C00AE710F /* SignInViewController.swift */,
 				D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */,
 				D9E67B77296D299400B704DB /* PreviousRecordViewController.swift */,
-				D9E6ABF929715CCF002FB36C /* WorkoutListDataSource.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

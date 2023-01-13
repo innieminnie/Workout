@@ -8,8 +8,12 @@
 import UIKit
 
 class WorkoutListDataSource: NSObject, UITableViewDataSource {
+  static let shared = WorkoutListDataSource()
+  
   private var isSearching = false
   private var searchingList = [Workout]()
+  
+  private override init() { }
   
   func showSearchData(searchingList: [Workout]) {
     self.searchingList = searchingList
