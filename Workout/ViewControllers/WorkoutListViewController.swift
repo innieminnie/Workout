@@ -24,6 +24,36 @@ class WorkoutListViewController: UITableViewController, ContainWorkoutList {
     setUpSearchController()
   }
   
+  private func addButtonTouched() {
+    let newWorkoutViewController = WorkoutInformationViewController()
+    newWorkoutViewController.updateWorkoutDelegate = self
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+      self.present(newWorkoutViewController, animated: true)
+    }
+  }
+  
+  private func setUpListTableView() {
+    self.tableView = WorkoutListTableView()
+    self.tableView.dataSource = workoutListDataSource
+  }
+  
+  private func setUpNavigationController() {
+    self.navigationController?.navigationBar.isHidden = false
+    self.navigationController?.navigationBar.prefersLargeTitles = true
+    self.navigationController?.navigationBar.topItem?.title = "나의 운동 목록"
+    self.navigationController?.navigationBar.topItem?.rightBarButtonItem = addButton
+  }
+  
+  private func setUpSearchController() {
+    let searchController = UISearchController(searchResultsController: nil)
+    searchController.searchResultsUpdater = self
+    searchController.searchBar.delegate = self.workoutListDataSource
+    self.navigationItem.hidesSearchBarWhenScrolling = false
+    self.navigationItem.searchController = searchController
+  }
+}
+extension WorkoutListViewController {
   override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
     let headerView = view as! UITableViewHeaderFooterView
     headerView.textLabel?.textColor = 0x096DB6.convertToRGB()
@@ -71,45 +101,14 @@ extension WorkoutListViewController: UpdateWorkoutDelegate {
     workoutManager.updateWorkout(code, name, weightUnit, bodySection)
     tableView.reloadData()
   }
-
 }
 extension WorkoutListViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     guard let searchingText = searchController.searchBar.searchTextField.text else {
       return
     }
-
+    
     self.workoutListDataSource.showSearchData(searchingList:  workoutManager.searchWorkouts(by: searchingText))
     self.tableView.reloadData()
-  }
-}
-extension WorkoutListViewController {
-  private func addButtonTouched() {
-    let newWorkoutViewController = WorkoutInformationViewController()
-    newWorkoutViewController.updateWorkoutDelegate = self
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-      self.present(newWorkoutViewController, animated: true)
-    }
-  }
-  
-  private func setUpListTableView() {
-    self.tableView = WorkoutListTableView()
-    self.tableView.dataSource = workoutListDataSource
-  }
-  
-  private func setUpNavigationController() {
-    self.navigationController?.navigationBar.isHidden = false
-    self.navigationController?.navigationBar.prefersLargeTitles = true
-    self.navigationController?.navigationBar.topItem?.title = "나의 운동 목록"
-    self.navigationController?.navigationBar.topItem?.rightBarButtonItem = addButton
-  }
-  
-  private func setUpSearchController() {
-    let searchController = UISearchController(searchResultsController: nil)
-    searchController.searchResultsUpdater = self
-    searchController.searchBar.delegate = self.workoutListDataSource
-    self.navigationItem.hidesSearchBarWhenScrolling = false
-    self.navigationItem.searchController = searchController
   }
 }
