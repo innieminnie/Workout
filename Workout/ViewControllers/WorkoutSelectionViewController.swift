@@ -17,7 +17,7 @@ class WorkoutSelectionViewController: UIViewController {
   weak var delegate: WorkoutSelectionDelegate?
   
   private let workoutListTableView = WorkoutListTableView()
-  
+  private var dataSource: WorkoutListDataSource!
   private lazy var addRoutineButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedAddRoutineButton() })
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -90,38 +90,6 @@ class WorkoutSelectionViewController: UIViewController {
     ])
   }
 }
-extension WorkoutSelectionViewController: UITableViewDataSource {
-  func numberOfSections(in tableView: UITableView) -> Int {
-    BodySection.allCases.count
-  }
-  
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    let bodySection = BodySection.allCases[section]
-    return workoutManager.filteredWorkout(by: bodySection).count
-  }
-  
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: WorkoutTableViewCell.identifier, for: indexPath) as? WorkoutTableViewCell else {
-      return UITableViewCell()
-    }
-    
-    let workout = workoutManager.workout(at: indexPath)
-    cell.setUp(with: workout)
-    
-    return cell
-  }
-  
-  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    let bodySection = BodySection.allCases[section]
-    return workoutManager.filteredWorkout(by: bodySection).count == 0 ? nil : BodySection.allCases[section].rawValue
-  }
-  
-  func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-    let headerView = view as! UITableViewHeaderFooterView
-    headerView.textLabel?.textColor = 0x096DB6.convertToRGB()
-    headerView.textLabel?.font = UIFont.Pretendard(type: .Regular, size: 15)
-  }
-}
 extension WorkoutSelectionViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     guard addRoutineButton.isEnabled else {
@@ -137,10 +105,18 @@ extension WorkoutSelectionViewController: UITableViewDelegate {
       return
     }
   }
+  
+  func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    let headerView = view as! UITableViewHeaderFooterView
+    headerView.textLabel?.textColor = 0x096DB6.convertToRGB()
+    headerView.textLabel?.font = UIFont.Pretendard(type: .Regular, size: 15)
+  }
 }
 extension WorkoutSelectionViewController {
   private func setUpListTableView() {
-    workoutListTableView.dataSource = self
+    self.dataSource = WorkoutListDataSource()
+    
+    workoutListTableView.dataSource = dataSource
     workoutListTableView.delegate = self
     workoutListTableView.allowsMultipleSelection = true
   }
