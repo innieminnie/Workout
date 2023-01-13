@@ -7,11 +7,6 @@
 
 import UIKit
 
-protocol WorkoutSelectionDelegate: AnyObject {
-  func addSelectedWorkouts(_ selectedWorkouts: [Workout])
-  func copyPlannedWorkouts(from date: DateInformation)
-}
-
 class WorkoutSelectionViewController: UIViewController, ContainWorkoutList {
   private var selectedWorkouts = [Workout]()
   weak var delegate: WorkoutSelectionDelegate?

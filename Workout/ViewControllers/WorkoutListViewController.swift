@@ -7,19 +7,6 @@
 
 import UIKit
 
-protocol SendingWorkoutDelegate: AnyObject {
-  func showInformation(of workout: Workout)
-}
-
-protocol ContainWorkoutList {
-  var workoutListDataSource: WorkoutListDataSource { get }
-}
-extension ContainWorkoutList {
-    var workoutListDataSource: WorkoutListDataSource {
-      return WorkoutListDataSource.shared
-    }
-}
-
 class WorkoutListViewController: UITableViewController, ContainWorkoutList {
   private lazy var addButton: UIBarButtonItem = {
     let button = UIBarButtonItem(systemItem: .add, primaryAction: UIAction { _ in self.addButtonTouched() })

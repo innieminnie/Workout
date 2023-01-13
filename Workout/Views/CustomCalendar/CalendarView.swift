@@ -11,11 +11,6 @@ class CaledarDateTapGesture: UITapGestureRecognizer {
   var tappedCell: CalendarDateCollectionViewCell?
 }
 
-protocol CalendarViewDelegate: AnyObject {
-  func changedSelectedDay(to dateInformation: DateInformation?)
-  func calendarIsFolded()
-}
-
 class CalendarView: UIView {
   static let defaultDate = Date()
   

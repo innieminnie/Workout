@@ -6,12 +6,6 @@
 //
 
 import UIKit
-protocol WorkoutPlanCardTableViewCellDelegate: AnyObject {
-  func cellExpand()
-  func cellShrink()
-  func textFieldsAreNotFilled()
-  func currentDateInformation() -> DateInformation?
-}
 
 class WorkoutPlanCardTableViewCell: UITableViewCell {
   static let identifier = "workoutPlanCardTableViewCell"

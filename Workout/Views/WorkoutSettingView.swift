@@ -12,12 +12,6 @@ class BodySectionTapGesture: UITapGestureRecognizer {
   var tappedCell: BodySectionCollectionViewCell?
 }
 
-protocol UpdateWorkoutActionDelegate: AnyObject {
-  func tappedCancel()
-  func register(_ name: String, _ weightUnit: WeightUnit, _ bodySection: BodySection)
-  func resignFirstResponder(on textField: UITextField)
-}
-
 class WorkoutSettingView: UIView {
   private let titleLabel: UILabel = {
     let label = UILabel()
