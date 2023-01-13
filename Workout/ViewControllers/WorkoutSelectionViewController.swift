@@ -12,7 +12,6 @@ class WorkoutSelectionViewController: UIViewController, ContainWorkoutList {
   weak var delegate: WorkoutSelectionDelegate?
   
   private let workoutListTableView = WorkoutListTableView()
-  private var dataSource: WorkoutListDataSource!
   private lazy var addRoutineButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedAddRoutineButton() })
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -72,6 +71,12 @@ class WorkoutSelectionViewController: UIViewController, ContainWorkoutList {
     ])
   }
   
+  private func setUpListTableView() {
+    workoutListTableView.dataSource = workoutListDataSource
+    workoutListTableView.delegate = self
+    workoutListTableView.allowsMultipleSelection = true
+  }
+  
   private func setUpLayout() {
     NSLayoutConstraint.activate([
       workoutListTableView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -105,12 +110,5 @@ extension WorkoutSelectionViewController: UITableViewDelegate {
     let headerView = view as! UITableViewHeaderFooterView
     headerView.textLabel?.textColor = 0x096DB6.convertToRGB()
     headerView.textLabel?.font = UIFont.Pretendard(type: .Regular, size: 15)
-  }
-}
-extension WorkoutSelectionViewController {
-  private func setUpListTableView() {
-    workoutListTableView.dataSource = workoutListDataSource
-    workoutListTableView.delegate = self
-    workoutListTableView.allowsMultipleSelection = true
   }
 }
