@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseDatabase
 
-struct RoutineNetworkConnecter {
+struct RoutineNetworkConnecter: NetworkAccessible {
   init() { }
   
   private func routineReference(dateInformation dateInfo: DateInformation) -> DatabaseReference {
@@ -76,22 +76,5 @@ struct RoutineNetworkConnecter {
   func removeRoutineData(id: String, on dateInformation: DateInformation) {
     let itemRef = self.routineReference(dateInformation: dateInformation)
     itemRef.child("/\(id)").removeValue()
-  }
-}
-extension RoutineNetworkConnecter: NetworkAccessible {
-  var encoder: JSONEncoder {
-    return NetworkServiceInformation.encoder
-  }
-  
-  var decoder: JSONDecoder {
-    return NetworkServiceInformation.decoder
-  }
-  
-  var ref: DatabaseReference! {
-    return NetworkServiceInformation.ref
-  }
-  
-  var uid: String {
-    return NetworkServiceInformation.uid
   }
 }

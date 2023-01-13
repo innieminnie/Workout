@@ -18,9 +18,3 @@ struct NetworkServiceInformation {
   }
 }
 
-protocol NetworkAccessible {
-  var encoder: JSONEncoder { get }
-  var decoder: JSONDecoder { get }
-  var ref: DatabaseReference! { get }
-  var uid: String { get }
-}

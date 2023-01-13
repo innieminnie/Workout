@@ -7,11 +7,7 @@
 
 import UIKit
 
-protocol WorkoutSetConfigurationViewDelegate: AnyObject {
-  func setSumUpdated(from oldValue: Float, to newValue: Float)
-  func weightValueUpdated(to newValue: Float, of index: Int)
-  func countValueUpdated(to newValue: UInt, of index: Int)
-}
+
 
 class WorkoutSetConfigurationView: UIView {
   private lazy var setIndex: Int = 0

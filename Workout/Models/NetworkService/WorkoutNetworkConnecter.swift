@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseDatabase
 
-struct WorkoutNetworkConnecter {
+struct WorkoutNetworkConnecter: NetworkAccessible {
   init() { }
   
   private func workoutReference() -> DatabaseReference {
@@ -72,22 +72,5 @@ struct WorkoutNetworkConnecter {
       let itemRef = self.workoutReference()
       itemRef.child("/\(workoutCode)").removeValue()
     }
-  }
-}
-extension WorkoutNetworkConnecter: NetworkAccessible {
-  var encoder: JSONEncoder {
-    return NetworkServiceInformation.encoder
-  }
-  
-  var decoder: JSONDecoder {
-    return NetworkServiceInformation.decoder
-  }
-  
-  var ref: DatabaseReference! {
-    return NetworkServiceInformation.ref
-  }
-  
-  var uid: String {
-    return NetworkServiceInformation.uid
   }
 }

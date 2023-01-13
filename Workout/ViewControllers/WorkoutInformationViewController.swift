@@ -7,11 +7,6 @@
 
 import UIKit
 
-protocol UpdateWorkoutDelegate: AnyObject {
-  func saveNewWorkout(workout: Workout)
-  func updateWorkout(code: String, name: String, weightUnit: WeightUnit, bodySection: BodySection)
-}
-
 class WorkoutInformationViewController: UIViewController {
   let workoutSettingView = WorkoutSettingView()
   weak var updateWorkoutDelegate: UpdateWorkoutDelegate?
