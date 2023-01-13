@@ -12,7 +12,7 @@
 		D90B7DFE294A1C760003B3CA /* WorkoutNetworkConnecter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90B7DFD294A1C760003B3CA /* WorkoutNetworkConnecter.swift */; };
 		D90B7E00294A1DC70003B3CA /* RoutineNetworkConnecter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90B7DFF294A1DC70003B3CA /* RoutineNetworkConnecter.swift */; };
 		D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C5527F030B800FABD37 /* DateInformation.swift */; };
-		D9107C582810045200FABD37 /* RoutineSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */; };
+		D9107C582810045200FABD37 /* WorkoutSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C572810045200FABD37 /* WorkoutSelectionViewController.swift */; };
 		D9107C5D282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C5B282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift */; };
 		D9107C5E282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9107C5C282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib */; };
 		D9107C60282E593C00FABD37 /* MonthlyPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9107C5F282E593C00FABD37 /* MonthlyPageCollectionView.swift */; };
@@ -72,6 +72,7 @@
 		D9E67B78296D299400B704DB /* PreviousRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E67B77296D299400B704DB /* PreviousRecordViewController.swift */; };
 		D9E67B7B296DAA8B00B704DB /* RecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E67B79296DAA8B00B704DB /* RecordTableViewCell.swift */; };
 		D9E67B7C296DAA8B00B704DB /* RecordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9E67B7A296DAA8B00B704DB /* RecordTableViewCell.xib */; };
+		D9E6ABF82971541F002FB36C /* WorkoutListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E6ABF72971541F002FB36C /* WorkoutListTableView.swift */; };
 		EE575D4D97BB050E426D8EB0 /* Pods_pitapatpumping_WorkoutUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB4E53EA4C8D05237FAD064 /* Pods_pitapatpumping_WorkoutUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -106,7 +107,7 @@
 		D90B7DFD294A1C760003B3CA /* WorkoutNetworkConnecter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutNetworkConnecter.swift; sourceTree = "<group>"; };
 		D90B7DFF294A1DC70003B3CA /* RoutineNetworkConnecter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineNetworkConnecter.swift; sourceTree = "<group>"; };
 		D9107C5527F030B800FABD37 /* DateInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInformation.swift; sourceTree = "<group>"; };
-		D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSelectionViewController.swift; sourceTree = "<group>"; };
+		D9107C572810045200FABD37 /* WorkoutSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSelectionViewController.swift; sourceTree = "<group>"; };
 		D9107C5B282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPlanCardTableViewCell.swift; sourceTree = "<group>"; };
 		D9107C5C282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorkoutPlanCardTableViewCell.xib; sourceTree = "<group>"; };
 		D9107C5F282E593C00FABD37 /* MonthlyPageCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPageCollectionView.swift; sourceTree = "<group>"; };
@@ -174,6 +175,7 @@
 		D9E67B77296D299400B704DB /* PreviousRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousRecordViewController.swift; sourceTree = "<group>"; };
 		D9E67B79296DAA8B00B704DB /* RecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordTableViewCell.swift; sourceTree = "<group>"; };
 		D9E67B7A296DAA8B00B704DB /* RecordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordTableViewCell.xib; sourceTree = "<group>"; };
+		D9E6ABF72971541F002FB36C /* WorkoutListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListTableView.swift; sourceTree = "<group>"; };
 		DFD51F9D1BBCD2B0AD3C9342 /* Pods-pitapatpumping-WorkoutUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pitapatpumping-WorkoutUITests.debug.xcconfig"; path = "Target Support Files/Pods-pitapatpumping-WorkoutUITests/Pods-pitapatpumping-WorkoutUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F99F031903C6C522AC1CD969 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		FF5C8FD7B0C3E2936CFFA345 /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.debug.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
@@ -286,7 +288,7 @@
 				D98569E3274D0299007E517A /* WorkoutListViewController.swift */,
 				D92D2411292B0BC400031670 /* SettingViewController.swift */,
 				D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */,
-				D9107C572810045200FABD37 /* RoutineSelectionViewController.swift */,
+				D9107C572810045200FABD37 /* WorkoutSelectionViewController.swift */,
 				D9E09624291DF74C00AE710F /* SignInViewController.swift */,
 				D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */,
 				D9E67B77296D299400B704DB /* PreviousRecordViewController.swift */,
@@ -315,6 +317,7 @@
 				D995871D286D523A0093E024 /* Extensions.swift */,
 				D9D44E4B2911F2FE0035B8D0 /* BodySectionCollectionView.swift */,
 				D961A07129544C7400494B85 /* UITextFieldWithPadding.swift */,
+				D9E6ABF72971541F002FB36C /* WorkoutListTableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -695,7 +698,7 @@
 				D92D2412292B0BC400031670 /* SettingViewController.swift in Sources */,
 				D9D44E4A2910F9540035B8D0 /* PaddingLabel.swift in Sources */,
 				D90B7E00294A1DC70003B3CA /* RoutineNetworkConnecter.swift in Sources */,
-				D9107C582810045200FABD37 /* RoutineSelectionViewController.swift in Sources */,
+				D9107C582810045200FABD37 /* WorkoutSelectionViewController.swift in Sources */,
 				D9E67B7B296DAA8B00B704DB /* RecordTableViewCell.swift in Sources */,
 				D9107C5D282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift in Sources */,
 				D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */,
@@ -709,6 +712,7 @@
 				D9E0962B2923564900AE710F /* APIKey.swift in Sources */,
 				D9107C5627F030B800FABD37 /* DateInformation.swift in Sources */,
 				D9E67B78296D299400B704DB /* PreviousRecordViewController.swift in Sources */,
+				D9E6ABF82971541F002FB36C /* WorkoutListTableView.swift in Sources */,
 				D9D44E45290692A00035B8D0 /* BodySectionCollectionViewCell.swift in Sources */,
 				D92D241A292CB67F00031670 /* SettingMenu.swift in Sources */,
 				D9958720286D6D760093E024 /* WeekdaysView.swift in Sources */,

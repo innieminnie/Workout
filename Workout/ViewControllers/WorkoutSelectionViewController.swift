@@ -7,22 +7,16 @@
 
 import UIKit
 
-protocol RoutineSelectionDelegate: AnyObject {
+protocol WorkoutSelectionDelegate: AnyObject {
   func addSelectedWorkouts(_ selectedWorkouts: [Workout])
   func copyPlannedWorkouts(from date: DateInformation)
 }
 
-class RoutineSelectionViewController: UIViewController {
+class WorkoutSelectionViewController: UIViewController {
   private var selectedWorkouts = [Workout]()
-  weak var delegate: RoutineSelectionDelegate?
+  weak var delegate: WorkoutSelectionDelegate?
   
-  private let workoutListTableView: UITableView = {
-    let tableView = UITableView()
-    tableView.translatesAutoresizingMaskIntoConstraints = false
-    
-    tableView.allowsMultipleSelection = true
-    return tableView
-  }()
+  private let workoutListTableView = WorkoutListTableView()
   
   private lazy var addRoutineButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.tappedAddRoutineButton() })
@@ -96,7 +90,7 @@ class RoutineSelectionViewController: UIViewController {
     ])
   }
 }
-extension RoutineSelectionViewController: UITableViewDataSource {
+extension WorkoutSelectionViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
     BodySection.allCases.count
   }
@@ -128,7 +122,7 @@ extension RoutineSelectionViewController: UITableViewDataSource {
     headerView.textLabel?.font = UIFont.Pretendard(type: .Regular, size: 15)
   }
 }
-extension RoutineSelectionViewController: UITableViewDelegate {
+extension WorkoutSelectionViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     guard addRoutineButton.isEnabled else {
       addRoutineButton.isEnabled = true
@@ -144,13 +138,10 @@ extension RoutineSelectionViewController: UITableViewDelegate {
     }
   }
 }
-extension RoutineSelectionViewController {
+extension WorkoutSelectionViewController {
   private func setUpListTableView() {
     workoutListTableView.dataSource = self
     workoutListTableView.delegate = self
-    
-    let nib = UINib(nibName: "WorkoutTableViewCell", bundle: nil)
-    self.workoutListTableView.register(nib, forCellReuseIdentifier: WorkoutTableViewCell.identifier)
-    self.workoutListTableView.separatorStyle = .none
+    workoutListTableView.allowsMultipleSelection = true
   }
 }

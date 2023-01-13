@@ -8,7 +8,7 @@
 import UIKit
 
 class PreviousRecordViewController: UIViewController {
-  weak var delegate: RoutineSelectionDelegate?
+  weak var delegate: WorkoutSelectionDelegate?
   
   private let previousRecordsTableView: UITableView = {
     let tableView = UITableView()

@@ -30,9 +30,9 @@ class WorkoutListViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
+    self.tableView = WorkoutListTableView()
     setUpNavigationController()
     setUpSearchController()
-    setUpListTableView()
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -144,11 +144,5 @@ extension WorkoutListViewController {
     
     self.navigationItem.hidesSearchBarWhenScrolling = false
     self.navigationItem.searchController = searchController
-  }
-  
-  private func setUpListTableView() {
-    let nib = UINib(nibName: "WorkoutTableViewCell", bundle: nil)
-    self.tableView.register(nib, forCellReuseIdentifier: WorkoutTableViewCell.identifier)
-    self.tableView.separatorStyle = .none
   }
 }
