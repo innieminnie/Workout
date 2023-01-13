@@ -187,7 +187,7 @@ class HomeViewController: UIViewController {
   private func tappedAddRoutineButton() {
     hideKeyboard()
     
-    let routineSelectionViewController = RoutineSelectionViewController()
+    let routineSelectionViewController = WorkoutSelectionViewController()
     routineSelectionViewController.delegate = self
     routineSelectionViewController.modalPresentationStyle = .formSheet
     self.present(routineSelectionViewController, animated: true, completion: nil)
@@ -398,7 +398,7 @@ extension HomeViewController: UITableViewDropDelegate {
     return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
   }
 }
-extension HomeViewController: RoutineSelectionDelegate {
+extension HomeViewController: WorkoutSelectionDelegate {
   func copyPlannedWorkouts(from date: DateInformation) {
     guard let selectedDayInformation = self.selectedDayInformation else { return }
     
