@@ -12,7 +12,7 @@ protocol WorkoutSelectionDelegate: AnyObject {
   func copyPlannedWorkouts(from date: DateInformation)
 }
 
-class WorkoutSelectionViewController: UIViewController {
+class WorkoutSelectionViewController: UIViewController, ContainWorkoutList {
   private var selectedWorkouts = [Workout]()
   weak var delegate: WorkoutSelectionDelegate?
   
@@ -114,9 +114,7 @@ extension WorkoutSelectionViewController: UITableViewDelegate {
 }
 extension WorkoutSelectionViewController {
   private func setUpListTableView() {
-    self.dataSource = WorkoutListDataSource()
-    
-    workoutListTableView.dataSource = dataSource
+    workoutListTableView.dataSource = workoutListDataSource
     workoutListTableView.delegate = self
     workoutListTableView.allowsMultipleSelection = true
   }

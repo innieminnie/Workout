@@ -11,12 +11,20 @@ protocol SendingWorkoutDelegate: AnyObject {
   func showInformation(of workout: Workout)
 }
 
-class WorkoutListViewController: UITableViewController {
+protocol ContainWorkoutList {
+  var workoutListDataSource: WorkoutListDataSource { get }
+}
+extension ContainWorkoutList {
+    var workoutListDataSource: WorkoutListDataSource {
+      return WorkoutListDataSource.shared
+    }
+}
+
+class WorkoutListViewController: UITableViewController, ContainWorkoutList {
   private lazy var addButton: UIBarButtonItem = {
     let button = UIBarButtonItem(systemItem: .add, primaryAction: UIAction { _ in self.addButtonTouched() })
     return button
   }()
-  private var dataSource: WorkoutListDataSource!
   
   weak var delegate: SendingWorkoutDelegate?
   
@@ -84,7 +92,7 @@ extension WorkoutListViewController: UISearchResultsUpdating {
       return
     }
 
-    self.dataSource.showSearchData(searchingList:  workoutManager.searchWorkouts(by: searchingText))
+    self.workoutListDataSource.showSearchData(searchingList:  workoutManager.searchWorkouts(by: searchingText))
     self.tableView.reloadData()
   }
 }
@@ -100,8 +108,7 @@ extension WorkoutListViewController {
   
   private func setUpListTableView() {
     self.tableView = WorkoutListTableView()
-    self.dataSource = WorkoutListDataSource()
-    self.tableView.dataSource = dataSource
+    self.tableView.dataSource = workoutListDataSource
   }
   
   private func setUpNavigationController() {
@@ -114,7 +121,7 @@ extension WorkoutListViewController {
   private func setUpSearchController() {
     let searchController = UISearchController(searchResultsController: nil)
     searchController.searchResultsUpdater = self
-    searchController.searchBar.delegate = self.dataSource
+    searchController.searchBar.delegate = self.workoutListDataSource
     self.navigationItem.hidesSearchBarWhenScrolling = false
     self.navigationItem.searchController = searchController
   }
