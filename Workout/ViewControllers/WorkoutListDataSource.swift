@@ -8,13 +8,20 @@
 import UIKit
 
 class WorkoutListDataSource: NSObject, UITableViewDataSource {
+  private var isSearching = false
+  private var searchingList = [Workout]()
+  
+  func showSearchData(searchingList: [Workout]) {
+    self.searchingList = searchingList
+  }
+  
   func numberOfSections(in tableView: UITableView) -> Int {
-    BodySection.allCases.count
+    return isSearching ? 1 : BodySection.allCases.count
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     let bodySection = BodySection.allCases[section]
-    return workoutManager.filteredWorkout(by: bodySection).count
+    return  isSearching ? self.searchingList.count : workoutManager.filteredWorkout(by: bodySection).count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -22,7 +29,7 @@ class WorkoutListDataSource: NSObject, UITableViewDataSource {
       return UITableViewCell()
     }
     
-    let workout = workoutManager.workout(at: indexPath)
+    let workout = isSearching ? self.searchingList[indexPath.row] : workoutManager.workout(at: indexPath)
     cell.setUp(with: workout)
     
     return cell
@@ -30,6 +37,17 @@ class WorkoutListDataSource: NSObject, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     let bodySection = BodySection.allCases[section]
-    return workoutManager.filteredWorkout(by: bodySection).count == 0 ? nil : BodySection.allCases[section].rawValue
+    if isSearching && workoutManager.filteredWorkout(by: bodySection).count == 0 { return nil }
+    
+    return isSearching ? "검색결과" : workoutManager.filteredWorkout(by: bodySection).count == 0 ? nil : BodySection.allCases[section].rawValue
+  }
+}
+extension WorkoutListDataSource: UISearchBarDelegate {
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    self.isSearching = false
+  }
+  
+  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    self.isSearching = true
   }
 }
