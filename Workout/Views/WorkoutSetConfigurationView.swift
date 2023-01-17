@@ -214,8 +214,17 @@ extension WorkoutSetConfigurationView {
     setStackView.addArrangedSubview(countStackView)
     self.addSubview(setStackView)
     
-    weightTextField.text = "\(setInformation.displayWeight)"
-    countTextField.text = "\(setInformation.displayCount)"
+    if let displayWeight = setInformation.displayWeight {
+      weightTextField.text = "\(displayWeight)"
+    } else {
+      weightTextField.text = nil
+    }
+    
+    if let displayCount = setInformation.displayCount {
+      countTextField.text = "\(displayCount)"
+    } else {
+      countTextField.text = nil
+    }
   }
   
   private func setUpLayout() {

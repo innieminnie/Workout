@@ -8,14 +8,14 @@
 import Foundation
 
 struct SetConfiguration: Codable {
-  private var weight: Float
-  private var count: UInt
+  private var weight: Float?
+  private var count: UInt?
   
-  var displayWeight: Float {
+  var displayWeight: Float? {
     return self.weight
   }
   
-  var displayCount: UInt {
+  var displayCount: UInt? {
     return self.count
   }
   
@@ -24,10 +24,7 @@ struct SetConfiguration: Codable {
     case count
   }
   
-  init() {
-    self.weight = 0
-    self.count = 0
-  }
+  init() { }
   
   mutating func updateWeight(with w: Float) {
     self.weight = w
@@ -38,6 +35,7 @@ struct SetConfiguration: Codable {
   }
   
   func weightTimesCount() -> Float {
-    return self.weight * Float(self.count)
+    guard let weight = self.weight, let count = self.count else { return 0.0 }
+    return weight * Float(count)
   }
 }
