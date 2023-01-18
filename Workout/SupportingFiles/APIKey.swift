@@ -8,8 +8,9 @@
 import Foundation
 import Firebase
 struct APIKey {
-  let kakaoNativeAppKey = "4983771287729e3a63a0b0ef1c07f1c9"
-  let googleClientID = FirebaseApp.app()?.options.clientID
+  static let kakaoNativeAppKey = "4983771287729e3a63a0b0ef1c07f1c9"
+  static let googleClientID = FirebaseApp.app()?.options.clientID
+  static let appID = 6444724818
 }
 
 // 주황: 0xF58423.convertToRGB()
