@@ -230,10 +230,10 @@ extension WorkoutSetConfigurationView {
   
   private func setUpLayout() {
     NSLayoutConstraint.activate([
-      setStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+      setStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 13),
       setStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
       setStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-      setStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
+      setStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -13),
       
       weightStackView.widthAnchor.constraint(equalTo: setStackView.widthAnchor, multiplier: 0.35),
       countStackView.widthAnchor.constraint(equalTo: weightStackView.widthAnchor),
