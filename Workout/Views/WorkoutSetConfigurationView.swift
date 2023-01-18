@@ -48,20 +48,20 @@ class WorkoutSetConfigurationView: UIView {
     return label
   }()
   
-  private lazy var weightTextField: UITextFieldWithPadding = {
-    let textField = UITextFieldWithPadding()
+  private lazy var weightTextFieldView: RoundedCornerTextFieldView = {
+    let textFieldView = RoundedCornerTextFieldView(value: "0.0")
+    let textField = textFieldView.valueTextField
+    
     textField.addAction(UIAction { _ in self.textFieldValueChanged(sender: textField) }, for: .editingChanged)
     textField.translatesAutoresizingMaskIntoConstraints = false
     
-    textField.backgroundColor = 0xBEC0C2.convertToRGB()
-    textField.applyCornerRadius(8)
+    textField.backgroundColor = .clear
     textField.keyboardType = .decimalPad
     textField.textAlignment = .right
     textField.font = UIFont.boldSystemFont(ofSize: 16)
     textField.placeholder = "\(0.0)"
-    textField.text = "\(0.0)"
     
-    return textField
+    return textFieldView
   }()
   
   private let weightUnitLabel: UILabel = {
@@ -74,20 +74,20 @@ class WorkoutSetConfigurationView: UIView {
     return label
   }()
   
-  private lazy var countTextField: UITextFieldWithPadding = {
-    let textField = UITextFieldWithPadding()
+  private lazy var countTextFieldView: RoundedCornerTextFieldView = {
+    let textFieldView = RoundedCornerTextFieldView(value: "0")
+    let textField = textFieldView.valueTextField
+    
     textField.addAction(UIAction { _ in self.textFieldValueChanged(sender: textField) }, for: .editingChanged)
     textField.translatesAutoresizingMaskIntoConstraints = false
     
-    textField.backgroundColor = 0xBEC0C2.convertToRGB()
-    textField.applyCornerRadius(8)
+    textField.backgroundColor = .clear
     textField.keyboardType = .numberPad
     textField.textAlignment = .right
     textField.font = UIFont.boldSystemFont(ofSize: 16)
     textField.placeholder = "\(0)"
-    textField.text = "\(0)"
     
-    return textField
+    return textFieldView
   }()
   
   private let countUnitLabel: UILabel = {
@@ -126,6 +126,7 @@ class WorkoutSetConfigurationView: UIView {
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
     
+    stackView.setContentCompressionResistancePriority(.required, for: .vertical)
     stackView.alignment = .center
     stackView.axis = .horizontal
     stackView.distribution = .fill
@@ -137,8 +138,8 @@ class WorkoutSetConfigurationView: UIView {
     super.init(frame: .zero)
     
     self.setIndex = index
-    weightTextField.delegate = self
-    countTextField.delegate = self
+    weightTextFieldView.valueTextField.delegate = self
+    countTextFieldView.valueTextField.delegate = self
     
     configureWeightStackView()
     configureCountStackView()
@@ -161,45 +162,45 @@ class WorkoutSetConfigurationView: UIView {
   }
   
   func showDoingStatusView() {
-    weightTextField.isUserInteractionEnabled = true
-    weightTextField.backgroundColor = 0xBEC0C2.convertToRGB()
-    weightTextField.textColor = .black
+    weightTextFieldView.isUserInteractionEnabled = true
+    weightTextFieldView.backgroundColor = 0xBEC0C2.convertToRGB()
+    weightTextFieldView.valueTextField.textColor = .black
     
-    countTextField.isUserInteractionEnabled = true
-    countTextField.backgroundColor = 0xBEC0C2.convertToRGB()
-    countTextField.textColor = .black
+    countTextFieldView.isUserInteractionEnabled = true
+    countTextFieldView.backgroundColor = 0xBEC0C2.convertToRGB()
+    countTextFieldView.valueTextField.textColor = .black
   }
   
   func showDoneStatusView() {
-    weightTextField.isUserInteractionEnabled = false
-    weightTextField.backgroundColor = .clear
-    weightTextField.textColor = 0x096DB6.convertToRGB()
+    weightTextFieldView.isUserInteractionEnabled = false
+    weightTextFieldView.backgroundColor = .clear
+    weightTextFieldView.valueTextField.textColor = 0x096DB6.convertToRGB()
     
-    countTextField.isUserInteractionEnabled = false
-    countTextField.backgroundColor = .clear
-    countTextField.textColor = 0x096DB6.convertToRGB()
+    countTextFieldView.isUserInteractionEnabled = false
+    countTextFieldView.backgroundColor = .clear
+    countTextFieldView.valueTextField.textColor = 0x096DB6.convertToRGB()
   }
   
   func allFieldsAreWritten() -> Bool {
-    return weightTextField.hasText && countTextField.hasText
+    return weightTextFieldView.valueTextField.hasText && countTextFieldView.valueTextField.hasText
   }
 }
 extension WorkoutSetConfigurationView {
   private func configureWeightStackView() {
-    weightStackView.addArrangedSubview(weightTextField)
+    weightStackView.addArrangedSubview(weightTextFieldView)
     weightStackView.addArrangedSubview(weightUnitLabel)
     
     NSLayoutConstraint.activate([
-      weightTextField.widthAnchor.constraint(equalTo: weightUnitLabel.widthAnchor, multiplier: 2.0)
+      weightTextFieldView.widthAnchor.constraint(equalTo: weightUnitLabel.widthAnchor, multiplier: 2.0)
       ])
   }
   
   private func configureCountStackView() {
-    countStackView.addArrangedSubview(countTextField)
+    countStackView.addArrangedSubview(countTextFieldView)
     countStackView.addArrangedSubview(countUnitLabel)
     
     NSLayoutConstraint.activate([
-      countTextField.widthAnchor.constraint(equalTo: countUnitLabel.widthAnchor, multiplier: 1.5)
+      countTextFieldView.widthAnchor.constraint(equalTo: countUnitLabel.widthAnchor, multiplier: 1.5)
     ])
   }
   
@@ -215,24 +216,24 @@ extension WorkoutSetConfigurationView {
     self.addSubview(setStackView)
     
     if let displayWeight = setInformation.displayWeight {
-      weightTextField.text = "\(displayWeight)"
+      weightTextFieldView.valueTextField.text = "\(displayWeight)"
     } else {
-      weightTextField.text = nil
+      weightTextFieldView.valueTextField.text = nil
     }
     
     if let displayCount = setInformation.displayCount {
-      countTextField.text = "\(displayCount)"
+      countTextFieldView.valueTextField.text = "\(displayCount)"
     } else {
-      countTextField.text = nil
+      countTextFieldView.valueTextField.text = nil
     }
   }
   
   private func setUpLayout() {
     NSLayoutConstraint.activate([
-      setStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+      setStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
       setStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
       setStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-      setStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15),
+      setStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
       
       weightStackView.widthAnchor.constraint(equalTo: setStackView.widthAnchor, multiplier: 0.35),
       countStackView.widthAnchor.constraint(equalTo: weightStackView.widthAnchor),
@@ -242,21 +243,21 @@ extension WorkoutSetConfigurationView {
   
   private func updateSetSum(sender: UITextField) {
     switch sender {
-    case self.countTextField:
+    case self.countTextFieldView.valueTextField:
       guard let text = sender.text,
             let countValue = UInt(text) else {
               countValue = 0
               return
             }
-      
+
       self.countValue = countValue
-    case self.weightTextField:
+    case self.weightTextFieldView.valueTextField:
       guard let text = sender.text,
             let weightValue = Float(text) else {
               weightValue = 0
               return
             }
-      
+
       self.weightValue = weightValue
     default:
       break
