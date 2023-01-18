@@ -25,7 +25,6 @@
 		D92D241A292CB67F00031670 /* SettingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D2419292CB67F00031670 /* SettingMenu.swift */; };
 		D92D241C292E444A00031670 /* NetworkConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */; };
 		D961A0542953422D00494B85 /* NetworkServiceInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D961A0532953422D00494B85 /* NetworkServiceInformation.swift */; };
-		D961A07229544C7400494B85 /* UITextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D961A07129544C7400494B85 /* UITextFieldWithPadding.swift */; };
 		D98569B0274CBAFB007E517A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569AF274CBAFB007E517A /* AppDelegate.swift */; };
 		D98569B4274CBAFB007E517A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98569B3274CBAFB007E517A /* HomeViewController.swift */; };
 		D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D98569B8274CBAFE007E517A /* Assets.xcassets */; };
@@ -123,7 +122,6 @@
 		D92D2419292CB67F00031670 /* SettingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMenu.swift; sourceTree = "<group>"; };
 		D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfirmViewController.swift; sourceTree = "<group>"; };
 		D961A0532953422D00494B85 /* NetworkServiceInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceInformation.swift; sourceTree = "<group>"; };
-		D961A07129544C7400494B85 /* UITextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldWithPadding.swift; sourceTree = "<group>"; };
 		D961A0B8295D8A0200494B85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Workout/SupportingFiles/Info.plist; sourceTree = SOURCE_ROOT; };
 		D98569AC274CBAFB007E517A /* pitapatpumping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pitapatpumping.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98569AF274CBAFB007E517A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -324,7 +322,6 @@
 				D9D44E492910F9540035B8D0 /* PaddingLabel.swift */,
 				D995871D286D523A0093E024 /* Extensions.swift */,
 				D9D44E4B2911F2FE0035B8D0 /* BodySectionCollectionView.swift */,
-				D961A07129544C7400494B85 /* UITextFieldWithPadding.swift */,
 				D9E6ABF72971541F002FB36C /* WorkoutListTableView.swift */,
 			);
 			path = Views;
@@ -735,7 +732,6 @@
 				D98569EF2758F669007E517A /* RoundedCornerLabelView.swift in Sources */,
 				D92D241C292E444A00031670 /* NetworkConfirmViewController.swift in Sources */,
 				D995871E286D523A0093E024 /* Extensions.swift in Sources */,
-				D961A07229544C7400494B85 /* UITextFieldWithPadding.swift in Sources */,
 				D92D2417292B14D400031670 /* SettingTableViewCell.swift in Sources */,
 				D98569E8274D2A3D007E517A /* TabBarMenu.swift in Sources */,
 				D9958724287E54E40093E024 /* PlannedWorkout.swift in Sources */,

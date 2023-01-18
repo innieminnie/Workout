@@ -26,19 +26,18 @@ class WorkoutSettingView: UIView {
     return label
   }()
   
-  private lazy var nameTextField: UITextFieldWithPadding = {
-    let textField = UITextFieldWithPadding()
+  private lazy var nameTextFieldView: RoundedCornerTextFieldView = {
+    let textFieldView = RoundedCornerTextFieldView(value: " ")
+    let textField = textFieldView.valueTextField
     textField.translatesAutoresizingMaskIntoConstraints = false
     
     textField.isUserInteractionEnabled = true
     textField.textColor = .black
     textField.textAlignment = .center
     textField.font = UIFont.Pretendard(type: .Bold, size: 20)
-    textField.backgroundColor = .lightGray
-    textField.borderStyle = .roundedRect
     textField.placeholder = "등록할 운동명을 입력하세요."
     
-    return textField
+    return textFieldView
   }()
   
   private lazy var nameCheckLabel: UILabel = {
@@ -139,10 +138,9 @@ class WorkoutSettingView: UIView {
         
         updateButton.customizeConfiguration(with: "등록할게요", foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
         
-        nameTextField.isUserInteractionEnabled = true
-        nameTextField.textColor = .black
-        nameTextField.backgroundColor = .lightGray
-        nameTextField.borderStyle = .roundedRect
+        nameTextFieldView.isUserInteractionEnabled = true
+        nameTextFieldView.valueTextField.textColor = .black
+        nameTextFieldView.backgroundColor = .lightGray
         
         weightUnitSegmentedControl.isUserInteractionEnabled = true
         bodySectionCollectionView.isUserInteractionEnabled = true
@@ -150,9 +148,8 @@ class WorkoutSettingView: UIView {
       } else {
         updateButton.customizeConfiguration(with: "수정할래요", foregroundColor: .white, font: UIFont.Pretendard(type: .Bold, size: 15), buttonSize: .medium)
         
-        nameTextField.isUserInteractionEnabled = false
-        nameTextField.backgroundColor = .clear
-        nameTextField.borderStyle = .none
+        nameTextFieldView.isUserInteractionEnabled = false
+        nameTextFieldView.backgroundColor = .clear
         
         weightUnitSegmentedControl.isUserInteractionEnabled = false
         bodySectionCollectionView.isUserInteractionEnabled = false
@@ -172,7 +169,7 @@ class WorkoutSettingView: UIView {
     bodySectionCollectionView.delegate = self
     
     addSubview(titleLabel)
-    addSubview(nameTextField)
+    addSubview(nameTextFieldView)
     addSubview(nameCheckLabel)
     addSubview(weightUnitSegmentedControl)
     addSubview(weightUnitCheckLabel)
@@ -188,11 +185,11 @@ class WorkoutSettingView: UIView {
       titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
       titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
       
-      nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-      nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
-      nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
+      nameTextFieldView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+      nameTextFieldView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
+      nameTextFieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
       
-      nameCheckLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor),
+      nameCheckLabel.topAnchor.constraint(equalTo: nameTextFieldView.bottomAnchor),
       nameCheckLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 13),
       nameCheckLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
       
@@ -205,8 +202,8 @@ class WorkoutSettingView: UIView {
       weightUnitCheckLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
       
       bodySectionCollectionView.topAnchor.constraint(equalTo: weightUnitCheckLabel.bottomAnchor),
-      bodySectionCollectionView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
-      bodySectionCollectionView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
+      bodySectionCollectionView.leadingAnchor.constraint(equalTo: nameTextFieldView.leadingAnchor),
+      bodySectionCollectionView.trailingAnchor.constraint(equalTo: nameTextFieldView.trailingAnchor),
       bodySectionCollectionView.bottomAnchor.constraint(equalTo: bodySectionCheckLabel.topAnchor),
       
       bodySectionCheckLabel.topAnchor.constraint(equalTo: bodySectionCollectionView.bottomAnchor),
@@ -214,12 +211,12 @@ class WorkoutSettingView: UIView {
       bodySectionCheckLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
       bodySectionCheckLabel.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -10),
       
-      buttonStackView.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
-      buttonStackView.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
+      buttonStackView.leadingAnchor.constraint(equalTo: nameTextFieldView.leadingAnchor),
+      buttonStackView.trailingAnchor.constraint(equalTo: nameTextFieldView.trailingAnchor),
       buttonStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
     ])
     
-    nameTextField.delegate = self
+    nameTextFieldView.valueTextField.delegate = self
   }
   
   required init?(coder: NSCoder) {
@@ -229,7 +226,7 @@ class WorkoutSettingView: UIView {
   func setUp(with workout: Workout) {
     self.isEditable = false
     titleLabel.text = "운동 정보"
-    nameTextField.text = workout.displayName()
+    nameTextFieldView.valueTextField.text = workout.displayName()
     selectedBodySection = workout.bodySection
     selectedWeightUnit = workout.weightUnit
     setSelectedWeightUnit()
@@ -237,7 +234,7 @@ class WorkoutSettingView: UIView {
   }
   
   func setFirstResponder() {
-    nameTextField.becomeFirstResponder()
+    nameTextFieldView.becomeFirstResponder()
   }
 }
 extension WorkoutSettingView: UITextFieldDelegate {
@@ -255,7 +252,7 @@ extension WorkoutSettingView {
     if !self.isEditable {
       self.isEditable = true
     } else {
-      guard let name = nameTextField.text, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+      guard let name = nameTextFieldView.valueTextField.text, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
         nameCheckLabel.text = "새로운 운동명을 입력해주세요 :)"
         return
       }

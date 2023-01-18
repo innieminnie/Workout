@@ -57,3 +57,42 @@ class RoundedCornerLabelView: UIView {
     self.backgroundColor = .white
   }
 }
+
+class RoundedCornerTextFieldView: UIView {
+  let valueTextField: UITextField = {
+    let textField = UITextField()
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    
+    textField.textAlignment = .right
+    textField.font = UIFont.Pretendard(type: .Regular, size: 15)
+    
+    return textField
+  }()
+  
+  init() {
+    super.init(frame: .zero)
+    self.translatesAutoresizingMaskIntoConstraints = false
+    
+    self.addSubview(valueTextField)
+    self.applyCornerRadius(8)
+    self.backgroundColor = 0xBEC0C2.convertToRGB()
+  }
+  
+  convenience init(value: String) {
+    self.init()
+    
+    self.valueTextField.text = value
+    self.valueTextField.textColor = .black
+    
+    NSLayoutConstraint.activate([
+      valueTextField.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+      valueTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+      valueTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+      valueTextField.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+    ])
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+}
