@@ -16,6 +16,8 @@ import AuthenticationServices
 class AuthenticationManager {
   static let shared = AuthenticationManager()
   static let user = Auth.auth().currentUser
+  let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+  let minimumVersion = "1.0.4"
   static var signedUpUser = String()
   static var userEmail = ""
   
@@ -26,7 +28,7 @@ class AuthenticationManager {
   }
   
   func googleLoginProcess(presentingVC: SignInViewController) {
-    guard let clientID = APIKey().googleClientID else { return }
+    guard let clientID = APIKey.googleClientID else { return }
     let config = GIDConfiguration.init(clientID: clientID)
     
     GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { user, error in
@@ -136,6 +138,26 @@ class AuthenticationManager {
         print("delete success.")
       }
     }
+  }
+  
+  func checkMinimumVersion(completionHandler: @escaping (String) -> Void ) {
+    guard let url = URL(string: "http://itunes.apple.com/lookup?id=\(APIKey.appID)") else { return }
+    
+    let requestURL = URLRequest(url: url)
+    URLSession.shared.dataTask(with: requestURL) { data, response, error in
+      if let error = error { print(error); return }
+      
+      if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+        do {
+          let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
+          let results = json!["results"] as? [[String: Any]]
+          let appStoreVersion = results![0]["version"] as? String
+          completionHandler(appStoreVersion!)
+        } catch {
+          print(error.localizedDescription)
+        }
+      }
+    }.resume()
   }
 }
 

@@ -34,15 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     setMonitor()
     FirebaseApp.configure()
-    KakaoSDK.initSDK(appKey: APIKey().kakaoNativeAppKey)
+    KakaoSDK.initSDK(appKey: APIKey.kakaoNativeAppKey)
     
-    if AuthenticationManager.user == nil {
-      self.window?.rootViewController = SignInViewController()
-    } else {
-      self.window?.rootViewController = BaseTabBarController()
-    }
-    
+    self.window?.rootViewController = SplashViewController()
     self.window?.makeKeyAndVisible()
+    
     return true
   }
   
