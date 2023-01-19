@@ -45,7 +45,11 @@ class RecordView: UIView {
     
     for setData in sets {
       let label = PaddingLabel()
-      label.text = "\(setData.displayWeight) \(weightUnit.rawValue)  \(setData.displayCount) reps"
+      
+      if let displayWeight = setData.displayWeight, let displayCount = setData.displayCount {
+        label.text = "\(displayWeight) \(weightUnit.rawValue) \(displayCount) reps"
+      }
+     
       label.font = UIFont.Pretendard(type: .Regular, size: 15)
       setStackView.addArrangedSubview(label)
     }
