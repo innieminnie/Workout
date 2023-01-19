@@ -28,31 +28,48 @@ class AuthenticationManager {
   }
   
   func googleLoginProcess(presentingVC: SignInViewController) {
-    guard let clientID = APIKey.googleClientID else { return }
-    let config = GIDConfiguration.init(clientID: clientID)
-    
-    GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { user, error in
-      if let error = error {
-        if (error as NSError).code == GIDSignInError.canceled.rawValue { return }
-        
-        let alert = UIAlertController(title: "\(error)\n 로그인에 실패했어요. 잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
-        let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
-        alert.addAction(action)
-        presentingVC.present(alert, animated: false, completion: nil)
-        return
-      }
+    GIDSignIn.sharedInstance.signIn(withPresenting: presentingVC) { signInResult, error in
+      guard error == nil else { return }
+      guard let signInResult = signInResult else { return }
       
-      guard let authentication = user?.authentication, let idToken = authentication.idToken else { return }
-      let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
-      Auth.auth().signIn(with: credential) { autoDataResult, error in
-        if let error = error {
-          let alert = UIAlertController(title: "\(error)\n 로그인에 실패했어요. 잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
+      signInResult.user.refreshTokensIfNeeded { user, error in
+        guard error == nil else {
+          let alert = UIAlertController(title: "\(String(describing: error))\n 로그인에 실패했어요. 잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
           let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
           alert.addAction(action)
           presentingVC.present(alert, animated: false, completion: nil)
+          return
         }
-        else {
-          presentingVC.completeSignInProcess()
+        
+        guard let user = user else {
+          let alert = UIAlertController(title: "\(String(describing: error))\n 로그인에 실패했어요. 잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
+          let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+          alert.addAction(action)
+          presentingVC.present(alert, animated: false, completion: nil)
+          return
+        }
+        
+        guard let idToken = user.idToken?.tokenString else {
+          let alert = UIAlertController(title: "\(String(describing: error))\n 로그인에 실패했어요. 잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
+          let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+          alert.addAction(action)
+          presentingVC.present(alert, animated: false, completion: nil)
+          return
+        }
+        
+        let accessToken = user.accessToken.tokenString
+        let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+        
+        Auth.auth().signIn(with: credential) { autoDataResult, error in
+          if let error = error {
+            let alert = UIAlertController(title: "\(error)\n 로그인에 실패했어요. 잠시후 다시 시도해주세요.", message: nil, preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+            alert.addAction(action)
+            presentingVC.present(alert, animated: false, completion: nil)
+          }
+          else {
+            presentingVC.completeSignInProcess()
+          }
         }
       }
     }
