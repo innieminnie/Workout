@@ -48,8 +48,8 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     NotificationCenter.default.addObserver(self, selector: #selector(self.checkRoutineData(_:)), name: Notification.Name("ReadRoutineData"), object: nil)
     
     self.dateBackgroundView.backgroundColor = .clear
-    self.dateBackgroundView.layer.borderColor = UIColor.clear.cgColor
-    self.dateBackgroundView.layer.borderWidth = 0
+    self.dateBackgroundView.layer.borderColor = UIColor.white.cgColor
+    self.dateBackgroundView.layer.borderWidth = 4
   }
   
   override func prepareForReuse() {
@@ -57,8 +57,8 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     self.isSelected = false
     
     self.dateBackgroundView.backgroundColor = .clear
-    self.dateBackgroundView.layer.borderColor = UIColor.clear.cgColor
-    self.dateBackgroundView.layer.borderWidth = 0
+    self.dateBackgroundView.layer.borderColor = UIColor.white.cgColor
+    self.dateBackgroundView.layer.borderWidth = 4
     self.dateNumberLabel.textColor = .black
     self.dateNumberLabel.font = UIFont.Pretendard(type: .Regular, size: 15)
   }
@@ -128,8 +128,7 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
   
   @objc  private func checkRoutineData(_ notification: NSNotification) {
     guard let userInfo = notification.userInfo,
-          let dateInformation = userInfo["date"] as? DateInformation,
-          let dailyRoutine = userInfo["dailyRoutine"] as? [PlannedWorkout] else {
+          let dateInformation = userInfo["date"] as? DateInformation else {
       return
     }
     
