@@ -34,7 +34,6 @@ class CalendarView: UIView {
     return label
   }()
   private let weekdaysView = WeekdaysView()
-  private let monthlyPageCollectionView = MonthlyPageCollectionView()
   private var selectedCell: CalendarDateCollectionViewCell?
   private lazy var rightButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToNextMonth() })
@@ -60,6 +59,23 @@ class CalendarView: UIView {
     return button
   }()
   
+  private lazy var contentScrollView: UIScrollView = {
+    let scrollView = UIScrollView()
+    scrollView.translatesAutoresizingMaskIntoConstraints = false
+    
+    scrollView.isPagingEnabled = true
+    scrollView.showsHorizontalScrollIndicator = false
+    scrollView.delegate = self
+    scrollView.contentSize.width = UIScreen.main.bounds.width * 3
+    scrollView.contentSize.height = UIScreen.main.bounds.width
+    scrollView.backgroundColor = .red
+    return scrollView
+  }()
+  
+  var previousMonthlyView = MonthlyPageCollectionView()
+  var currentMonthlyView = MonthlyPageCollectionView()
+  var nextMonthlyView = MonthlyPageCollectionView()
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.translatesAutoresizingMaskIntoConstraints = false
@@ -69,13 +85,13 @@ class CalendarView: UIView {
     self.addSubview(leftButton)
     self.addSubview(calendarStateButton)
     self.addSubview(weekdaysView)
-    self.addSubview(monthlyPageCollectionView)
+    self.addSubview(contentScrollView)
     
+    let monthlyCalendarArray = [previousMonthlyView, currentMonthlyView, nextMonthlyView]
+    configureMonthlyCollectionViews(with: monthlyCalendarArray)
+    
+//    configureSwipeGestures()
     currentMonthLabel.text = displayingMonthInformation.currentMonthTitle
-    monthlyPageCollectionView.dataSource = self
-    monthlyPageCollectionView.delegate = self
-    
-    configureSwipeGestures()
     
     NSLayoutConstraint.activate([
       currentMonthLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
@@ -92,13 +108,14 @@ class CalendarView: UIView {
       calendarStateButton.trailingAnchor.constraint(equalTo: weekdaysView.trailingAnchor),
       
       weekdaysView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 10),
-      weekdaysView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-      weekdaysView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+      weekdaysView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      weekdaysView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       
-      monthlyPageCollectionView.topAnchor.constraint(equalTo: weekdaysView.bottomAnchor),
-      monthlyPageCollectionView.leadingAnchor.constraint(equalTo: weekdaysView.leadingAnchor),
-      monthlyPageCollectionView.trailingAnchor.constraint(equalTo: weekdaysView.trailingAnchor),
-      monthlyPageCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+      contentScrollView.topAnchor.constraint(equalTo: weekdaysView.bottomAnchor),
+      contentScrollView.leadingAnchor.constraint(equalTo: weekdaysView.leadingAnchor),
+      contentScrollView.trailingAnchor.constraint(equalTo: weekdaysView.trailingAnchor),
+      contentScrollView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+      contentScrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
     ])
   }
   
@@ -106,15 +123,28 @@ class CalendarView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  private func configureSwipeGestures() {
-    let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToLastMonth))
-    swipeRightGestureRecognizer.direction = .right
-    self.addGestureRecognizer(swipeRightGestureRecognizer)
+  private func configureMonthlyCollectionViews(with array: [MonthlyPageCollectionView]) {
+    for (index, collectionView) in array.enumerated() {
+      collectionView.dataSource = self
+      collectionView.delegate = self
+      
+      let xPosition = UIScreen.main.bounds.width * CGFloat(index)
+      collectionView.frame = CGRect(x: xPosition, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+      contentScrollView.addSubview(collectionView)
+    }
     
-    let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToNextMonth))
-    swipeLeftGestureRecognizer.direction = .left
-    self.addGestureRecognizer(swipeLeftGestureRecognizer)
+    contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width, y: 0), animated: false)
   }
+  
+//  private func configureSwipeGestures() {
+//    let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToLastMonth))
+//    swipeRightGestureRecognizer.direction = .right
+//    currentMonthlyView.addGestureRecognizer(swipeRightGestureRecognizer)
+//
+//    let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToNextMonth))
+//    swipeLeftGestureRecognizer.direction = .left
+//    currentMonthlyView.addGestureRecognizer(swipeLeftGestureRecognizer)
+//  }
   
   private func foldCalendar() {
     delegate?.calendarIsFolded()
@@ -125,16 +155,16 @@ class CalendarView: UIView {
     delegate?.changedSelectedDay(to: nil)
     
     DispatchQueue.main.async {
-      UIView.animate(withDuration: 0.5) {
-        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: -self.bounds.width, y: 0)
-        self.monthlyPageCollectionView.alpha = 0
-      } completion: { _ in
-        self.monthlyPageCollectionView.reloadData()
-        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: 0, y: 0)
-        UIView.animate(withDuration: 0.3) {
-          self.monthlyPageCollectionView.alpha = 1
-        }
-      }
+//      UIView.animate(withDuration: 0.5) {
+//        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: -self.bounds.width, y: 0)
+//        self.monthlyPageCollectionView.alpha = 0
+//      } completion: { _ in
+//        self.monthlyPageCollectionView.reloadData()
+//        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: 0, y: 0)
+//        UIView.animate(withDuration: 0.3) {
+//          self.monthlyPageCollectionView.alpha = 1
+//        }
+//      }
     }
   }
   
@@ -143,16 +173,16 @@ class CalendarView: UIView {
     delegate?.changedSelectedDay(to: nil)
     
     DispatchQueue.main.async {
-      UIView.animate(withDuration: 0.5) {
-        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: self.bounds.width, y: 0)
-        self.monthlyPageCollectionView.alpha = 0
-      } completion: { _ in
-        self.monthlyPageCollectionView.reloadData()
-        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: 0, y: 0)
-        UIView.animate(withDuration: 0.3) {
-          self.monthlyPageCollectionView.alpha = 1
-        }
-      }
+//      UIView.animate(withDuration: 0.5) {
+//        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: self.bounds.width, y: 0)
+//        self.monthlyPageCollectionView.alpha = 0
+//      } completion: { _ in
+//        self.monthlyPageCollectionView.reloadData()
+//        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: 0, y: 0)
+//        UIView.animate(withDuration: 0.3) {
+//          self.monthlyPageCollectionView.alpha = 1
+//        }
+//      }
     }
   }
   
@@ -179,13 +209,15 @@ class CalendarView: UIView {
   
   func reloadUserData() {
     DispatchQueue.main.async {
-      self.monthlyPageCollectionView.reloadData()
+      self.previousMonthlyView.reloadData()
+      self.currentMonthlyView.reloadData()
+      self.nextMonthlyView.reloadData()
     }
   }
 }
 extension CalendarView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let cellWidth =  monthlyPageCollectionView.frame.width / 7
+    let cellWidth =  currentMonthlyView.frame.width / 7
     let cellHeight = cellWidth
     return CGSize(width: cellWidth, height: cellHeight)
   }
