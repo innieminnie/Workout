@@ -103,4 +103,14 @@ struct MonthlyInformation {
     self.year = Calendar.current.component(.year, from: dateInLastMonth!)
     self.month = Calendar.current.component(.month, from: dateInLastMonth!)
   }
+  
+  func nextMonth() -> MonthlyInformation {
+    let dateInNextMonth = Calendar.current.date(byAdding: .month, value: 1,  to: self.startDate)
+    return MonthlyInformation(date: dateInNextMonth!)
+  }
+  
+  func lastMonth() -> MonthlyInformation {
+    let dateInLastMonth = Calendar.current.date(byAdding: .month, value: -1,  to: self.startDate)
+    return MonthlyInformation(date: dateInLastMonth!)
+  }
 }

@@ -72,9 +72,11 @@ class CalendarView: UIView {
     return scrollView
   }()
   
-  var previousMonthlyView = MonthlyPageCollectionView()
-  var currentMonthlyView = MonthlyPageCollectionView()
-  var nextMonthlyView = MonthlyPageCollectionView()
+  private var previousMonthlyView = MonthlyPageCollectionView()
+  private var currentMonthlyView = MonthlyPageCollectionView()
+  private var nextMonthlyView = MonthlyPageCollectionView()
+  
+  private var monthArray = [MonthlyInformation]()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -89,8 +91,8 @@ class CalendarView: UIView {
     
     let monthlyCalendarArray = [previousMonthlyView, currentMonthlyView, nextMonthlyView]
     configureMonthlyCollectionViews(with: monthlyCalendarArray)
-    
-//    configureSwipeGestures()
+    monthArray = [displayingMonthInformation.lastMonth(), displayingMonthInformation, displayingMonthInformation.nextMonth()]
+        configureSwipeGestures()
     currentMonthLabel.text = displayingMonthInformation.currentMonthTitle
     
     NSLayoutConstraint.activate([
@@ -136,54 +138,30 @@ class CalendarView: UIView {
     contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width, y: 0), animated: false)
   }
   
-//  private func configureSwipeGestures() {
-//    let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToLastMonth))
-//    swipeRightGestureRecognizer.direction = .right
-//    currentMonthlyView.addGestureRecognizer(swipeRightGestureRecognizer)
-//
-//    let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToNextMonth))
-//    swipeLeftGestureRecognizer.direction = .left
-//    currentMonthlyView.addGestureRecognizer(swipeLeftGestureRecognizer)
-//  }
+    private func configureSwipeGestures() {
+      let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToLastMonth))
+      swipeRightGestureRecognizer.direction = .right
+      currentMonthlyView.addGestureRecognizer(swipeRightGestureRecognizer)
+  
+      let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action:  #selector(moveToNextMonth))
+      swipeLeftGestureRecognizer.direction = .left
+      currentMonthlyView.addGestureRecognizer(swipeLeftGestureRecognizer)
+    }
   
   private func foldCalendar() {
     delegate?.calendarIsFolded()
   }
   
   @objc private func moveToNextMonth() {
-    displayingMonthInformation.changeToNextMonth()
-    delegate?.changedSelectedDay(to: nil)
-    
-    DispatchQueue.main.async {
-//      UIView.animate(withDuration: 0.5) {
-//        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: -self.bounds.width, y: 0)
-//        self.monthlyPageCollectionView.alpha = 0
-//      } completion: { _ in
-//        self.monthlyPageCollectionView.reloadData()
-//        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: 0, y: 0)
-//        UIView.animate(withDuration: 0.3) {
-//          self.monthlyPageCollectionView.alpha = 1
-//        }
-//      }
-    }
+        displayingMonthInformation.changeToNextMonth()
+        delegate?.changedSelectedDay(to: nil)
+    //자동 오른쪽으로 스크롤 구현
   }
   
   @objc private func moveToLastMonth() {
-    displayingMonthInformation.changeToLastMonth()
-    delegate?.changedSelectedDay(to: nil)
-    
-    DispatchQueue.main.async {
-//      UIView.animate(withDuration: 0.5) {
-//        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: self.bounds.width, y: 0)
-//        self.monthlyPageCollectionView.alpha = 0
-//      } completion: { _ in
-//        self.monthlyPageCollectionView.reloadData()
-//        self.monthlyPageCollectionView.transform = CGAffineTransform(translationX: 0, y: 0)
-//        UIView.animate(withDuration: 0.3) {
-//          self.monthlyPageCollectionView.alpha = 1
-//        }
-//      }
-    }
+        displayingMonthInformation.changeToLastMonth()
+        delegate?.changedSelectedDay(to: nil)
+    // 자동왼쪽스크롤구현
   }
   
   @objc private func cellTapped(gesture: CaledarDateTapGesture) {
@@ -232,7 +210,9 @@ extension CalendarView: UICollectionViewDelegateFlowLayout {
 }
 extension CalendarView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return displayingMonthInformation.numberOfDaysToDisplay
+    let xPoint = collectionView.frame.minX
+    let index = Int(xPoint / UIScreen.main.bounds.width)
+    return monthArray[index].numberOfDaysToDisplay
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -240,10 +220,12 @@ extension CalendarView: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
     
-    let cellDateInfo = displayingMonthInformation.dateComponentsInformation(at: indexPath.row)
+    let xPoint = collectionView.frame.minX
+    let index = Int(xPoint / UIScreen.main.bounds.width)
+    let cellDateInfo = monthArray[index].dateComponentsInformation(at: indexPath.row)
     cell.setUp(with: cellDateInfo)
-   
-    if cell.dateInformation == todayInformation {
+    
+    if cell.dateInformation == todayInformation && collectionView.frame.minX == UIScreen.main.bounds.width {
       collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
       cell.isToday = true
       self.selectedCell = cell
@@ -256,4 +238,34 @@ extension CalendarView: UICollectionViewDataSource {
     
     return cell
   }
+}
+extension CalendarView: UIScrollViewDelegate {
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    switch targetContentOffset.pointee.x {
+    case CGFloat(0)..<CGFloat(UIScreen.main.bounds.width):
+      displayingMonthInformation.changeToLastMonth()
+      monthArray[0].changeToLastMonth()
+      monthArray[1].changeToLastMonth()
+      monthArray[2].changeToLastMonth()
+     
+    case CGFloat(UIScreen.main.bounds.width * 2)..<CGFloat(UIScreen.main.bounds.width * 3):
+      displayingMonthInformation.changeToNextMonth()
+      monthArray[0].changeToNextMonth()
+      monthArray[1].changeToNextMonth()
+      monthArray[2].changeToNextMonth()
+    default:
+      break
+    }
+    
+    DispatchQueue.main.async {
+      self.reloadUserData()
+      self.delegate?.changedSelectedDay(to: nil)
+    }
+  }
+  
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+      DispatchQueue.main.async {
+        self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width, y: 0), animated: false)
+      }
+    }
 }
