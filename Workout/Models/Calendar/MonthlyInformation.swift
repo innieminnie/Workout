@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MonthlyInformation {
+class MonthlyInformation {
   private var year: Int
   private var month: Int
   private var startDate: Date {
@@ -92,13 +92,13 @@ struct MonthlyInformation {
     return calendarDisplayingDateComponents[index]
   }
   
-  mutating func changeToNextMonth() {
+  func changeToNextMonth() {
     let dateInNextMonth = Calendar.current.date(byAdding: .month, value: 1,  to: self.startDate)
     self.year = Calendar.current.component(.year, from: dateInNextMonth!)
     self.month = Calendar.current.component(.month, from: dateInNextMonth!)
   }
   
-  mutating func changeToLastMonth() {
+  func changeToLastMonth() {
     let dateInLastMonth = Calendar.current.date(byAdding: .month, value: -1,  to: self.startDate)
     self.year = Calendar.current.component(.year, from: dateInLastMonth!)
     self.month = Calendar.current.component(.month, from: dateInLastMonth!)
