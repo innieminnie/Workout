@@ -54,12 +54,27 @@ class CalendarView: UIView {
     
     stackView.axis = .horizontal
     stackView.alignment = .center
+    stackView.distribution = .fill
     stackView.addArrangedSubview(self.leftButton)
     stackView.addArrangedSubview(self.currentMonthLabel)
     stackView.addArrangedSubview(self.rightButton)
     
     return stackView
   }()
+  
+  private lazy var navigationStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    stackView.axis = .horizontal
+    stackView.distribution = .fillProportionally
+  
+    stackView.addArrangedSubview(monthSelectionStackView)
+    stackView.addArrangedSubview(calendarStateButton)
+    
+    return stackView
+  }()
+  
   private lazy var leftButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToLastMonth() })
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -98,11 +113,7 @@ class CalendarView: UIView {
     super.init(frame: frame)
     self.translatesAutoresizingMaskIntoConstraints = false
     
-//    self.addSubview(currentMonthLabel)
-//    self.addSubview(rightButton)
-//    self.addSubview(leftButton)
-    self.addSubview(monthSelectionStackView)
-    self.addSubview(calendarStateButton)
+    self.addSubview(navigationStackView)
     self.addSubview(weekdaysView)
     self.addSubview(contentScrollView)
     
@@ -112,11 +123,9 @@ class CalendarView: UIView {
     currentMonthLabel.text = monthArray[1].currentMonthTitle
     
     NSLayoutConstraint.activate([
-      monthSelectionStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      monthSelectionStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-      
-      calendarStateButton.centerYAnchor.constraint(equalTo: monthSelectionStackView.centerYAnchor),
-      calendarStateButton.trailingAnchor.constraint(equalTo: weekdaysView.trailingAnchor),
+      navigationStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      navigationStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+      navigationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
       
       weekdaysView.topAnchor.constraint(equalTo: monthSelectionStackView.bottomAnchor, constant: 10),
       weekdaysView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -148,7 +157,14 @@ class CalendarView: UIView {
   }
   
   private func foldCalendar() {
-    delegate?.calendarIsFolded()
+    delegate?.calendarIsFolded(height: self.weekdaysView.frame.minY)
+    weekdaysView.isHidden = true
+    contentScrollView.isHidden = true
+  }
+  
+  func openCalendar() {
+    weekdaysView.isHidden = false
+    contentScrollView.isHidden = false
   }
   
   @objc private func moveToNextMonth() {

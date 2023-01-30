@@ -161,7 +161,11 @@ class HomeViewController: UIViewController {
     routineTableView.endUpdates()
   }
   
+  var constraint: NSLayoutConstraint!
+  
   private func setUpLayout() {
+    constraint = buttonStackView.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10)
+    
     NSLayoutConstraint.activate([
       contentScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
       contentScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -173,7 +177,7 @@ class HomeViewController: UIViewController {
       calendarView.trailingAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.trailingAnchor),
       calendarView.widthAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.widthAnchor),
       
-      buttonStackView.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10),
+      constraint,
       buttonStackView.leadingAnchor.constraint(equalTo: calendarView.leadingAnchor, constant: 5),
       buttonStackView.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -5),
       
@@ -208,19 +212,6 @@ class HomeViewController: UIViewController {
     self.present(previousRecordViewController, animated: true)
   }
   
-  private func openCalendar() {
-    calendarView.isHidden = false
-    NSLayoutConstraint.deactivate([calendarViewBottomConstraint])
-    
-    if let navigationController = self.navigationController {
-      navigationController.navigationBar.isHidden = true
-    }
-    
-    UIView.animate(withDuration: 0.7) {
-      self.view.layoutIfNeeded()
-    }
-  }
-  
   private func shakeAddRoutineButton() {
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     let dur = 0.1
@@ -252,16 +243,27 @@ class HomeViewController: UIViewController {
     completion: nil
     )
   }
+  private func openCalendar() {
+    NSLayoutConstraint.deactivate([constraint])
+    constraint = buttonStackView.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10)
+    NSLayoutConstraint.activate([constraint])
+    
+    UIView.animate(withDuration: 0.7) {
+      self.view.layoutIfNeeded()
+    } completion: { _ in
+      self.calendarView.openCalendar()
+    }
+  }
   
-  private func foldCalendar() {
+  private func foldCalendar(height: CGFloat) {
     guard selectedDayInformation != nil else {
       shakeAddRoutineButton()
       return
     }
     
-    self.calendarView.isHidden = true
-    calendarViewBottomConstraint = calendarView.bottomAnchor.constraint(equalTo: calendarView.topAnchor)
-    NSLayoutConstraint.activate([calendarViewBottomConstraint])
+    NSLayoutConstraint.deactivate([constraint])
+    constraint = buttonStackView.topAnchor.constraint(equalTo: calendarView.topAnchor, constant: height)
+    NSLayoutConstraint.activate([constraint])
     
     if let navigationController = self.navigationController {
       navigationController.navigationBar.isHidden = false
@@ -441,12 +443,12 @@ extension HomeViewController: WorkoutSelectionDelegate {
   }
 }
 extension HomeViewController: CalendarViewDelegate {
-  func changedSelectedDay(to dateInformation: DateInformation?) {
-    self.selectedDayInformation = dateInformation
+  func calendarIsFolded(height: CGFloat) {
+    foldCalendar(height: height)
   }
   
-  func calendarIsFolded() {
-    foldCalendar()
+  func changedSelectedDay(to dateInformation: DateInformation?) {
+    self.selectedDayInformation = dateInformation
   }
 }
 extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
