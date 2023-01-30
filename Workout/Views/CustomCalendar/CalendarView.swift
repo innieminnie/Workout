@@ -93,9 +93,9 @@ class CalendarView: UIView {
     return label
   }()
   private lazy var calendarStateButton: UIButton = {
-    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.foldCalendar() })
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.changeCalendarState() })
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.customizeConfiguration(with: "달력접기", foregroundColor: .black, font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+    button.customizeConfiguration(with: "달력접기", foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
     button.contentVerticalAlignment = .top
     button.contentHorizontalAlignment = .right
     
@@ -156,10 +156,27 @@ class CalendarView: UIView {
     contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width, y: 0), animated: false)
   }
   
-  private func foldCalendar() {
-    delegate?.calendarIsFolded(height: self.weekdaysView.frame.minY)
-    weekdaysView.isHidden = true
-    contentScrollView.isHidden = true
+  private func changeCalendarState() {
+    if calendarStateButton.configuration?.title == "달력접기" {
+      delegate?.calendarIsFolded(height: self.weekdaysView.frame.minY)
+      calendarStateButton.customizeConfiguration(with: "달력펼치기", foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+      weekdaysView.isHidden = true
+      contentScrollView.isHidden = true
+      
+      guard let selectedCell = selectedCell else { return }
+      guard let dateInformation = selectedCell.dateInformation else { return }
+      
+      currentMonthLabel.text = "\(dateInformation.fullDate)"
+      leftButton.isHidden = true
+      rightButton.isHidden = true
+    } else {
+      delegate?.calendarIsOpened()
+      calendarStateButton.customizeConfiguration(with: "달력접기", foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+      
+      currentMonthLabel.text = self.monthArray[1].currentMonthTitle
+      leftButton.isHidden = false
+      rightButton.isHidden = false
+    }
   }
   
   func openCalendar() {

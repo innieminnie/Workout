@@ -24,7 +24,6 @@ class HomeViewController: UIViewController {
           self.buttonStackView.removeArrangedSubview(last)
         }
       } else {
-        self.navigationController?.navigationBar.topItem?.title = selectedDayInformation?.fullDate
         guard buttonStackView.arrangedSubviews.count == 1 else {
           DispatchQueue.main.async {
             self.routineTableView.reloadData()
@@ -109,7 +108,6 @@ class HomeViewController: UIViewController {
     
     configureNotification()
     configureGestureRecognizer()
-    configureNavigationController()
     configureAuthListener()
     setUpLayout()
   }
@@ -135,11 +133,6 @@ class HomeViewController: UIViewController {
     tapGestureRecognizer.numberOfTapsRequired = 1
     tapGestureRecognizer.isEnabled = true
     contentScrollView.addGestureRecognizer(tapGestureRecognizer)
-  }
-  
-  private func configureNavigationController() {
-    self.navigationController?.navigationBar.isHidden = true
-    self.navigationController?.navigationBar.topItem?.rightBarButtonItem = openCalendarButton
   }
   
   private func configureAuthListener() {
@@ -248,7 +241,7 @@ class HomeViewController: UIViewController {
     constraint = buttonStackView.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 10)
     NSLayoutConstraint.activate([constraint])
     
-    UIView.animate(withDuration: 0.7) {
+    UIView.animate(withDuration: 0.5) {
       self.view.layoutIfNeeded()
     } completion: { _ in
       self.calendarView.openCalendar()
@@ -265,11 +258,7 @@ class HomeViewController: UIViewController {
     constraint = buttonStackView.topAnchor.constraint(equalTo: calendarView.topAnchor, constant: height)
     NSLayoutConstraint.activate([constraint])
     
-    if let navigationController = self.navigationController {
-      navigationController.navigationBar.isHidden = false
-    }
-    
-    UIView.animate(withDuration: 0.7) {
+    UIView.animate(withDuration: 0.5) {
       self.view.layoutIfNeeded()
     }
   }
@@ -449,6 +438,10 @@ extension HomeViewController: CalendarViewDelegate {
   
   func changedSelectedDay(to dateInformation: DateInformation?) {
     self.selectedDayInformation = dateInformation
+  }
+  
+  func calendarIsOpened() {
+    openCalendar()
   }
 }
 extension HomeViewController: WorkoutPlanCardTableViewCellDelegate {
