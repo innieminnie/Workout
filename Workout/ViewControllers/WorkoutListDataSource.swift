@@ -45,6 +45,14 @@ class WorkoutListDataSource: NSObject, UITableViewDataSource {
     
     return isSearching ? "검색결과" : workoutManager.filteredWorkout(by: bodySection).count == 0 ? nil : BodySection.allCases[section].rawValue
   }
+  
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == .delete {
+      let removingWorkout = workoutManager.workout(at: indexPath)
+      workoutManager.removeWorkout(removingWorkout)
+      tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+  }
 }
 extension WorkoutListDataSource: UISearchBarDelegate {
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
