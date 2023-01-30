@@ -23,38 +23,13 @@ class CalendarView: UIView {
   weak var delegate: CalendarViewDelegate?
   private let todayInformation = DateInformation(date: CalendarView.defaultDate)
   
-  private let currentMonthLabel: UILabel = {
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    
-    label.textAlignment = .center
-    label.font = UIFont.Pretendard(type: .Bold, size: 20)
-    label.textColor = .black
-    
-    return label
-  }()
+  
   private let weekdaysView = WeekdaysView()
   private var selectedCell: CalendarDateCollectionViewCell?
   private lazy var rightButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToNextMonth() })
     button.translatesAutoresizingMaskIntoConstraints = false
     button.customizeConfiguration(with: ">", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
-    
-    return button
-  }()
-  private lazy var leftButton: UIButton = {
-    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToLastMonth() })
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.customizeConfiguration(with: "<", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
-    
-    return button
-  }()
-  private lazy var calendarStateButton: UIButton = {
-    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.foldCalendar() })
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.customizeConfiguration(with: "달력접기", foregroundColor: .black, font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
-    button.contentVerticalAlignment = .top
-    button.contentHorizontalAlignment = .right
     
     return button
   }()
@@ -73,6 +48,45 @@ class CalendarView: UIView {
     return scrollView
   }()
   
+  private lazy var monthSelectionStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    stackView.axis = .horizontal
+    stackView.alignment = .center
+    stackView.addArrangedSubview(self.leftButton)
+    stackView.addArrangedSubview(self.currentMonthLabel)
+    stackView.addArrangedSubview(self.rightButton)
+    
+    return stackView
+  }()
+  private lazy var leftButton: UIButton = {
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToLastMonth() })
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.customizeConfiguration(with: "<", foregroundColor: .black, font: UIFont.Pretendard(type: .Bold, size: 20), buttonSize: .small)
+    
+    return button
+  }()
+  private let currentMonthLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    label.textAlignment = .center
+    label.font = UIFont.Pretendard(type: .Bold, size: 20)
+    label.textColor = .black
+    
+    return label
+  }()
+  private lazy var calendarStateButton: UIButton = {
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.foldCalendar() })
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.customizeConfiguration(with: "달력접기", foregroundColor: .black, font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+    button.contentVerticalAlignment = .top
+    button.contentHorizontalAlignment = .right
+    
+    return button
+  }()
+  
   private var previousMonthlyView = MonthlyPageCollectionView()
   private var currentMonthlyView = MonthlyPageCollectionView()
   private var nextMonthlyView = MonthlyPageCollectionView()
@@ -84,9 +98,10 @@ class CalendarView: UIView {
     super.init(frame: frame)
     self.translatesAutoresizingMaskIntoConstraints = false
     
-    self.addSubview(currentMonthLabel)
-    self.addSubview(rightButton)
-    self.addSubview(leftButton)
+//    self.addSubview(currentMonthLabel)
+//    self.addSubview(rightButton)
+//    self.addSubview(leftButton)
+    self.addSubview(monthSelectionStackView)
     self.addSubview(calendarStateButton)
     self.addSubview(weekdaysView)
     self.addSubview(contentScrollView)
@@ -97,20 +112,13 @@ class CalendarView: UIView {
     currentMonthLabel.text = monthArray[1].currentMonthTitle
     
     NSLayoutConstraint.activate([
-      currentMonthLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      currentMonthLabel.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor, constant: 10),
-      currentMonthLabel.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor, constant: -10),
+      monthSelectionStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      monthSelectionStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
       
-      rightButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
-      
-      leftButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
-      leftButton.trailingAnchor
-        .constraint(equalTo: self.leadingAnchor, constant: 50),
-      
-      calendarStateButton.centerYAnchor.constraint(equalTo: currentMonthLabel.centerYAnchor),
+      calendarStateButton.centerYAnchor.constraint(equalTo: monthSelectionStackView.centerYAnchor),
       calendarStateButton.trailingAnchor.constraint(equalTo: weekdaysView.trailingAnchor),
       
-      weekdaysView.topAnchor.constraint(equalTo: currentMonthLabel.bottomAnchor, constant: 10),
+      weekdaysView.topAnchor.constraint(equalTo: monthSelectionStackView.bottomAnchor, constant: 10),
       weekdaysView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
       weekdaysView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       
