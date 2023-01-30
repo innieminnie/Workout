@@ -192,7 +192,13 @@ class CalendarView: UIView {
       self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width * 2, y: 0), animated: false)
     } completion: { _ in
       self.monthArray.forEach{ $0.changeToNextMonth() }
-      self.delegate?.changedSelectedDay(to: nil)
+      
+      if self.todayInformation.currentMonthlyDate == self.monthArray[1].currentMonthTitle {
+        self.delegate?.changedSelectedDay(to: self.todayInformation)
+      } else {
+        self.delegate?.changedSelectedDay(to: nil)
+      }
+      
       self.currentMonthlyView.reloadData()
       self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width, y: 0), animated: false)
       self.previousMonthlyView.reloadData()
@@ -206,7 +212,13 @@ class CalendarView: UIView {
       self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width * 0, y: 0), animated: false)
     } completion: { _ in
       self.monthArray.forEach{ $0.changeToLastMonth() }
-      self.delegate?.changedSelectedDay(to: nil)
+      
+      if self.todayInformation.currentMonthlyDate == self.monthArray[1].currentMonthTitle {
+        self.delegate?.changedSelectedDay(to: self.todayInformation)
+      } else {
+        self.delegate?.changedSelectedDay(to: nil)
+      }
+      
       self.currentMonthlyView.reloadData()
       self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width, y: 0), animated: false)
       self.previousMonthlyView.reloadData()
@@ -276,7 +288,7 @@ extension CalendarView: UICollectionViewDataSource {
     let cellDateInfo = monthArray[index].dateComponentsInformation(at: indexPath.row)
     cell.setUp(with: cellDateInfo)
     
-    if cell.dateInformation == todayInformation && collectionView.frame.minX == UIScreen.main.bounds.width {
+    if cell.dateInformation == todayInformation && collectionView.frame.minX == UIScreen.main.bounds.width && cell.isCurrentMonth {
       collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
       cell.isToday = true
       self.selectedCell = cell

@@ -10,7 +10,7 @@ import UIKit
 class CalendarDateCollectionViewCell: UICollectionViewCell {
   static let identifier = "calendarDateCollectionViewCell"
   
-  private var isCurrentMonth = true
+  var isCurrentMonth = true
   var isToday = false
   var dateInformation: DateInformation?
   
@@ -85,11 +85,6 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     isCurrentMonth ? (self.dateNumberLabel.textColor = .black) : (self.dateNumberLabel.textColor = .systemGray)
     
     self.dateBackgroundView.layer.borderWidth = 4
-    
-    if isToday {
-      self.isSelected = true
-      self.dateBackgroundView.layer.borderColor = 0xBEC0C2.convertToRGB().cgColor
-    }
     
     updateUI()
   }
