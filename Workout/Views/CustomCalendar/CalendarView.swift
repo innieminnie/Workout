@@ -59,6 +59,10 @@ class CalendarView: UIView {
     stackView.addArrangedSubview(self.currentMonthLabel)
     stackView.addArrangedSubview(self.rightButton)
     
+    NSLayoutConstraint.activate([
+      self.rightButton.widthAnchor.constraint(equalTo: self.leftButton.widthAnchor)
+    ])
+    
     return stackView
   }()
   
