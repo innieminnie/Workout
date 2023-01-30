@@ -73,14 +73,6 @@ extension WorkoutListViewController {
     
     tableView.deselectRow(at: indexPath, animated: true)
   }
-  
-  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-    if editingStyle == .delete {
-      let removingWorkout = workoutManager.workout(at: indexPath)
-      workoutManager.removeWorkout(removingWorkout)
-      tableView.deleteRows(at: [indexPath], with: .automatic)
-    }
-  }
 }
 extension WorkoutListViewController: TabBarMenu {
   var tabTitle: String {
