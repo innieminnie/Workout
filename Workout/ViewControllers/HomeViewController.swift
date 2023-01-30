@@ -261,6 +261,8 @@ class HomeViewController: UIViewController {
     UIView.animate(withDuration: 0.5) {
       self.view.layoutIfNeeded()
     }
+    
+    calendarView.foldCalendar()
   }
   
   @objc private func trackTappedTextField(notification: Notification) {

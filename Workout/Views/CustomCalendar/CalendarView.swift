@@ -54,7 +54,7 @@ class CalendarView: UIView {
     
     stackView.axis = .horizontal
     stackView.alignment = .center
-    stackView.distribution = .fill
+    stackView.distribution = .fillProportionally
     stackView.addArrangedSubview(self.leftButton)
     stackView.addArrangedSubview(self.currentMonthLabel)
     stackView.addArrangedSubview(self.rightButton)
@@ -159,16 +159,6 @@ class CalendarView: UIView {
   private func changeCalendarState() {
     if calendarStateButton.configuration?.title == "달력접기" {
       delegate?.calendarIsFolded(height: self.weekdaysView.frame.minY)
-      calendarStateButton.customizeConfiguration(with: "달력펼치기", foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
-      weekdaysView.isHidden = true
-      contentScrollView.isHidden = true
-      
-      guard let selectedCell = selectedCell else { return }
-      guard let dateInformation = selectedCell.dateInformation else { return }
-      
-      currentMonthLabel.text = "\(dateInformation.fullDate)"
-      leftButton.isHidden = true
-      rightButton.isHidden = true
     } else {
       delegate?.calendarIsOpened()
       calendarStateButton.customizeConfiguration(with: "달력접기", foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
@@ -177,6 +167,19 @@ class CalendarView: UIView {
       leftButton.isHidden = false
       rightButton.isHidden = false
     }
+  }
+  
+  func foldCalendar() {
+    guard let selectedCell = selectedCell else { return }
+    guard let dateInformation = selectedCell.dateInformation else { return }
+    
+    calendarStateButton.customizeConfiguration(with: "달력펼치기", foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+    weekdaysView.isHidden = true
+    contentScrollView.isHidden = true
+    
+    currentMonthLabel.text = "\(dateInformation.fullDate)"
+    leftButton.isHidden = true
+    rightButton.isHidden = true
   }
   
   func openCalendar() {
