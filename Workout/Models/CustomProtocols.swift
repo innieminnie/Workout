@@ -11,7 +11,8 @@ import FirebaseDatabase
 
 protocol CalendarViewDelegate: AnyObject {
   func changedSelectedDay(to dateInformation: DateInformation?)
-  func calendarIsFolded()
+  func calendarIsFolded(height: CGFloat)
+  func calendarIsOpened()
 }
 
 protocol UpdateWorkoutActionDelegate: AnyObject {

@@ -54,12 +54,31 @@ class CalendarView: UIView {
     
     stackView.axis = .horizontal
     stackView.alignment = .center
+    stackView.distribution = .fillProportionally
     stackView.addArrangedSubview(self.leftButton)
     stackView.addArrangedSubview(self.currentMonthLabel)
     stackView.addArrangedSubview(self.rightButton)
     
+    NSLayoutConstraint.activate([
+      self.rightButton.widthAnchor.constraint(equalTo: self.leftButton.widthAnchor)
+    ])
+    
     return stackView
   }()
+  
+  private lazy var navigationStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    stackView.axis = .horizontal
+    stackView.distribution = .fillProportionally
+  
+    stackView.addArrangedSubview(monthSelectionStackView)
+    stackView.addArrangedSubview(calendarStateButton)
+    
+    return stackView
+  }()
+  
   private lazy var leftButton: UIButton = {
     let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.moveToLastMonth() })
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -78,9 +97,9 @@ class CalendarView: UIView {
     return label
   }()
   private lazy var calendarStateButton: UIButton = {
-    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.foldCalendar() })
+    let button = UIButton(type: .custom, primaryAction: UIAction { _ in self.changeCalendarState() })
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.customizeConfiguration(with: "달력접기", foregroundColor: .black, font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+    button.customizeConfiguration(with: "달력접기", foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
     button.contentVerticalAlignment = .top
     button.contentHorizontalAlignment = .right
     
@@ -98,11 +117,7 @@ class CalendarView: UIView {
     super.init(frame: frame)
     self.translatesAutoresizingMaskIntoConstraints = false
     
-//    self.addSubview(currentMonthLabel)
-//    self.addSubview(rightButton)
-//    self.addSubview(leftButton)
-    self.addSubview(monthSelectionStackView)
-    self.addSubview(calendarStateButton)
+    self.addSubview(navigationStackView)
     self.addSubview(weekdaysView)
     self.addSubview(contentScrollView)
     
@@ -112,11 +127,9 @@ class CalendarView: UIView {
     currentMonthLabel.text = monthArray[1].currentMonthTitle
     
     NSLayoutConstraint.activate([
-      monthSelectionStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-      monthSelectionStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-      
-      calendarStateButton.centerYAnchor.constraint(equalTo: monthSelectionStackView.centerYAnchor),
-      calendarStateButton.trailingAnchor.constraint(equalTo: weekdaysView.trailingAnchor),
+      navigationStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+      navigationStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+      navigationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
       
       weekdaysView.topAnchor.constraint(equalTo: monthSelectionStackView.bottomAnchor, constant: 10),
       weekdaysView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -147,8 +160,35 @@ class CalendarView: UIView {
     contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width, y: 0), animated: false)
   }
   
-  private func foldCalendar() {
-    delegate?.calendarIsFolded()
+  private func changeCalendarState() {
+    if calendarStateButton.configuration?.title == "달력접기" {
+      delegate?.calendarIsFolded(height: self.weekdaysView.frame.minY)
+    } else {
+      delegate?.calendarIsOpened()
+      calendarStateButton.customizeConfiguration(with: "달력접기", foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+      
+      currentMonthLabel.text = self.monthArray[1].currentMonthTitle
+      leftButton.isHidden = false
+      rightButton.isHidden = false
+    }
+  }
+  
+  func foldCalendar() {
+    guard let selectedCell = selectedCell else { return }
+    guard let dateInformation = selectedCell.dateInformation else { return }
+    
+    calendarStateButton.customizeConfiguration(with: "달력펼치기", foregroundColor: 0x096DB6.convertToRGB(), font: UIFont.Pretendard(type: .Semibold, size: 17), buttonSize: .small)
+    weekdaysView.isHidden = true
+    contentScrollView.isHidden = true
+    
+    currentMonthLabel.text = "\(dateInformation.fullDate)"
+    leftButton.isHidden = true
+    rightButton.isHidden = true
+  }
+  
+  func openCalendar() {
+    weekdaysView.isHidden = false
+    contentScrollView.isHidden = false
   }
   
   @objc private func moveToNextMonth() {
@@ -156,7 +196,13 @@ class CalendarView: UIView {
       self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width * 2, y: 0), animated: false)
     } completion: { _ in
       self.monthArray.forEach{ $0.changeToNextMonth() }
-      self.delegate?.changedSelectedDay(to: nil)
+      
+      if self.todayInformation.currentMonthlyDate == self.monthArray[1].currentMonthTitle {
+        self.delegate?.changedSelectedDay(to: self.todayInformation)
+      } else {
+        self.delegate?.changedSelectedDay(to: nil)
+      }
+      
       self.currentMonthlyView.reloadData()
       self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width, y: 0), animated: false)
       self.previousMonthlyView.reloadData()
@@ -170,7 +216,13 @@ class CalendarView: UIView {
       self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width * 0, y: 0), animated: false)
     } completion: { _ in
       self.monthArray.forEach{ $0.changeToLastMonth() }
-      self.delegate?.changedSelectedDay(to: nil)
+      
+      if self.todayInformation.currentMonthlyDate == self.monthArray[1].currentMonthTitle {
+        self.delegate?.changedSelectedDay(to: self.todayInformation)
+      } else {
+        self.delegate?.changedSelectedDay(to: nil)
+      }
+      
       self.currentMonthlyView.reloadData()
       self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width, y: 0), animated: false)
       self.previousMonthlyView.reloadData()
@@ -240,7 +292,7 @@ extension CalendarView: UICollectionViewDataSource {
     let cellDateInfo = monthArray[index].dateComponentsInformation(at: indexPath.row)
     cell.setUp(with: cellDateInfo)
     
-    if cell.dateInformation == todayInformation && collectionView.frame.minX == UIScreen.main.bounds.width {
+    if cell.dateInformation == todayInformation && collectionView.frame.minX == UIScreen.main.bounds.width && cell.isCurrentMonth {
       collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
       cell.isToday = true
       self.selectedCell = cell
