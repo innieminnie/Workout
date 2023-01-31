@@ -73,8 +73,8 @@
 		D9E6ABF82971541F002FB36C /* WorkoutListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E6ABF72971541F002FB36C /* WorkoutListTableView.swift */; };
 		D9E6ABFA29715CCF002FB36C /* WorkoutListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E6ABF929715CCF002FB36C /* WorkoutListDataSource.swift */; };
 		D9E6ABFC2971910B002FB36C /* CustomProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E6ABFB2971910B002FB36C /* CustomProtocols.swift */; };
-		D9E6BB82298841F3008A7078 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E6BB81298841F2008A7078 /* APIKey.swift */; };
-		D9E6BB84298841F8008A7078 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9E6BB83298841F8008A7078 /* GoogleService-Info.plist */; };
+		D9E6BB8A2988CE14008A7078 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E6BB892988CE14008A7078 /* APIKey.swift */; };
+		D9E6BB8C2988CE1F008A7078 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9E6BB8B2988CE1F008A7078 /* GoogleService-Info.plist */; };
 		EE575D4D97BB050E426D8EB0 /* Pods_pitapatpumping_WorkoutUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB4E53EA4C8D05237FAD064 /* Pods_pitapatpumping_WorkoutUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -177,9 +177,9 @@
 		D9E6ABF72971541F002FB36C /* WorkoutListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListTableView.swift; sourceTree = "<group>"; };
 		D9E6ABF929715CCF002FB36C /* WorkoutListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListDataSource.swift; sourceTree = "<group>"; };
 		D9E6ABFB2971910B002FB36C /* CustomProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProtocols.swift; sourceTree = "<group>"; };
-		D9E6BB81298841F2008A7078 /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
-		D9E6BB83298841F8008A7078 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D9E6BB85298841FE008A7078 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9E6BB892988CE14008A7078 /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		D9E6BB8B2988CE1F008A7078 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D9E6BB8D2988CE2B008A7078 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DFD51F9D1BBCD2B0AD3C9342 /* Pods-pitapatpumping-WorkoutUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pitapatpumping-WorkoutUITests.debug.xcconfig"; path = "Target Support Files/Pods-pitapatpumping-WorkoutUITests/Pods-pitapatpumping-WorkoutUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F99F031903C6C522AC1CD969 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		FF5C8FD7B0C3E2936CFFA345 /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.debug.xcconfig"; path = "Target Support Files/Pods-Workout/Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
@@ -373,9 +373,9 @@
 		D99CA713295DA056003D2BB5 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				D9E6BB81298841F2008A7078 /* APIKey.swift */,
-				D9E6BB83298841F8008A7078 /* GoogleService-Info.plist */,
-				D9E6BB85298841FE008A7078 /* Info.plist */,
+				D9E6BB8D2988CE2B008A7078 /* Info.plist */,
+				D9E6BB892988CE14008A7078 /* APIKey.swift */,
+				D9E6BB8B2988CE1F008A7078 /* GoogleService-Info.plist */,
 				D9DA405C293707DA00DBBEDD /* InfoPlist.strings */,
 				D9DA404629349FCA00DBBEDD /* Fonts */,
 				D98569B8274CBAFE007E517A /* Assets.xcassets */,
@@ -561,7 +561,7 @@
 				D9DA404F2934A04F00DBBEDD /* Pretendard-Thin.otf in Resources */,
 				D98569B9274CBAFE007E517A /* Assets.xcassets in Resources */,
 				D9D44E46290692A00035B8D0 /* BodySectionCollectionViewCell.xib in Resources */,
-				D9E6BB84298841F8008A7078 /* GoogleService-Info.plist in Resources */,
+				D9E6BB8C2988CE1F008A7078 /* GoogleService-Info.plist in Resources */,
 				D9DA40562934A04F00DBBEDD /* Pretendard-ExtraBold.otf in Resources */,
 				D98569FF2760ADC0007E517A /* WorkoutTableViewCell.xib in Resources */,
 				D9E67B7C296DAA8B00B704DB /* RecordTableViewCell.xib in Resources */,
@@ -697,7 +697,7 @@
 			files = (
 				D9958718286153250093E024 /* RoutineManager.swift in Sources */,
 				D9D44E482907C1010035B8D0 /* WorkoutInformationViewController.swift in Sources */,
-				D9E6BB82298841F3008A7078 /* APIKey.swift in Sources */,
+				D9E6BB8A2988CE14008A7078 /* APIKey.swift in Sources */,
 				D98569E2274CD162007E517A /* BaseTabBarController.swift in Sources */,
 				D9856A1527C0CBC2007E517A /* CalendarDateCollectionViewCell.swift in Sources */,
 				D9D44E4C2911F2FE0035B8D0 /* BodySectionCollectionView.swift in Sources */,
