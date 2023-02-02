@@ -7,6 +7,15 @@
 
 import UIKit
 
+protocol ContainWorkoutList {
+  var workoutListDataSource: WorkoutListDataSource { get }
+}
+extension ContainWorkoutList {
+    var workoutListDataSource: WorkoutListDataSource {
+      return WorkoutListDataSource.shared
+    }
+}
+
 class WorkoutListDataSource: NSObject, UITableViewDataSource {
   static let shared = WorkoutListDataSource()
   

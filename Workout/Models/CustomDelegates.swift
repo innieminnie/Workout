@@ -1,5 +1,5 @@
 //
-//  CustomProtocols.swift
+//  CustomDelegates.swift
 //  pitapatpumping
 //
 //  Created by 강인희 on 2023/01/13.
@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import FirebaseDatabase
 
 protocol CalendarViewDelegate: AnyObject {
   func changedSelectedDay(to dateInformation: DateInformation?)
@@ -46,34 +45,4 @@ protocol WorkoutPlanCardTableViewCellDelegate: AnyObject {
   func cellShrink()
   func textFieldsAreNotFilled()
   func currentDateInformation() -> DateInformation?
-}
-
-protocol ContainWorkoutList {
-  var workoutListDataSource: WorkoutListDataSource { get }
-}
-extension ContainWorkoutList {
-    var workoutListDataSource: WorkoutListDataSource {
-      return WorkoutListDataSource.shared
-    }
-}
-
-protocol NetworkAccessible {
-  var encoder: JSONEncoder { get }
-  var decoder: JSONDecoder { get }
-  var ref: DatabaseReference! { get }
-  var uid: String { get }
-}
-extension NetworkAccessible {
-  var encoder: JSONEncoder {
-    return NetworkServiceInformation.encoder
-  }
-  var decoder: JSONDecoder {
-    return NetworkServiceInformation.decoder
-  }
-  var ref: DatabaseReference! {
-    return NetworkServiceInformation.ref
-  }
-  var uid: String {
-    return NetworkServiceInformation.uid
-  }
 }
