@@ -8,18 +8,20 @@
 import Foundation
 
 class MonthlyInformation {
-  private var year: Int
-  private var month: Int
+  var currentMonthTitle: String {
+    return "\(self.dateComponent.year!)년 \(self.dateComponent.month!)월"
+  }
+  var numberOfDaysToDisplay: Int { self.calendarDisplayingDateComponents.count }
+  
+  private var dateComponent: DateComponents
   private var startDate: Date {
-    let currentMonthStartDateComponents = DateComponents(year: self.year, month: self.month, day: 1)
+    let currentMonthStartDateComponents = DateComponents(year: self.dateComponent.year!, month: self.dateComponent.month!, day: 1)
     let date = Calendar.current.date(from: currentMonthStartDateComponents)
     
     return date!
   }
   private var numberOfDaysInMonth: Int {
-    let dateComponents = DateComponents(year: self.year, month: self.month)
-    
-    guard let date = Calendar.current.date(from: dateComponents),
+    guard let date = Calendar.current.date(from: self.dateComponent),
           let interval = Calendar.current.dateInterval(of: .month, for: date),
           let days = Calendar.current.dateComponents([.day], from: interval.start, to: interval.end).day else { return -1 }
   
@@ -75,17 +77,15 @@ class MonthlyInformation {
     return displayingDateComponents
   }
   
-  var currentMonthTitle: String { return "\(self.year)년 \(self.month)월" }
-  var numberOfDaysToDisplay: Int { self.calendarDisplayingDateComponents.count }
-
-  init(_ year: Int, _ month: Int) {
-    self.year = year
-    self.month = month
+  init(date: Date) {
+    self.dateComponent = MonthlyInformation.makeMonthlyDateComponent(date: date)
   }
   
-  init(date: Date) {
-    self.year = Calendar.current.component(.year, from: date)
-    self.month = Calendar.current.component(.month, from: date)
+  private static func makeMonthlyDateComponent(date: Date?) -> DateComponents {
+    let year = Calendar.current.component(.year, from: date!)
+    let month = Calendar.current.component(.month, from: date!)
+    
+    return DateComponents(year: year, month: month)
   }
   
   func dateComponentsInformation(at index: Int) -> (DateComponents, Bool) {
@@ -94,14 +94,12 @@ class MonthlyInformation {
   
   func changeToNextMonth() {
     let dateInNextMonth = Calendar.current.date(byAdding: .month, value: 1,  to: self.startDate)
-    self.year = Calendar.current.component(.year, from: dateInNextMonth!)
-    self.month = Calendar.current.component(.month, from: dateInNextMonth!)
+    self.dateComponent = MonthlyInformation.makeMonthlyDateComponent(date: dateInNextMonth!)
   }
   
   func changeToLastMonth() {
     let dateInLastMonth = Calendar.current.date(byAdding: .month, value: -1,  to: self.startDate)
-    self.year = Calendar.current.component(.year, from: dateInLastMonth!)
-    self.month = Calendar.current.component(.month, from: dateInLastMonth!)
+    self.dateComponent = MonthlyInformation.makeMonthlyDateComponent(date: dateInLastMonth!)
   }
   
   func nextMonth() -> MonthlyInformation {
