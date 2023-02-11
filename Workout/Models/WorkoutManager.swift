@@ -33,10 +33,6 @@ class WorkoutManager {
     }
   }
   
-  func numberOfWorkoutList() -> Int {
-    return workoutCodeDictionary.count
-  }
-  
   func register(workout: Workout) {
     networkConnecter.createWorkoutId(workout: workout) { key in
       workout.configureId(with: key)
