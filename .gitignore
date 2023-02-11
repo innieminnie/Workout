@@ -5,6 +5,9 @@
 ### Storyboard ###
 Workout/Base.lproj
 
+### UnitTest $$$
+WorkoutTests
+
 ### API Key ###
 Workout/SupportingFiles/APIKey.swift
 Workout/SupportingFiles/Info.plist
