@@ -195,7 +195,7 @@ class CalendarView: UIView {
     UIView.animate(withDuration: 0.5) {
       self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width * 2, y: 0), animated: false)
     } completion: { _ in
-      self.monthArray.forEach{ $0.changeToNextMonth() }
+      self.monthArray = self.monthArray.map{ $0.nextMonth() }
       
       if self.todayInformation.currentMonthlyDate == self.monthArray[1].currentMonthTitle {
         self.delegate?.changedSelectedDay(to: self.todayInformation)
@@ -215,7 +215,7 @@ class CalendarView: UIView {
     UIView.animate(withDuration: 0.5) {
       self.contentScrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width * 0, y: 0), animated: false)
     } completion: { _ in
-      self.monthArray.forEach{ $0.changeToLastMonth() }
+      self.monthArray = self.monthArray.map { $0.lastMonth() }
       
       if self.todayInformation.currentMonthlyDate == self.monthArray[1].currentMonthTitle {
         self.delegate?.changedSelectedDay(to: self.todayInformation)

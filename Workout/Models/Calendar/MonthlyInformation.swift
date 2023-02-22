@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MonthlyInformation {
+struct MonthlyInformation {
   var currentMonthTitle: String {
     return "\(self.dateComponent.year!)년 \(self.dateComponent.month!)월"
   }
@@ -90,16 +90,6 @@ class MonthlyInformation {
   
   func dateComponentsInformation(at index: Int) -> (DateComponents, Bool) {
     return calendarDisplayingDateComponents[index]
-  }
-  
-  func changeToNextMonth() {
-    let dateInNextMonth = Calendar.current.date(byAdding: .month, value: 1,  to: self.startDate)
-    self.dateComponent = MonthlyInformation.makeMonthlyDateComponent(date: dateInNextMonth!)
-  }
-  
-  func changeToLastMonth() {
-    let dateInLastMonth = Calendar.current.date(byAdding: .month, value: -1,  to: self.startDate)
-    self.dateComponent = MonthlyInformation.makeMonthlyDateComponent(date: dateInLastMonth!)
   }
   
   func nextMonth() -> MonthlyInformation {
