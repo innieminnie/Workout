@@ -17,30 +17,12 @@ struct Weekday {
     self.weekDayIndex = weekdayIndex
   }
   
-  func convertWeekdayIndexToMondayBased() -> Int {
-    switch self.weekDayIndex {
-    case 1:
-      return 6
-    case 2:
-      return 0
-    case 3:
-      return 1
-    case 4:
-      return 2
-    case 5:
-      return 3
-    case 6:
-      return 4
-    case 7:
-      return 5
-    default:
-      break
-    }
-    
-    return -1
+  func mondayBasedIndex() -> Int {
+    let changedIndex = self.weekDayIndex - 2
+    return changedIndex >= 0 ? changedIndex : changedIndex + Weekday.daysInWeek
   }
   
   func weekdayName() -> String {
-    return Weekday.weekdaysName[self.convertWeekdayIndexToMondayBased()]
+    return Weekday.weekdaysName[self.mondayBasedIndex()]
   }
 }

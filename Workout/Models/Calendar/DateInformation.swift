@@ -16,7 +16,7 @@ struct DateInformation: Hashable, Codable {
     let date = dateComponent.date!
     let weekday = Weekday(Calendar.current.component(.weekday, from: date))
   
-    return weekday  .weekdayName()
+    return weekday.weekdayName()
   }
   
   

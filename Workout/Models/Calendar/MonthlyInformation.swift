@@ -28,7 +28,7 @@ class MonthlyInformation {
     return days
   }
   private var weekDayIndexOfFirstDay: Int {
-    return Weekday(Calendar.current.component(.weekday, from: self.startDate)).convertWeekdayIndexToMondayBased()
+    return Weekday(Calendar.current.component(.weekday, from: self.startDate)).mondayBasedIndex()
   }
   private var calendarDisplayingDateComponents: [(dateComponent: DateComponents, isCurrentMonth: Bool)] {
     return self.lastMonthDateComponents + self.currentMonthDateComponents + self.nextMonthDateComponents
@@ -62,7 +62,7 @@ class MonthlyInformation {
     var displayingDateComponents = [(DateComponents, Bool)]()
     
     if let dateInNextMonth = Calendar.current.date(byAdding: .month, value: 1,  to: self.startDate) {
-      let  daysOfNextMonthToDisplay = Weekday.daysInWeek - Weekday(Calendar.current.component(.weekday, from: dateInNextMonth)).convertWeekdayIndexToMondayBased()
+      let  daysOfNextMonthToDisplay = Weekday.daysInWeek - Weekday(Calendar.current.component(.weekday, from: dateInNextMonth)).mondayBasedIndex()
       
       guard daysOfNextMonthToDisplay < 7 else { return [] }
       
