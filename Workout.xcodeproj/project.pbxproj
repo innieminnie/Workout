@@ -256,11 +256,11 @@
 			isa = PBXGroup;
 			children = (
 				D9E09621291DF53F00AE710F /* Workout.entitlements */,
-				D98569F1275E345E007E517A /* Models */,
-				D98569F02758F6E4007E517A /* Views */,
-				D98569E5274D088A007E517A /* ViewControllers */,
-				D9856A00278EA442007E517A /* CustomCells */,
-				D98569E6274D08AF007E517A /* TabBarController */,
+				D9E6ABF32971442F002FB36C /* Network */,
+				D98569E6274D08AF007E517A /* ServiceMenu */,
+				D98569E5274D088A007E517A /* Onboarding */,
+				D98569F02758F6E4007E517A /* CommonViews */,
+				D9E6ABFB2971910B002FB36C /* CustomDelegates.swift */,
 				D98569AF274CBAFB007E517A /* AppDelegate.swift */,
 				D99CA713295DA056003D2BB5 /* SupportingFiles */,
 			);
@@ -285,89 +285,48 @@
 			path = WorkoutUITests;
 			sourceTree = "<group>";
 		};
-		D98569E5274D088A007E517A /* ViewControllers */ = {
+		D98569E5274D088A007E517A /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				D98569B3274CBAFB007E517A /* HomeViewController.swift */,
-				D98569E3274D0299007E517A /* WorkoutListViewController.swift */,
-				D9107C572810045200FABD37 /* WorkoutSelectionViewController.swift */,
-				D9E6ABF929715CCF002FB36C /* WorkoutListDataSource.swift */,
-				D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */,
-				D92D2411292B0BC400031670 /* SettingViewController.swift */,
 				D9E09624291DF74C00AE710F /* SignInViewController.swift */,
-				D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */,
-				D9E67B77296D299400B704DB /* PreviousRecordViewController.swift */,
 				D9A433E92976EA750017C07F /* SplashViewController.swift */,
 			);
-			path = ViewControllers;
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		D98569E6274D08AF007E517A /* TabBarController */ = {
+		D98569E6274D08AF007E517A /* ServiceMenu */ = {
 			isa = PBXGroup;
 			children = (
 				D98569E1274CD162007E517A /* BaseTabBarController.swift */,
 				D98569E7274D2A3D007E517A /* TabBarMenu.swift */,
+				D9DF6FDB2A0152B200A32B76 /* Home */,
+				D9E6ABF2297143F9002FB36C /* Workout */,
+				D9DF6FDD2A0153DD00A32B76 /* Settings */,
 			);
-			path = TabBarController;
+			path = ServiceMenu;
 			sourceTree = "<group>";
 		};
-		D98569F02758F6E4007E517A /* Views */ = {
+		D98569F02758F6E4007E517A /* CommonViews */ = {
 			isa = PBXGroup;
 			children = (
-				D9856A0127BA4711007E517A /* CustomCalendar */,
-				D98569EC2758A1D7007E517A /* WorkoutSettingView.swift */,
+				D92D241B292E444A00031670 /* NetworkConfirmViewController.swift */,
 				D98569EE2758F669007E517A /* RoundedCornerLabelView.swift */,
-				D9107C632836151300FABD37 /* WorkoutSetConfigurationView.swift */,
-				D9107C612833741800FABD37 /* RoutineTableView.swift */,
 				D9D44E492910F9540035B8D0 /* PaddingLabel.swift */,
 				D995871D286D523A0093E024 /* Extensions.swift */,
-				D9D44E4B2911F2FE0035B8D0 /* BodySectionCollectionView.swift */,
-				D9E6ABF72971541F002FB36C /* WorkoutListTableView.swift */,
 			);
-			path = Views;
+			path = CommonViews;
 			sourceTree = "<group>";
 		};
-		D98569F1275E345E007E517A /* Models */ = {
+		D9856A0127BA4711007E517A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D9E6ABF429714489002FB36C /* Calendar */,
-				D9E6ABF2297143F9002FB36C /* Workout */,
-				D9E6ABF32971442F002FB36C /* NetworkService */,
-				D98569F6275F717B007E517A /* WorkoutManager.swift */,
-				D9958717286153250093E024 /* RoutineManager.swift */,
-				D92D2419292CB67F00031670 /* SettingMenu.swift */,
-				D9E6ABFB2971910B002FB36C /* CustomDelegates.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		D9856A00278EA442007E517A /* CustomCells */ = {
-			isa = PBXGroup;
-			children = (
-				D98569FC2760ADC0007E517A /* WorkoutTableViewCell.swift */,
-				D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */,
 				D9856A1327C0CBC2007E517A /* CalendarDateCollectionViewCell.swift */,
 				D9856A1427C0CBC2007E517A /* CalendarDateCollectionViewCell.xib */,
-				D9107C5B282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift */,
-				D9107C5C282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib */,
-				D9D44E43290692A00035B8D0 /* BodySectionCollectionViewCell.swift */,
-				D9D44E44290692A00035B8D0 /* BodySectionCollectionViewCell.xib */,
-				D92D2415292B14D400031670 /* SettingTableViewCell.swift */,
-				D92D2416292B14D400031670 /* SettingTableViewCell.xib */,
-				D9E67B79296DAA8B00B704DB /* RecordTableViewCell.swift */,
-				D9E67B7A296DAA8B00B704DB /* RecordTableViewCell.xib */,
-			);
-			path = CustomCells;
-			sourceTree = "<group>";
-		};
-		D9856A0127BA4711007E517A /* CustomCalendar */ = {
-			isa = PBXGroup;
-			children = (
 				D9856A0B27BA4E69007E517A /* CalendarView.swift */,
 				D995871F286D6D760093E024 /* WeekdaysView.swift */,
 				D9107C5F282E593C00FABD37 /* MonthlyPageCollectionView.swift */,
 			);
-			path = CustomCalendar;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		D99CA713295DA056003D2BB5 /* SupportingFiles */ = {
@@ -399,18 +358,74 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		D9E6ABF2297143F9002FB36C /* Workout */ = {
+		D9DF6FDB2A0152B200A32B76 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				D98569F2275E346D007E517A /* Workout.swift */,
+				D98569B3274CBAFB007E517A /* HomeViewController.swift */,
+				D9E6ABF429714489002FB36C /* Calendar */,
+				D9DF6FDC2A0152DF00A32B76 /* Routine */,
+				D9DF6FDE2A0154C900A32B76 /* Record */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		D9DF6FDC2A0152DF00A32B76 /* Routine */ = {
+			isa = PBXGroup;
+			children = (
+				D9107C612833741800FABD37 /* RoutineTableView.swift */,
+				D9107C632836151300FABD37 /* WorkoutSetConfigurationView.swift */,
 				D9958723287E54E40093E024 /* PlannedWorkout.swift */,
 				D9958721287CFFFD0093E024 /* SetConfiguration.swift */,
 				D995872728894F500093E024 /* WorkoutStatus.swift */,
+				D9958717286153250093E024 /* RoutineManager.swift */,
+				D9107C5B282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.swift */,
+				D9107C5C282CEC6600FABD37 /* WorkoutPlanCardTableViewCell.xib */,
+			);
+			path = Routine;
+			sourceTree = "<group>";
+		};
+		D9DF6FDD2A0153DD00A32B76 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D92D2419292CB67F00031670 /* SettingMenu.swift */,
+				D92D2411292B0BC400031670 /* SettingViewController.swift */,
+				D92D2415292B14D400031670 /* SettingTableViewCell.swift */,
+				D92D2416292B14D400031670 /* SettingTableViewCell.xib */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D9DF6FDE2A0154C900A32B76 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				D9E67B79296DAA8B00B704DB /* RecordTableViewCell.swift */,
+				D9E67B7A296DAA8B00B704DB /* RecordTableViewCell.xib */,
+				D9E67B77296D299400B704DB /* PreviousRecordViewController.swift */,
+			);
+			path = Record;
+			sourceTree = "<group>";
+		};
+		D9E6ABF2297143F9002FB36C /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				D98569F6275F717B007E517A /* WorkoutManager.swift */,
+				D98569F2275E346D007E517A /* Workout.swift */,
+				D9E6ABF929715CCF002FB36C /* WorkoutListDataSource.swift */,
+				D98569FC2760ADC0007E517A /* WorkoutTableViewCell.swift */,
+				D98569FD2760ADC0007E517A /* WorkoutTableViewCell.xib */,
+				D98569E3274D0299007E517A /* WorkoutListViewController.swift */,
+				D9E6ABF72971541F002FB36C /* WorkoutListTableView.swift */,
+				D9107C572810045200FABD37 /* WorkoutSelectionViewController.swift */,
+				D9D44E472907C1010035B8D0 /* WorkoutInformationViewController.swift */,
+				D98569EC2758A1D7007E517A /* WorkoutSettingView.swift */,
+				D9D44E4B2911F2FE0035B8D0 /* BodySectionCollectionView.swift */,
+				D9D44E43290692A00035B8D0 /* BodySectionCollectionViewCell.swift */,
+				D9D44E44290692A00035B8D0 /* BodySectionCollectionViewCell.xib */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
 		};
-		D9E6ABF32971442F002FB36C /* NetworkService */ = {
+		D9E6ABF32971442F002FB36C /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				D9E096282922AEBA00AE710F /* AuthenticationManager.swift */,
@@ -418,12 +433,13 @@
 				D90B7DFD294A1C760003B3CA /* WorkoutNetworkConnecter.swift */,
 				D90B7DFF294A1DC70003B3CA /* RoutineNetworkConnecter.swift */,
 			);
-			path = NetworkService;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		D9E6ABF429714489002FB36C /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				D9856A0127BA4711007E517A /* Views */,
 				D926672E27D1016F00A30366 /* MonthlyInformation.swift */,
 				D9107C5527F030B800FABD37 /* DateInformation.swift */,
 				D995871B286571BD0093E024 /* Weekday.swift */,
