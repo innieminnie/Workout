@@ -79,7 +79,7 @@ extension WorkoutInformationViewController: UpdateWorkoutActionDelegate {
     if let workoutCode = handlingWorkoutCode {
       self.updateWorkoutDelegate?.updateWorkout(code: workoutCode, name: name, weightUnit: weightUnit, bodySection: bodySection)
     } else {
-      self.updateWorkoutDelegate?.saveNewWorkout(workout: Workout(name, bodySection))
+      self.updateWorkoutDelegate?.saveNewWorkout(workout: Workout(name, bodySection, weightUnit))
     }
     
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {

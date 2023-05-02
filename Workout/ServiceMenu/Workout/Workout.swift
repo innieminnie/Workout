@@ -37,10 +37,10 @@ class Workout: Identifiable, Codable {
     case registeredDate
   }
   
-  init(_ name: String, _ bodySection: BodySection) {
+  init(_ name: String, _ bodySection: BodySection, _ weightUnit: WeightUnit) {
     self.name = name
     self.bodySection = bodySection
-    self.weightUnit = .kg
+    self.weightUnit = weightUnit
     self.registeredDate = []
   }
   
