@@ -19,8 +19,8 @@ extension ContainWorkoutList {
 class WorkoutListDataSource: NSObject, UITableViewDataSource {
   static let shared = WorkoutListDataSource()
   
-  private var isSearching = false
-  private var searchingList = [Workout]()
+  var isSearching = false
+  var searchingList = [Workout]()
   
   private override init() { }
   

@@ -408,6 +408,7 @@
 		D9E6ABF2297143F9002FB36C /* Workout */ = {
 			isa = PBXGroup;
 			children = (
+				D90B7DFD294A1C760003B3CA /* WorkoutNetworkConnecter.swift */,
 				D98569F6275F717B007E517A /* WorkoutManager.swift */,
 				D98569F2275E346D007E517A /* Workout.swift */,
 				D9E6ABF929715CCF002FB36C /* WorkoutListDataSource.swift */,
@@ -430,7 +431,6 @@
 			children = (
 				D9E096282922AEBA00AE710F /* AuthenticationManager.swift */,
 				D961A0532953422D00494B85 /* NetworkServiceInformation.swift */,
-				D90B7DFD294A1C760003B3CA /* WorkoutNetworkConnecter.swift */,
 				D90B7DFF294A1DC70003B3CA /* RoutineNetworkConnecter.swift */,
 			);
 			path = Network;

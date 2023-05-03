@@ -22,6 +22,8 @@ class WorkoutListViewController: UITableViewController, ContainWorkoutList {
     setUpListTableView()
     setUpNavigationController()
     setUpSearchController()
+    
+    workoutManager.workoutViewDelegate = self
   }
   
   private func addButtonTouched() {
@@ -61,7 +63,8 @@ extension WorkoutListViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let workout = workoutManager.workout(at: indexPath)
+    let workout = workoutListDataSource.isSearching ? workoutListDataSource.searchingList[indexPath.row] : workoutManager.workout(at: indexPath)
+//    let workout = workoutManager.workout(at: indexPath)
     let workoutInformationViewController = WorkoutInformationViewController()
     self.delegate = workoutInformationViewController
     workoutInformationViewController.updateWorkoutDelegate = self
@@ -101,6 +104,11 @@ extension WorkoutListViewController: UISearchResultsUpdating {
     }
     
     self.workoutListDataSource.showSearchData(searchingList:  workoutManager.searchWorkouts(by: searchingText))
+    self.tableView.reloadData()
+  }
+}
+extension WorkoutListViewController: WorkoutViewDelegate {
+  func workoutAdded() {
     self.tableView.reloadData()
   }
 }

@@ -144,8 +144,6 @@ class HomeViewController: UIViewController {
       if currentUser == nil {
         AuthenticationManager.signedUpUser = user.uid
       }
-      
-      workoutManager.readWorkoutData()
     }
   }
   

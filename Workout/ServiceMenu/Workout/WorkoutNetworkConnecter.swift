@@ -8,11 +8,37 @@
 import Foundation
 import FirebaseDatabase
 
-struct WorkoutNetworkConnecter: NetworkAccessible {
-  init() { }
+protocol WorkoutDelegate: AnyObject {
+  func childAdded(_ workout: Workout)
+}
+
+class WorkoutNetworkConnecter: NetworkAccessible {
+  init() {
+    self.setChildAddListener()
+  }
   
+  weak var workoutDelegate: WorkoutDelegate?
   private func workoutReference() -> DatabaseReference {
     return ref.child("users/\(self.uid)/workout")
+  }
+  
+  private func setChildAddListener() {
+    let itemRef = self.workoutReference()
+    itemRef.observe(.childAdded) { snapshot in
+      guard snapshot.exists() else { return }
+      
+      let jsonKey = snapshot.key
+      guard let jsonValue = snapshot.value else { return }
+      
+      do {
+        let data = try JSONSerialization.data(withJSONObject: jsonValue)
+        let workout = try self.decoder.decode(Workout.self, from: data)
+        workout.configureId(with: jsonKey)
+        self.workoutDelegate?.childAdded(workout)
+      } catch {
+        NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
+      }
+    }
   }
   
   func fetchWorkoutData(completion: @escaping ([String: Workout]?, Error?) -> Void) {

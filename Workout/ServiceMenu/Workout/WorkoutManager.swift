@@ -7,30 +7,21 @@
 
 import Foundation
 
+protocol WorkoutViewDelegate: AnyObject {
+  func workoutAdded()
+}
+
 class WorkoutManager {
   static let shared = WorkoutManager()
   
   private let networkConnecter = WorkoutNetworkConnecter()
-  private var workoutCodeDictionary: [String: Workout]
-  private init() {
-    workoutCodeDictionary = [ : ]
-  }
+  private var workouts = [Workout]()
+  private var workoutCodeDictionary = [String : Workout]()
   
-  func readWorkoutData() {
-    networkConnecter.fetchWorkoutData { workoutDictionary, error in
-      if let error = error {
-        NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
-        return
-      }
-      
-      if let workoutDictionary = workoutDictionary {
-        self.workoutCodeDictionary = workoutDictionary
-      }
-      
-      for element in self.workoutCodeDictionary {
-        element.value.configureId(with: element.key)
-      }
-    }
+  weak var workoutViewDelegate: WorkoutViewDelegate?
+  
+  private init() {
+    networkConnecter.workoutDelegate = self
   }
   
   func register(workout: Workout) {
@@ -58,10 +49,12 @@ class WorkoutManager {
       workout.removeRegisteredRoutine()
       networkConnecter.removeWorkoutData(workout: workout)
     }
+    
+    // 아직 workouts 배열에선 workout 제거 안됨, 수정 필요
   }
   
   func updateWorkout(_ code: String, _ name: String, _ weightUnit: WeightUnit, _ bodySection: BodySection) {
-    guard let updatingWorkout = workoutCodeDictionary[code] else { return }
+    guard let updatingWorkout = workoutByCode(code) else { return }
     updatingWorkout.update(name, bodySection, weightUnit)
     networkConnecter.updateWorkoutData(workout: updatingWorkout, key: code)
   }
@@ -71,20 +64,20 @@ class WorkoutManager {
   }
   
   func checkNameValidation(_ previousName: String, _ name: String) -> Bool {
-    let nameList = Set(self.workoutCodeDictionary.values.map { $0.displayName() }.filter{ $0 != previousName })
+    let nameList = Set(self.workouts.map { $0.displayName() }.filter{ $0 != previousName })
     return !nameList.contains(name)
   }
   
   func filteredWorkout(by bodySection: BodySection) -> [Workout] {
-    let filteredList = workoutCodeDictionary.values.filter { workout in
+    let filteredList = workouts.filter { workout in
       workout.bodySection == bodySection
     }
-
+    
     return filteredList
   }
   
   func searchWorkouts(by text: String) -> [Workout] {
-    let filteredList = workoutCodeDictionary.values.filter { workout in
+    let filteredList = workouts.filter { workout in
       workout.displayName().localizedCaseInsensitiveContains(text)
     }
     
@@ -92,7 +85,15 @@ class WorkoutManager {
   }
   
   func totalWorkoutsCount() -> Int {
-    return workoutCodeDictionary.count
+    return workouts.count
+  }
+}
+extension WorkoutManager: WorkoutDelegate {
+  func childAdded(_ workout: Workout) {
+    guard let id = workout.id else { return }
+    workoutCodeDictionary[id] = workout
+    workouts.append(workout)
+    self.workoutViewDelegate?.workoutAdded()
   }
 }
 
