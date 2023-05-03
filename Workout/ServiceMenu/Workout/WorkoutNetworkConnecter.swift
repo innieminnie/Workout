@@ -18,12 +18,14 @@ class WorkoutNetworkConnecter: NetworkAccessible {
   }
   
   weak var workoutDelegate: WorkoutDelegate?
+  
   private func workoutReference() -> DatabaseReference {
     return ref.child("users/\(self.uid)/workout")
   }
   
   private func setChildAddListener() {
     let itemRef = self.workoutReference()
+    
     itemRef.observe(.childAdded) { snapshot in
       guard snapshot.exists() else { return }
       
@@ -34,6 +36,7 @@ class WorkoutNetworkConnecter: NetworkAccessible {
         let data = try JSONSerialization.data(withJSONObject: jsonValue)
         let workout = try self.decoder.decode(Workout.self, from: data)
         workout.configureId(with: jsonKey)
+        
         self.workoutDelegate?.childAdded(workout)
       } catch {
         NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
