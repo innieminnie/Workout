@@ -41,29 +41,6 @@ class WorkoutNetworkConnecter: NetworkAccessible {
     }
   }
   
-  func fetchWorkoutData(completion: @escaping ([String: Workout]?, Error?) -> Void) {
-    let itemRef = self.workoutReference()
-    itemRef.getData { error, snapshot in
-      if let error = error {
-        completion(nil, error)
-      } else if let snapshot = snapshot, snapshot.exists() {
-        guard let jsonValue = snapshot.value as? [String: Any] else {
-          return
-        }
-        
-        do {
-          let data = try JSONSerialization.data(withJSONObject: jsonValue)
-          let workoutDictionary = try self.decoder.decode([String : Workout].self, from: data)
-          completion(workoutDictionary, nil)
-        } catch {
-          completion(nil, error)
-        }
-        
-        completion(nil, error)
-      }
-    }
-  }
-  
   func createWorkoutId (workout: Workout, completion: @escaping (String) -> Void) {
     let itemRef = self.workoutReference()
     if let key = itemRef.childByAutoId().key {
