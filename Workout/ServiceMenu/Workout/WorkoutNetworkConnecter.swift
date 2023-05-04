@@ -13,20 +13,18 @@ protocol WorkoutDelegate: AnyObject {
 }
 
 class WorkoutNetworkConnecter: NetworkAccessible {
+  private lazy var workoutReference: DatabaseReference = {
+    return ref.child("users/\(self.uid)/workout")
+  }()
+  
+  weak var workoutDelegate: WorkoutDelegate?
+  
   init() {
     self.setChildAddListener()
   }
   
-  weak var workoutDelegate: WorkoutDelegate?
-  
-  private func workoutReference() -> DatabaseReference {
-    return ref.child("users/\(self.uid)/workout")
-  }
-  
   private func setChildAddListener() {
-    let itemRef = self.workoutReference()
-    
-    itemRef.observe(.childAdded) { [weak self] snapshot in
+    workoutReference.observe(.childAdded) { [weak self] snapshot in
       guard snapshot.exists() else { return }
       
       let jsonKey = snapshot.key
@@ -45,8 +43,7 @@ class WorkoutNetworkConnecter: NetworkAccessible {
   }
   
   func createWorkoutId (workout: Workout, completion: @escaping (String) -> Void) {
-    let itemRef = self.workoutReference()
-    if let key = itemRef.childByAutoId().key {
+    if let key = workoutReference.childByAutoId().key {
      completion(key)
     }
   }
@@ -75,8 +72,7 @@ class WorkoutNetworkConnecter: NetworkAccessible {
   
   func removeWorkoutData(workout: Workout) {
     if let workoutCode = workout.id {
-      let itemRef = self.workoutReference()
-      itemRef.child("/\(workoutCode)").removeValue()
+      workoutReference.child("/\(workoutCode)").removeValue()
     }
   }
 }
