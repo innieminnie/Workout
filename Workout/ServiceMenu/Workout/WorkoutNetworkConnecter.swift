@@ -26,11 +26,11 @@ class WorkoutNetworkConnecter: NetworkAccessible {
   private func setChildAddListener() {
     let itemRef = self.workoutReference()
     
-    itemRef.observe(.childAdded) { snapshot in
+    itemRef.observe(.childAdded) { [weak self] snapshot in
       guard snapshot.exists() else { return }
       
       let jsonKey = snapshot.key
-      guard let jsonValue = snapshot.value else { return }
+      guard let self = self, let jsonValue = snapshot.value else { return }
       
       do {
         let data = try JSONSerialization.data(withJSONObject: jsonValue)
