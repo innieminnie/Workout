@@ -28,6 +28,19 @@ extension NetworkAccessible {
     return NetworkServiceInformation.uid
   }
 }
+extension NetworkAccessible {
+  var workoutLocation: String {
+    return "/users/\(self.uid)/workout"
+  }
+  
+  func workoutCodeLocation(_ id: String) -> String {
+    return "\(workoutLocation)/\(id)"
+  }
+  
+  func workoutRegisteredDateLocation(_ id: String) -> String {
+    return "\(workoutCodeLocation(id))/registeredDate"
+  }
+}
 
 struct NetworkServiceInformation {
   static let encoder = JSONEncoder()

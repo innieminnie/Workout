@@ -16,7 +16,7 @@ protocol WorkoutDelegate: AnyObject {
 
 class WorkoutNetworkConnecter: NetworkAccessible {
   private lazy var workoutReference: DatabaseReference = {
-    return ref.child("users/\(self.uid)/workout")
+    return ref.child(self.workoutLocation)
   }()
   
   weak var workoutDelegate: WorkoutDelegate?
@@ -79,11 +79,13 @@ class WorkoutNetworkConnecter: NetworkAccessible {
     }
   }
   
-  func updateWorkoutData(workout: Workout, key: String) {
+  func updateWorkoutData(workout: Workout) {
+    guard let id = workout.id else { return }
+    
     do {
       let data = try self.encoder.encode(workout)
       let json = try JSONSerialization.jsonObject(with: data)
-      let childUpdates = ["/users/\(self.uid)/workout/\(key)/": json]
+      let childUpdates = [workoutCodeLocation(id): json]
       self.ref.updateChildValues(childUpdates)
     } catch {
       print(error)
@@ -94,7 +96,7 @@ class WorkoutNetworkConnecter: NetworkAccessible {
     do {
       let data = try self.encoder.encode(Array(date))
       let json = try JSONSerialization.jsonObject(with: data)
-      let childUpdates = ["/users/\(self.uid)/workout/\(code)/registeredDate": json]
+      let childUpdates = [workoutRegisteredDateLocation(code): json]
       self.ref.updateChildValues(childUpdates)
     } catch {
       print(error)

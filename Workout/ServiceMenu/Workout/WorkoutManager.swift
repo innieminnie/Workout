@@ -36,7 +36,7 @@ class WorkoutManager {
     networkConnecter.createWorkoutId(workout: workout) { key in
       workout.configureId(with: key)
       self.workoutCodeDictionary[key] = workout
-      self.networkConnecter.updateWorkoutData(workout: workout, key: key)
+      self.networkConnecter.updateWorkoutData(workout: workout)
     }
   }
   
@@ -60,7 +60,7 @@ class WorkoutManager {
   func updateWorkout(_ code: String, _ name: String, _ weightUnit: WeightUnit, _ bodySection: BodySection) {
     guard let updatingWorkout = workoutByCode(code) else { return }
     updatingWorkout.update(name, bodySection, weightUnit)
-    networkConnecter.updateWorkoutData(workout: updatingWorkout, key: code)
+    networkConnecter.updateWorkoutData(workout: updatingWorkout)
   }
   
   func updateWorkoutRegistration(_ code: String, _ registeredDate: Set<DateInformation>) {
