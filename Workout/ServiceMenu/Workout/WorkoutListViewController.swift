@@ -88,7 +88,6 @@ extension WorkoutListViewController: TabBarMenu {
 extension WorkoutListViewController: UpdateWorkoutDelegate {
   func saveNewWorkout(workout: Workout) {
     workoutManager.register(workout: workout)
-    tableView.reloadData()
   }
   
   func updateWorkout(code: String, name: String, weightUnit: WeightUnit, bodySection: BodySection ) {
@@ -108,8 +107,7 @@ extension WorkoutListViewController: UISearchResultsUpdating {
 }
 extension WorkoutListViewController: WorkoutViewDelegate {
   func workoutAdded() {
-    self.tableView.beginUpdates()
-    self.tableView.endUpdates()
+    self.tableView.reloadData()
   }
   
   func workoutRemoved(at indexPath: IndexPath) {
