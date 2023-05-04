@@ -11,6 +11,7 @@ import FirebaseDatabase
 protocol WorkoutDelegate: AnyObject {
   func childAdded(_ workout: Workout)
   func childRemoved(_ workoutId: String)
+  func childChanged(_ workoutId: String, _ workout: Workout)
 }
 
 class WorkoutNetworkConnecter: NetworkAccessible {
@@ -22,6 +23,7 @@ class WorkoutNetworkConnecter: NetworkAccessible {
   
   init() {
     self.setChildAddListener()
+    self.setChildChangeListener()
     self.setChildRemoveListener()
   }
   
@@ -38,6 +40,25 @@ class WorkoutNetworkConnecter: NetworkAccessible {
         workout.configureId(with: jsonKey)
         
         self.workoutDelegate?.childAdded(workout)
+      } catch {
+        NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
+      }
+    }
+  }
+  
+  private func setChildChangeListener() {
+    workoutReference.observe(.childChanged) { [weak self] snapshot in
+      guard snapshot.exists() else { return }
+      
+      let jsonKey = snapshot.key
+      guard let self = self, let jsonValue = snapshot.value else { return }
+      
+      do {
+        let data = try JSONSerialization.data(withJSONObject: jsonValue)
+        let workout = try self.decoder.decode(Workout.self, from: data)
+        workout.configureId(with: jsonKey)
+        
+        self.workoutDelegate?.childChanged(snapshot.key, workout)
       } catch {
         NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
       }

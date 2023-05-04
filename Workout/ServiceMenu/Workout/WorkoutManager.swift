@@ -9,6 +9,7 @@ import Foundation
 
 protocol WorkoutViewDelegate: AnyObject {
   func workoutAdded()
+  func workoutChanged()
   func workoutRemoved(at indexPath: IndexPath)
 }
 
@@ -106,6 +107,12 @@ extension WorkoutManager: WorkoutDelegate {
     self.workoutViewDelegate?.workoutRemoved(at: targetIndexPath)
     
     self.targetIndexPath = nil
+  }
+  
+  func childChanged(_ workoutId: String, _ workout: Workout) {
+    workoutCodeDictionary[workoutId] = workout
+    
+    self.workoutViewDelegate?.workoutChanged()
   }
 }
 

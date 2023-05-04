@@ -92,7 +92,6 @@ extension WorkoutListViewController: UpdateWorkoutDelegate {
   
   func updateWorkout(code: String, name: String, weightUnit: WeightUnit, bodySection: BodySection ) {
     workoutManager.updateWorkout(code, name, weightUnit, bodySection)
-    tableView.reloadData()
   }
 }
 extension WorkoutListViewController: UISearchResultsUpdating {
@@ -107,6 +106,10 @@ extension WorkoutListViewController: UISearchResultsUpdating {
 }
 extension WorkoutListViewController: WorkoutViewDelegate {
   func workoutAdded() {
+    self.tableView.reloadData()
+  }
+  
+  func workoutChanged() {
     self.tableView.reloadData()
   }
   
