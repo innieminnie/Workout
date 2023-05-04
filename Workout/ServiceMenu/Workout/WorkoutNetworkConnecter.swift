@@ -10,6 +10,7 @@ import FirebaseDatabase
 
 protocol WorkoutDelegate: AnyObject {
   func childAdded(_ workout: Workout)
+  func childRemoved(_ workoutId: String)
 }
 
 class WorkoutNetworkConnecter: NetworkAccessible {
@@ -21,6 +22,7 @@ class WorkoutNetworkConnecter: NetworkAccessible {
   
   init() {
     self.setChildAddListener()
+    self.setChildRemoveListener()
   }
   
   private func setChildAddListener() {
@@ -39,6 +41,14 @@ class WorkoutNetworkConnecter: NetworkAccessible {
       } catch {
         NotificationCenter.default.post(name: Notification.Name("ReadWorkoutData"), object: nil, userInfo: ["error" : error])
       }
+    }
+  }
+  
+  private func setChildRemoveListener() {
+    workoutReference.observe(.childRemoved) { [weak self] snapshot in
+      guard snapshot.exists() else { return }
+      guard let self = self else { return }
+      self.workoutDelegate?.childRemoved(snapshot.key)
     }
   }
   

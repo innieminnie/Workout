@@ -57,9 +57,7 @@ class WorkoutListDataSource: NSObject, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      let removingWorkout = workoutManager.workout(at: indexPath)
-      workoutManager.removeWorkout(removingWorkout)
-      tableView.deleteRows(at: [indexPath], with: .automatic)
+      workoutManager.removeWorkout(at: indexPath)
     }
   }
 }

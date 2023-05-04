@@ -64,7 +64,6 @@ extension WorkoutListViewController {
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let workout = workoutListDataSource.isSearching ? workoutListDataSource.searchingList[indexPath.row] : workoutManager.workout(at: indexPath)
-//    let workout = workoutManager.workout(at: indexPath)
     let workoutInformationViewController = WorkoutInformationViewController()
     self.delegate = workoutInformationViewController
     workoutInformationViewController.updateWorkoutDelegate = self
@@ -109,6 +108,13 @@ extension WorkoutListViewController: UISearchResultsUpdating {
 }
 extension WorkoutListViewController: WorkoutViewDelegate {
   func workoutAdded() {
-    self.tableView.reloadData()
+    self.tableView.beginUpdates()
+    self.tableView.endUpdates()
+  }
+  
+  func workoutRemoved(at indexPath: IndexPath) {
+    self.tableView.beginUpdates()
+    self.tableView.deleteRows(at: [indexPath], with: .fade)
+    self.tableView.endUpdates()
   }
 }

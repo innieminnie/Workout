@@ -9,14 +9,18 @@ import Foundation
 
 protocol WorkoutViewDelegate: AnyObject {
   func workoutAdded()
+  func workoutRemoved(at indexPath: IndexPath)
 }
 
 class WorkoutManager {
   static let shared = WorkoutManager()
   
   private let networkConnecter = WorkoutNetworkConnecter()
-  private var workouts = [Workout]()
+  private var workouts: [Workout] {
+    return workoutCodeDictionary.map { $0.value }
+  }
   private var workoutCodeDictionary = [String : Workout]()
+  private var targetIndexPath: IndexPath?
   
   weak var workoutViewDelegate: WorkoutViewDelegate?
   
@@ -46,14 +50,10 @@ class WorkoutManager {
     return workoutCodeDictionary[code]
   }
   
-  func removeWorkout(_ workout: Workout) {
-    if let removingCode = workout.id {
-      workoutCodeDictionary[removingCode] = nil
-      workout.removeRegisteredRoutine()
-      networkConnecter.removeWorkoutData(workout: workout)
-    }
-    
-    // 아직 workouts 배열에선 workout 제거 안됨, 수정 필요
+  func removeWorkout(at indexPath: IndexPath) {
+    let removingWorkout = workout(at: indexPath)
+    self.targetIndexPath = indexPath
+    networkConnecter.removeWorkoutData(workout: removingWorkout)
   }
   
   func updateWorkout(_ code: String, _ name: String, _ weightUnit: WeightUnit, _ bodySection: BodySection) {
@@ -93,10 +93,19 @@ class WorkoutManager {
 }
 extension WorkoutManager: WorkoutDelegate {
   func childAdded(_ workout: Workout) {
-    guard let id = workout.id else { return }
-    workoutCodeDictionary[id] = workout
-    workouts.append(workout)
+    guard let workoutId = workout.id else { return }
+    workoutCodeDictionary[workoutId] = workout
+    
     self.workoutViewDelegate?.workoutAdded()
+  }
+  
+  func childRemoved(_ workoutId: String) {
+    workoutCodeDictionary[workoutId] = nil
+    
+    guard let targetIndexPath = targetIndexPath else { return }
+    self.workoutViewDelegate?.workoutRemoved(at: targetIndexPath)
+    
+    self.targetIndexPath = nil
   }
 }
 
