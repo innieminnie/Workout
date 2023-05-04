@@ -89,10 +89,7 @@ class RoutineManager {
     guard let id = removingWorkout.id else { return }
     networkConnecter.removeRoutineData(id: id, on: dateInformation)
     let workoutCode = removingWorkout.workoutCode
-    if let workout = workoutManager.workoutByCode(workoutCode) {
-      workout.removeRegisteredDate(on: dateInformation)
-    }
-   
+    workoutManager.removeWorkoutRegistration(workoutCode, dateInformation)
     self.updatePlan(with: reorderingPlan, on: dateInformation)
   }
   

@@ -72,8 +72,11 @@ class Workout: Identifiable, Codable {
     return registeredDate
   }
   
-  func removeRegisteredDate(on dateInformation: DateInformation) {
+  func removeRegisteredDate(on dateInformation: DateInformation) -> Set<DateInformation>? {
+    guard registeredDate.contains(dateInformation) else { return nil }
     registeredDate.remove(dateInformation)
+    
+    return registeredDate
   }
  
   func displayName() -> String {

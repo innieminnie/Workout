@@ -54,6 +54,7 @@ class WorkoutManager {
   
   func removeWorkout(at indexPath: IndexPath) {
     let removingWorkout = workout(at: indexPath)
+    
     self.targetIndexPath = indexPath
     networkConnecter.removeWorkoutData(workout: removingWorkout)
   }
@@ -67,6 +68,13 @@ class WorkoutManager {
   func updateWorkoutRegistration(_ code: String, _ registeredDate: DateInformation) {
     guard let workout = workoutByCode(code),
           let updatedWorkoutRegisteredDate = workout.addRegisteredDate(on: registeredDate) else { return }
+    
+    networkConnecter.updateWorkoutRegistrationDate(code: code, dateSet: updatedWorkoutRegisteredDate)
+  }
+  
+  func removeWorkoutRegistration(_ code: String, _ registeredDate: DateInformation) {
+    guard let workout = workoutByCode(code),
+          let updatedWorkoutRegisteredDate = workout.removeRegisteredDate(on: registeredDate) else { return }
     
     networkConnecter.updateWorkoutRegistrationDate(code: code, dateSet: updatedWorkoutRegisteredDate)
   }
@@ -105,6 +113,9 @@ extension WorkoutManager: WorkoutDelegate {
   }
   
   func childRemoved(_ workoutId: String) {
+    guard let removingWorkout = workoutCodeDictionary[workoutId] else { return }
+    removingWorkout.removeRegisteredRoutine()
+    
     workoutCodeDictionary[workoutId] = nil
     
     guard let targetIndexPath = targetIndexPath else { return }
