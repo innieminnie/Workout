@@ -17,10 +17,10 @@ class WorkoutManager {
   static let shared = WorkoutManager()
   
   private let networkConnecter = WorkoutNetworkConnecter()
+  private var workoutCodeDictionary = [String : Workout]()
   private var workouts: [Workout] {
     return workoutCodeDictionary.map { $0.value }
   }
-  private var workoutCodeDictionary = [String : Workout]()
   private var targetIndexPath: IndexPath?
   
   weak var workoutViewDelegate: WorkoutViewDelegate?
@@ -32,6 +32,7 @@ class WorkoutManager {
   func test() {
     
   }
+  
   func register(workout: Workout) {
     networkConnecter.createWorkoutId(workout: workout) { key in
       workout.configureId(with: key)
@@ -63,8 +64,11 @@ class WorkoutManager {
     networkConnecter.updateWorkoutData(workout: updatingWorkout)
   }
   
-  func updateWorkoutRegistration(_ code: String, _ registeredDate: Set<DateInformation>) {
-    networkConnecter.updateWorkoutRegistrationDate(code: code, date: registeredDate)
+  func updateWorkoutRegistration(_ code: String, _ registeredDate: DateInformation) {
+    guard let workout = workoutByCode(code),
+          let updatedWorkoutRegisteredDate = workout.addRegisteredDate(on: registeredDate) else { return }
+    
+    networkConnecter.updateWorkoutRegistrationDate(code: code, dateSet: updatedWorkoutRegisteredDate)
   }
   
   func checkNameValidation(_ previousName: String, _ name: String) -> Bool {

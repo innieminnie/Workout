@@ -92,9 +92,9 @@ class WorkoutNetworkConnecter: NetworkAccessible {
     }
   }
   
-  func updateWorkoutRegistrationDate(code: String, date: Set<DateInformation>) {
+  func updateWorkoutRegistrationDate(code: String, dateSet: Set<DateInformation>) {
     do {
-      let data = try self.encoder.encode(Array(date))
+      let data = try self.encoder.encode(Array(dateSet))
       let json = try JSONSerialization.jsonObject(with: data)
       let childUpdates = [workoutRegisteredDateLocation(code): json]
       self.ref.updateChildValues(childUpdates)

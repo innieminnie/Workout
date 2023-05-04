@@ -31,7 +31,7 @@ class PlannedWorkout: Identifiable, Codable {
     self.isDone = .doing
     self.sets = []
     
-    workout.addRegisteredDate(on: planningDate)
+    workoutManager.updateWorkoutRegistration(workoutCode, planningDate)
   }
   
   required init(from decoder: Decoder) throws {
