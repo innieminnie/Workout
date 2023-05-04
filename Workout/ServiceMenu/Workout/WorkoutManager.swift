@@ -24,6 +24,9 @@ class WorkoutManager {
     networkConnecter.workoutDelegate = self
   }
   
+  func test() {
+    
+  }
   func register(workout: Workout) {
     networkConnecter.createWorkoutId(workout: workout) { key in
       workout.configureId(with: key)

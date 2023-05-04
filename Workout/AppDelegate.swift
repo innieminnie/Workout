@@ -40,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = SplashViewController()
     self.window?.makeKeyAndVisible()
     
+    workoutManager.test() //수정필요
+    
     return true
   }
   
